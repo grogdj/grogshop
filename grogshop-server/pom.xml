@@ -23,7 +23,7 @@
     <version>6.4.0-redhat-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Grog Shop</name>
-    <description>Grog Shop</description>
+    <description>Grog Shop Server</description>
 
     <url>http://jboss.org/jbossas</url>
     <licenses>
