@@ -22,7 +22,7 @@
     <artifactId>grogshop-server</artifactId>
     <version>6.4.0-redhat-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Grog Shop</name>
+    <name>Grog Shop Server</name>
     <description>Grog Shop Server</description>
 
     <url>http://jboss.org/jbossas</url>

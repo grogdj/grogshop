@@ -1,0 +1,26 @@
+package grogshop;
+
+import com.grogdj.grogshop.core.model.*;
+import static com.grogdj.grogshop.core.utils.NotificationUtils.*;
+
+rule "matching bid, not right price"
+  when
+    // When I have a list that matches with all the bidders 
+    $l: Listing($listingTags: tags, $price: price)
+    $b: Bid(tags.containsAll($listingTags), amount < $price)
+  then
+    //set the bid priority
+    notifyClubLowOffer($l, $b);
+    notifyBidderHighPrice($b, $l);
+end
+
+rule "matching bid, best price"
+  when
+    // When I have a list that matches with all the bidders 
+    $l: Listing($listingTags: tags, $price: price)
+    $b: Bid(tags.containsAll($listingTags), amount > $price)
+  then
+    //set the bid priority
+    notifyClubHighOffer($l, $b);
+    notifyBidderLowPrice($b, $l);
+end
