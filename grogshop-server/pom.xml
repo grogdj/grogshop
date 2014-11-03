@@ -37,7 +37,7 @@
     <properties>
         <!-- Explicitly declaring the source encoding eliminates the following message: -->
         <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered 
-            resources, i.e. build is platform dependent! -->
+        resources, i.e. build is platform dependent! -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- JBoss dependency versions -->
@@ -57,14 +57,14 @@
     <dependencyManagement>
         <dependencies>
             <!-- Define the version of JBoss' Java EE 6 APIs we want to import. 
-                Any dependencies from org.jboss.spec will have their version defined by this 
-                BOM -->
+            Any dependencies from org.jboss.spec will have their version defined by this 
+            BOM -->
             <!-- JBoss distributes a complete set of Java EE 6 APIs including
-                a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
-                a collection) of artifacts. We use this here so that we always get the correct
-                versions of artifacts. Here we use the jboss-javaee-6.0 stack (you can
-                read this as the JBoss stack of the Java EE 6 APIs). You can actually
-                use this stack with any version of JBoss EAP that implements Java EE 6. -->
+            a Bill of Materials (BOM). A BOM specifies the versions of a "stack" (or
+            a collection) of artifacts. We use this here so that we always get the correct
+            versions of artifacts. Here we use the jboss-javaee-6.0 stack (you can
+            read this as the JBoss stack of the Java EE 6 APIs). You can actually
+            use this stack with any version of JBoss EAP that implements Java EE 6. -->
             <dependency>
                 <groupId>org.jboss.spec</groupId>
                 <artifactId>jboss-javaee-6.0</artifactId>
@@ -76,7 +76,11 @@
     </dependencyManagement>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.grogdj</groupId>
+            <artifactId>grogshop-core</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
         <!-- Import the CDI API, we use provided scope as the API is included in JBoss EAP 6 -->
         <dependency>
             <groupId>javax.enterprise</groupId>
@@ -85,7 +89,7 @@
         </dependency>
 
         <!-- Import the Common Annotations API (JSR-250), we use provided scope 
-            as the API is included in JBoss EAP 6 -->
+        as the API is included in JBoss EAP 6 -->
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
             <artifactId>jboss-annotations-api_1.1_spec</artifactId>
@@ -102,14 +106,14 @@
 
     <build>
         <!-- Set the name of the war, used as the context root when the app 
-            is deployed -->
+        is deployed -->
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${version.war.plugin}</version>
                 <configuration>
-               <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
+                    <!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
@@ -145,5 +149,18 @@
             </build>
         </profile>
     </profiles> 
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jboss</id>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
 </project>
 

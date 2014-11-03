@@ -1,0 +1,43 @@
+package grogshop;
+
+import com.grogdj.grogshop.core.model.*;
+import static com.mycompany.grogshop.processing.util.NotificationUtils.*;
+
+rule "new listing"
+    when
+        $l: Listing()
+    then
+        drawListing($l);
+end
+
+
+rule "matching bid, not right price"
+  when
+    // When I have a list that matches with all the bidders 
+    $l: Listing($listingTags: tags, $price: price)
+    $b: Bid(tags.containsAll($listingTags), amount < $price)
+  then
+    //set the bid priority
+   // notifyClubLowOffer($l, $b);
+   // notifyBidderHighPrice($b, $l);
+    System.out.println("matching bid, not right price" + $b);
+    drawLowBid($b);
+end
+
+rule "matching bid, best price"
+  when
+    // When I have a list that matches with all the bidders 
+    $l: Listing($listingTags: tags, $price: price)
+    $b: Bid(tags.containsAll($listingTags), amount > $price)
+  then
+    //set the bid priority
+    //notifyClubHighOffer($l, $b);
+    //notifyBidderLowPrice($b, $l);
+    
+    System.out.println("matching bid, best price" + $b);
+    drawHighBid($b);
+    Listing listing = new Listing("salaboy", $b.getAmount());
+    listing.addTag("Fake");
+    insert(listing);
+
+end

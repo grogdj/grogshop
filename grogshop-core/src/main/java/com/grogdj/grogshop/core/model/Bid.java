@@ -18,6 +18,11 @@ public class Bid {
     private String userId;
     private double amount;
 
+    public Bid() {
+    }
+
+    
+    
     public Bid(String userId, double amount) {
         this.userId = userId;
         this.amount = amount;
@@ -42,6 +47,27 @@ public class Bid {
     public double getAmount() {
         return amount;
     }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return "Bid{" + "tags=" + tags + ", userId=" + userId + ", amount=" + amount + '}';
+    }
+    
+    
     
     
     

@@ -17,6 +17,8 @@ public class Listing {
     private List<Tag> tags;
     private String userId;
     private double price;
+    
+    
 
     public Listing() {
     }
@@ -43,6 +45,23 @@ public class Listing {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Listing{" + "tags=" + tags + ", userId=" + userId + ", price=" + price + '}';
     }
     
     

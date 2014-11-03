@@ -15,6 +15,11 @@ import java.util.Objects;
 public class Tag {
     private String name;
 
+    public Tag() {
+    }
+
+    
+    
     public Tag(String name) {
         this.name = name;
     }
@@ -22,6 +27,12 @@ public class Tag {
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    
 
     @Override
     public String toString() {
