@@ -10,5 +10,5 @@ package org.grogshop.services.api;
  * @author salaboy
  */
 public interface NotificationsService {
-    
+    void notifyUser(String userId, String message);
 }

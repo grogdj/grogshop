@@ -17,10 +17,14 @@ import org.grogshop.services.api.BidsService;
  */
 @Singleton
 public class BidsServiceImpl implements BidsService {
-     private List<Bid> bids;
+    private List<Bid> bids;
 
     public BidsServiceImpl() {
         bids = new ArrayList<Bid>();
+        Bid bid = new Bid("example", 300);
+        bid.addTag("#tag1");
+        bid.addTag("#tag2");
+        bids.add(bid);
         System.out.println("BidsServiceImpl "+this.hashCode());
     }
      
@@ -35,6 +39,11 @@ public class BidsServiceImpl implements BidsService {
     @Override
     public void newBid(Bid bid){
         this.bids.add(bid);
+    }
+    
+    @Override
+    public void clearBids() {
+        this.bids.clear();
     }
         
         

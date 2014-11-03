@@ -5,19 +5,11 @@
  */
 package org.grogshop.services.api;
 
-import com.grogdj.grogshop.core.model.Bid;
-import java.util.List;
-
 /**
  *
  * @author salaboy
  */
-public interface BidsService {
-
-    List<Bid> getBids();
-
-    void newBid(Bid bid);
-    
-    void clearBids();
-    
+public interface MatchingService {
+    void insert(Object o);
+    void reset();
 }

@@ -16,10 +16,8 @@
  */
 package org.grogshop.services.impl;
 
-
 import com.grogdj.grogshop.core.model.Bid;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -29,45 +27,47 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.api.BidsService;
-
-
+import org.grogshop.services.api.NotificationsService;
 
 @Path("/bids")
 public class ShopBidsServiceImpl {
+
     @Inject
     BidsService bidsService;
     
+    @Inject
+    NotificationsService notificationService;
     
+    @Inject
+    MatchingServiceImpl matchingService;
 
     public ShopBidsServiceImpl() {
-        
+
     }
-    
-    @PostConstruct
-    public void init(){
-        Bid bid = new Bid("example", 300);
-        bid.addTag("#tag1");
-        bid.addTag("#tag2");
-        bidsService.newBid(bid);
-    }
-    
 
     @POST
     @Path("/new")
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.TEXT_PLAIN })
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.TEXT_PLAIN})
     public Response newBid(Bid bid) {
         bidsService.newBid(bid);
+        matchingService.insert(bid);
         return Response.ok().build();
     }
-    
+
     @GET
     @Path("/all")
-    @Produces({ MediaType.APPLICATION_JSON })
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Bid> getAllBids() {
         return bidsService.getBids();
     }
-        
-
+    
+    @GET
+    @Path("/clear")
+    public void clearBids() {
+        bidsService.clearBids();
+    }
+    
+    
 
 }

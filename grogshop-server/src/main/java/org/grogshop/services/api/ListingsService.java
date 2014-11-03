@@ -5,10 +5,19 @@
  */
 package org.grogshop.services.api;
 
+import com.grogdj.grogshop.core.model.Listing;
+import java.util.List;
+
 /**
  *
  * @author salaboy
  */
 public interface ListingsService {
+    List<Listing> getAllListings();
     
+    void newListing(Listing listing);
+    
+    void clearListings();
+            
+            
 }

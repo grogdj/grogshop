@@ -16,60 +16,65 @@
  */
 package org.grogshop.services.impl;
 
-
 import com.grogdj.grogshop.core.model.Listing;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.grogshop.services.api.ListingsService;
+import org.grogshop.services.api.NotificationsService;
 
 /**
- * A simple REST service which is able to say hello to someone using HelloService Please take a look at the web.xml where JAX-RS
- * is enabled
- * 
+ * A simple REST service which is able to say hello to someone using
+ * HelloService Please take a look at the web.xml where JAX-RS is enabled
+ *
  * @author gbrey@redhat.com
- * 
+ *
  */
-
 @Path("/listings")
 public class ShopListingsServiceImpl {
+
     @Inject
     ListingsService listingsService;
 
+    @Inject
+    MatchingServiceImpl matchingService;
+
+    @Inject
+    NotificationsService notificationService;
+
     @GET
     @Path("/all")
-    @Produces({ "application/json" })
+    @Produces({"application/json"})
     public List<Listing> getAllListings() {
-        
-        //TODO: use listingsService here
-        List<Listing> listings = new ArrayList<Listing>();
-        Listing listing1 = new Listing("xxx", 200000);
-        listing1.addTag("#car");
-        listing1.addTag("#2014");
-        listing1.addTag("#ferrari");
-        listing1.addTag("#blue");
-        listings.add(listing1);
-        
-        Listing listing2 = new Listing("yyy", 4000);
-        listing2.addTag("#car");
-        listing2.addTag("#2000");
-        listing2.addTag("#ford");
-        listing2.addTag("#red");
-        listings.add(listing2);
-        
-        Listing listing3 = new Listing("zzz", 4500);
-        listing3.addTag("#car");
-        listing3.addTag("#2003");
-        listing3.addTag("#ford");
-        listing3.addTag("#blue");
-        listings.add(listing3);
-        
-        
-        return listings;
+        return listingsService.getAllListings();
     }
 
+    @POST
+    @Path("/new")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.TEXT_PLAIN})
+    public Response newListing(Listing listing) {
+        listingsService.newListing(listing);
+        matchingService.insert(listing);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/clear")
+    public void clearListings() {
+        listingsService.clearListings();
+    }
+
+    @GET
+    @Path("/reset")
+    public void resetMatchingService() {
+        matchingService.reset();
+    }
 
 }

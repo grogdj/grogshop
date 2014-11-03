@@ -1,0 +1,39 @@
+package grogshop;
+
+import com.grogdj.grogshop.core.model.*;
+import org.grogshop.services.api.*;
+
+global NotificationsService notificationsService;
+
+rule "new listing"
+    when
+        $l: Listing()
+    then
+        notificationsService.notifyUser($l.getUserId(), "your new listing is up");
+end
+
+
+rule "matching bid, not right price"
+  when
+    // When I have a list that matches with all the bidders 
+    $l: Listing($listingTags: tags, $price: price)
+    $b: Bid(tags.containsAll($listingTags), amount < $price)
+  then
+    notificationsService.notifyUser($l.getUserId(), "matching bid, not right price");
+    notificationsService.notifyUser($b.getUserId(), "matching listing, not right price");
+    
+end
+
+rule "matching bid, best price"
+  when
+    // When I have a list that matches with all the bidders 
+    $l: Listing($listingTags: tags, $price: price)
+    $b: Bid(tags.containsAll($listingTags), amount > $price)
+  then
+    
+    notificationsService.notifyUser($l.getUserId(), "matching bid, best price");
+    notificationsService.notifyUser($b.getUserId(), "matching bid, best price");
+    
+   
+
+end
