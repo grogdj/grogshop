@@ -1,0 +1,12 @@
+ <div class="list-container" ng-repeat="bids in bidsCtrl.bids">
+     <div class="bids-item">
+	<h3> 
+		<span ng-repeat="tag in bids.tags">
+			{{tag.name}}, 
+		</span>
+	</h3>
+    <div class="user">User: ({{bids.userId}})</div>
+	<div class="price">$ {{bids.amount}}</div>
+	</div>       
+                  
+</div>                  

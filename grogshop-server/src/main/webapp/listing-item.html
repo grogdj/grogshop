@@ -1,7 +1,12 @@
  <div class="list-container" ng-repeat="product in listingsCtrl.products">
-               
-	<h3>Product: {{product.tags}}</h3>
-        <p>User: ({{product.userId}})</p>
-	<p>$ {{product.price}}</p>
+     <div class="listing-item">
+	<h3> 
+		<span ng-repeat="tag in product.tags">
+			{{tag.name}}, 
+		</span>
+	</h3>
+    <div class="user">User: ({{product.userId}})</div>
+	<div class="price">$ {{product.price}}</div>
+	</div>       
                   
 </div>                  

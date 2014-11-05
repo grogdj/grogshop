@@ -1,6 +1,6 @@
 (function(){
 
-	var app = angular.module('grogshop', ['shoplistings']);
+	var app = angular.module('grogshop', ['shoplistings', 'shopbids']);
 
 
 }) ();
