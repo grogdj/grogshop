@@ -63,3 +63,10 @@
 	font-size: 12px;
 }
 
+input.ng-invalid.ng-dirty {
+	border-color:#990000;
+}
+input.ng-valid.ng-dirty {
+	border-color:#CCC;
+}
+
