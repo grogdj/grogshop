@@ -6,7 +6,7 @@
 
 package com.grogdj.grogshop.core.model;
 
-import java.util.Objects;
+
 
 /**
  *
@@ -41,8 +41,8 @@ public class Tag {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.name);
+        int hash = 5;
+        hash = 59 * hash + (this.name != null ? this.name.hashCode() : 0);
         return hash;
     }
 
@@ -55,11 +55,12 @@ public class Tag {
             return false;
         }
         final Tag other = (Tag) obj;
-        if (!Objects.equals(this.name, other.name)) {
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
         return true;
     }
+
     
     
     

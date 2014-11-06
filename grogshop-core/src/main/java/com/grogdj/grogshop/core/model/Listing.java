@@ -63,6 +63,36 @@ public class Listing {
     public String toString() {
         return "Listing{" + "tags=" + tags + ", userId=" + userId + ", price=" + price + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 47 * hash + (this.tags != null ? this.tags.hashCode() : 0);
+        hash = 47 * hash + (this.userId != null ? this.userId.hashCode() : 0);
+        hash = 47 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Listing other = (Listing) obj;
+        if (this.tags != other.tags && (this.tags == null || !this.tags.equals(other.tags))) {
+            return false;
+        }
+        if ((this.userId == null) ? (other.userId != null) : !this.userId.equals(other.userId)) {
+            return false;
+        }
+        if (Double.doubleToLongBits(this.price) != Double.doubleToLongBits(other.price)) {
+            return false;
+        }
+        return true;
+    }
     
     
     
