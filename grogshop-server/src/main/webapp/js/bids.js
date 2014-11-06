@@ -32,8 +32,8 @@
 				var shop = this
 				shop.livebid = {};
 
-				this.addBid = function(formCtrl) {
-					alert("estas creando un nuevo bid - " + formCtrl.livebid.userId)
+				this.addBid = function() {
+					alert("estas creando un nuevo bid - " + shop.livebid.userId)
 					// ACA VA LA LOGICA QUE GUARDE LOS DATOS CON POST
 					shop.livebid= {};
 					 $scope.bidform.$setPristine();
