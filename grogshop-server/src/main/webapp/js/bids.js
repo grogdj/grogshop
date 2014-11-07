@@ -10,11 +10,12 @@
 				var shop = this;
 				shop.bids = [];
 
-				//$http.get("http://grogshop-restprovider.rhcloud.com/grogshop-server/rest/listings/all").success(function(data){
+				$http.get("http://localhost:8080/grogshop-server/rest/bids/all").success(function(data){
 
-				 	shop.bids = bidsdata;
+				 	shop.bids = data;
                                 
-				// });
+                                
+				 });
 
 
 				
@@ -33,8 +34,10 @@
 				shop.livebid = {};
 
 				this.addBid = function() {
-					alert("estas creando un nuevo bid - " + shop.livebid.userId)
-					// ACA VA LA LOGICA QUE GUARDE LOS DATOS CON POST
+					
+					//
+					$http.post('http://localhost:8080/grogshop-server/rest/bids/new',{userId:shop.livebid.userId, amount:shop.livebid.amount, tags:[shop.livebid.tags]});
+					//
 					shop.livebid= {};
 					 $scope.bidform.$setPristine();
 
@@ -45,33 +48,7 @@
 	}]);
 
 
-	var bidsdata = [
-             {
-			    "userId" : "example",
-			    "amount" : 300,
-			    "tags" : [
-			      {
-			        "name" : "#tag1"
-			      },
-			      {
-			        "name" : "#tag2"
-			      }
-			    ]
-			  },
-			  {
-			    "userId" : "Ezequiel",
-			    "amount" : 700,
-			    "tags" : [
-			      {
-			        "name" : "#tag1"
-			      },
-			      {
-			        "name" : "#tag2"
-			      }
-			    ]
-			  }      
-                   
-    ];
+	
 
 })();
 
