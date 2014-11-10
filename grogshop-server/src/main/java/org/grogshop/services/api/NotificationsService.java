@@ -5,10 +5,13 @@
  */
 package org.grogshop.services.api;
 
+import java.util.Set;
+import javax.websocket.Session;
 /**
  *
  * @author salaboy
  */
 public interface NotificationsService {
     void notifyUser(String userId, String message);
+    void setActiveSessions(Set<Session> activeSessions);
 }

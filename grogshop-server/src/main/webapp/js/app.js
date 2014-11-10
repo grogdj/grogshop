@@ -1,6 +1,7 @@
+'use strict';
 (function(){
 
-	var app = angular.module('grogshop', ['shoplistings', 'shopbids']);
+	var app = angular.module('grogshop', ['shoplistings', 'shopbids', 'shopnotifications']);
 
 
 }) ();
