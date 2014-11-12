@@ -37,7 +37,7 @@
                     shop.livebid = {};
 
                     this.addBid = function () {
-                        var bid =  {userId: shop.livebid.userId, amount: shop.livebid.amount, tags: [shop.livebid.tags]}
+                        var bid =  {userId: shop.livebid.userId, amount: shop.livebid.amount, tags: shop.livebid.tags}
                         //
                         $http.post('http://localhost:8080/grogshop-server/rest/bids/new',bid);
                         //

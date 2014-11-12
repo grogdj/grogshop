@@ -1,12 +1,18 @@
- <div class="list-container" ng-repeat="bids in bidsCtrl.bids">
-     <div class="bids-item">
-	<h3> 
-		<span ng-repeat="tag in bids.tags">
-			{{tag.name}}, 
-		</span>
-	</h3>
-    <div class="user">User: ({{bids.userId}})</div>
-	<div class="price">$ {{bids.amount}}</div>
-	</div>       
+ <div class="item-container bids-item" ng-repeat="bids in bidsCtrl.bids">
+     
+	<li class="media">
+
+	    <div class="media-body">
+	      <h4 class="media-heading" >
+				<span ng-repeat="tag in bids.tags">
+				{{tag.name}}, 
+				</span>
+			
+	      </h4>
+	      <div class="user">User: ({{bids.userId}})</div>
+			<div class="price">$ {{bids.amount}}</div>
+	    </div>
+
+	</li>     
                   
 </div>                  

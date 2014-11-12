@@ -38,7 +38,7 @@
                     var shop = this
                     shop.livelisting = {};
                     this.addListing = function () {
-                        var listing = {userId: shop.livelisting.userId, price: shop.livelisting.price, tags: [shop.livelisting.tags]};
+                        var listing = {userId: shop.livelisting.userId, price: shop.livelisting.price, tags: shop.livelisting.tags};
                         $http.post('http://localhost:8080/grogshop-server/rest/listings/new', listing);
                         $scope.$broadcast('newListing', listing);
                         shop.livelisting = {};

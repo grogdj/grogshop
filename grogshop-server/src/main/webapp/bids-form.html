@@ -22,7 +22,10 @@
         <div class="form-group">
           <label class="col-sm-3 control-label" for="tags">Tags</label>
           <div class="col-sm-9">
-            <input type="text" class="form-control" id="tags" ng-model="bidsFromCtrl.livebid.tags" required>
+            <tags-input ng-model="bidsFromCtrl.livebid.tags" display-property="name" max-tags="5" required>
+              
+            </tags-input>
+            <!--<input type="text" class="form-control" id="tags" ng-model="bidsFromCtrl.livebid.tags" required>-->
           </div>
         </div>
 

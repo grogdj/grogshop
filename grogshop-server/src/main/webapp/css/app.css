@@ -3,33 +3,47 @@
 	bottom: 0;
 	width: 100%;
 
-	height: 100px;
+	height: 150px;
 	background-color: #222;
 	color: #FFF;
 }
 
-.listing-item {
-		padding: 8px;
+.notification-bar .notification-container {
+	height: 80px;
+	overflow-y: auto;
+	padding: 20px 0;
+	border: 1px solid #CCC;
+	color: #FFF;
+}
+
+.notification-item-container {
+	border-bottom: 1px dashed #CCC;
+	padding: 10px 0;
+
+}
+
+.item-container {
+	padding: 8px;
 	margin: 6px 0;
-	border-bottom: 1px solid #999;
+	border: 1px solid #EEE;
 	position: relative;
-	background-color: #EEE;
+	
 	
 }
 
-.listing-item h3 {
+.item-container h3 {
 	padding: 0;
 	margin: 0 0 5px 0;
 	font-size: 16px;
 }
 
-.listing-item .price {
+.item-container .price {
 	position: absolute;
 	top: 10px;
 	right: 10px;
 }
 
-.listing-item .user {
+.item-container .user {
 	color: #666;
 	font-size: 12px;
 }
@@ -37,10 +51,9 @@
 .bids-item {
 	padding: 8px;
 	margin: 6px 0;
-	border-bottom: 1px solid #cccab0;
 	position: relative;
-	background-color: #fffef8;
-	border-radius: 6px;
+	border: 1px solid #EEEEEC;
+	background-color: #fffffc;
 }
 
 
@@ -69,4 +82,13 @@ input.ng-invalid.ng-dirty {
 input.ng-valid.ng-dirty {
 	border-color:#CCC;
 }
+
+
+.list-container {
+	position: relative;
+	width: 100%;
+	padding-bottom: 200px;
+}
+
+
 

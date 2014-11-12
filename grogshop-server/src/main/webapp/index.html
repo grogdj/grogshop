@@ -9,6 +9,8 @@
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/app.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/ng-tags-input.min.css"> 
+        <link rel="stylesheet" href="css/ng-tags-input.bootstrap.min.css">
 
 
 
@@ -21,16 +23,43 @@
         <![endif]-->
     </head>
     <body >
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
-                    <h3>Listings</h3>
-                    <listing-item > </listing-item>
+        <div class="container-fluid ">
+            <div class="row ">
+                <div class="col-md-4" >
+                    <nav   class="navbar navbar-default navbar-static-top navbar-fixed-col " role="navigation">
+                          <div class="container-fluid">
+                            <div class="navbar-header">
+                              <a class="navbar-brand" href="#">
+                                Listings
+                              </a>
+                            </div>
+                          </div>
+                        </nav>
+                    <div class="list-container">
+                        
+                        <ul class="media-list">
+                            <listing-item > </listing-item>
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h3>Bids</h3>
-                    <bids-item></bids-item>
+                <div class="col-md-4 " >
+                    <nav  class="navbar navbar-default navbar-static-top " role="navigation">
+                      <div class="container-fluid">
+                        <div class="navbar-header">
+                          <a class="navbar-brand" href="#">
+                            Bids
+                          </a>
+                        </div>
+                      </div>
+                    </nav>
+                    <div class="list-container">
+                        
+                        <ul class="media-list">
+                            <bids-item></bids-item>
+                        </ul>
+                    </div>
                 </div>
+                
                 <div class="col-md-4">
                     <br/>
                     <bids-form></bids-form>
@@ -44,9 +73,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <h3>Notifications</h3><div id="status"></div>
 
-                        <notifications-items> </notifications-items>
+                        <h3>Notifications</h3>
+                        <div class="notification-container">
+                            <div id="status"></div>
+                            <notifications-items> </notifications-items>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,6 +88,7 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
+        <script type="text/javascript" src="js/ng-tags-input.min.js"></script>
         <script src="js/app.js"></script>
         <script src="js/listings.js"></script>
         <script src="js/bids.js"></script>
