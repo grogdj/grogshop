@@ -17,7 +17,7 @@ public interface TagsService {
 
     List<Tag> getTopTags(int amount);
     
-    void addTag(Tag tag);
+    void newTag(Tag tag);
     
     void clearTags();
 }

@@ -42,7 +42,7 @@ public class BidsServiceImpl implements BidsService {
     public void newBid(Bid bid){
         if(bid != null){
             for(Tag t : bid.getTags()){
-                tagsService.addTag(t);
+                tagsService.newTag(t);
             }
             this.bids.add(bid);
         }else{

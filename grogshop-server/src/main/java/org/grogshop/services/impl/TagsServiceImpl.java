@@ -26,7 +26,7 @@ public class TagsServiceImpl implements TagsService{
         return new ArrayList<Tag>(this.tags);
     }
     
-    public void addTag(Tag tag){
+    public void newTag(Tag tag){
         this.tags.add(tag);
     }
 

@@ -39,7 +39,7 @@ public class ListingsServiceImpl implements ListingsService {
     public void newListing(Listing listing) {
         if (listing != null) {
             for (Tag t : listing.getTags()) {
-                tagsService.addTag(t);
+                tagsService.newTag(t);
             }
             this.listings.add(listing);
         }else{

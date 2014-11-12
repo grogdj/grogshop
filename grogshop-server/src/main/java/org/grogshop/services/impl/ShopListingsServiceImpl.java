@@ -30,13 +30,7 @@ import javax.ws.rs.core.Response;
 import org.grogshop.services.api.ListingsService;
 import org.grogshop.services.api.NotificationsService;
 
-/**
- * A simple REST service which is able to say hello to someone using
- * HelloService Please take a look at the web.xml where JAX-RS is enabled
- *
- * @author gbrey@redhat.com
- *
- */
+
 @Path("/listings")
 public class ShopListingsServiceImpl {
 
