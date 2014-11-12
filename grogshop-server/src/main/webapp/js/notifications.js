@@ -8,7 +8,7 @@
                 controller: function () {
                     console.log('notification controller on! ');
                     var shop = this;
-                    shop.notifications = [{userId: 'asdasd', message: "xxxxxx"}];
+                    shop.notifications = [];
 
                     var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + "/grogshop-server/" + "shop";
                     var websocket = new WebSocket(wsUri);
@@ -34,7 +34,8 @@
 
                     function onMessage(evt) {
                         console.log("onMessage: " + evt.data);
-                        writeToScreen(evt.data + "\n");
+                         var notification = JSON.parse(event.data);
+                        shop.notifications.push(notification);
 
                     }
 

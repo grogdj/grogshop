@@ -5,11 +5,13 @@
  */
 package org.grogshop.services.impl;
 
+import com.grogdj.grogshop.core.model.Notification;
 import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Singleton;
+import javax.websocket.EncodeException;
 import org.grogshop.services.api.NotificationsService;
 import javax.websocket.Session;
 /**
@@ -26,8 +28,10 @@ public class NotificationServiceImpl implements NotificationsService{
         System.out.println(">>> \tUser: "+userId  + " - Message: "+ message);
         for (Session peer : activeSessions) {
             try {
-                peer.getBasicRemote().sendText(">>> \tUser: "+userId  + " - Message: "+ message);
+                peer.getBasicRemote().sendObject(new Notification(userId, message));
             } catch (IOException ex) {
+                Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (EncodeException ex) {
                 Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

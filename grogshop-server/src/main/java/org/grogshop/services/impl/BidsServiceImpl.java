@@ -6,10 +6,13 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Bid;
+import com.grogdj.grogshop.core.model.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.grogshop.services.api.BidsService;
+import org.grogshop.services.api.TagsService;
 
 /**
  *
@@ -17,15 +20,14 @@ import org.grogshop.services.api.BidsService;
  */
 @Singleton
 public class BidsServiceImpl implements BidsService {
+    
+    @Inject
+    private TagsService tagsService;
+    
     private List<Bid> bids;
 
     public BidsServiceImpl() {
         bids = new ArrayList<Bid>();
-        Bid bid = new Bid("example", 300);
-        bid.addTag("#tag1");
-        bid.addTag("#tag2");
-        bids.add(bid);
-        System.out.println("BidsServiceImpl "+this.hashCode());
     }
      
      
@@ -38,7 +40,14 @@ public class BidsServiceImpl implements BidsService {
        
     @Override
     public void newBid(Bid bid){
-        this.bids.add(bid);
+        if(bid != null){
+            for(Tag t : bid.getTags()){
+                tagsService.addTag(t);
+            }
+            this.bids.add(bid);
+        }else{
+            System.out.println("> Bid cannot be null :( ");
+        }
     }
     
     @Override
