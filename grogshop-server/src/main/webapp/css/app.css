@@ -1,3 +1,12 @@
+body, html {
+	height: 100%;
+	position: relative;
+}
+body {
+	padding-top: 60px;
+
+}
+
 .notification-bar {
 	position: fixed;
 	bottom: 0;
@@ -24,7 +33,7 @@
 
 .item-container {
 	padding: 8px;
-	margin: 6px 0;
+
 	border: 1px solid #EEE;
 	position: relative;
 	
@@ -42,6 +51,23 @@
 	top: 10px;
 	right: 10px;
 }
+
+.item-container .delete {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	display: none;
+}
+
+.item-container:hover .price {
+	
+	right: 70px;
+}
+
+.item-container:hover .delete {
+	display: inline-block;
+}
+
 
 .item-container .user {
 	color: #666;
@@ -84,10 +110,23 @@ input.ng-valid.ng-dirty {
 }
 
 
-.list-container {
-	position: relative;
+
+#create-bar {
+	position: fixed;
+	bottom: -300px;
 	width: 100%;
-	padding-bottom: 200px;
+	background-color: #222;
+	-webkit-transition: bottom .3s ease-in-out;
+	-o-transition: bottom .3s ease-in-out;
+	transition: bottom .3s ease-in-out;
+}
+
+#create-bar .create-container {
+	height: 280px;
+}
+
+#create-bar.open {
+	bottom: 0;
 }
 
 

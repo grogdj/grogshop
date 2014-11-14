@@ -44,7 +44,12 @@
                         shop.livelisting = {};
                         $scope.listingform.$setPristine();
 
-                    }
+                    };
+
+                    $scope.loadTags = function(query) {
+                        return $http.get('http://localhost:8080/grogshop-server/rest/tags/all');
+                    };
+
                 },
                 controllerAs: 'listingFromCtrl'
             }

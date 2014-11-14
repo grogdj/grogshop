@@ -1,6 +1,6 @@
- <div class="item-container bids-item" ng-repeat="bids in bidsCtrl.bids">
+
      
-	<li class="media">
+	<div  class=" media item-container bids-item " ng-repeat="bids in bidsCtrl.bids">
 
 	    <div class="media-body">
 	      <h4 class="media-heading" >
@@ -11,8 +11,11 @@
 	      </h4>
 	      <div class="user">User: ({{bids.userId}})</div>
 			<div class="price">$ {{bids.amount}}</div>
+			<div class="delete">
+				<a href>Delete</a>
+			</div>
 	    </div>
 
-	</li>     
+	</div>     
                   
-</div>                  
+                 

@@ -23,54 +23,48 @@
         <![endif]-->
     </head>
     <body >
-        <div class="container-fluid ">
-            <div class="row ">
-                <div class="col-md-4" >
-                    <nav   class="navbar navbar-default navbar-static-top navbar-fixed-col " role="navigation">
-                          <div class="container-fluid">
-                            <div class="navbar-header">
-                              <a class="navbar-brand" href="#">
-                                Listings
-                              </a>
-                            </div>
-                          </div>
-                        </nav>
-                    <div class="list-container">
-                        
-                        <ul class="media-list">
-                            <listing-item > </listing-item>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4 " >
-                    <nav  class="navbar navbar-default navbar-static-top " role="navigation">
-                      <div class="container-fluid">
-                        <div class="navbar-header">
-                          <a class="navbar-brand" href="#">
-                            Bids
-                          </a>
-                        </div>
-                      </div>
-                    </nav>
-                    <div class="list-container">
-                        
-                        <ul class="media-list">
-                            <bids-item></bids-item>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <br/>
-                    <bids-form></bids-form>
-                    <br/>
-                    <listing-form></listing-form>
-                </div>
-            </div>
 
-        </div>
-        <div class="notification-bar">
-            <div class="container-fluid">
+        <div class="container-fluid " ng-controller="NavigationController as navCtrl">
+            <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">
+                    Grogshop
+                  </a>
+                </div>
+                <div class="collapse navbar-collapse">
+                  <ul class="nav navbar-nav">
+                    <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Listings</a></li>
+                    <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Bids</a></li>
+                    <li ng-class="{ active: navCtrl.isSelected(3)}"> <a href ng-click="navCtrl.selectSection(3)">Notifications <span class="badge" >0</span></a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+
+            <section ng-show="navCtrl.isSelected(1)">
+                <div class="row ">
+                    <div class="col-md-12" >
+                            <div>
+                                <listing-item > </listing-item>
+                            </div>
+                        
+                    </div>
+                </div>
+            </section>
+
+            <section ng-show="navCtrl.isSelected(2)">
+                <div class="row ">
+                    <div class="col-md-12" >
+                            <div >
+                                <bids-item></bids-item>
+                            </div>
+                        
+                    </div>
+                </div>
+            </section>
+            
+            <section ng-show="navCtrl.isSelected(3)">
                 <div class="row">
                     <div class="col-md-12">
 
@@ -81,8 +75,29 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
+
         </div>
+
+        <section id="create-bar" ng-controller="CreateBarController as createCtrl" ng-class="{open: createCtrl.status}">
+            <nav class="navbar navbar-default navbar-static-top"  role="navigation">
+                <div class="navbar-header">
+                   <a class="navbar-brand" href ng-click="createCtrl.status = !createCtrl.status ">Create</a>
+
+                </div>
+            </nav>
+             <div class="container-fluid create-container">
+              <div class="col-md-4">
+                <bids-form></bids-form>
+              </div>
+              <div class="col-md-4">
+                <listing-form></listing-form>
+              </div>
+            </div>
+        </section>
+
+
+        
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
