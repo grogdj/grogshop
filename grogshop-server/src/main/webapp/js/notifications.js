@@ -10,6 +10,7 @@
                     var shop = this;
                     shop.notifications = [];
 
+                    //var wsUri = "ws://" + "grog-restprovider.rhcloud.com:8000" + "/grogshop-server/" + "shop";
                     var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + "/grogshop-server/" + "shop";
                     var websocket = new WebSocket(wsUri);
 
@@ -34,9 +35,9 @@
 
                     function onMessage(evt) {
                         console.log("onMessage: " + evt.data);
-                         var notification = JSON.parse(event.data);
+                        var notification = JSON.parse(event.data);
                         shop.notifications.push(notification);
-
+                                //  $scope.broadcast('newNotification', notification);
                     }
 
                     function onError(evt) {

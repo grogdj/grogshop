@@ -20,12 +20,13 @@ import com.grogdj.grogshop.core.model.Listing;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.grogshop.services.api.ListingsService;
 import org.grogshop.services.api.NotificationsService;
@@ -53,11 +54,11 @@ public class ShopListingsServiceImpl {
     @POST
     @Path("/new")
     @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.TEXT_PLAIN})
-    public Response newListing(Listing listing) {
-        listingsService.newListing(listing);
+    @Produces({MediaType.APPLICATION_JSON})
+    public Long newListing(Listing listing) {
+        Long id = listingsService.newListing(listing);
         matchingService.insert(listing);
-        return Response.ok().build();
+        return id;
     }
 
     @GET
@@ -70,6 +71,18 @@ public class ShopListingsServiceImpl {
     @Path("/reset")
     public void resetMatchingService() {
         matchingService.reset();
+    }
+    
+    @DELETE
+    @Path("{id}")
+    public void removeBid(@PathParam("id") Long id) {
+        listingsService.removeListing(id);
+    }
+    
+    @GET
+    @Path("{id}")
+    public Listing getListing(@PathParam("id") Long id) {
+        return listingsService.getListing(id);
     }
 
 }

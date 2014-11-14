@@ -11,5 +11,6 @@ package org.grogshop.services.api;
  */
 public interface MatchingService {
     void insert(Object o);
+    void retract(Object o);
     void reset();
 }

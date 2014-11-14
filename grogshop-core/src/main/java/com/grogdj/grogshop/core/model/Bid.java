@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.grogdj.grogshop.core.model;
 
 import java.util.ArrayList;
@@ -14,23 +13,30 @@ import java.util.List;
  * @author salaboy
  */
 public class Bid {
+
+    private static Long BID_ID = 0L;
+
+    private Long id;
     private List<Tag> tags;
     private String userId;
     private double amount;
 
     public Bid() {
+        this.id = BID_ID++;
     }
 
-    
-    
     public Bid(String userId, double amount) {
+        this.id = BID_ID++;
         this.userId = userId;
         this.amount = amount;
     }
 
-    
-    public void addTag(String tag){
-        if(this.tags == null){
+    public Long getId() {
+        return id;
+    }
+
+    public void addTag(String tag) {
+        if (this.tags == null) {
             this.tags = new ArrayList<Tag>();
         }
         tags.add(new Tag(tag));
@@ -59,20 +65,19 @@ public class Bid {
     public void setAmount(double amount) {
         this.amount = amount;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "Bid{" + "tags=" + tags + ", userId=" + userId + ", amount=" + amount + '}';
+        return "Bid{" + "id=" + id + ", tags=" + tags + ", userId=" + userId + ", amount=" + amount + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + (this.tags != null ? this.tags.hashCode() : 0);
-        hash = 41 * hash + (this.userId != null ? this.userId.hashCode() : 0);
-        hash = 41 * hash + (int) (Double.doubleToLongBits(this.amount) ^ (Double.doubleToLongBits(this.amount) >>> 32));
+        hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 71 * hash + (this.tags != null ? this.tags.hashCode() : 0);
+        hash = 71 * hash + (this.userId != null ? this.userId.hashCode() : 0);
+        hash = 71 * hash + (int) (Double.doubleToLongBits(this.amount) ^ (Double.doubleToLongBits(this.amount) >>> 32));
         return hash;
     }
 
@@ -85,6 +90,9 @@ public class Bid {
             return false;
         }
         final Bid other = (Bid) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
         if (this.tags != other.tags && (this.tags == null || !this.tags.equals(other.tags))) {
             return false;
         }
@@ -96,10 +104,7 @@ public class Bid {
         }
         return true;
     }
+
     
-    
-    
-    
-    
-    
+
 }

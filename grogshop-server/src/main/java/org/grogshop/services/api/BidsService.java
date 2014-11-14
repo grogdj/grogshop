@@ -13,11 +13,15 @@ import java.util.List;
  * @author salaboy
  */
 public interface BidsService {
+    
+    Bid getBid(Long bidId);
 
     List<Bid> getBids();
 
-    void newBid(Bid bid);
+    Long newBid(Bid bid);
     
     void clearBids();
+    
+    void removeBid(Long bidId);
     
 }

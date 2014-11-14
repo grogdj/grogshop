@@ -1,21 +1,18 @@
+<div  class=" media item-container bids-item " ng-repeat="bid in bidsCtrl.bids track by $id(bid)">
 
-     
-	<div  class=" media item-container bids-item " ng-repeat="bids in bidsCtrl.bids">
+    <div class="media-body">
+        <h4 class="media-heading" >
+            <span ng-repeat="tag in bid.tags">
+                {{tag.name}}, 
+            </span>
 
-	    <div class="media-body">
-	      <h4 class="media-heading" >
-				<span ng-repeat="tag in bids.tags">
-				{{tag.name}}, 
-				</span>
-			
-	      </h4>
-	      <div class="user">User: ({{bids.userId}})</div>
-			<div class="price">$ {{bids.amount}}</div>
-			<div class="delete">
-				<a href>Delete</a>
-			</div>
-	    </div>
+        </h4>
+        <div class="user">User: ({{bid.userId}})</div>
+        <div class="price">$ {{bid.amount}}</div>
+        <div class="delete">
+            <a href>Delete</a>
+        </div>
+    </div>
 
-	</div>     
-                  
-                 
+</div>     
+

@@ -36,20 +36,43 @@ public class ListingsServiceImpl implements ListingsService {
     }
 
     @Override
-    public void newListing(Listing listing) {
+    public Long newListing(Listing listing) {
         if (listing != null) {
             for (Tag t : listing.getTags()) {
                 tagsService.newTag(t);
             }
             this.listings.add(listing);
+            return listing.getId();
         }else{
             System.out.println(">  Listing cannot be null :( ");
         }
+        return -1l;
     }
 
     @Override
     public void clearListings() {
         this.listings.clear();
     }
+
+    @Override
+    public void removeListing(Long listingId) {
+        for (Listing l : this.listings) {
+            if (l.getId().equals(listingId)) {
+                this.listings.remove(l);
+            }
+        }
+    }
+
+    @Override
+    public Listing getListing(Long listingId) {
+        for (Listing l : this.listings) {
+            if (l.getId().equals(listingId)) {
+                return l;
+            }
+        }
+        return null;
+    }
+    
+    
 
 }

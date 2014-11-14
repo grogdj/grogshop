@@ -20,9 +20,11 @@ import com.grogdj.grogshop.core.model.Bid;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -34,10 +36,10 @@ public class ShopBidsServiceImpl {
 
     @Inject
     BidsService bidsService;
-    
+
     @Inject
     NotificationsService notificationService;
-    
+
     @Inject
     MatchingServiceImpl matchingService;
 
@@ -48,11 +50,11 @@ public class ShopBidsServiceImpl {
     @POST
     @Path("/new")
     @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.TEXT_PLAIN})
-    public Response newBid(Bid bid) {
-        bidsService.newBid(bid);
+    @Produces({MediaType.APPLICATION_JSON})
+    public Long newBid(Bid bid) {
+        Long id = bidsService.newBid(bid);
         matchingService.insert(bid);
-        return Response.ok().build();
+        return id;
     }
 
     @GET
@@ -61,13 +63,24 @@ public class ShopBidsServiceImpl {
     public List<Bid> getAllBids() {
         return bidsService.getBids();
     }
-    
+
     @GET
     @Path("/clear")
     public void clearBids() {
         bidsService.clearBids();
     }
-    
-    
+
+    @DELETE
+    @Path("{id}")
+    public void removeBid(@PathParam("id") Long id) {
+        bidsService.removeBid(id);
+
+    }
+
+    @GET
+    @Path("{id}")
+    public Bid getBid(@PathParam("id") Long id) {
+        return bidsService.getBid(id);
+    }
 
 }

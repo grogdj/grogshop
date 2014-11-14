@@ -9,11 +9,14 @@
 
                     var shop = this;
                     shop.bids = [];
-
-                    $http.get("http://localhost:8080/grogshop-server/rest/bids/all").success(function (data) {
+                    $http.jsonp("http://localhost:8080/grogshop-server/rest/" + "bids/all" + "?callback=JSON_CALLBACK").success(function (data) {
+                        // $http.jsonp("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"bids/all"+"?callback=JSON_CALLBACK").success(function (data) {
 
                         shop.bids = data;
 
+
+                    }).error(function (data) {
+                        console.log("Request failed");
 
                     });
                     $rootScope.$on('newBid', function (event, data) {
@@ -31,19 +34,20 @@
             return {
                 restrict: 'E',
                 templateUrl: 'bids-form.html',
-                controller: function ($http, $scope) {
+                controller: function ($http, $scope, $rootScope) {
 
                     var shop = this
                     shop.livebid = {};
 
                     this.addBid = function () {
-                        var bid =  {userId: shop.livebid.userId, amount: shop.livebid.amount, tags: shop.livebid.tags}
-                        //
-                        $http.post('http://localhost:8080/grogshop-server/rest/bids/new',bid);
-                        //
-                        $scope.$broadcast('newBid', bid);
-                        shop.livebid = {};
-                        $scope.bidform.$setPristine();
+                        var bid = {userId: shop.livebid.userId, amount: shop.livebid.amount, tags: shop.livebid.tags}
+                        //$http.post("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"bids/new",bid);
+                        $http.post("http://localhost:8080/grogshop-server/rest/" + "bids/new", bid).success(function (data) {
+                            bid.id = data;
+                            $rootScope.$broadcast('newBid', bid);
+                            shop.livebid = {};
+                            $scope.bidform.$setPristine();
+                        });
 
                     }
                 },

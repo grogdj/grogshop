@@ -14,6 +14,9 @@ import java.util.List;
  * @author salaboy
  */
 public class Listing {
+    private static Long LISTING_ID = 0L;
+
+    private Long id;
     private List<Tag> tags;
     private String userId;
     private double price;
@@ -21,12 +24,19 @@ public class Listing {
     
 
     public Listing() {
+        this.id = LISTING_ID++;
     }
 
     public Listing(String userId, double price) {
+        this.id = LISTING_ID++;
         this.userId = userId;
         this.price = price;
     }
+
+    public Long getId() {
+        return id;
+    }
+  
     
     public void addTag(String tag){
         if(this.tags == null){
@@ -61,15 +71,17 @@ public class Listing {
 
     @Override
     public String toString() {
-        return "Listing{" + "tags=" + tags + ", userId=" + userId + ", price=" + price + '}';
+        return "Listing{" + "id=" + id + ", tags=" + tags + ", userId=" + userId + ", price=" + price + '}';
     }
 
+    
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + (this.tags != null ? this.tags.hashCode() : 0);
-        hash = 47 * hash + (this.userId != null ? this.userId.hashCode() : 0);
-        hash = 47 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        int hash = 5;
+        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 59 * hash + (this.tags != null ? this.tags.hashCode() : 0);
+        hash = 59 * hash + (this.userId != null ? this.userId.hashCode() : 0);
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
         return hash;
     }
 
@@ -82,6 +94,9 @@ public class Listing {
             return false;
         }
         final Listing other = (Listing) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
         if (this.tags != other.tags && (this.tags == null || !this.tags.equals(other.tags))) {
             return false;
         }
@@ -93,11 +108,7 @@ public class Listing {
         }
         return true;
     }
-    
-    
-    
-    
-    
-    
+
+   
     
 }

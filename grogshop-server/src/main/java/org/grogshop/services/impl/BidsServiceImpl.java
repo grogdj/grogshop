@@ -8,7 +8,9 @@ package org.grogshop.services.impl;
 import com.grogdj.grogshop.core.model.Bid;
 import com.grogdj.grogshop.core.model.Tag;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.grogshop.services.api.BidsService;
@@ -20,40 +22,57 @@ import org.grogshop.services.api.TagsService;
  */
 @Singleton
 public class BidsServiceImpl implements BidsService {
-    
+
     @Inject
     private TagsService tagsService;
-    
-    private List<Bid> bids;
+
+    private Set<Bid> bids;
 
     public BidsServiceImpl() {
-        bids = new ArrayList<Bid>();
+        bids = new HashSet<Bid>();
     }
-     
-     
 
     @Override
     public List<Bid> getBids() {
-        return bids;
+        return new ArrayList<Bid>(bids);
     }
 
-       
     @Override
-    public void newBid(Bid bid){
-        if(bid != null){
-            for(Tag t : bid.getTags()){
+    public Long newBid(Bid bid) {
+        if (bid != null) {
+            for (Tag t : bid.getTags()) {
                 tagsService.newTag(t);
             }
             this.bids.add(bid);
-        }else{
+            return bid.getId();
+        } else {
             System.out.println("> Bid cannot be null :( ");
         }
+        return -1l;
     }
-    
+
     @Override
     public void clearBids() {
         this.bids.clear();
     }
-        
-        
+
+    @Override
+    public void removeBid(Long bidId) {
+        for (Bid b : this.bids) {
+            if (b.getId().equals(bidId)) {
+                this.bids.remove(b);
+            }
+        }
+    }
+
+    @Override
+    public Bid getBid(Long bidId) {
+        for (Bid b : this.bids) {
+            if (b.getId().equals(bidId)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
 }

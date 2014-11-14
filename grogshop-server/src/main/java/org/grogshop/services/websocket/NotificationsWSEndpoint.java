@@ -29,7 +29,6 @@ public class NotificationsWSEndpoint {
 
     @OnMessage
     public void onMessage(String message, Session client) {
-        System.out.println("New Client here: " + message);
         notificationService.setActiveSessions(client.getOpenSessions());
     }
 

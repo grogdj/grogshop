@@ -13,6 +13,7 @@ import org.grogshop.services.api.NotificationsService;
 import org.kie.api.KieBase;
 import org.kie.api.cdi.KBase;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 
 /**
  *
@@ -45,9 +46,17 @@ public class MatchingServiceImpl implements MatchingService{
         kieSession.fireAllRules();
     }
 
+    
+    
     @Override
     public void reset() {
         init();
+    }
+
+    public void retract(Object o) {
+        FactHandle factHandle = kieSession.getFactHandle(o);
+        kieSession.delete(factHandle);
+        kieSession.fireAllRules();
     }
 
     

@@ -13,11 +13,15 @@ import java.util.List;
  * @author salaboy
  */
 public interface ListingsService {
+    
+    Listing getListing(Long listingId);
+
     List<Listing> getAllListings();
-    
-    void newListing(Listing listing);
-    
+
+    Long newListing(Listing listing);
+
     void clearListings();
-            
-            
+
+    void removeListing(Long listingId);
+
 }
