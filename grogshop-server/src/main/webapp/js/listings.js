@@ -23,6 +23,10 @@
                         shop.products.push(data);
                     });
 
+                    this.deleteListing = function(deleteId){
+                        $http.delete("http://localhost:8080/grogshop-server/rest/" + "listings/"+deleteId);
+                    };
+
 
 
                 },
@@ -56,6 +60,8 @@
                     $scope.loadTags = function (query) {
                         return $http.get('http://localhost:8080/grogshop-server/rest/tags/all');
                     };
+
+
 
                 },
                 controllerAs: 'listingFromCtrl'

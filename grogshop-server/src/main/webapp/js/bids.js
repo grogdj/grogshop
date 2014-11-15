@@ -24,6 +24,10 @@
                         shop.bids.push(data);
                     });
 
+                    this.deleteBid = function(deleteId){
+                        $http.delete("http://localhost:8080/grogshop-server/" + "rest/bids/"+deleteId);
+                    };
+
 
                 },
                 controllerAs: 'bidsCtrl'

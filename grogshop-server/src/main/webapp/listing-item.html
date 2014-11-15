@@ -1,20 +1,33 @@
-<div class="media item-container " ng-repeat="product in listingsCtrl.products track by $id(product)">
 
 
+<div class="col-md-4 col-sm-6" ng-repeat="product in listingsCtrl.products track by $id(product)">
 
-    <div class="media-body">
-        <h4 class="media-heading" >
-            <span ng-repeat="tag in product.tags">
-                {{tag.name}}, 
-            </span>
 
-        </h4>
-        <div class="user">User: ({{product.userId}})</div>
-        <div class="price">$ {{product.price}}</div>
-        <div class="delete">
-            <a href>Delete</a>
+    <div class="item listing">
+
+        <a href class="delete" ng-click="listingsCtrl.deleteListing(product.id)"></a>
+
+
+        <div class="item-body">
+            
+            <div class="item-left">
+                    
+            </div>
+
+            <div class="item-tags">
+                <span ng-repeat="tag in product.tags">
+                    <a href class="tag">{{tag.name}}</a> 
+                </span>
+
+            </div>
+
         </div>
-    </div>    
 
+        <div class="item-footer">
+            <div class="user">Created by <a href="#">{{product.userId}}</a>. ID: {{product.id}} </div>
+            <div class="price">{{product.price  | currency}}</div>
+        </div>
+
+    </div>    
 
 </div>                  
