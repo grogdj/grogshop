@@ -1,6 +1,6 @@
 <div  class="col-md-4 col-sm-6" ng-repeat="bid in bidsCtrl.bids track by $id(bid)">
 
-    <div class="item bid">
+    <div class="item bid" onclick="">
 
         <a href class="delete" ng-click="bidsCtrl.deleteBid(bid.id)"></a>
 
@@ -19,7 +19,7 @@
         </div>
 
         <div class="item-footer">
-            <div class="user">Created by <a href="#">{{bid.userId}}</a>. ID: {{bid.id}}</div>
+            <div class="user"><span class="hidden-xs">Created </span>by <a href="#">{{bid.userId}}</a>. ID: {{bid.id}}</div>
             <div class="price">{{bid.amount | currency}}</div>
         </div>
 

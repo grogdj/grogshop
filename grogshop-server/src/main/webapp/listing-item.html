@@ -3,7 +3,7 @@
 <div class="col-md-4 col-sm-6" ng-repeat="product in listingsCtrl.products track by $id(product)">
 
 
-    <div class="item listing">
+    <div class="item listing" onclick="" >
 
         <a href class="delete" ng-click="listingsCtrl.deleteListing(product.id)"></a>
 
@@ -24,7 +24,7 @@
         </div>
 
         <div class="item-footer">
-            <div class="user">Created by <a href="#">{{product.userId}}</a>. ID: {{product.id}} </div>
+            <div class="user"><span class="hidden-xs">Created </span>by <a href="#">{{product.userId}}</a>. ID: {{product.id}} </div>
             <div class="price">{{product.price  | currency}}</div>
         </div>
 

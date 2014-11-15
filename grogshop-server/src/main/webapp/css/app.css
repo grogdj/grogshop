@@ -129,6 +129,9 @@ body {
 	#create-bar .create-bar-body {
 		height: 250px;
 	}
+	.item .item-body .item-left {
+		width: 78px !important;
+	}
  }
 
 /* SECTIONS */
@@ -211,9 +214,11 @@ section {
 	border-radius: 18px;
 	display: none;
 }
-.item:hover .delete {
+.item:hover .delete, .item:focus .delete {
 	display: inline-block;
 }
+
+
 
 
 
