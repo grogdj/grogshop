@@ -5,7 +5,7 @@
             return {
                 restrict: 'E',
                 templateUrl: 'notifications.html',
-                controller: function () {
+                controller: function ($rootScope) {
                     console.log('notification controller on! ');
                     var shop = this;
                     shop.notifications = [];
@@ -19,7 +19,7 @@
                         onOpen(evt)
                     };
                     websocket.onmessage = function (evt) {
-                        onMessage(evt)
+                        onMessage(evt, $rootScope)
                     };
                     websocket.onerror = function (evt) {
                         onError(evt)
@@ -33,11 +33,11 @@
                         writeToScreen("Connected to " + wsUri);
                     }
 
-                    function onMessage(evt) {
+                    function onMessage(evt, $rootScope) {
                         console.log("onMessage: " + evt.data);
                         var notification = JSON.parse(event.data);
                         shop.notifications.push(notification);
-                                //  $scope.broadcast('newNotification', notification);
+                        $rootScope.$broadcast('newNotification', notification);
                     }
 
                     function onError(evt) {

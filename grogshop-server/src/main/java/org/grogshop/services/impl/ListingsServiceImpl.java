@@ -56,10 +56,14 @@ public class ListingsServiceImpl implements ListingsService {
 
     @Override
     public void removeListing(Long listingId) {
+        Listing remove = null;
         for (Listing l : this.listings) {
             if (l.getId().equals(listingId)) {
-                this.listings.remove(l);
+                remove = l;
             }
+        }
+        if(remove != null){
+            this.listings.remove(remove);
         }
     }
 

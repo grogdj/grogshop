@@ -58,10 +58,14 @@ public class BidsServiceImpl implements BidsService {
 
     @Override
     public void removeBid(Long bidId) {
+        Bid remove = null;
         for (Bid b : this.bids) {
             if (b.getId().equals(bidId)) {
-                this.bids.remove(b);
+                remove = b;
             }
+        }
+        if(remove != null){
+            this.bids.remove(remove);
         }
     }
 

@@ -11,20 +11,29 @@
                     shop.products = [];
                     //$http.jsonp("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"/listings/all"+"?callback=JSON_CALLBACK").success(function (data) {
                     $http.jsonp("http://localhost:8080/grogshop-server/rest/" + "/listings/all" + "?callback=JSON_CALLBACK").success(function (data) {
-                            shop.products = data;
-        
+                        shop.products = data;
+
                     }).error(function (data) {
-                        console.log("Request failed");
+                        console.log("Request failed: listing all failed");
 
                     });
 
                     $rootScope.$on('newListing', function (event, data) {
-                        console.log(data);
+                        
                         shop.products.push(data);
                     });
 
-                    this.deleteListing = function(deleteId){
-                        $http.delete("http://localhost:8080/grogshop-server/rest/" + "listings/"+deleteId);
+                    this.deleteListing = function (product) {
+                        var index = shop.products.indexOf(product);
+                        console.log("Deleting listing: "+ index);
+                        $http.delete("http://localhost:8080/grogshop-server/rest/" + "listings/" + product.id).success(function (data) {
+                           console.log("Deleting listing 2: "+ index);
+                           shop.products.splice(index, 1);
+
+                        }).error(function (data) {
+                            console.log("Request failed: delete listing");
+
+                        });
                     };
 
 
@@ -45,15 +54,15 @@
                     this.addListing = function () {
                         var listing = {userId: shop.livelisting.userId, price: shop.livelisting.price, tags: shop.livelisting.tags};
                         //$http.post("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"listings/new", listing);
-                        $http.post("http://localhost:8080/grogshop-server/rest/" + "listings/new", listing).success(function(data) {
-                                listing.id = data;
-                                console.log("new listing, broadcasting event! "+data);
-                        
-                                $rootScope.$broadcast('newListing', listing);
-                                shop.livelisting = {};
-                                $scope.listingform.$setPristine();
-                              });
-                        
+                        $http.post("http://localhost:8080/grogshop-server/rest/" + "listings/new", listing).success(function (data) {
+                            listing.id = data;
+                            console.log("new listing, broadcasting event! " + data);
+
+                            $rootScope.$broadcast('newListing', listing);
+                            shop.livelisting = {};
+                            $scope.listingform.$setPristine();
+                        });
+
 
                     };
 

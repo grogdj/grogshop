@@ -41,7 +41,7 @@
                       <ul class="nav navbar-nav">
                         <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Listings</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Bids</a></li>
-                        <li ng-class="{ active: navCtrl.isSelected(3)}"> <a href ng-click="navCtrl.selectSection(3)">Notifications <span class="badge" >0</span></a></li>
+                        <li ng-class="{ active: navCtrl.isSelected(3)}"> <a href ng-click="navCtrl.selectSection(3)">Notifications <span class="badge" >{{navCtrl.notificationCounter}}</span></a></li>
                        
                       </ul>
                       
