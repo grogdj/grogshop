@@ -40,8 +40,22 @@ public class ShopMatchingsServiceImpl {
     @GET
     @Path("/all")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Matching> getAllMatchingss() {
+    public List<Matching> getAllMatchings() {
         return matchingsService.getAllMatchings();
+    }
+    
+    @GET
+    @Path("/bylisting/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Matching> getMatchingsByListing(@PathParam("id") Long listingId) {
+        return matchingsService.getAllMatchingsByListing(listingId);
+    }
+    
+    @GET
+    @Path("/bybid/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Matching> getMatchingsByBid(@PathParam("id") Long bidId) {
+        return matchingsService.getAllMatchingsByBid(bidId);
     }
 
     @GET

@@ -16,6 +16,10 @@ public interface MatchingsService {
     Matching getMatching(Long matchingId);
 
     List<Matching> getAllMatchings();
+    
+    List<Matching> getAllMatchingsByListing(Long listingId);
+    
+    List<Matching> getAllMatchingsByBid(Long bidId);
 
     Long newMatching(Matching matching);
 

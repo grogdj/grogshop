@@ -66,4 +66,25 @@ public class MatchingsServiceImpl implements MatchingsService {
         return null;
     }
 
+    public List<Matching> getAllMatchingsByListing(Long listingId) {
+        List<Matching> matchingsByListing = new ArrayList<Matching>();
+        for(Matching m : this.matchings){
+            if(m.getListingId().equals(listingId)){
+                matchingsByListing.add(m);
+            }
+        }
+        return matchingsByListing;
+        
+    }
+
+    public List<Matching> getAllMatchingsByBid(Long bidId) {
+        List<Matching> matchingsByBid = new ArrayList<Matching>();
+        for(Matching m : this.matchings){
+            if(m.getBidId().equals(bidId)){
+                matchingsByBid.add(m);
+            }
+        }
+        return matchingsByBid;
+    }
+
 }
