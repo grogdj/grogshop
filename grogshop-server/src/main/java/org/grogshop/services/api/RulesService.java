@@ -9,7 +9,7 @@ package org.grogshop.services.api;
  *
  * @author salaboy
  */
-public interface MatchingService {
+public interface RulesService {
     void insert(Object o);
     void retract(Object o);
     void reset();

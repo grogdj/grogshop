@@ -8,7 +8,8 @@ package org.grogshop.services.impl;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.grogshop.services.api.MatchingService;
+import org.grogshop.services.api.MatchingsService;
+import org.grogshop.services.api.RulesService;
 import org.grogshop.services.api.NotificationsService;
 import org.kie.api.KieBase;
 import org.kie.api.cdi.KBase;
@@ -20,10 +21,13 @@ import org.kie.api.runtime.rule.FactHandle;
  * @author salaboy
  */
 @Singleton
-public class MatchingServiceImpl implements MatchingService{
+public class RulesServiceImpl implements RulesService{
 
     @Inject
     NotificationsService notificationService;
+    
+    @Inject
+    MatchingsService matchingsService;
     
     @Inject
     @KBase("matchingrules")
@@ -31,13 +35,14 @@ public class MatchingServiceImpl implements MatchingService{
     
     private KieSession kieSession;
     
-    public MatchingServiceImpl() {
+    public RulesServiceImpl() {
     }
 
     @PostConstruct
     public void init(){
         kieSession = kBase.newKieSession();
         kieSession.setGlobal("notificationsService", notificationService);
+        kieSession.setGlobal("matchingsService", matchingsService);
     }
     
     @Override

@@ -4,6 +4,7 @@ import com.grogdj.grogshop.core.model.*;
 import org.grogshop.services.api.*;
 
 global NotificationsService notificationsService;
+global MatchingsService matchingsService;
 
 rule "new listing"
     when
@@ -24,12 +25,13 @@ rule "matching bid, not right price"
   when
     // When I have a list that matches with all the bidders 
     $l: Listing($listingTags: tags, $price: price)
-    $b: Bid(tags.containsAll($listingTags), amount < $price)
+    $b: Bid(tags.containsAll($listingTags), $amount: amount < $price)
   then
-    notificationsService.notifyUser($l.getUserId(), "matching bid tags, not right price");
-    notificationsService.notifyUser($b.getUserId(), "matching listing tags, not right price");
-    
+    notificationsService.notifyUser($l.getUserId(), "matching bid tags, not right price("+($price-$amount)+")");
+    notificationsService.notifyUser($b.getUserId(), "matching listing tags, not right price ("+($amount-$price)+")");
+    matchingsService.newMatching(new Matching($b.getId(), $l.getId(), $b.getUserId(), $l.getUserId(), "Full Match"));
 end
+
 
 rule "matching bid, best price"
   when
@@ -37,10 +39,7 @@ rule "matching bid, best price"
     $l: Listing($listingTags: tags, $price: price)
     $b: Bid(tags.containsAll($listingTags), amount >= $price)
   then
-    
     notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price");
     notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price");
-    
-   
-
+    matchingsService.newMatching(new Matching($b.getId(), $l.getId(), $b.getUserId(), $l.getUserId(), "Full Match"));
 end

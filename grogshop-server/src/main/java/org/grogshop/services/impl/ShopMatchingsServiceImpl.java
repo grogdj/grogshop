@@ -16,74 +16,50 @@
  */
 package org.grogshop.services.impl;
 
-import com.grogdj.grogshop.core.model.Listing;
+import com.grogdj.grogshop.core.model.Matching;
 import java.util.List;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.grogshop.services.api.MatchingsService;
 
-import org.grogshop.services.api.ListingsService;
-import org.grogshop.services.api.NotificationsService;
-
-
-@Path("/listings")
-public class ShopListingsServiceImpl {
+@Path("/matchings")
+public class ShopMatchingsServiceImpl {
 
     @Inject
-    ListingsService listingsService;
+    MatchingsService matchingsService;
 
-    @Inject
-    RulesServiceImpl matchingService;
+    public ShopMatchingsServiceImpl() {
 
-    @Inject
-    NotificationsService notificationService;
+    }
 
     @GET
     @Path("/all")
-    @Produces({"application/json"})
-    public List<Listing> getAllListings() {
-        return listingsService.getAllListings();
-    }
-
-    @POST
-    @Path("/new")
-    @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Long newListing(Listing listing) {
-        Long id = listingsService.newListing(listing);
-        matchingService.insert(listing);
-        return id;
+    public List<Matching> getAllMatchingss() {
+        return matchingsService.getAllMatchings();
     }
 
     @GET
     @Path("/clear")
-    public void clearListings() {
-        listingsService.clearListings();
+    public void clearMatchings() {
+        matchingsService.clearMatchings();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeMatching(@PathParam("id") Long id) {
+        Matching removedMatching = matchingsService.removeMatching(id);
     }
 
     @GET
-    @Path("/reset")
-    public void resetMatchingService() {
-        matchingService.reset();
-    }
-    
-    @DELETE
     @Path("{id}")
-    public void removeBid(@PathParam("id") Long id) {
-        Listing removedListing = listingsService.removeListing(id);
-        matchingService.retract(removedListing);
-    }
-    
-    @GET
-    @Path("{id}")
-    public Listing getListing(@PathParam("id") Long id) {
-        return listingsService.getListing(id);
+    public Matching getBid(@PathParam("id") Long id) {
+        return matchingsService.getMatching(id);
     }
 
 }

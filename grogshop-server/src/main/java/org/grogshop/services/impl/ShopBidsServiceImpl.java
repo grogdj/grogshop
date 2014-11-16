@@ -41,7 +41,7 @@ public class ShopBidsServiceImpl {
     NotificationsService notificationService;
 
     @Inject
-    MatchingServiceImpl matchingService;
+    RulesServiceImpl matchingService;
 
     public ShopBidsServiceImpl() {
 
