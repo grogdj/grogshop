@@ -9,14 +9,14 @@ rule "new listing"
     when
         $l: Listing()
     then
-        notificationsService.notifyUser($l.getUserId(), "your new listing is up >>"+$l);
+        //notificationsService.notifyUser($l.getUserId(), "your new listing is up >>"+$l);
 end
 
 rule "new bid"
     when
         $b: Bid()
     then
-        notificationsService.notifyUser($b.getUserId(), "your new bid is up >>"+$b);
+        //notificationsService.notifyUser($b.getUserId(), "your new bid is up >>"+$b);
 end
 
 
@@ -24,10 +24,10 @@ rule "matching bid, not right price"
   when
     // When I have a list that matches with all the bidders 
     $l: Listing($listingTags: tags, $price: price)
-    $b: Bid(tags.containsAll($listingTags), amount <= $price)
+    $b: Bid(tags.containsAll($listingTags), amount < $price)
   then
-    notificationsService.notifyUser($l.getUserId(), "matching bid, not right price");
-    notificationsService.notifyUser($b.getUserId(), "matching listing, not right price");
+    notificationsService.notifyUser($l.getUserId(), "matching bid tags, not right price");
+    notificationsService.notifyUser($b.getUserId(), "matching listing tags, not right price");
     
 end
 
@@ -35,11 +35,11 @@ rule "matching bid, best price"
   when
     // When I have a list that matches with all the bidders 
     $l: Listing($listingTags: tags, $price: price)
-    $b: Bid(tags.containsAll($listingTags), amount > $price)
+    $b: Bid(tags.containsAll($listingTags), amount >= $price)
   then
     
-    notificationsService.notifyUser($l.getUserId(), "matching bid, best price");
-    notificationsService.notifyUser($b.getUserId(), "matching bid, best price");
+    notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price");
+    notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price");
     
    
 

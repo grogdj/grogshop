@@ -22,6 +22,6 @@ public interface ListingsService {
 
     void clearListings();
 
-    void removeListing(Long listingId);
+    Listing removeListing(Long listingId);
 
 }

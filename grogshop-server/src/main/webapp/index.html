@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="css/ng-tags-input.min.css"> 
         <link rel="stylesheet" href="css/ng-tags-input.bootstrap.min.css">
         <link href="css/app.css" rel="stylesheet">
-         <link rel="apple-touch-icon" href="appleicon.png">
+        <link rel="apple-touch-icon" href="appleicon.png">
 
 
 
@@ -25,28 +25,28 @@
         <![endif]-->
     </head>
     <body >
-        <growl-notifications>
-            
-        </growl-notifications>
+    <growl-notifications>
+
+    </growl-notifications>
 
 
-        
-            <div ng-controller="NavigationController as navCtrl">
-                
-                <nav class="navbar navbar-default navbar-fixed-top navbar-inverse app-main-nav" role="navigation">
-                  <div class="container-fluid">
-                    
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header navbar-left ">
-                      <button type="button" class="navbar-toggle collapsed btn-block app-toogle-nav" data-toggle="collapse" data-target="#main-nav">
+
+    <div ng-controller="NavigationController as navCtrl">
+
+        <nav class="navbar navbar-default navbar-fixed-top navbar-inverse app-main-nav" role="navigation">
+            <div class="container-fluid">
+
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header navbar-left ">
+                    <button type="button" class="navbar-toggle collapsed btn-block app-toogle-nav" data-toggle="collapse" data-target="#main-nav">
                         <span class="sr-only">Toggle navigation</span>
                         Menu
-                      </button>
-                    </div>
+                    </button>
+                </div>
 
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="main-nav">
-                      <ul class="nav navbar-nav">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <ul class="nav navbar-nav">
                         <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Listings</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Bids</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(3)}"> 
@@ -54,110 +54,110 @@
                                 <span class="badge" ng-class="{ 'new': navCtrl.notificationCounter != 0}">{{navCtrl.notificationCounter}}</span>
                             </a>
                         </li>
-                       
-                      </ul>
-                      
-                    </div>
-                    
-                  </div>
-                </nav>
 
-       
+                    </ul>
 
-        
-          
-
-            <section id="listings" ng-show="navCtrl.isSelected(1)">
-                <div class="container-fluid">
-                    <listing-item > </listing-item>
-
-                                
-            </section>
-
-            <section id="bids" ng-show="navCtrl.isSelected(2)">
-                 <div class="container-fluid">
-                     <bids-item></bids-item>
                 </div>
-            </section>
 
-            <section id="notifications" ng-show="navCtrl.isSelected(3)">
-                <div class="notification-container">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div id="status"></div>
-                                <notifications-items> 
-                                         
-                                           
-                                        
-                                </notifications-items>
-                            </div>
+            </div>
+        </nav>
+
+
+
+
+
+
+        <section id="listings" ng-show="navCtrl.isSelected(1)">
+            <div class="container-fluid">
+                <listing-item > </listing-item>
+
+
+        </section>
+
+        <section id="bids" ng-show="navCtrl.isSelected(2)">
+            <div class="container-fluid">
+                <bids-item></bids-item>
+            </div>
+        </section>
+
+        <section id="notifications" ng-show="navCtrl.isSelected(3)">
+            <div class="notification-container">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="status"></div>
+                            <notifications-items> 
+
+
+
+                            </notifications-items>
                         </div>
                     </div>
                 </div>
-            </section>
-           
+            </div>
+        </section>
 
 
-           
 
-           
+
+
+
 
 
         <div id="create-bar" ng-controller="CreateBarController as createCtrl" ng-class="{open: createCtrl.status}" ng-show="navCtrl.isSelected(2) || navCtrl.isSelected(1)">
-                <a class="bar-toogle" href ng-click="createCtrl.status = !createCtrl.status">
-                    <span class="create">Create</span>
-                    <span class="close-nav">Close</span>
-                </a>
-                
-                 <div class="create-bar-body">
-                        <div class="container-fluid" ng-show="navCtrl.isSelected(1)">
-                            <div class="row">
-                               
+            <a class="bar-toogle" href ng-click="createCtrl.status = !createCtrl.status">
+                <span class="create">Create</span>
+                <span class="close-nav">Close</span>
+            </a>
 
-                                    <listing-form></listing-form>
+            <div class="create-bar-body">
+                <div class="container-fluid" ng-show="navCtrl.isSelected(1)">
+                    <div class="row">
 
-                                
-                            </div>
-                        </div>
 
-                        <div class="container-fluid" ng-show="navCtrl.isSelected(2)">
-                            <div class="row">
-                               
-                                    <bids-form></bids-form>
-                                                            
-                            </div>
-                        </div>
+                        <listing-form></listing-form>
 
-                 </div>
-            
+
+                    </div>
+                </div>
+
+                <div class="container-fluid" ng-show="navCtrl.isSelected(2)">
+                    <div class="row">
+
+                        <bids-form></bids-form>
+
+                    </div>
+                </div>
+
+            </div>
+
         </div>
 
 
-     </div>
-
-    
+    </div>
 
 
 
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/angular.min.js"></script>
-        <script src="js/angular-animate.min.js"></script>
-        <script type="text/javascript" src="js/ng-tags-input.min.js"></script>
-        <script type="text/javascript" src="js/angular-growl-notifications.min.js"></script>
-
-        
-        <script src="js/app.js"></script>
-        <script src="js/listings.js"></script>
-        <script src="js/bids.js"></script>
-        <script src="js/notifications.js"></script>
-
-        
 
 
-    </body>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-animate.min.js"></script>
+    <script type="text/javascript" src="js/ng-tags-input.min.js"></script>
+    <script type="text/javascript" src="js/angular-growl-notifications.min.js"></script>
+
+
+    <script src="js/app.js"></script>
+    <script src="js/listings.js"></script>
+    <script src="js/bids.js"></script>
+    <script src="js/notifications.js"></script>
+
+
+
+
+</body>
 </html>

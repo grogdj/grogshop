@@ -42,6 +42,7 @@ public class MatchingServiceImpl implements MatchingService{
     
     @Override
     public void insert(Object o) {
+        System.out.println(">> Matching Service inserted: "+o);
         kieSession.insert(o);
         kieSession.fireAllRules();
     }
@@ -50,10 +51,12 @@ public class MatchingServiceImpl implements MatchingService{
     
     @Override
     public void reset() {
+        System.out.println(">> Matching Service init!" );
         init();
     }
 
     public void retract(Object o) {
+        System.out.println(">> Matching Service retracted: "+o);
         FactHandle factHandle = kieSession.getFactHandle(o);
         kieSession.delete(factHandle);
         kieSession.fireAllRules();

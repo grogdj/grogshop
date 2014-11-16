@@ -76,7 +76,8 @@ public class ShopListingsServiceImpl {
     @DELETE
     @Path("{id}")
     public void removeBid(@PathParam("id") Long id) {
-        listingsService.removeListing(id);
+        Listing removedListing = listingsService.removeListing(id);
+        matchingService.retract(removedListing);
     }
     
     @GET

@@ -22,6 +22,6 @@ public interface BidsService {
     
     void clearBids();
     
-    void removeBid(Long bidId);
+    Bid removeBid(Long bidId);
     
 }

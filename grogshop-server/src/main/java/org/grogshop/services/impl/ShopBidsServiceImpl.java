@@ -73,8 +73,8 @@ public class ShopBidsServiceImpl {
     @DELETE
     @Path("{id}")
     public void removeBid(@PathParam("id") Long id) {
-        bidsService.removeBid(id);
-
+        Bid removedBid = bidsService.removeBid(id);
+        matchingService.retract(removedBid);
     }
 
     @GET

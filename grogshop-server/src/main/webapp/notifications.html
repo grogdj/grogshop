@@ -1,13 +1,13 @@
 <div class="notification-item-container" ng-repeat="notification in notificationsCtrl.notifications">
     <div class="listing-item">
-        
+
         <div class="user">User: ({{notification.userId}})</div>
         <div class="price">Message: {{notification.message}}</div>
     </div>       
-	 <growl-notification class="fading" ttl="30000">
-            {{notification}}
-            
-		       <a class="close-link" href="#" ng-click="$growlNotification.remove()"><span>Close me</span></a>
-		    
-        </growl-notification>
+    <growl-notification class="fading" ttl="30000">
+        {{notification.userId}}: {{notification.message}} 
+
+        <a class="close-link" href="#" ng-click="$growlNotification.remove()"><span>Close me</span></a>
+
+    </growl-notification>
 </div> 
