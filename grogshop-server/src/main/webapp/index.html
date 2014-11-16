@@ -40,7 +40,10 @@
                 <div class="navbar-header navbar-left ">
                     <button type="button" class="navbar-toggle collapsed btn-block app-toogle-nav" data-toggle="collapse" data-target="#main-nav">
                         <span class="sr-only">Toggle navigation</span>
-                        Menu
+                        
+                        <div ng-show="navCtrl.isSelected(1)">Listings</div>
+                        <div ng-show="navCtrl.isSelected(2)">Bids</div>
+                        <div ng-show="navCtrl.isSelected(3)">Matchings</div>
                     </button>
                 </div>
 
@@ -50,7 +53,7 @@
                         <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Listings</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Bids</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(3)}"> 
-                            <a href ng-click="navCtrl.selectSection(3)">Notifications 
+                            <a href ng-click="navCtrl.selectSection(3)">Matchings 
                                 <span class="badge" ng-class="{ 'new': navCtrl.notificationCounter != 0}">{{navCtrl.notificationCounter}}</span>
                             </a>
                         </li>
