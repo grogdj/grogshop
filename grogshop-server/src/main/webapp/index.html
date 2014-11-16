@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
         <title>angular app</title>
 
         <!-- Bootstrap -->
@@ -11,6 +12,7 @@
         <link rel="stylesheet" href="css/ng-tags-input.min.css"> 
         <link rel="stylesheet" href="css/ng-tags-input.bootstrap.min.css">
         <link href="css/app.css" rel="stylesheet">
+         <link rel="apple-touch-icon" href="appleicon.png">
 
 
 
@@ -23,6 +25,12 @@
         <![endif]-->
     </head>
     <body >
+        <growl-notifications>
+            
+        </growl-notifications>
+
+
+        
             <div ng-controller="NavigationController as navCtrl">
                 
                 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse app-main-nav" role="navigation">
@@ -41,7 +49,11 @@
                       <ul class="nav navbar-nav">
                         <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Listings</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Bids</a></li>
-                        <li ng-class="{ active: navCtrl.isSelected(3)}"> <a href ng-click="navCtrl.selectSection(3)">Notifications <span class="badge" >{{navCtrl.notificationCounter}}</span></a></li>
+                        <li ng-class="{ active: navCtrl.isSelected(3)}"> 
+                            <a href ng-click="navCtrl.selectSection(3)">Notifications 
+                                <span class="badge" ng-class="{ 'new': navCtrl.notificationCounter != 0}">{{navCtrl.notificationCounter}}</span>
+                            </a>
+                        </li>
                        
                       </ul>
                       
@@ -58,7 +70,8 @@
             <section id="listings" ng-show="navCtrl.isSelected(1)">
                 <div class="container-fluid">
                     <listing-item > </listing-item>
-                </div>
+
+                                
             </section>
 
             <section id="bids" ng-show="navCtrl.isSelected(2)">
@@ -68,17 +81,27 @@
             </section>
 
             <section id="notifications" ng-show="navCtrl.isSelected(3)">
-                <div class="row">
-                    <div class="col-md-12">
-
-                        <h3>Notifications</h3>
-                        <div class="notification-container">
-                            <div id="status"></div>
-                            <notifications-items> </notifications-items>
+                <div class="notification-container">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="status"></div>
+                                <notifications-items> 
+                                         
+                                           
+                                        
+                                </notifications-items>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
+           
+
+
+           
+
+           
 
 
         <div id="create-bar" ng-controller="CreateBarController as createCtrl" ng-class="{open: createCtrl.status}" ng-show="navCtrl.isSelected(2) || navCtrl.isSelected(1)">
@@ -112,16 +135,29 @@
 
 
      </div>
+
+    
+
+
+
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/angular.min.js"></script>
+        <script src="js/angular-animate.min.js"></script>
         <script type="text/javascript" src="js/ng-tags-input.min.js"></script>
+        <script type="text/javascript" src="js/angular-growl-notifications.min.js"></script>
+
+        
         <script src="js/app.js"></script>
         <script src="js/listings.js"></script>
         <script src="js/bids.js"></script>
         <script src="js/notifications.js"></script>
+
+        
+
 
     </body>
 </html>

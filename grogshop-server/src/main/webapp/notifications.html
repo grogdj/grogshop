@@ -4,5 +4,10 @@
         <div class="user">User: ({{notification.userId}})</div>
         <div class="price">Message: {{notification.message}}</div>
     </div>       
-
+	 <growl-notification class="fading" ttl="30000">
+            {{notification}}
+            
+		       <a class="close-link" href="#" ng-click="$growlNotification.remove()"><span>Close me</span></a>
+		    
+        </growl-notification>
 </div> 

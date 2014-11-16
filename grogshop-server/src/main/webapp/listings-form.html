@@ -1,31 +1,27 @@
 
     <form name="listingform" id="listingform" ng-submit="listingform.$valid && listingFromCtrl.addListing()" novalidate>
         
-        <div class="col-md-1 col-sm-1 hidden-xs">
-          <div class="form-group">
-              <label for="id" class="hidden-xs">ID</label>
-              <input type="text" class="form-control " disabled="" ng-model="listingFromCtrl.livelisting.id" id="id"  placeholder="Id">
-          </div>
-        </div>
+      
 
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-2 col-sm-2">
           <div class="form-group">
               <label for="userid" class="hidden-xs">User Name</label>
               <input type="text" class="form-control" ng-model="listingFromCtrl.livelisting.userId" id="userid"  placeholder="User Name" required >
           </div>
         </div>
         
-         <div class="col-md-3 col-sm-3">
+         <div class="col-md-2 col-sm-2">
             <div class="form-group">
                 <label for="price" class="hidden-xs">Price</label>
                 <input type="number" class="form-control" ng-model="listingFromCtrl.livelisting.price" id="price"  placeholder="Price" required>
             </div>
           </div>
 
-          <div class="col-md-3 col-sm-3">
+          <div class="col-md-6 col-sm-6">
               <div class="form-group">
                   <label for="tags" class="hidden-xs">Tags</label>
                   <tags-input ng-model="listingFromCtrl.livelisting.tags" display-property="name" max-tags="5" required>
+                      <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
                   </tags-input>
               </div>
             </div>
@@ -36,6 +32,6 @@
               <button type="submit" class="btn btn-primary btn-block">Create <span class="hidden-sm">Listing</span></button>
             </div>
 
-
+        
       
     </form>

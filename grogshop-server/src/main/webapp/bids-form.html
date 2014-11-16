@@ -2,16 +2,7 @@
     <form name="bidform" id="bidform"  ng-submit="bidform.$valid && bidsFromCtrl.addBid()" novalidate>
         
 
-         <div class="col-md-1 col-sm-1 hidden-xs">
-          <div class="form-group">
-              <label for="id" class="hidden-xs">ID</label>
-              <input type="text" class="form-control " disabled="" ng-model="listingFromCtrl.livebid.id" id="id"  placeholder="Id">
-          </div>
-        </div>
-        
-
-
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-2 col-sm-2">
           <div class="form-group">
               <label for="userid" class="hidden-xs">User Name</label>
               <input type="text" class="form-control" ng-model="bidsFromCtrl.livebid.userId" id="userid"  placeholder="User Name" required >
@@ -19,7 +10,7 @@
         </div>
 
 
-        <div class="col-md-3 col-sm-3">
+        <div class="col-md-2 col-sm-2">
             <div class="form-group">
                 <label for="amount" class="hidden-xs">Price</label>
                 <input type="number" class="form-control" ng-model="bidsFromCtrl.livebid.amount" id="amount"  placeholder="Amount" required>
@@ -27,10 +18,11 @@
           </div>
 
 
-          <div class="col-md-3 col-sm-3">
+          <div class="col-md-6 col-sm-6">
               <div class="form-group">
                   <label for="tags" class="hidden-xs">Tags</label>
                   <tags-input ng-model="bidsFromCtrl.livebid.tags" display-property="name" max-tags="5" required>
+                     <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
                   </tags-input>
               </div>
             </div>
