@@ -1,0 +1,72 @@
+<div class="matching-item-container " ng-repeat="matching in matchingsCtrl.matchings">
+    <div class="matching-item">
+    	<div class="container-fluid">
+    		<div class="row">
+    			<div class="matching-data">
+    				{{matching.type}}, {{matching.occurrence}}, ID: {{matching.id}}
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="matching-listing col-md-6">
+					
+
+    				
+
+    				<div class="item listing">
+
+				        <div class="item-body">
+				            
+				            <div class="item-left">
+				                    
+				            </div>
+
+				            <div class="item-tags">
+				              	<span>
+				                    <a href="" class="tag ng-binding">car</a> 
+				                </span>
+				                <span>
+				                    <a href="" class="tag ng-binding">flag</a> 
+				                </span>
+
+				            </div>
+
+				        </div>
+
+				        <div class="item-footer">
+				            <div class="user ng-binding"><span class="hidden-xs">Created </span>by <a href="#" class="ng-binding">{{matching.listingUserId}}</a>. ID: {{matching.listingId}} </div>
+				            <div class="price ng-binding">$100.00</div>
+				        </div>
+
+				    </div>
+    			</div>
+
+    			<div class="matching-bid col-md-6">
+					<div class="item bid">
+
+				        <div class="item-body">
+
+				            <div class="item-tags">
+				                
+				                <span >
+				                    <a href="" class="tag ng-binding">car</a> 
+				                </span>
+
+				            </div>
+
+				        </div>
+
+				        <div class="item-footer">
+				            <div class="user ng-binding"><span class="hidden-xs">Created </span>by <a href="#" class="ng-binding">{{matching.bidUserId}}</a>. ID: {{matching.bidId}}</div>
+				            <div class="price ng-binding">$100.00</div>
+				        </div>
+
+				    </div>
+
+
+    			</div>
+
+
+    		</div>
+    	</div>
+    </div>
+</div> 

@@ -123,7 +123,7 @@ body {
 	font-weight: 700;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .btn-primary:focus {
 	background-color: #679852;
 	border-color: #679852;
 }
@@ -252,6 +252,34 @@ section {
 	background-color: #85c3eb;
 }
 
+/* MATCHING ITEM */
+.matching-item {
+	background-color: #FFF;
+	margin: 15px 0;
+	border: 1px solid #d0d0d0;
+}
+
+.matching-item .item.listing {
+	border: none;
+}
+
+.matching-item .item.listing .item-body .item-left, .matching-item .item.listing .item-footer .user {
+	margin-left: -10px;
+}
+
+.matching-item .item.bid .item-body {
+	height: 98px;
+}
+
+.matching-data {
+	border-bottom: 1px solid #EEE;
+	padding: 10px 15px;
+	font-size: 16px;
+	text-transform: uppercase;
+	color: #9f9f9f;
+}
+
+
 /* ANGULAR */
 
 input.ng-invalid.ng-dirty {
@@ -260,9 +288,13 @@ input.ng-invalid.ng-dirty {
 input.ng-valid.ng-dirty {
 	border-color:#CCC;
 }
+
+
+
+
 /* NOTIFICATIONS */
 .notification-container {
-	padding: 15px;
+	padding: 0 15px;
 }
 
 growl-notifications{
