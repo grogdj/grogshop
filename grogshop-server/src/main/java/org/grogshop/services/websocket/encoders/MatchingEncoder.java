@@ -30,13 +30,13 @@ public class MatchingEncoder implements Encoder.Text<Matching> {
 
         JsonArrayBuilder listingTagsBuilder = Json.createArrayBuilder();
         for (Tag t : matching.getListing().getTags()) {
-            listingTagsBuilder.add(t.getName());
+            listingTagsBuilder.add(Json.createObjectBuilder().add("name", t.getName()).build());
         }
         JsonArray listingTagsArray = listingTagsBuilder.build();
 
         JsonArrayBuilder bidTagsBuilder = Json.createArrayBuilder();
         for (Tag t : matching.getBid().getTags()) {
-            bidTagsBuilder.add(t.getName());
+            bidTagsBuilder.add(Json.createObjectBuilder().add("name", t.getName()).build());
         }
         JsonArray bidTagsArray = bidTagsBuilder.build();
 

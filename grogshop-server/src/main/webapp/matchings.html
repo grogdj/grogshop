@@ -30,7 +30,7 @@
 
                         <div class="item-footer">
                             <div class="user ng-binding"><span class="hidden-xs">Created </span>by <a href="#" class="ng-binding">{{value[0].listing.userId}}</a>. ID: {{value[0].listing.id}} </div>
-                            <div class="price ng-binding">$ {{value[0].listing.price}}</div>
+                            <div class="price ng-binding">$ {{value[0].listing.priceRange[0]}}</div>
                         </div>
 
                     </div>
@@ -52,7 +52,7 @@
 
                         <div class="item-footer">
                             <div class="user ng-binding"><span class="hidden-xs">Created </span>by <a href="#" class="ng-binding">{{matching.bid.userId}}</a>. ID: {{matching.bid.id}}</div>
-                            <div class="price ng-binding">$ {{matching.bid.amount}}</div>
+                            <div class="price ng-binding">$ {{matching.bid.priceRange[0]}}</div>
                         </div>
 
                     </div>
