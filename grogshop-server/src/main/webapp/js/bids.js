@@ -10,7 +10,7 @@
                     var shop = this;
                     shop.bids = [];
                     $http.jsonp("http://localhost:8080/grogshop-server/rest/" + "bids/all" + "?callback=JSON_CALLBACK").success(function (data) {
-                    //$http.jsonp("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"bids/all"+"?callback=JSON_CALLBACK").success(function (data) {
+                        //$http.jsonp("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"bids/all"+"?callback=JSON_CALLBACK").success(function (data) {
 
                         shop.bids = data;
 
@@ -52,7 +52,7 @@
                     shop.livebid = {};
 
                     this.addBid = function () {
-                        var bid = {userId: shop.livebid.userId, amount: shop.livebid.amount, tags: shop.livebid.tags}
+                        var bid = {userId: shop.livebid.userId, priceRange: [shop.livebid.price, shop.livebid.range], tags: shop.livebid.tags}
                         //$http.post("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"bids/new",bid).success(function (data) {
                         $http.post("http://localhost:8080/grogshop-server/rest/" + "bids/new", bid).success(function (data) {
                             bid.id = data;

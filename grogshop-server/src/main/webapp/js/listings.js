@@ -53,7 +53,7 @@
                     var shop = this
                     shop.livelisting = {};
                     this.addListing = function () {
-                        var listing = {userId: shop.livelisting.userId, price: shop.livelisting.price, tags: shop.livelisting.tags};
+                        var listing = {userId: shop.livelisting.userId, priceRange: [shop.livelisting.price, shop.livelisting.range ], tags: shop.livelisting.tags};
                         //$http.post("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"listings/new", listing).success(function (data) {
                         $http.post("http://localhost:8080/grogshop-server/rest/" + "listings/new", listing).success(function (data) {
                             listing.id = data;

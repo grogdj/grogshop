@@ -2,44 +2,50 @@ package grogshop;
 
 import com.grogdj.grogshop.core.model.*;
 import org.grogshop.services.api.*;
+import org.grogshop.services.impl.*;
 
 global NotificationsService notificationsService;
 global MatchingsService matchingsService;
-
-rule "new listing"
-    when
-        $l: Listing()
-    then
-        //notificationsService.notifyUser($l.getUserId(), "your new listing is up >>"+$l);
-end
-
-rule "new bid"
-    when
-        $b: Bid()
-    then
-        //notificationsService.notifyUser($b.getUserId(), "your new bid is up >>"+$b);
-end
 
 
 rule "matching bid, not right price"
   when
     // When I have a list that matches with all the bidders 
-    $l: Listing($listingTags: tags, $price: price)
-    $b: Bid(tags.containsAll($listingTags), $amount: amount < $price)
+    $l: Listing($listingTags: tags, $listingPriceRange: priceRange)
+    $b: Bid(tags matchp $listingTags, $bidPrice: priceRange[0] < $listingPriceRange[0])
   then
-    notificationsService.notifyUser($l.getUserId(), "matching bid tags, not right price("+($price-$amount)+")");
-    notificationsService.notifyUser($b.getUserId(), "matching listing tags, not right price ("+($amount-$price)+")");
-    matchingsService.newMatching(new Matching($b.getId(), $l.getId(), $b.getUserId(), $l.getUserId(), "Full Match"));
+    notificationsService.notifyUser($l.getUserId(), "matching bid tags, not right price("+($listingPriceRange[0]-$bidPrice)+")");
+    notificationsService.notifyUser($b.getUserId(), "matching listing tags, not right price ("+($bidPrice-$listingPriceRange[0])+")");
+    Matching newMatching = new Matching($l, $b, "Full Match");
+    matchingsService.newMatching(newMatching);
+    notificationsService.notifyMatching($l.getUserId(), $b.getUserId(),  newMatching);
 end
 
 
 rule "matching bid, best price"
   when
     // When I have a list that matches with all the bidders 
-    $l: Listing($listingTags: tags, $price: price)
-    $b: Bid(tags.containsAll($listingTags), amount >= $price)
+    $l: Listing($listingTags: tags, $listingPriceRange: priceRange)
+    $b: Bid(tags matchp $listingTags, priceRange[0] >= $listingPriceRange[0])
   then
     notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price");
     notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price");
-    matchingsService.newMatching(new Matching($b.getId(), $l.getId(), $b.getUserId(), $l.getUserId(), "Full Match"));
+    Matching newMatching = new Matching($l, $b, "Full Match");
+    matchingsService.newMatching(newMatching);
+    notificationsService.notifyMatching($l.getUserId(), $b.getUserId(),  newMatching);
+end
+
+
+rule "matching listings and bids tags"
+  when
+    
+    $l: Listing($listingTags: tags,  $priceRange: priceRange)
+    $b: Bid(tags matchp $listingTags, priceRange[0]  inrange  $priceRange)
+  then
+   // notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price");
+   // notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price");
+   // Matching newMatching = new Matching($l, $b, "Full Match");
+   // matchingsService.newMatching(newMatching);
+   // notificationsService.notifyMatching(newMatching);
+    
 end

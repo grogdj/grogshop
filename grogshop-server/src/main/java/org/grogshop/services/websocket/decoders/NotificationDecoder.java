@@ -25,6 +25,7 @@ public class NotificationDecoder implements Decoder.Text<Notification> {
         JsonObject jsonObject = Json
                 .createReader(new StringReader(jsonMessage)).readObject();
         Notification notification = new Notification(jsonObject.getString("userId"), jsonObject.getString("message"));
+        notification.setId(jsonObject.getJsonNumber("notificationId").longValue());
         return notification;
 
     }
@@ -42,11 +43,11 @@ public class NotificationDecoder implements Decoder.Text<Notification> {
 
     @Override
     public void init(EndpointConfig ec) {
-        System.out.println("MessageDecoder -init method called");
+        
     }
 
     @Override
     public void destroy() {
-        System.out.println("MessageDecoder - destroy method called");
+        
     }
 }

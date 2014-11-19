@@ -6,6 +6,7 @@
 package com.grogdj.grogshop.core.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,25 +15,32 @@ import java.util.List;
  */
 public class Bid {
 
+    public enum BidStatus {
+
+        ACTIVE, MATCHED, REJECTED, CLOSED
+    };
+
     private static Long BID_ID = 0L;
 
     private Long id;
     private List<Tag> tags;
     private String userId;
-    private double amount;
+    private Double[] priceRange;
+    private BidStatus status = BidStatus.ACTIVE;
 
     public Bid() {
         this.id = BID_ID++;
     }
 
     public Bid(String userId, double amount) {
-        this.id = BID_ID++;
+        this();
         this.userId = userId;
-        this.amount = amount;
+        this.priceRange = new Double[]{amount, 0.0};
     }
 
-    public Long getId() {
-        return id;
+    public Bid(String userId, double amount, double range) {
+        this(userId, amount);
+        this.priceRange = new Double[]{amount, range};
     }
 
     public void addTag(String tag) {
@@ -42,42 +50,54 @@ public class Bid {
         tags.add(new Tag(tag));
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public List<Tag> getTags() {
         return tags;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public double getAmount() {
-        return amount;
     }
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public Double[] getPriceRange() {
+        return priceRange;
     }
 
-    @Override
-    public String toString() {
-        return "Bid{" + "id=" + id + ", tags=" + tags + ", userId=" + userId + ", amount=" + amount + '}';
+    public void setPriceRange(Double[] priceRange) {
+        this.priceRange = priceRange;
+    }
+
+    public BidStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BidStatus status) {
+        this.status = status;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 71 * hash + (this.tags != null ? this.tags.hashCode() : 0);
-        hash = 71 * hash + (this.userId != null ? this.userId.hashCode() : 0);
-        hash = 71 * hash + (int) (Double.doubleToLongBits(this.amount) ^ (Double.doubleToLongBits(this.amount) >>> 32));
+        int hash = 7;
+        hash = 19 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 19 * hash + (this.tags != null ? this.tags.hashCode() : 0);
+        hash = 19 * hash + (this.userId != null ? this.userId.hashCode() : 0);
+        hash = 19 * hash + Arrays.deepHashCode(this.priceRange);
+        hash = 19 * hash + (this.status != null ? this.status.hashCode() : 0);
         return hash;
     }
 
@@ -99,12 +119,18 @@ public class Bid {
         if ((this.userId == null) ? (other.userId != null) : !this.userId.equals(other.userId)) {
             return false;
         }
-        if (Double.doubleToLongBits(this.amount) != Double.doubleToLongBits(other.amount)) {
+        if (!Arrays.deepEquals(this.priceRange, other.priceRange)) {
+            return false;
+        }
+        if (this.status != other.status) {
             return false;
         }
         return true;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Bid{" + "id=" + id + ", tags=" + tags + ", userId=" + userId + ", priceRange=" + priceRange + ", status=" + status + '}';
+    }
 
 }

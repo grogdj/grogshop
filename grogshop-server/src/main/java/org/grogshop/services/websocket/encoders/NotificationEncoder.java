@@ -22,6 +22,7 @@ public class NotificationEncoder implements Encoder.Text<Notification> {
     public String encode(Notification notification) throws EncodeException {
 
         JsonObject jsonObject = Json.createObjectBuilder()
+                .add("notificationId", notification.getId())
                 .add("userId", notification.getUserId())
                 .add("message", notification.getMessage()).build();
         return jsonObject.toString();

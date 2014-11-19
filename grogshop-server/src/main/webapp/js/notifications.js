@@ -9,7 +9,7 @@
                     console.log('notification controller on! ');
                     var shop = this;
                     shop.notifications = [];
-
+                    
                     //var wsUri = "ws://" + "grog-restprovider.rhcloud.com:8000" + "/grogshop-server/" + "shop";
                     var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + "/grogshop-server/" + "shop";
                     var websocket = new WebSocket(wsUri);
@@ -35,9 +35,16 @@
 
                     function onMessage(evt, $rootScope) {
                         console.log("onMessage: " + evt.data);
-                        var notification = JSON.parse(event.data);
-                        shop.notifications.push(notification);
-                        $rootScope.$broadcast('newNotification', notification);
+                        var message = JSON.parse(event.data);
+                        if(message.hasOwnProperty('notificationId')){
+                            console.log("Its a notification: " + message);
+                            shop.notifications.push(message);
+                            $rootScope.$broadcast('newNotification', message);
+                        }else if(message.hasOwnProperty('matchingId')){
+                            console.log("Its a matching: " + message);
+                            $rootScope.$broadcast('newMatching', message);
+                            
+                        }
                     }
 
                     function onError(evt) {
