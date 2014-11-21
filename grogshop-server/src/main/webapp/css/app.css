@@ -259,8 +259,15 @@ section {
 	border: 1px solid #d0d0d0;
 }
 
-.matching-item .item.listing {
+.matching-data .item.listing {
 	border: none;
+}
+
+.matching-data .item.listing .item-body {
+	border:none;
+	padding: 0 10px;
+	min-height: 93px;
+	height: auto;
 }
 
 .matching-item .item.listing .item-body .item-left, .matching-item .item.listing .item-footer .user {
@@ -268,15 +275,14 @@ section {
 }
 
 .matching-item .item.bid .item-body {
-	height: 98px;
+	height: 63px;
+	overflow-y:auto;
+	overflow-x:hidden;
 }
 
 .matching-data {
 	border-bottom: 1px solid #EEE;
-	padding: 10px 15px;
-	font-size: 16px;
-	text-transform: uppercase;
-	color: #9f9f9f;
+
 }
 
 
