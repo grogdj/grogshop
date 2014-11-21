@@ -24,7 +24,8 @@ public class NotificationEncoder implements Encoder.Text<Notification> {
         JsonObject jsonObject = Json.createObjectBuilder()
                 .add("notificationId", notification.getId())
                 .add("userId", notification.getUserId())
-                .add("message", notification.getMessage()).build();
+                .add("message", notification.getMessage())
+                .add("type", notification.getType()).build();
         return jsonObject.toString();
 
     }

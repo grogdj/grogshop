@@ -15,7 +15,7 @@ import javax.websocket.Session;
  */
 public interface NotificationsService {
 
-    void notifyUser(String userId, String message);
+    void notifyUser(String userId, String message, String type);
 
     void notifyMatching(String listingUserId, String bidUserId, Matching matching);
 

@@ -66,8 +66,10 @@ public class ShopMatchingsServiceImpl {
 
     @DELETE
     @Path("{id}")
-    public void removeMatching(@PathParam("id") Long id) {
+    @Produces({MediaType.APPLICATION_JSON})
+    public Long removeMatching(@PathParam("id") Long id) {
         Matching removedMatching = matchingsService.removeMatching(id);
+        return removedMatching.getId();
     }
 
     @GET

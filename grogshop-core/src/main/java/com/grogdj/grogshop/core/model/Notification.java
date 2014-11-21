@@ -15,6 +15,7 @@ public class Notification {
     private Long id;
     private String userId;
     private String message;
+    private String type;
 
     public Notification() {
         this.id = this.notificationKeyGenerator++;
@@ -24,6 +25,11 @@ public class Notification {
         this();
         this.userId = userId;
         this.message = message;
+    }
+
+    public Notification(String userId, String message, String type) {
+        this(userId, message);
+        this.type = type;
     }
 
     public Long getId() {
@@ -50,12 +56,21 @@ public class Notification {
         this.message = message;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 53 * hash + (this.userId != null ? this.userId.hashCode() : 0);
-        hash = 53 * hash + (this.message != null ? this.message.hashCode() : 0);
+        hash = 41 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 41 * hash + (this.userId != null ? this.userId.hashCode() : 0);
+        hash = 41 * hash + (this.message != null ? this.message.hashCode() : 0);
+        hash = 41 * hash + (this.type != null ? this.type.hashCode() : 0);
         return hash;
     }
 
@@ -77,12 +92,15 @@ public class Notification {
         if ((this.message == null) ? (other.message != null) : !this.message.equals(other.message)) {
             return false;
         }
+        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "Notification{" + "id=" + id + ", userId=" + userId + ", message=" + message + '}';
+        return "Notification{" + "id=" + id + ", userId=" + userId + ", message=" + message + ", type=" + type + '}';
     }
 
 }

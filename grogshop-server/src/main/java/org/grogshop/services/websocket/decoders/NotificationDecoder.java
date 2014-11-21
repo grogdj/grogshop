@@ -24,7 +24,7 @@ public class NotificationDecoder implements Decoder.Text<Notification> {
 
         JsonObject jsonObject = Json
                 .createReader(new StringReader(jsonMessage)).readObject();
-        Notification notification = new Notification(jsonObject.getString("userId"), jsonObject.getString("message"));
+        Notification notification = new Notification(jsonObject.getString("userId"), jsonObject.getString("message"), jsonObject.getString("type"));
         notification.setId(jsonObject.getJsonNumber("notificationId").longValue());
         return notification;
 

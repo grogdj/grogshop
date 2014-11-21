@@ -26,12 +26,12 @@ public class NotificationServiceImpl implements NotificationsService {
     private Set<Session> activeSessions;
 
     @Override
-    public void notifyUser(String userId, String message) {
+    public void notifyUser(String userId, String message, String type) {
         //@TODO: I need to use the userId to identify the correct session
         System.out.println(">>> Notification: \tUser: " + userId + " - Message: " + message);
         for (Session peer : activeSessions) {
             try {
-                peer.getBasicRemote().sendObject(new Notification(userId, message));
+                peer.getBasicRemote().sendObject(new Notification(userId, message, type));
             } catch (IOException ex) {
                 Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             } catch (EncodeException ex) {

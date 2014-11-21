@@ -14,10 +14,11 @@ rule "matching bid, not right price"
     $l: Listing($listingTags: tags, $listingPriceRange: priceRange)
     $b: Bid(tags matchp $listingTags, $bidPrice: priceRange[0] < $listingPriceRange[0])
   then
-    notificationsService.notifyUser($l.getUserId(), "matching bid tags, not right price("+($listingPriceRange[0]-$bidPrice)+")");
-    notificationsService.notifyUser($b.getUserId(), "matching listing tags, not right price ("+($bidPrice-$listingPriceRange[0])+")");
+    notificationsService.notifyUser($l.getUserId(), "matching bid tags, not right price("+($listingPriceRange[0]-$bidPrice)+")", "user");
+    notificationsService.notifyUser($b.getUserId(), "matching listing tags, not right price ("+($bidPrice-$listingPriceRange[0])+")", "user");
     Matching newMatching = new Matching($l, $b, "Full Match");
     matchingsService.newMatching(newMatching);
+    insertLogical(newMatching);
     notificationsService.notifyMatching($l.getUserId(), $b.getUserId(),  newMatching);
 end
 
@@ -28,10 +29,11 @@ rule "matching bid, best price"
     $l: Listing($listingTags: tags, $listingPriceRange: priceRange)
     $b: Bid(tags matchp $listingTags, priceRange[0] >= $listingPriceRange[0])
   then
-    notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price");
-    notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price");
+    notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price", "user");
+    notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price", "user");
     Matching newMatching = new Matching($l, $b, "Full Match");
     matchingsService.newMatching(newMatching);
+    insertLogical(newMatching);
     notificationsService.notifyMatching($l.getUserId(), $b.getUserId(),  newMatching);
 end
 
@@ -42,8 +44,8 @@ rule "matching listings and bids tags"
     $l: Listing($listingTags: tags,  $priceRange: priceRange)
     $b: Bid(tags matchp $listingTags, priceRange[0]  inrange  $priceRange)
   then
-   // notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price");
-   // notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price");
+   // notificationsService.notifyUser($l.getUserId(), "matching listing tags, best price", "user");
+   // notificationsService.notifyUser($b.getUserId(), "matching bid tags, best price", "user");
    // Matching newMatching = new Matching($l, $b, "Full Match");
    // matchingsService.newMatching(newMatching);
    // notificationsService.notifyMatching(newMatching);

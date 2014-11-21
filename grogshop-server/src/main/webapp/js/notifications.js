@@ -37,9 +37,16 @@
                         console.log("onMessage: " + evt.data);
                         var message = JSON.parse(event.data);
                         if(message.hasOwnProperty('notificationId')){
-                            console.log("Its a notification: " + message);
-                            shop.notifications.push(message);
-                            $rootScope.$broadcast('newNotification', message);
+                            if(message.type === 'user'){
+                                console.log("Its a notification: " + message);
+                                shop.notifications.push(message);
+                                $rootScope.$broadcast('newNotification', message);
+                            }else if(message.type === 'removeMatching'){
+                                console.log("removeMatching message: " + message);
+                                $rootScope.$broadcast('removeMatching', message.message);
+                            }
+                            
+                            
                         }else if(message.hasOwnProperty('matchingId')){
                             console.log("Its a matching: " + message);
                             $rootScope.$broadcast('newMatching', message);
