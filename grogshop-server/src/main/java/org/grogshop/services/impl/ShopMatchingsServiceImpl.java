@@ -52,10 +52,10 @@ public class ShopMatchingsServiceImpl {
     }
     
     @GET
-    @Path("/bybid/{id}")
+    @Path("/bymembership/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Matching> getMatchingsByBid(@PathParam("id") Long bidId) {
-        return matchingsService.getAllMatchingsByBid(bidId);
+    public List<Matching> getMatchingsByBid(@PathParam("id") Long matchingId) {
+        return matchingsService.getAllMatchingsByMembership(matchingId);
     }
 
     @GET

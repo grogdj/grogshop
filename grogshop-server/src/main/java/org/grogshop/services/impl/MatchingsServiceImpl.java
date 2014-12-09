@@ -77,14 +77,14 @@ public class MatchingsServiceImpl implements MatchingsService {
         
     }
 
-    public List<Matching> getAllMatchingsByBid(Long bidId) {
-        List<Matching> matchingsByBid = new ArrayList<Matching>();
+    public List<Matching> getAllMatchingsByMembership(Long matchingId) {
+        List<Matching> matchingsByMembership = new ArrayList<Matching>();
         for(Matching m : this.matchings){
-            if(m.getBid().getId().equals(bidId)){
-                matchingsByBid.add(m);
+            if(m.getMembership().getId().equals(matchingId)){
+                matchingsByMembership.add(m);
             }
         }
-        return matchingsByBid;
+        return matchingsByMembership;
     }
 
 }

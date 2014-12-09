@@ -1,7 +1,7 @@
 'use strict';
 (function () {
 
-    var app = angular.module('grogshop', ['shoplistings', 'shopbids', 'shopnotifications', 'shopmatchings', 'ngTagsInput', 'growlNotifications', 'ngAnimate','angular.filter']);
+    var app = angular.module('grogshop', ['shoplistings', 'shopmemberships', 'shopnotifications', 'shopmatchings',  'ngTagsInput', 'growlNotifications', 'ngAnimate','angular.filter']);
 
     app.controller('NavigationController', function ($rootScope) {
         this.section = 1;

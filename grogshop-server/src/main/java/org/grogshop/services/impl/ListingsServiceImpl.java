@@ -31,12 +31,19 @@ public class ListingsServiceImpl implements ListingsService {
     }
 
     @Override
-    public List<Listing> getAllListings() {
-        return listings;
+    public List<Listing> getAllListings(String userId) {
+        List<Listing> userListing = new ArrayList<Listing>();
+        for(Listing l : listings){
+            if(l.getUserId().equals(userId)){
+                userListing.add(l);
+            }
+        }
+        return userListing;
     }
 
     @Override
-    public Long newListing(Listing listing) {
+    public Long newListing(String userId, Listing listing) {
+        listing.setUserId(userId);
         if (listing != null) {
             for (Tag t : listing.getTags()) {
                 tagsService.newTag(t);

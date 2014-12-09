@@ -10,7 +10,7 @@
                     var shop = this;
                     shop.bids = [];
                     $http.jsonp("http://localhost:8080/grogshop-server/rest/" + "bids/all" + "?callback=JSON_CALLBACK").success(function (data) {
-                        //$http.jsonp("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"bids/all"+"?callback=JSON_CALLBACK").success(function (data) {
+                    //$http.jsonp("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"bids/all"+"?callback=JSON_CALLBACK").success(function (data) {
 
                         shop.bids = data;
 

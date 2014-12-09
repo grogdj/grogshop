@@ -16,9 +16,9 @@ public interface BidsService {
     
     Bid getBid(Long bidId);
 
-    List<Bid> getBids();
+    List<Bid> getBids(String userId);
 
-    Long newBid(Bid bid);
+    Long newBid(String userId, Bid bid);
     
     void clearBids();
     

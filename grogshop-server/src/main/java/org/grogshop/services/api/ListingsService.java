@@ -16,9 +16,9 @@ public interface ListingsService {
     
     Listing getListing(Long listingId);
 
-    List<Listing> getAllListings();
+    List<Listing> getAllListings(String userId);
 
-    Long newListing(Listing listing);
+    Long newListing(String userId, Listing listing);
 
     void clearListings();
 

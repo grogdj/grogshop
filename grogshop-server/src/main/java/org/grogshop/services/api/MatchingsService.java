@@ -19,7 +19,7 @@ public interface MatchingsService {
     
     List<Matching> getAllMatchingsByListing(Long listingId);
     
-    List<Matching> getAllMatchingsByBid(Long bidId);
+    List<Matching> getAllMatchingsByMembership(Long bidId);
 
     Long newMatching(Matching matching);
 

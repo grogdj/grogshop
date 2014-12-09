@@ -20,7 +20,7 @@ public class Matching {
 
     private static Long matchingKeyGenerator = 0L;
     private Long id;
-    private Bid bid;
+    private ClubMembership membership;
     private Listing listing;
     private String type;
     private Date occurrence;
@@ -30,9 +30,9 @@ public class Matching {
         this.id = this.matchingKeyGenerator++;
     }
 
-    public Matching(Listing listing, Bid bid, String type) {
+    public Matching(Listing listing, ClubMembership membership, String type) {
         this.id = this.matchingKeyGenerator++;
-        this.bid = bid;
+        this.membership = membership;
         this.listing = listing;
         this.type = type;
         this.occurrence = new Date();
@@ -46,12 +46,12 @@ public class Matching {
         this.id = id;
     }
 
-    public Bid getBid() {
-        return bid;
+    public ClubMembership getMembership() {
+        return membership;
     }
 
-    public void setBid(Bid bid) {
-        this.bid = bid;
+    public void setMembership(ClubMembership membership) {
+        this.membership = membership;
     }
 
     public Listing getListing() {
@@ -90,7 +90,7 @@ public class Matching {
     public int hashCode() {
         int hash = 7;
         hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 29 * hash + (this.bid != null ? this.bid.hashCode() : 0);
+        hash = 29 * hash + (this.membership != null ? this.membership.hashCode() : 0);
         hash = 29 * hash + (this.listing != null ? this.listing.hashCode() : 0);
         hash = 29 * hash + (this.type != null ? this.type.hashCode() : 0);
         hash = 29 * hash + (this.occurrence != null ? this.occurrence.hashCode() : 0);
@@ -110,7 +110,7 @@ public class Matching {
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
-        if (this.bid != other.bid && (this.bid == null || !this.bid.equals(other.bid))) {
+        if (this.membership != other.membership && (this.membership == null || !this.membership.equals(other.membership))) {
             return false;
         }
         if (this.listing != other.listing && (this.listing == null || !this.listing.equals(other.listing))) {
@@ -130,7 +130,7 @@ public class Matching {
 
     @Override
     public String toString() {
-        return "Matching{" + "id=" + id + ", bid=" + bid + ", listing=" + listing + ", type=" + type + ", occurrence=" + occurrence + ", status=" + status + '}';
+        return "Matching{" + "id=" + id + ", bid=" + membership + ", listing=" + listing + ", type=" + type + ", occurrence=" + occurrence + ", status=" + status + '}';
     }
 
 }

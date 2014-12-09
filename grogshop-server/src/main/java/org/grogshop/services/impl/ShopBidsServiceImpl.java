@@ -17,8 +17,10 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Bid;
+import java.security.Principal;
 import java.util.List;
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -41,6 +43,12 @@ public class ShopBidsServiceImpl {
 
     @Inject
     RulesServiceImpl matchingService;
+    
+    @Inject
+    Principal principal;
+    
+    @Inject
+    HttpSession session;
 
     public ShopBidsServiceImpl() {
 
@@ -51,7 +59,7 @@ public class ShopBidsServiceImpl {
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
     public Long newBid(Bid bid) {
-        Long id = bidsService.newBid(bid);
+        Long id = bidsService.newBid(principal.getName(), bid);
         matchingService.insert(bid);
         return id;
     }
@@ -60,7 +68,7 @@ public class ShopBidsServiceImpl {
     @Path("/all")
     @Produces({MediaType.APPLICATION_JSON})
     public List<Bid> getAllBids() {
-        return bidsService.getBids();
+        return bidsService.getBids(principal.getName());
     }
 
     @GET

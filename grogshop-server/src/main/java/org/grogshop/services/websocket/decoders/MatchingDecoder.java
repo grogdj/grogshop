@@ -5,7 +5,7 @@
  */
 package org.grogshop.services.websocket.decoders;
 
-import com.grogdj.grogshop.core.model.Bid;
+import com.grogdj.grogshop.core.model.ClubMembership;
 import com.grogdj.grogshop.core.model.Listing;
 import com.grogdj.grogshop.core.model.Matching;
 import com.grogdj.grogshop.core.model.Tag;
@@ -49,25 +49,25 @@ public class MatchingDecoder implements Decoder.Text<Matching> {
         listing.setTags(listingTags);
         
         
-        Bid bid = new Bid();
-        JsonObject jsonObjectBid = jsonObject.getJsonObject("bid");
-        bid.setId(jsonObjectBid.getJsonNumber("id").longValue());
-        JsonArray jsonArrayBidPriceRange = jsonObjectBid.getJsonArray("priceRange");
-        Double[] priceRangeBid = new Double[]{jsonArrayBidPriceRange.getJsonNumber(0).doubleValue(), jsonArrayBidPriceRange.getJsonNumber(1).doubleValue()};
-        bid.setPriceRange(priceRangeBid);
-        bid.setUserId(jsonObjectBid.getString("userId"));
-        bid.setStatus(Bid.BidStatus.valueOf(jsonObjectBid.getString("status")));
-        JsonArray jsonArrayBidTags = jsonObjectBid.getJsonArray("tags");
-        List<Tag> bidTags = new ArrayList<Tag>(jsonArrayBidTags.size());
-        for(JsonValue jsv : jsonArrayBidTags){
-            bidTags.add(new Tag(jsv.toString()));
+        ClubMembership membership = new ClubMembership();
+        JsonObject jsonObjectMembership = jsonObject.getJsonObject("membership");
+        membership.setId(jsonObjectMembership.getJsonNumber("id").longValue());
+        JsonArray jsonArrayMembershipPriceRange = jsonObjectMembership.getJsonArray("priceRange");
+        Double[] priceRangeMembership = new Double[]{jsonArrayMembershipPriceRange.getJsonNumber(0).doubleValue(), jsonArrayMembershipPriceRange.getJsonNumber(1).doubleValue()};
+        membership.setPriceRange(priceRangeMembership);
+        membership.setUserId(jsonObjectMembership.getString("userId"));
+        //membership.setStatus(Bid.BidStatus.valueOf(jsonObjectBid.getString("status")));
+        JsonArray jsonArrayMembershipTags = jsonObjectMembership.getJsonArray("tags");
+        List<Tag> membershipTags = new ArrayList<Tag>(jsonArrayMembershipTags.size());
+        for(JsonValue jsv : jsonArrayMembershipTags){
+            membershipTags.add(new Tag(jsv.toString()));
         }
-        bid.setTags(bidTags);
+        membership.setTags(membershipTags);
 
         
         Matching matching = new Matching();
         matching.setId(jsonObject.getJsonNumber("matchingId").longValue());
-        matching.setBid(bid);
+        matching.setMembership(membership);
         matching.setListing(listing);
         matching.setOccurrence(new Date(jsonObject.getJsonNumber("occurrence").longValue()));
         matching.setStatus(Matching.MatchingStatus.valueOf(jsonObject.getString("status")));

@@ -1,0 +1,21 @@
+
+<form name="membershipform" id="membershipform"  ng-submit="membershipform.$valid && membershipsFromCtrl.previewClub()" novalidate>
+
+
+    
+
+    <div class="col-md-4 col-sm-4">
+        <div class="form-group">
+            <label for="tags" class="hidden-xs">Tags</label>
+            <tags-input ng-model="membershipsFromCtrl.livemembership.tags" display-property="name" max-tags="5" required>
+                <auto-complete min-length="2" source="loadTags($query)"></auto-complete>
+            </tags-input>
+        </div>
+    </div>
+
+    <div class="col-md-2 col-sm-2">
+        <div class="spacer hidden-xs"></div>
+        <button type="submit" class="btn btn-primary btn-block">Preview <span class="hidden-sm">Club</span></button>
+    </div>
+
+</form>

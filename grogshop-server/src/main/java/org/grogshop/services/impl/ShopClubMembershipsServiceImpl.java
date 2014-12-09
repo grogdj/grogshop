@@ -16,7 +16,7 @@
  */
 package org.grogshop.services.impl;
 
-import com.grogdj.grogshop.core.model.Listing;
+import com.grogdj.grogshop.core.model.ClubMembership;
 import java.security.Principal;
 import java.util.List;
 import javax.inject.Inject;
@@ -29,69 +29,75 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import org.grogshop.services.api.ListingsService;
+import org.grogshop.services.api.ClubMembershipsService;
 import org.grogshop.services.api.NotificationsService;
+import org.grogshop.services.api.RulesService;
 
-
-@Path("/listings")
-public class ShopListingsServiceImpl {
-
-    @Inject
-    Principal principal;
-    
-    @Inject
-    ListingsService listingsService;
+@Path("/memberships")
+public class ShopClubMembershipsServiceImpl {
 
     @Inject
-    RulesServiceImpl matchingService;
+    ClubMembershipsService membershipsService;
 
     @Inject
     NotificationsService notificationService;
-    
+
+    @Inject
+    RulesService matchingService;
+
+    @Inject
+    Principal principal;
+
     @Inject
     HttpSession session;
 
-    @GET
-    @Path("/all")
-    @Produces({"application/json"})
-    public List<Listing> getAllListings() {
-        return listingsService.getAllListings(principal.getName());
+    public ShopClubMembershipsServiceImpl() {
+
     }
 
     @POST
-    @Path("/new")
+    @Path("/join")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public Long newListing(Listing listing) {
-        Long id = listingsService.newListing(principal.getName(), listing);
-        matchingService.insert(listing);
+    public Long joinClub(ClubMembership membership) {
+        Long id = membershipsService.joinClub(principal.getName(), membership);
+        matchingService.insert(membership);
         return id;
+    }
+    
+    @POST
+    @Path("/update")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void updateClubMembership(ClubMembership membership) {
+        membershipsService.updateClubMembership(membership);
+        matchingService.update(membership);
+        
+    }
+
+    @GET
+    @Path("/all")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<ClubMembership> getAllClubMemberships() {
+        return membershipsService.getClubMemberships(principal.getName());
     }
 
     @GET
     @Path("/clear")
-    public void clearListings() {
-        listingsService.clearListings();
+    public void clearClubMemberships() {
+        membershipsService.clearClubMemberships();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void removeClubMembership(@PathParam("id") Long id) {
+        ClubMembership removedMembership = membershipsService.removeClubMembership(id);
+        matchingService.retract(removedMembership);
     }
 
     @GET
-    @Path("/reset")
-    public void resetMatchingService() {
-        matchingService.reset();
-    }
-    
-    @DELETE
     @Path("{id}")
-    public void removeBid(@PathParam("id") Long id) {
-        Listing removedListing = listingsService.removeListing(id);
-        matchingService.retract(removedListing);
-    }
-    
-    @GET
-    @Path("{id}")
-    public Listing getListing(@PathParam("id") Long id) {
-        return listingsService.getListing(id);
+    public ClubMembership getClubMembership(@PathParam("id") Long id) {
+        return membershipsService.getClubMembership(id);
     }
 
 }

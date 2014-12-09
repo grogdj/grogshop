@@ -33,12 +33,20 @@ public class BidsServiceImpl implements BidsService {
     }
 
     @Override
-    public List<Bid> getBids() {
-        return new ArrayList<Bid>(bids);
+    public List<Bid> getBids(String userId) {
+        List<Bid> userBids = new ArrayList<Bid>();
+        for (Bid b : bids) {
+            if (b.getUserId().equals(userId)) {
+                userBids.add(b);
+            }
+        }
+        return userBids;
+
     }
 
     @Override
-    public Long newBid(Bid bid) {
+    public Long newBid(String userId, Bid bid) {
+        bid.setUserId(userId);
         if (bid != null) {
             for (Tag t : bid.getTags()) {
                 tagsService.newTag(t);
@@ -64,7 +72,7 @@ public class BidsServiceImpl implements BidsService {
                 remove = b;
             }
         }
-        if(remove != null){
+        if (remove != null) {
             this.bids.remove(remove);
             return remove;
         }

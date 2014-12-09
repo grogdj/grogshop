@@ -71,7 +71,11 @@
                         //return $http.get('http://grog-restprovider.rhcloud.com/grogshop-server/rest/tags/all');
                         return $http.get('http://localhost:8080/grogshop-server/rest/tags/all');
                     };
-
+                    
+                    $scope.tagAdded = function(tag) {
+                        
+                        $scope.log.push('Added: ' + tag.text);
+                    };
 
 
                 },

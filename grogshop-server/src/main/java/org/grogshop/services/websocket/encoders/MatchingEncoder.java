@@ -7,7 +7,6 @@ package org.grogshop.services.websocket.encoders;
 
 import com.grogdj.grogshop.core.model.Matching;
 import com.grogdj.grogshop.core.model.Tag;
-import java.math.BigDecimal;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -26,7 +25,7 @@ public class MatchingEncoder implements Encoder.Text<Matching> {
     public String encode(Matching matching) throws EncodeException {
 
         JsonArray listingPriceRangeArray = Json.createArrayBuilder().add(matching.getListing().getPriceRange()[0]).add(matching.getListing().getPriceRange()[1]).build();
-        JsonArray bidPriceRangeArray = Json.createArrayBuilder().add(matching.getBid().getPriceRange()[0]).add(matching.getBid().getPriceRange()[1]).build();
+        JsonArray membershipPriceRangeArray = Json.createArrayBuilder().add(matching.getMembership().getPriceRange()[0]).add(matching.getMembership().getPriceRange()[1]).build();
 
         JsonArrayBuilder listingTagsBuilder = Json.createArrayBuilder();
         for (Tag t : matching.getListing().getTags()) {
@@ -35,7 +34,7 @@ public class MatchingEncoder implements Encoder.Text<Matching> {
         JsonArray listingTagsArray = listingTagsBuilder.build();
 
         JsonArrayBuilder bidTagsBuilder = Json.createArrayBuilder();
-        for (Tag t : matching.getBid().getTags()) {
+        for (Tag t : matching.getMembership().getTags()) {
             bidTagsBuilder.add(Json.createObjectBuilder().add("name", t.getName()).build());
         }
         JsonArray bidTagsArray = bidTagsBuilder.build();
@@ -53,10 +52,10 @@ public class MatchingEncoder implements Encoder.Text<Matching> {
                         .add("tags", listingTagsArray)
                         .build())
                 .add("bid", Json.createObjectBuilder()
-                        .add("id", matching.getBid().getId())
-                        .add("userId", matching.getBid().getUserId())
-                        .add("priceRange", bidPriceRangeArray)
-                        .add("status", matching.getBid().getStatus().name())
+                        .add("id", matching.getMembership().getId())
+                        .add("userId", matching.getMembership().getUserId())
+                        .add("priceRange", membershipPriceRangeArray)
+                        //.add("status", matching.getMembership().getStatus().name())
                         .add("tags", bidTagsArray)
                         .build())
                 .build();

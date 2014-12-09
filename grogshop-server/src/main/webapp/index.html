@@ -40,9 +40,8 @@
                 <div class="navbar-header navbar-left ">
                     <button type="button" class="navbar-toggle collapsed btn-block app-toogle-nav" data-toggle="collapse" data-target="#main-nav">
                         <span class="sr-only">Toggle navigation</span>
-                        
-                        <div ng-show="navCtrl.isSelected(1)">Listings</div>
-                        <div ng-show="navCtrl.isSelected(2)">Bids</div>
+                        <div ng-show="navCtrl.isSelected(1)">Memberships</div>
+                        <div ng-show="navCtrl.isSelected(2)">Listings</div>
                         <div ng-show="navCtrl.isSelected(3)">Matchings</div>
                     </button>
                 </div>
@@ -50,8 +49,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="main-nav">
                     <ul class="nav navbar-nav">
-                        <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Listings</a></li>
-                        <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Bids</a></li>
+                        <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Memberships</a></li>
+                        <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Listings</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(3)}"> 
                             <a href ng-click="navCtrl.selectSection(3)">Matchings 
                                 <span class="badge" ng-class="{ 'new': navCtrl.notificationCounter != 0}">{{navCtrl.notificationCounter}}</span>
@@ -68,20 +67,19 @@
 
 
 
+        <section id="memberships" ng-show="navCtrl.isSelected(1)">
+            <div class="container-fluid">
+                <memberships-item></membeships-item>
+            </div>
+        </section>
 
-
-        <section id="listings" ng-show="navCtrl.isSelected(1)">
+        <section id="listings" ng-show="navCtrl.isSelected(2)">
             <div class="container-fluid">
                 <listing-item > </listing-item>
 
-
         </section>
 
-        <section id="bids" ng-show="navCtrl.isSelected(2)">
-            <div class="container-fluid">
-                <bids-item></bids-item>
-            </div>
-        </section>
+        
 
         <section id="notifications" ng-show="navCtrl.isSelected(3)">
             <div class="notification-container">
@@ -117,6 +115,13 @@
                 <div class="container-fluid" ng-show="navCtrl.isSelected(1)">
                     <div class="row">
 
+                        <memberships-form></memberships-form>
+
+                    </div>
+                </div>
+                <div class="container-fluid" ng-show="navCtrl.isSelected(2)">
+                    <div class="row">
+
 
                         <listing-form></listing-form>
 
@@ -124,13 +129,7 @@
                     </div>
                 </div>
 
-                <div class="container-fluid" ng-show="navCtrl.isSelected(2)">
-                    <div class="row">
-
-                        <bids-form></bids-form>
-
-                    </div>
-                </div>
+                
 
             </div>
 
@@ -157,7 +156,7 @@
 
     <script src="js/app.js"></script>
     <script src="js/listings.js"></script>
-    <script src="js/bids.js"></script>
+    <script src="js/memberships.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/matchings.js"></script>
 
