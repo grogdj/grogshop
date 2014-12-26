@@ -9,18 +9,190 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
     </head>
     <body>
-        <form method="POST" action="j_security_check">
+        <div class="signin-screen">
+            <div class="container-fluid">
+                <div class="row">
 
-            Username:
-            <input type="text" name="j_username" />
-            Password:
-            <input type="password" name="j_password" />
+                    <div class="col-md-6 col-md-offset-3 col-sd-8 col-sd-offset-2">
+                        <br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Login
+                            </div>
+                            <div class="panel-body">
+                              
+                                 <form method="POST" class="form-horizontal" action="j_security_check">
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-3 control-label">Username:</label> 
+                                        <div class="col-sm-9">
+                                           <input type="text" id="username" name="j_username" class="form-control" />
+                                        </div>
 
-            <input type="submit" value="Login" />
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="pass" class="col-sm-3 control-label"> Password:</label>
+                                       <div class="col-sm-9">
+                                            <input type="password" id="pass" name="j_password" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3 hidden-xs" ></div>
+                                        <div class="col-sm-9">
+                                            <a href="#"> <small>Forgot your password?</small></a>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-3 hidden-xs" ></div>
+                                        <div class="col-sm-9">
+                                            <button  type="submit" value="Login" class="btn btn-primary col-sm-3 col-xs-12">Sign in</button>
+                                           
+                                        </div>
+                                    </div>
+                                
 
 
-        </form>
+                                </form>
+                               
+                                
+                                 
+                            </div>
+                        </div>
+                        <p class="text-center">
+                            <a href="#" >Create an account</a>
+                        </p>
+
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+
+
+        <div class="password-reset-screen">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-6 col-md-offset-3 col-sd-8 col-sd-offset-2">
+                        <br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Reset password
+                            </div>
+                            <div class="panel-body">
+                                <p class="small text-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus in, minima esse pariatur, libero iure quo excepturi quis quasi ipsam incidunt explicabo doloremque porro, perferendis praesentium tempora. Error, et, ipsam?</p>
+                                 <form method="POST" class="form-inline" action="j_security_check">
+
+
+
+                                    <div class="form-group">
+                                        <label for="username" class="sr-only">Email Address:</label> 
+                                        <input type="email" id="email" name="j_email" class="form-control" placeholder="Your email address" />
+                                        
+                                    </div>
+                                    <button  type="submit" value="Login" class="btn btn-primary">Send</button>
+                                    
+                            
+                                  
+                                
+
+
+                                </form>
+                               
+                                
+                                 
+                            </div>
+                        </div>
+                        <p class="text-center">
+                            <a href="#" >Go back</a>
+                        </p>
+
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        <div class="signup-screen">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-md-6 col-md-offset-3 col-sd-8 col-sd-offset-2">
+                        <br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Create an account
+                            </div>
+                            <div class="panel-body">
+                                
+                                 <form method="POST" class="form-horizontal" action="j_security_check">
+                                     <div class="form-group">
+                                       <label for="email" class="col-sm-4 control-label"> Email:</label>
+                                       <div class="col-sm-8">
+                                            <input type="email" id="email" name="j_email" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-4 control-label">Username:</label> 
+                                        <div class="col-sm-8">
+                                           <input type="text" id="username" name="j_username" class="form-control" />
+                                        </div>
+
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="pass" class="col-sm-4 control-label"> Password:</label>
+                                       <div class="col-sm-8">
+                                            <input type="password" id="pass" name="j_password" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="pass-again" class="col-sm-4 control-label">Repeat password:</label>
+                                       <div class="col-sm-8">
+                                            <input type="password" id="pass-again" name="j_password-again" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 hidden-xs" ></div>
+                                        <div class="col-sm-8">
+                                             <div class="checkbox">
+                                                <label>
+                                                  <input type="checkbox"> <small>Agree to Terms & Conditions</small>
+                                                </label>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 hidden-xs" ></div>
+                                        <div class="col-sm-8">
+                                            <button  type="submit" value="Login" class="btn btn-primary col-sm-3 col-xs-12">Sign up</button>
+                                           
+                                        </div>
+                                    </div>
+                                
+
+
+                                </form>
+                               
+                                
+                                 
+                            </div>
+                        </div>
+
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        
+
+
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
     </body>
 </html>
