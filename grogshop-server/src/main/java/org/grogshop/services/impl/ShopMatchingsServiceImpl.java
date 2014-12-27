@@ -27,7 +27,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.grogshop.services.api.MatchingsService;
 
-@Path("/matchings")
+@Path("/secured/matchings")
 public class ShopMatchingsServiceImpl {
 
     @Inject

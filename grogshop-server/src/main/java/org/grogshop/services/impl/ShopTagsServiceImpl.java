@@ -5,7 +5,6 @@
  */
 package org.grogshop.services.impl;
 
-import com.grogdj.grogshop.core.model.Listing;
 import com.grogdj.grogshop.core.model.Tag;
 import java.util.List;
 import javax.inject.Inject;
@@ -19,7 +18,7 @@ import javax.ws.rs.core.Response;
 import org.grogshop.services.api.TagsService;
 
 
-@Path("/tags")
+@Path("/secured/tags")
 public class ShopTagsServiceImpl {
     @Inject
     private TagsService tagsService;

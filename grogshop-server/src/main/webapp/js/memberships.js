@@ -9,7 +9,7 @@
 
                     var shop = this;
                     shop.memberships = [];
-                    $http.jsonp("http://localhost:8080/grogshop-server/rest/" + "memberships/all" + "?callback=JSON_CALLBACK").success(function (data) {
+                    $http.jsonp("http://localhost:8080/grogshop-server/secured/rest/" + "memberships/all" + "?callback=JSON_CALLBACK").success(function (data) {
                     //$http.jsonp("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"memberships/all"+"?callback=JSON_CALLBACK").success(function (data) {
 
                         shop.memberships = data;
@@ -27,7 +27,7 @@
                     this.deleteMembership = function (membership) {
                         var index = shop.memberships.indexOf(membership);
                         //$http.delete("http://grog-restprovider.rhcloud.com/grogshop-server/" + "rest/memberships/" + membership.id).success(function (data) {
-                        $http.delete("http://localhost:8080/grogshop-server/" + "rest/memberships/" + membership.id).success(function (data) {
+                        $http.delete("http://localhost:8080/grogshop-server/secured/" + "rest/memberships/" + membership.id).success(function (data) {
                             shop.memberships.splice(index, 1);
 
                         }).error(function (data) {
@@ -54,7 +54,7 @@
                     this.previewClub = function () {
                         var membership = {tags: shop.livemembership.tags}
                         //$http.post("http://grog-restprovider.rhcloud.com/grogshop-server/rest/"+"memberships/join",membership).success(function (data) {
-                        $http.post("http://localhost:8080/grogshop-server/rest/" + "memberships/join", membership).success(function (data) {
+                        $http.post("http://localhost:8080/grogshop-server/secured/rest/" + "memberships/join", membership).success(function (data) {
                             membership.id = data;
                             $rootScope.$broadcast('newMembership', membership);
                             shop.livemembership = {};

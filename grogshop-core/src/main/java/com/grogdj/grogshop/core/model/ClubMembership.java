@@ -6,7 +6,6 @@
 package com.grogdj.grogshop.core.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

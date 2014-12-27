@@ -34,7 +34,7 @@ import org.grogshop.services.api.ListingsService;
 import org.grogshop.services.api.NotificationsService;
 
 
-@Path("/listings")
+@Path("/secured/listings")
 public class ShopListingsServiceImpl {
 
     @Inject

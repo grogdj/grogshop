@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.grogshop.services.entities;
+package com.grogdj.grogshop.core.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import javax.persistence.Table;
  *
  * @author salaboy
  */
-@Entity(name = "USERS")
+@Entity(name = "User")
 @Table(name = "USERS")
 public class User implements Serializable {
 

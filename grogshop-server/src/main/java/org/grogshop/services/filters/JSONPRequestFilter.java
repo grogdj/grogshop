@@ -49,7 +49,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
  * @author balunasj
  * 
  */
-@WebFilter("/rest/*")
+@WebFilter("/secured/rest/*")
 public class JSONPRequestFilter implements Filter {
     // The callback method to use
     private static final String CALLBACK_METHOD = "callback";

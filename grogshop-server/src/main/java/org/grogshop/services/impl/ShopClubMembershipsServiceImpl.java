@@ -33,7 +33,7 @@ import org.grogshop.services.api.ClubMembershipsService;
 import org.grogshop.services.api.NotificationsService;
 import org.grogshop.services.api.RulesService;
 
-@Path("/memberships")
+@Path("/secured/memberships")
 public class ShopClubMembershipsServiceImpl {
 
     @Inject

@@ -32,7 +32,7 @@ import javax.ws.rs.core.MediaType;
 import org.grogshop.services.api.BidsService;
 import org.grogshop.services.api.NotificationsService;
 
-@Path("/bids")
+@Path("/secured/bids")
 public class ShopBidsServiceImpl {
 
     @Inject
