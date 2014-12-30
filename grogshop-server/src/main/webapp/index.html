@@ -44,33 +44,28 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="nav navbar-nav" >
-                        <!--
-                        <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Memberships</a></li>
-                        <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Listings</a></li>
-                        <li ng-class="{ active: navCtrl.isSelected(3)}"> 
-                            <a href ng-click="navCtrl.selectSection(3)">Matchings 
-                                <span class="badge" ng-class="{ 'new': navCtrl.notificationCounter != 0}">{{navCtrl.notificationCounter}}</span>
-                            </a>
+                    <ul class="nav navbar-nav" ng-show="main.auth_token" >
+                        <li>
+                          <p class="navbar-text" >
+                                Hi {{main.user}}!
+                          </p>
                         </li>
-                        -->
-                      <li style="color:#FFF" ng-show="main.auth_token">  - {{main.auth_token}} - {{main}}  </li>
-                        
+                        <li ng-class="{active: navCtrl.isSelected(1)}" ><a href  ng-click="navCtrl.selectSection(1)">Home</a></li>
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right" ng-show="!main.auth_token">
                         <li>
                             <a href="#" tabindex="0" role="button" id="login-popover">Login</a>
                         </li>
-                        <li><a href ng-click="navCtrl.selectSection(4)">Register</a></li>
-                        <li><a href ng-click="navCtrl.selectSection(5)">pass</a></li>
+                        <li ng-class="{active : navCtrl.isSelected(4)}"><a href  ng-click="navCtrl.selectSection(4)">Register</a></li>
+                    
 
                         
                     </ul>
-                        <p class="navbar-text navbar-right" ng-show="main.auth_token">
-                            Hi {{main.user}}!
-                        </p>
-                        <li ng-show="main.auth_token"> <button ng-click="logoutUser()" >Logout</button></li>
+                        
+                    <ul class="nav navbar-nav navbar-right" ng-show="main.auth_token">
+                        <li ng-class="{active : navCtrl.isSelected(6)}" ><a href ng-click="navCtrl.selectSection(6)">Settings</a></li>
+                        <li > <a href ng-click="logoutUser()" >Logout</a></li>
                         
                     </ul>
 
@@ -78,13 +73,30 @@
 
             </div>
         </nav>
+        <!-- HOME -->
+        <div class="container" ng-show="navCtrl.isSelected(1)">
+            <div class="row">
+                <div class="jumbotron">
+                    <h1>Grogshop</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur magni earum natus eius sunt hic quaerat impedit at repudiandae laudantium deserunt, repellat optio soluta officia adipisci ipsum tempore quod sapiente.</p>
+                </div>
+            </div>
+        </div>
+        <!-- SETTINGS -->
+        <div class="container" ng-show="navCtrl.isSelected(6)">
+            <div class="row">
+                <div class="page-header">
+                  <h1>Settings <small>User Account Configuration </small></h1>
+                </div>
+            </div>
+        </div>
         <!-- LOST PASSWORD SCREEN -->
         <div class="password-reset-screen" ng-show="navCtrl.isSelected(5)">
             <div class="container-fluid">
                 <div class="row">
 
                     <div class="col-md-6 col-md-offset-3 col-sd-8 col-sd-offset-2">
-                        <br>
+                        
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 Reset password
@@ -129,7 +141,7 @@
                 <div class="row">
 
                     <div class="col-md-6 col-md-offset-3 col-sd-8 col-sd-offset-2">
-                        <br><br><br><br>
+                      
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 Create an account

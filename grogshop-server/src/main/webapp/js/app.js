@@ -5,7 +5,7 @@
 
     app.controller('MainCtrl', function ($scope, $http, $compile) {
         $scope.main = {
-        
+            auth_token : ""
         };
 
 
@@ -53,10 +53,13 @@
                 data: {email: user.email, password: user.password}
             }).success(function (data) {
                 
-                    console.log("You are signed in! "+data.auth_token);
+                    console.log("You are signed in! "+data.auth_token );
                     $scope.main.auth_token = data.auth_token;
                     $scope.credentials = {};
                     $scope.main.user = user.email;
+
+                    $('#login-popover').popover('hide');
+
                 
             }).error(function (data){
                     console.log("Error: "+data);
@@ -95,7 +98,7 @@
 
                 
                     console.log("Welcome to " + data + "!");
-                    $scope.newUser = {};
+                    $scope.newUser = "";
                 
             }).error(function (data) {
               
