@@ -25,8 +25,6 @@ public class UserServiceImpl {
 
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
-    
-    
 
     public UserServiceImpl() {
     }
@@ -38,12 +36,11 @@ public class UserServiceImpl {
         user.setPassword(GrogUtil.hash(user.getPassword()));
         em.persist(user);
         String key = generateWebKey(user.getEmail());
-        System.out.println("User " + user.getEmail() + " registered. Service Key: "+key);
-        return "User " + user.getEmail() + " registered. Service Key: "+key;
+        System.out.println("User " + user.getEmail() + " registered. Service Key: " + key);
+        return "User " + user.getEmail() + " registered. Service Key: " + key;
     }
 
-    
-    public boolean exist(String email){
+    public boolean exist(String email) {
         return (getByEmail(email) != null);
     }
 
@@ -59,17 +56,17 @@ public class UserServiceImpl {
     public List<User> getAllUsers() {
         return em.createNamedQuery("User.getAll", User.class).getResultList();
     }
-    
-    public String generateApplicationKey(String email){
-        String key = email+":"+UUID.randomUUID().toString();
-        System.out.println("Generating Key: "+key);
+
+    public String generateApplicationKey(String email) {
+        String key = email + ":" + UUID.randomUUID().toString();
+        System.out.println("Generating Key: " + key);
         em.persist(new ServiceKey(key, email));
         return key;
     }
-    
-    public String generateWebKey(String email){
-        String key = "webkey";
-        System.out.println("Generating Key: "+key);
+
+    public String generateWebKey(String email) {
+        String key = "webkey:" + email;
+        System.out.println("Generating Key: " + key);
         em.persist(new ServiceKey(key, email));
         return key;
     }
@@ -77,7 +74,7 @@ public class UserServiceImpl {
     public String getKey(String serviceKey) {
         try {
             ServiceKey singleResult = em.createNamedQuery("ServiceKey.getByKey", ServiceKey.class).setParameter("key", serviceKey).getSingleResult();
-            if(singleResult != null){
+            if (singleResult != null) {
                 return singleResult.getEmail();
             }
         } catch (NoResultException e) {
@@ -87,23 +84,15 @@ public class UserServiceImpl {
     }
 
     public boolean existKey(String serviceKey) {
-        try {
-            ServiceKey singleResult = em.createNamedQuery("ServiceKey.getByKey", ServiceKey.class).setParameter("key", serviceKey).getSingleResult();
-            if(singleResult != null){
-                return true;
-            }
-        } catch (NoResultException e) {
-            return false;
-        }
-        return false;
+        return (em.createNamedQuery("ServiceKey.getByKey", ServiceKey.class).setParameter("key", serviceKey).getResultList().size() > 0);
     }
 
     List<String> getAllKeysByEmail(String email) {
-        System.out.println("Email getAllKeysByEmail: "+email);
+        System.out.println("Email getAllKeysByEmail: " + email);
         List<ServiceKey> resultList = em.createNamedQuery("ServiceKey.getByEmail", ServiceKey.class).setParameter("email", email).getResultList();
-        System.out.println("keys size: "+resultList.size());
+        System.out.println("keys size: " + resultList.size());
         List<String> keys = new ArrayList<String>(resultList.size());
-        for(ServiceKey k: resultList){
+        for (ServiceKey k : resultList) {
             keys.add(k.getKey());
         }
         return keys;

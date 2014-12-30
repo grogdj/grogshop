@@ -28,6 +28,11 @@
 
     <growl-notifications></growl-notifications>
 
+    <div ng-repeat="(id, notification) in notifications track by id">
+        <growl-notification>
+            {{notification}}
+        </growl-notification>
+    </div>
 
     <div ng-controller="NavigationController as navCtrl">
 
@@ -47,7 +52,7 @@
                     <ul class="nav navbar-nav" ng-show="main.auth_token" >
                         <li>
                           <p class="navbar-text" >
-                                Hi {{main.user}}!
+                                Hi {{main.user.email}}!
                           </p>
                         </li>
                         <li ng-class="{active: navCtrl.isSelected(1)}" ><a href  ng-click="navCtrl.selectSection(1)">Home</a></li>

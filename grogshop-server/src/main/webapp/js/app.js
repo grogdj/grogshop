@@ -3,26 +3,47 @@
 
     var app = angular.module('grogshop', ['shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngAnimate', 'angular.filter']);
 
-    app.controller('MainCtrl', function ($scope, $http, $compile) {
+    app.controller('MainCtrl', function ($scope, $http, $compile, $rootScope) {
         $scope.main = {
-            auth_token : ""
+            auth_token : "",
+            user: {
+                email: ""
+            }
         };
+        
+        $scope.index = 0;
+        $scope.notifications = {};
+        
+        $rootScope.$on('quickNotification', function (event, data) {
+            var i;
+            
+            if(!data){
+              $scope.invalidNotification = true;
+              return;
+            }
 
-
+            i = $scope.index++;
+            $scope.invalidNotification = false;
+            $scope.notifications[i] = data;
+           
+        });
+        
         $scope.logoutUser = function () {
             $http({
                 method: 'POST',
                 url: 'rest/auth/logout',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey', auth_token: $scope.main.auth_token},
+                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:'+$scope.main.user.email, auth_token: $scope.main.auth_token},
                 
             }).success(function (data) {
                 
                 console.log("You have been logged out."+data);
-                $scope.main = {};
-                
+                $scope.main.auth_token = "";
+                $scope.main.user = {};
+                $rootScope.$broadcast('gohome', "");
+                $rootScope.$broadcast("quickNotification", "You have been logged out.");
             }).error(function (data){
                     console.log("Error: "+data);
-                
+                    $rootScope.$broadcast("quickNotification", "Error: "+data);
             });
             
         };
@@ -32,7 +53,7 @@
             $http({
                 method: 'POST',
                 url: 'rest/auth/login',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey'},
+                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:'+user.email},
                 transformRequest: function (obj) {
                     var str = [];
                     for (var key in obj) {
@@ -52,18 +73,18 @@
                 },
                 data: {email: user.email, password: user.password}
             }).success(function (data) {
-                
+                    $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
                     console.log("You are signed in! "+data.auth_token );
                     $scope.main.auth_token = data.auth_token;
                     $scope.credentials = {};
-                    $scope.main.user = user.email;
+                    $scope.main.user.email = user.email;
 
                     $('#login-popover').popover('hide');
 
                 
             }).error(function (data){
                     console.log("Error: "+data);
-                
+                    $rootScope.$broadcast("quickNotification", "You are NOT logged in because: +data");
             });
         };
        
@@ -95,13 +116,13 @@
                 data: {email: user.email, password: user.password}
             }).success(function (data) {
                
-
-                
+                    $rootScope.$broadcast("quickNotification", "You are  now registered, please login!");
+                    $rootScope.$broadcast("gohome");
                     console.log("Welcome to " + data + "!");
                     $scope.newUser = "";
                 
             }).error(function (data) {
-              
+                    $rootScope.$broadcast("quickNotification", "Something failed, please retry!");
                     console.log("Error : " + data + "!");
                     
                 
@@ -128,6 +149,8 @@
 
         var nav = this;
 
+        
+
         this.selectSection = function (setSection) {
             this.section = setSection;
             if (this.section === 3) {
@@ -137,9 +160,11 @@
 
         this.isSelected = function (checkSection) {
             return this.section === checkSection;
-        }
+        };
 
-
+        $rootScope.$on('gohome', function (event, data) {
+            nav.section = 1;
+        });
 
         $rootScope.$on('newNotification', function (event, data) {
             nav.notificationCounter = nav.notificationCounter + 1;
