@@ -37,7 +37,8 @@ public class UserServiceImpl {
         }
         user.setPassword(GrogUtil.hash(user.getPassword()));
         em.persist(user);
-        String key = generateKey(user.getEmail());
+        String key = generateWebKey(user.getEmail());
+        System.out.println("User " + user.getEmail() + " registered. Service Key: "+key);
         return "User " + user.getEmail() + " registered. Service Key: "+key;
     }
 
@@ -59,8 +60,15 @@ public class UserServiceImpl {
         return em.createNamedQuery("User.getAll", User.class).getResultList();
     }
     
-    public String generateKey(String email){
+    public String generateApplicationKey(String email){
         String key = email+":"+UUID.randomUUID().toString();
+        System.out.println("Generating Key: "+key);
+        em.persist(new ServiceKey(key, email));
+        return key;
+    }
+    
+    public String generateWebKey(String email){
+        String key = "webkey";
         System.out.println("Generating Key: "+key);
         em.persist(new ServiceKey(key, email));
         return key;

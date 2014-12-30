@@ -75,7 +75,7 @@ public class ShopUserServiceImpl {
     @Path("/newkey")
     @Produces({MediaType.APPLICATION_JSON})
     public String newKey(@FormParam("email") String email) {
-        return userService.generateKey(email);
+        return userService.generateApplicationKey(email);
     }
 
     @GET
@@ -83,6 +83,13 @@ public class ShopUserServiceImpl {
     @Produces({MediaType.APPLICATION_JSON})
     public List<String> getAllKeys(@QueryParam("email") String email) {
         return userService.getAllKeysByEmail(email);
+    }
+    
+    @GET
+    @Path("/loadkey")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getKey(@QueryParam("email") String email) {
+        return userService.getAllKeysByEmail(email).get(0);
     }
 
     @POST
@@ -99,7 +106,8 @@ public class ShopUserServiceImpl {
             String authToken = authenticator.login(serviceKey, email, password);
 
             JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-
+            jsonObjBuilder.add("email", email);
+            jsonObjBuilder.add("service_key", serviceKey);
             jsonObjBuilder.add("auth_token", authToken);
 
             JsonObject jsonObj = jsonObjBuilder.build();
@@ -120,6 +128,9 @@ public class ShopUserServiceImpl {
 
     }
 
+    
+    
+    
     @POST
     @Path("/logout")
     public Response logout(

@@ -19,9 +19,9 @@
 CREATE TABLE ROLES (ID INT, NAME VARCHAR(20));
 CREATE TABLE USERS_ROLES (USER_ID INT, ROLE_ID INT);
 
-INSERT INTO USERS (ID, USERNAME, PASSWORD, EMAIL, ADDRESS) VALUES (1, 'grogdj', 'password', 'grogdj@gmail.com', 'LH sessions'); 
-INSERT INTO USERS (ID, USERNAME, PASSWORD, EMAIL, ADDRESS) VALUES (2, 'guest','password' , 'guest@gmail.com', 'guesty town');
-INSERT INTO USERS (ID, USERNAME, PASSWORD, EMAIL, ADDRESS) VALUES (3, 'esala', 'password', 'esala@gmail.com', 'bcn');
+INSERT INTO USERS (ID, EMAIL, PASSWORD) VALUES (1,  'grogdj@gmail.com', 'password' ); 
+INSERT INTO USERS (ID, EMAIL, PASSWORD) VALUES (2, 'guest@gmail.com' ,'password'   );
+INSERT INTO USERS (ID, EMAIL, PASSWORD) VALUES (3,  'esala@gmail.com', 'password' );
 
 INSERT INTO ROLES (ID, NAME) VALUES (1, 'user');
 

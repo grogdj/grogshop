@@ -1,14 +1,14 @@
 'use strict';
 (function () {
 
-    var app = angular.module('grogshop', [ 'shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngAnimate', 'angular.filter']);
+    var app = angular.module('grogshop', ['shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngAnimate', 'angular.filter']);
 
-    app.controller('MainCtrl', function ($scope, $http) {
+    app.controller('MainCtrl', function ($scope, $http, $compile) {
         $scope.main = {
-          user: {}
-          
+            user: {}
+
         };
-  
+
 
         $scope.logoutUser = function () {
             Auth.logout().success(function (data) {
@@ -17,47 +17,95 @@
             });
         };
 
-        $scope.loginUser = function () {
-            Auth.login({
-                email: $scope.main.credentials.email,
-                password: $scope.main.credentials.password,
-                service_key: 'webkey'
+        $scope.loginUser = function (user) {
+            console.log("asd22 " + user.email + " / password" + user.password);
+            $http({
+                method: 'POST',
+                url: 'rest/auth/login',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey'},
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var key in obj) {
+                        if (obj[key] instanceof Array) {
+                            for (var idx in obj[key]) {
+                                var subObj = obj[key][idx];
+                                for (var subKey in subObj) {
+                                    str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
+                                }
+                            }
+                        }
+                        else {
+                            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+                        }
+                    }
+                    return str.join("&");
+                },
+                data: {email: user.email, password: user.password}
             }).success(function (data) {
-                if (data.error) {
-                    console.log("Error:"+data.error);
-                } else {
-                    console.log("You are signed in!");
-                    $scope.main.user.auth_token = data.auth_token;
+                
+                    console.log("You are signed in!"+data.auth_token);
+                    $scope.main.auth_token = data.auth_token;
                     $scope.main.credentials = {};
-                }
+                
+            }).error(function (data){
+                    console.log("Error: "+data);
+                
             });
         };
-        $scope.load = function(user) {
-           console.log("asd " + $scope.newUser.email);  
-        };
+       
 
         $scope.registerUser = function (user) {
-            $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
-            $http.defaults.headers.common.service_key = "webkey";
+            console.log("asd " + user.email + " / " + user.password);
 
-            console.log("asd " + user.email + " / " +  user.password) ;
-
-            $http.post('rest/auth/register',{
-                email: user.email,
-                password: user.password
+            $http({
+                method: 'POST',
+                url: 'rest/auth/register',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var key in obj) {
+                        if (obj[key] instanceof Array) {
+                            for (var idx in obj[key]) {
+                                var subObj = obj[key][idx];
+                                for (var subKey in subObj) {
+                                    str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
+                                }
+                            }
+                        }
+                        else {
+                            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+                        }
+                    }
+                    return str.join("&");
+                },
+                data: {email: user.email, password: user.password}
             }).success(function (data) {
-                if (data.error) {
-                    console.log("Error:"+data.error);
-                }
+               
 
-                if (data.success) {
-                    console.log("Welcome to " + $scope.main.email + "!");
+                
+                    console.log("Welcome to " + data + "!");
                     $scope.newUser = {};
-                }
+                
+            }).error(function (data) {
+              
+                    console.log("Error : " + data + "!");
+                    
+                
             });
         };
 
-
+        $('#login-popover').popover({
+ 
+            html : true,
+                title: function() {
+          return $("#login-form-title").html();
+            },
+            content: function() {
+              return $compile($("#login-form-content").html())($scope);
+            },
+            placement : 'bottom',
+            trigger : 'click'
+        });
     });
 
     app.controller('NavigationController', function ($rootScope) {
@@ -82,7 +130,8 @@
         $rootScope.$on('newNotification', function (event, data) {
             nav.notificationCounter = nav.notificationCounter + 1;
         });
-
+        
+        
     });
 
     app.controller('CreateBarController', function () {
