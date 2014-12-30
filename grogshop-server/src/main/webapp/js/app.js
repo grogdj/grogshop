@@ -1,63 +1,63 @@
 'use strict';
 (function () {
 
-    var app = angular.module('grogshop', ['shopmemberships', 'shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngAnimate', 'angular.filter']);
+    var app = angular.module('grogshop', [ 'shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngAnimate', 'angular.filter']);
 
-    app.controller('MainCtrl', function ($scope) {
-        $scope.$on('authLoaded', function () {
-            $scope.isMember($scope.main.user.name);
-        });
-
-        $scope.loadAuth = function () {
-            Auth.load().success(function (data) {
-                $scope.main.user = data.user;
-                $scope.$broadcast("authLoaded");
-            });
-        }
-
+    app.controller('MainCtrl', function ($scope, $http) {
+        $scope.main = {
+          user: {}
+          
+        };
+  
 
         $scope.logoutUser = function () {
             Auth.logout().success(function (data) {
-                toastr.info("You have been logged out.");
+                console.log("You have been logged out.");
                 $scope.main.user = {};
             });
-        }
+        };
 
         $scope.loginUser = function () {
             Auth.login({
-                username: $scope.main.credentials.email,
-                password: $scope.main.credentials.password
+                email: $scope.main.credentials.email,
+                password: $scope.main.credentials.password,
+                service_key: 'webkey'
             }).success(function (data) {
                 if (data.error) {
-                    toastr.error(data.error);
+                    console.log("Error:"+data.error);
                 } else {
-                    toastr.success("You are signed in!");
-                    $scope.loadAuth();
+                    console.log("You are signed in!");
+                    $scope.main.user.auth_token = data.auth_token;
                     $scope.main.credentials = {};
                 }
             });
-        }
+        };
+        $scope.load = function(user) {
+           console.log("asd " + $scope.newUser.email);  
+        };
 
-        $scope.registerUser = function () {
-            Auth.register({
-                email: $scope.newUser.email,
-                password: $scope.newUser.password,
-                name: $scope.newUser.name,
+        $scope.registerUser = function (user) {
+            $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+            $http.defaults.headers.common.service_key = "webkey";
+
+            console.log("asd " + user.email + " / " +  user.password) ;
+
+            $http.post('rest/auth/register',{
+                email: user.email,
+                password: user.password
             }).success(function (data) {
                 if (data.error) {
-                    toastr.error(data.error);
+                    console.log("Error:"+data.error);
                 }
 
                 if (data.success) {
-                    toastr.success("Welcome to " + $scope.main.serie.name + "!");
-                    $scope.loadAuth();
+                    console.log("Welcome to " + $scope.main.email + "!");
                     $scope.newUser = {};
                 }
             });
-        }
+        };
 
-        $scope.loadAuth();
-        $scope.loadSerie();
+
     });
 
     app.controller('NavigationController', function ($rootScope) {

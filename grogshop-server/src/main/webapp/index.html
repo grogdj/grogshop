@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="lib/ng-tags-input.min.css"> 
         <link rel="stylesheet" type="text/css" href="lib/ng-tags-input.bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="lib/app.css">
+        <link rel="stylesheet" type="text/css" href="css/app.css">
         <link rel="apple-touch-icon" href="appleicon.png">
 
 
@@ -24,7 +24,7 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body>
+    <body >
 
     <growl-notifications></growl-notifications>
 
@@ -38,15 +38,14 @@
                 <div class="navbar-header navbar-left ">
                     <button type="button" class="navbar-toggle collapsed btn-block app-toogle-nav" data-toggle="collapse" data-target="#main-nav">
                         <span class="sr-only">Toggle navigation</span>
-                        <div ng-show="navCtrl.isSelected(1)">Memberships</div>
-                        <div ng-show="navCtrl.isSelected(2)">Listings</div>
-                        <div ng-show="navCtrl.isSelected(3)">Matchings</div>
+                        <span>Open menu</span>
                     </button>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav" >
+                        <!--
                         <li ng-class="{ active: navCtrl.isSelected(1)}" > <a href ng-click="navCtrl.selectSection(1)">Memberships</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(2)}"> <a href ng-click="navCtrl.selectSection(2)">Listings</a></li>
                         <li ng-class="{ active: navCtrl.isSelected(3)}"> 
@@ -54,29 +53,170 @@
                                 <span class="badge" ng-class="{ 'new': navCtrl.notificationCounter != 0}">{{navCtrl.notificationCounter}}</span>
                             </a>
                         </li>
+                        -->
+                        
 
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" tabindex="0" role="button" id="login-popover">Login</a>
+                        </li>
+                        <li><a href ng-click="navCtrl.selectSection(4)">Register</a></li>
+                        <li><a href ng-click="navCtrl.selectSection(5)">pass</a></li>
+
+                        
                     </ul>
 
                 </div>
 
             </div>
         </nav>
-
-
-
-
-        <section id="memberships" ng-show="navCtrl.isSelected(1)">
+        <!-- LOST PASSWORD SCREEN -->
+        <div class="password-reset-screen" ng-show="navCtrl.isSelected(5)">
             <div class="container-fluid">
-                Section 1
+                <div class="row">
 
+                    <div class="col-md-6 col-md-offset-3 col-sd-8 col-sd-offset-2">
+                        <br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Reset password
+                            </div>
+                            <div class="panel-body">
+                                <p class="small text-info">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus in, minima esse pariatur, libero iure quo excepturi quis quasi ipsam incidunt explicabo doloremque porro, perferendis praesentium tempora. Error, et, ipsam?</p>
+                                 <form method="POST" class="form-inline" action="j_security_check">
+
+
+
+                                    <div class="form-group">
+                                        <label for="username" class="sr-only">Email Address:</label> 
+                                        <input type="email" id="email" name="j_email" class="form-control" placeholder="Your email address" />
+                                        
+                                    </div>
+                                    <button  type="submit" value="Login" class="btn btn-primary">Send</button>
+                                    
+                            
+                                  
+                                
+
+
+                                </form>
+                               
+                                
+                                 
+                            </div>
+                        </div>
+                        <p class="text-center">
+                            <a href ng-click="navCtrl.selectSection(1)" >Go back</a>
+                        </p>
+
+                    </div>
+                
+                </div>
             </div>
-        </section>
-
-        <section id="listings" ng-show="navCtrl.isSelected(2)">
+        </div>
+        <!-- SING UP SCREEN -->
+         <div class="signup-screen" ng-show="navCtrl.isSelected(4)">
             <div class="container-fluid">
-                Section 2
+                <div class="row">
+
+                    <div class="col-md-6 col-md-offset-3 col-sd-8 col-sd-offset-2">
+                        <br><br><br><br>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                Create an account
+                            </div>
+                            <div class="panel-body" ng-controller="MainCtrl">
+                                
+                                 <form novalidate  >
+                                     <div class="form-group">
+                                       <label for="email" class="col-sm-4 control-label"> Email:</label>
+                                       <div class="col-sm-8">
+                                            <input type="email" id="email" required ng-model="newUser.email" class="form-control" />
+                                        </div>
+                                    </div>
+
+                                   
+                                    <div class="form-group">
+                                       <label for="pass" class="col-sm-4 control-label"> Password:</label>
+                                       <div class="col-sm-8">
+                                            <input type="password" id="pass" required ng-model="newUser.password"  class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                       <label for="pass-again" class="col-sm-4 control-label">Repeat password:</label>
+                                       <div class="col-sm-8">
+                                            <input type="password" id="pass-again" required ng-model="newUser.password2" class="form-control" />
+                                        </div>
+                                    </div>
+                                    
+                                    
+
+                                    <div class="form-group">
+                                        <div class="col-sm-4 hidden-xs" ></div>
+                                        <div class="col-sm-8">
+                                             <div class="checkbox">
+                                                <label>
+                                                  <input type="checkbox" required ng-model="newUser.terms"> <small>Agree to Terms & Conditions</small>
+                                                </label>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 hidden-xs" ></div>
+                                        <div class="col-sm-8">
+                                            <button  type="submit" value="signup" ng-click="registerUser(newUser)" class="btn btn-primary col-sm-3 col-xs-12">Sign up</button>
+                                           
+                                        </div>
+                                    </div>
+                                
+
+
+                                </form>
+                               
+                                
+                                 
+                            </div>
+                        </div>
+
+                    </div>
+                
+                </div>
             </div>
-        </section>
+        </div>
+
+      
+        <div id="login-form-title" class="hide">
+            Log in
+            
+        </div>
+        <div id="login-form-content" class="hide">
+            <div style="min-width:200px;">
+            <form method="POST" class="form" action="j_security_check">
+                <div class="form-group">
+                    <label for="username"  class=" sr-only control-label">Username:</label> 
+                    <input type="text" id="username" name="j_username" class="form-control" placeholder="Username" />
+                    
+
+                    
+                </div>
+                <div class="form-group">
+                   <label for="pass" class="sr-only control-label"> Password:</label>
+                   <input type="password" id="pass" name="j_password" class="form-control" placeholder="Password" />
+                   
+                </div>
+                <div class="form-group">
+                        <a href ng-click="navCtrl.selectSection(5)"> <small>Forgot your password?</small></a>
+                </div>
+                <div class="form-group">
+                    
+                        <button  type="submit" value="Login" class="btn btn-primary btn-block ">Sign in</button>
+                       
+                    
+                </div>
+            </form>
+            </div>
+        </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -90,6 +230,8 @@
 
 
         <script type="text/javascript" src="js/app.js"></script>
+
+        <script type="text/javascript" src="js/ui.js"></script>
 
         <script type="text/javascript" src="js/notifications.js"></script>
 
