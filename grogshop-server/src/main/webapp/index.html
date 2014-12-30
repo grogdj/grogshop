@@ -54,16 +54,23 @@
                             </a>
                         </li>
                         -->
+                      <li style="color:#FFF" ng-show="main.auth_token">  - {{main.auth_token}} - {{main}}  </li>
                         
 
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" ng-show="!main.auth_token">
                         <li>
                             <a href="#" tabindex="0" role="button" id="login-popover">Login</a>
                         </li>
                         <li><a href ng-click="navCtrl.selectSection(4)">Register</a></li>
                         <li><a href ng-click="navCtrl.selectSection(5)">pass</a></li>
 
+                        
+                    </ul>
+                        <p class="navbar-text navbar-right" ng-show="main.auth_token">
+                            Hi {{main.user}}!
+                        </p>
+                        <li ng-show="main.auth_token"> <button ng-click="logoutUser()" >Logout</button></li>
                         
                     </ul>
 
@@ -129,7 +136,7 @@
                             </div>
                             <div class="panel-body" >
                                 
-                                 <form novalidate  >
+                                 <form novalidate  class="form form-horizontal" >
                                      <div class="form-group">
                                        <label for="email" class="col-sm-4 control-label"> Email:</label>
                                        <div class="col-sm-8">

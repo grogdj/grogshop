@@ -5,8 +5,7 @@
 
     app.controller('MainCtrl', function ($scope, $http, $compile) {
         $scope.main = {
-            user: {}
-
+        
         };
 
 
@@ -43,9 +42,10 @@
                 data: {email: user.email, password: user.password}
             }).success(function (data) {
                 
-                    console.log("You are signed in!"+data.auth_token);
+                    console.log("You are signed in! "+data.auth_token);
                     $scope.main.auth_token = data.auth_token;
-                    $scope.main.credentials = {};
+                    $scope.credentials = {};
+                    $scope.main.user = user.email;
                 
             }).error(function (data){
                     console.log("Error: "+data);
