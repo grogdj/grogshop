@@ -75,7 +75,15 @@ public class UserServiceImpl {
     }
 
     public String getKey(String serviceKey) {
-        return em.find(ServiceKey.class, serviceKey).getEmail();
+        try {
+            ServiceKey singleResult = em.createNamedQuery("ServiceKey.getByKey", ServiceKey.class).setParameter("key", serviceKey).getSingleResult();
+            if(singleResult != null){
+                return singleResult.getEmail();
+            }
+        } catch (NoResultException e) {
+            return "";
+        }
+        return "";
     }
 
     public boolean existKey(String serviceKey) {

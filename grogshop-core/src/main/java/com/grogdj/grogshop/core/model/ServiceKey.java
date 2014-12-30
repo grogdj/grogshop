@@ -7,6 +7,8 @@ package com.grogdj.grogshop.core.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -16,6 +18,9 @@ import javax.persistence.Id;
 @Entity
 public class ServiceKey implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
     private String key;
     private String email;
 
@@ -35,11 +40,28 @@ public class ServiceKey implements Serializable {
         return email;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 61 * hash + (this.key != null ? this.key.hashCode() : 0);
-        hash = 61 * hash + (this.email != null ? this.email.hashCode() : 0);
+        hash = 23 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 23 * hash + (this.key != null ? this.key.hashCode() : 0);
+        hash = 23 * hash + (this.email != null ? this.email.hashCode() : 0);
         return hash;
     }
 
@@ -52,6 +74,9 @@ public class ServiceKey implements Serializable {
             return false;
         }
         final ServiceKey other = (ServiceKey) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
         if ((this.key == null) ? (other.key != null) : !this.key.equals(other.key)) {
             return false;
         }
@@ -63,8 +88,10 @@ public class ServiceKey implements Serializable {
 
     @Override
     public String toString() {
-        return "ServiceKey{" + "key=" + key + ", email=" + email + '}';
+        return "ServiceKey{" + "id=" + id + ", key=" + key + ", email=" + email + '}';
     }
+
+   
     
     
 }

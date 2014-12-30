@@ -10,10 +10,21 @@
 
 
         $scope.logoutUser = function () {
-            Auth.logout().success(function (data) {
-                console.log("You have been logged out.");
-                $scope.main.user = {};
+            $http({
+                method: 'POST',
+                url: 'rest/auth/logout',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey', auth_token: $scope.main.auth_token},
+                
+            }).success(function (data) {
+                
+                console.log("You have been logged out."+data);
+                $scope.main = {};
+                
+            }).error(function (data){
+                    console.log("Error: "+data);
+                
             });
+            
         };
 
         $scope.loginUser = function (user) {
