@@ -7,7 +7,7 @@ package com.grogdj.grogshop.core.model;
 
 /**
  *
- * @author salaboy
+ * @author grogdj
  */
 public class Notification {
 

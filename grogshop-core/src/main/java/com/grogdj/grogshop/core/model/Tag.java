@@ -10,7 +10,7 @@ package com.grogdj.grogshop.core.model;
 
 /**
  *
- * @author salaboy
+ * @author grogdj
  */
 public class Tag {
     private String name;

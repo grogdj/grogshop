@@ -11,7 +11,7 @@ import com.mycompany.grogshop.processing.Embedded;
 
 /**
  *
- * @author salaboy
+ * @author grogdj
  */
 public class NotificationUtils {
 

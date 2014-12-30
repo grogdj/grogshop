@@ -11,7 +11,7 @@ import processing.core.PApplet;
 
 /**
  *
- * @author salaboy
+ * @author grogdj
  */
 public class Embedded extends PApplet {
 

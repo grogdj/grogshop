@@ -21,7 +21,7 @@ import org.kie.api.runtime.KieSession;
 
 /**
  *
- * @author salaboy
+ * @author grogdj
  */
 public class ListingRuntime extends Frame {
 
@@ -70,7 +70,7 @@ public class ListingRuntime extends Frame {
         WeldContainer wc = w.initialize();
         ListingRuntime bean = wc.instance().select(ListingRuntime.class).get();
 
-        Listing listing = new Listing("salaboy", 70);
+        Listing listing = new Listing("grogdj", 70);
         listing.addTag("Car");
         listing.addTag("PT Cruiser");
         listing.addTag("Blue");

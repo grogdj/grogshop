@@ -13,3 +13,5 @@ hs_err_pid*
 /grogshop-core/target/
 /grogshop-processing/target/
 grogshop-server/src/main/webapp/js/listings.js
+/grogshop-services/target/
+/grogshop-filters/target/

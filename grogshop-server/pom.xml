@@ -40,50 +40,17 @@
         
         <dependency>
             <groupId>org.grogshop</groupId>
-            <artifactId>grogshop-core</artifactId>
+            <artifactId>grogshop-services</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.jboss.weld.se</groupId>
-                    <artifactId>weld-se-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
- 
+        
         <!--dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
         </dependency-->
         
-        <!-- JSR-303 (Bean Validation) Implementation -->
-        <!-- Provides portable constraints such as @Email -->
-        <!-- Hibernate Validator is shipped in JBoss WildFly -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
        
-
-        <!--Import dependencies to hibernate packages(eg. hibernate-core) 
-            depending on features you want to use like Hibernate Session used in the 
-            quickstart -->
-        <!--please note that scope is provided as these jars are shipped 
-            with wildfly -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
 
     </dependencies>
  

@@ -5,13 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <title>angular app</title>
+        <title>Welcome to Grog Shop</title>
 
         <!-- Bootstrap -->
-        <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/ng-tags-input.min.css"> 
-        <link rel="stylesheet" type="text/css" href="css/ng-tags-input.bootstrap.min.css">
-        <link href="css/app.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="lib/ng-tags-input.min.css"> 
+        <link rel="stylesheet" type="text/css" href="lib/ng-tags-input.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="lib/app.css">
         <link rel="apple-touch-icon" href="appleicon.png">
 
 
@@ -24,11 +24,9 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body >
-    <growl-notifications>
+    <body>
 
-    </growl-notifications>
-
+    <growl-notifications></growl-notifications>
 
 
     <div ng-controller="NavigationController as navCtrl">
@@ -69,99 +67,31 @@
 
         <section id="memberships" ng-show="navCtrl.isSelected(1)">
             <div class="container-fluid">
-                <memberships-item></membeships-item>
+                Section 1
+
             </div>
         </section>
 
         <section id="listings" ng-show="navCtrl.isSelected(2)">
             <div class="container-fluid">
-                <listing-item > </listing-item>
-
-        </section>
-
-
-
-        <section id="notifications" ng-show="navCtrl.isSelected(3)">
-            <div class="notification-container">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div id="status" style="display:none;"></div>
-                        <notifications-items style="display:none;"> </notifications-items>
-                        <div class="col-md-9">
-                            <matchings-items></matchings-items>
-                        </div>
-                        <div class="col-md-3">
-                            matching info
-                        </div>
-                    </div>
-                </div>
+                Section 2
             </div>
         </section>
 
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="lib/angular.min.js"></script>
+        <script type="text/javascript" src="lib/angular-animate.min.js"></script>
+        <script type="text/javascript" src="lib/angular-filter.min.js"></script>
+        <script type="text/javascript" src="lib/ng-tags-input.min.js"></script>
+        <script type="text/javascript" src="lib/angular-growl-notifications.min.js"></script>
 
 
+        <script type="text/javascript" src="js/app.js"></script>
 
+        <script type="text/javascript" src="js/notifications.js"></script>
 
-
-
-
-        <div id="create-bar" ng-controller="CreateBarController as createCtrl" ng-class="{open: createCtrl.status}" ng-show="navCtrl.isSelected(2) || navCtrl.isSelected(1)">
-            <a class="bar-toogle" href ng-click="createCtrl.status = !createCtrl.status">
-                <span class="create">Create</span>
-                <span class="close-nav">Close</span>
-            </a>
-
-            <div class="create-bar-body">
-                <div class="container-fluid" ng-show="navCtrl.isSelected(1)">
-                    <div class="row">
-
-                        <memberships-form></memberships-form>
-
-                    </div>
-                </div>
-                <div class="container-fluid" ng-show="navCtrl.isSelected(2)">
-                    <div class="row">
-
-
-                        <listing-form></listing-form>
-
-
-                    </div>
-                </div>
-
-
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-
-
-
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/angular.min.js"></script>
-    <script type="text/javascript" src="js/angular-animate.min.js"></script>
-    <script type="text/javascript" src="js/angular-filter.min.js"></script>
-    <script type="text/javascript" src="js/ng-tags-input.min.js"></script>
-    <script type="text/javascript" src="js/angular-growl-notifications.min.js"></script>
-
-
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/listings.js"></script>
-    <script type="text/javascript" src="js/memberships.js"></script>
-    <script type="text/javascript" src="js/notifications.js"></script>
-    <script type="text/javascript" src="js/matchings.js"></script>
-
-
-
-
-</body>
+    </body>
 </html>

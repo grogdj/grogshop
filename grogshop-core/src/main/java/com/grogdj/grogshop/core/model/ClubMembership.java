@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author salaboy
+ * @author grogdj
  */
 public class ClubMembership {
 
