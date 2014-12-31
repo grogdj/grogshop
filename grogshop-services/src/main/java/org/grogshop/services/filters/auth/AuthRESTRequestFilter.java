@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.grogshop.services.filters;
+package org.grogshop.services.filters.auth;
 
 import java.io.IOException;
 import java.util.logging.Logger;

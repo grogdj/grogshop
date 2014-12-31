@@ -14,6 +14,7 @@ import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import org.grogshop.services.api.UserService;
 import org.grogshop.services.util.GrogUtil;
 
 /**
@@ -21,7 +22,7 @@ import org.grogshop.services.util.GrogUtil;
  * @author grogdj
  */
 @Singleton
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
@@ -29,6 +30,7 @@ public class UserServiceImpl {
     public UserServiceImpl() {
     }
 
+    @Override
     public String registerUser(User user) {
         if (getByEmail(user.getEmail()) != null) {
             return "User already registered with email: " + user.getEmail();
@@ -40,10 +42,12 @@ public class UserServiceImpl {
         return "User " + user.getEmail() + " registered. Service Key: " + key;
     }
 
+    @Override
     public boolean exist(String email) {
         return (getByEmail(email) != null);
     }
 
+    @Override
     public User getByEmail(String email) {
         try {
             return em.createNamedQuery("User.getByEmail", User.class).setParameter("email", email).getSingleResult();
@@ -53,24 +57,14 @@ public class UserServiceImpl {
 
     }
 
-    public List<User> getAllUsers() {
-        return em.createNamedQuery("User.getAll", User.class).getResultList();
-    }
-
-    public String generateApplicationKey(String email) {
-        String key = email + ":" + UUID.randomUUID().toString();
-        System.out.println("Generating Key: " + key);
-        em.persist(new ServiceKey(key, email));
-        return key;
-    }
-
-    public String generateWebKey(String email) {
+    private String generateWebKey(String email) {
         String key = "webkey:" + email;
         System.out.println("Generating Key: " + key);
         em.persist(new ServiceKey(key, email));
         return key;
     }
 
+    @Override
     public String getKey(String serviceKey) {
         try {
             ServiceKey singleResult = em.createNamedQuery("ServiceKey.getByKey", ServiceKey.class).setParameter("key", serviceKey).getSingleResult();
@@ -83,18 +77,9 @@ public class UserServiceImpl {
         return "";
     }
 
+    @Override
     public boolean existKey(String serviceKey) {
         return (em.createNamedQuery("ServiceKey.getByKey", ServiceKey.class).setParameter("key", serviceKey).getResultList().size() > 0);
     }
 
-    List<String> getAllKeysByEmail(String email) {
-        System.out.println("Email getAllKeysByEmail: " + email);
-        List<ServiceKey> resultList = em.createNamedQuery("ServiceKey.getByEmail", ServiceKey.class).setParameter("email", email).getResultList();
-        System.out.println("keys size: " + resultList.size());
-        List<String> keys = new ArrayList<String>(resultList.size());
-        for (ServiceKey k : resultList) {
-            keys.add(k.getKey());
-        }
-        return keys;
-    }
 }

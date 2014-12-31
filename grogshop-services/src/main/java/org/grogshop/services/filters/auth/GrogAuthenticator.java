@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import javax.security.auth.login.LoginException;
-import org.grogshop.services.impl.UserServiceImpl;
+import org.grogshop.services.api.UserService;
 import org.grogshop.services.util.GrogUtil;
 
 /**
@@ -29,7 +29,7 @@ public final class GrogAuthenticator {
     private final Map<String, String> authorizationTokensStorage = new HashMap();
     
     @Inject
-    UserServiceImpl userService;
+    UserService userService;
     
 
     private GrogAuthenticator() {

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.grogshop.services.impl;
+package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.ClubMembership;
 import java.security.Principal;

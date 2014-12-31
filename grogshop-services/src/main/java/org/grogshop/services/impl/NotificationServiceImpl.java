@@ -5,7 +5,6 @@
  */
 package org.grogshop.services.impl;
 
-import com.grogdj.grogshop.core.model.Matching;
 import com.grogdj.grogshop.core.model.Notification;
 import java.io.IOException;
 import java.util.Set;
@@ -40,20 +39,6 @@ public class NotificationServiceImpl implements NotificationsService {
         }
     }
 
-    @Override
-    public void notifyMatching(String listingUserId, String bidUserId, Matching matching) {
-        //@TODO: I need to use the userId to identify the correct session
-        System.out.println(">>> Matching \t Listing User: " + listingUserId + " Bid User: " + bidUserId + " - Matching: " + matching);
-        for (Session peer : activeSessions) {
-            try {
-                peer.getBasicRemote().sendObject(matching);
-            } catch (IOException ex) {
-                Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (EncodeException ex) {
-                Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
 
     public void setActiveSessions(Set<Session> activeSessions) {
         this.activeSessions = activeSessions;

@@ -10,9 +10,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import org.grogshop.services.api.NotificationsService;
-import org.grogshop.services.websocket.decoders.MatchingDecoder;
 import org.grogshop.services.websocket.decoders.NotificationDecoder;
-import org.grogshop.services.websocket.encoders.MatchingEncoder;
 import org.grogshop.services.websocket.encoders.NotificationEncoder;
 
 /**
@@ -20,8 +18,8 @@ import org.grogshop.services.websocket.encoders.NotificationEncoder;
  * @author grogdj
  */
 @ServerEndpoint( value = "/shop", 
-        encoders = {NotificationEncoder.class, MatchingEncoder.class}, 
-        decoders = {NotificationDecoder.class, MatchingDecoder.class}
+        encoders = {NotificationEncoder.class}, 
+        decoders = {NotificationDecoder.class}
 )
 public class NotificationsWSEndpoint {
 

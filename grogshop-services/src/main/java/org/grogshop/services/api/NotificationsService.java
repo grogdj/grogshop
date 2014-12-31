@@ -5,7 +5,6 @@
  */
 package org.grogshop.services.api;
 
-import com.grogdj.grogshop.core.model.Matching;
 import java.util.Set;
 import javax.websocket.Session;
 
@@ -16,8 +15,6 @@ import javax.websocket.Session;
 public interface NotificationsService {
 
     void notifyUser(String userId, String message, String type);
-
-    void notifyMatching(String listingUserId, String bidUserId, Matching matching);
 
     void setActiveSessions(Set<Session> activeSessions);
 }

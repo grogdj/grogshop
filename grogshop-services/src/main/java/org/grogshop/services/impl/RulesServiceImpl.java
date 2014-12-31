@@ -5,11 +5,10 @@
  */
 package org.grogshop.services.impl;
 
-import com.grogdj.grogshop.core.model.Matching;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.grogshop.services.api.MatchingsService;
 import org.grogshop.services.api.RulesService;
 import org.grogshop.services.api.NotificationsService;
 import org.kie.api.KieBase;
@@ -31,8 +30,7 @@ public class RulesServiceImpl implements RulesService {
     @Inject
     NotificationsService notificationService;
 
-    @Inject
-    MatchingsService matchingsService;
+  
 
     @Inject
     @KBase("matchingrules")
@@ -58,14 +56,14 @@ public class RulesServiceImpl implements RulesService {
 
             public void objectDeleted(ObjectDeletedEvent event) {
                 System.out.println("event.getOldObject() = " + event.getOldObject());
-                if (event.getOldObject() instanceof Matching) {
-                    notificationService.notifyUser(((Matching) event.getOldObject()).getMembership().getUserId() + ((Matching) event.getOldObject()).getListing().getUserId(),
-                            ((Matching) event.getOldObject()).getId().toString(), "removeMatching");
-                }
+//                if (event.getOldObject() instanceof Matching) {
+//                    notificationService.notifyUser(((Matching) event.getOldObject()).getMembership().getUserId() + ((Matching) event.getOldObject()).getListing().getUserId(),
+//                            ((Matching) event.getOldObject()).getId().toString(), "removeMatching");
+//                }
             }
         });
         kieSession.setGlobal("notificationsService", notificationService);
-        kieSession.setGlobal("matchingsService", matchingsService);
+        
     }
 
     @Override
