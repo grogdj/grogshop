@@ -49,7 +49,8 @@
            
         });
         
-        $scope.logoutUser = function () {
+        $scope.logoutUser = function (isValid) {
+
             $http({
                 method: 'POST',
                 url: 'rest/auth/logout',
@@ -71,46 +72,53 @@
             
         };
 
-        $scope.loginUser = function (user) {
+        $scope.loginUser = function (isValid, user) {
             console.log("asd22 " + user.email + " / password" + user.password);
-            $http({
-                method: 'POST',
-                url: 'rest/auth/login',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:'+user.email},
-                transformRequest: function (obj) {
-                    var str = [];
-                    for (var key in obj) {
-                        if (obj[key] instanceof Array) {
-                            for (var idx in obj[key]) {
-                                var subObj = obj[key][idx];
-                                for (var subKey in subObj) {
-                                    str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
+
+            $scope.submitted = true;
+
+            if(isValid){
+
+                $http({
+                    method: 'POST',
+                    url: 'rest/auth/login',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:'+user.email},
+                    transformRequest: function (obj) {
+                        var str = [];
+                        for (var key in obj) {
+                            if (obj[key] instanceof Array) {
+                                for (var idx in obj[key]) {
+                                    var subObj = obj[key][idx];
+                                    for (var subKey in subObj) {
+                                        str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
+                                    }
                                 }
                             }
+                            else {
+                                str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
+                            }
                         }
-                        else {
-                            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                        }
-                    }
-                    return str.join("&");
-                },
-                data: {email: user.email, password: user.password}
-            }).success(function (data) {
-                    $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
-                    console.log("You are signed in! "+data.auth_token );
+                        return str.join("&");
+                    },
+                    data: {email: user.email, password: user.password}
+                }).success(function (data) {
+                        $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
+                        console.log("You are signed in! "+data.auth_token );
+                        
+                        $cookieStore.put('auth_token', data.auth_token);
+                        $cookieStore.put('email',user.email);
+                        $scope.auth_token = $cookieStore.get('auth_token');
+                        $scope.email = $cookieStore.get('email');
+                        $scope.credentials = {};
+                        $scope.submitted = false;
+                        $rootScope.$broadcast('goTo', "/");
+                         
                     
-                    $cookieStore.put('auth_token', data.auth_token);
-                    $cookieStore.put('email',user.email);
-                    $scope.auth_token = $cookieStore.get('auth_token');
-                    $scope.email = $cookieStore.get('email');
-                    $scope.credentials = {};
-                    $rootScope.$broadcast('goTo', "/");
-                     
-                
-            }).error(function (data){
-                    console.log("Error: "+data);
-                    $rootScope.$broadcast("quickNotification", "You are NOT logged in because: +data");
-            });
+                }).error(function (data){
+                        console.log("Error: "+data);
+                        $rootScope.$broadcast("quickNotification", "You are NOT logged in because: +data");
+                });
+            }
         };
        
 

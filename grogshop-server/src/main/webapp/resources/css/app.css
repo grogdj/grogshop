@@ -349,15 +349,28 @@ section {
 }
 
 
-/* ANGULAR */
+/* ANGULAR FORMS*/
 
-input.ng-invalid.ng-dirty {
-	border-color:#990000;
-}
-input.ng-valid.ng-dirty {
-	border-color:#CCC;
+ .ng-invalid:not(.ng-pristine) {
+    border-color: red;
+    outline-color: red;
 }
 
+.ng-invalid.submitError {
+    border-color: red !important;
+    outline-color: red !important;
+}
+
+.ng-valid:not(.ng-pristine) {
+    border-color: green;
+    outline-color: green;
+}
+
+.error-msg {
+	font-size: 80%;
+	opacity: .5;
+	padding-top: .5em;
+}
 
 
 
