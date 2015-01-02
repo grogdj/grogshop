@@ -6,13 +6,13 @@
 package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.User;
-import java.security.GeneralSecurityException;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.security.auth.login.LoginException;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Context;
@@ -20,8 +20,11 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.api.UserService;
 import org.grogshop.services.endpoints.api.ShopAuthenticationService;
+import org.grogshop.services.exceptions.ServiceException;
 import org.grogshop.services.filters.auth.GrogAuthenticator;
 import org.grogshop.services.filters.auth.GrogHTTPHeaderNames;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -35,69 +38,52 @@ public class ShopAuthenticationServiceImpl implements ShopAuthenticationService 
 
     @Inject
     GrogAuthenticator authenticator;
+    
+    private final static Logger log =  Logger.getLogger( ShopAuthenticationServiceImpl.class.getName() );
 
     public ShopAuthenticationServiceImpl() {
 
     }
 
     @Override
-    public String registerUser(@FormParam("email") String email, @FormParam("password") String password) {
-        return userService.registerUser(new User(email, password));
+    public Response registerUser(@NotNull @Email @NotEmpty @FormParam("email") String email, 
+            @NotNull @NotEmpty @FormParam("password") String password) throws ServiceException{
+        userService.newUser(new User(email, password));
+        return Response.ok().build();
     }
 
     @Override
     public Response login(
             @Context HttpHeaders httpHeaders,
-            @FormParam("email") String email,
-            @FormParam("password") String password) {
+            @NotNull @Email @NotEmpty @FormParam("email") String email,
+            @NotNull @NotEmpty @FormParam("password") String password) throws ServiceException {
 
         String serviceKey = httpHeaders.getHeaderString(GrogHTTPHeaderNames.SERVICE_KEY);
 
-        try {
-            String authToken = authenticator.login(serviceKey, email, password);
+        String authToken = authenticator.login(serviceKey, email, password);
 
-            JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-            jsonObjBuilder.add("email", email);
-            jsonObjBuilder.add("service_key", serviceKey);
-            jsonObjBuilder.add("auth_token", authToken);
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add("email", email);
+        jsonObjBuilder.add("service_key", serviceKey);
+        jsonObjBuilder.add("auth_token", authToken);
 
-            JsonObject jsonObj = jsonObjBuilder.build();
+        JsonObject jsonObj = jsonObjBuilder.build();
 
-            return getNoCacheResponseBuilder(Response.Status.OK).entity(jsonObj.toString()).build();
-
-        } catch (final LoginException ex) {
-
-            JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-
-            jsonObjBuilder.add("message", "Problem matching service key, username and password");
-
-            JsonObject jsonObj = jsonObjBuilder.build();
-
-            return getNoCacheResponseBuilder(Response.Status.UNAUTHORIZED).entity(jsonObj.toString()).build();
-
-        }
+        return getNoCacheResponseBuilder(Response.Status.OK).entity(jsonObj.toString()).build();
 
     }
 
     @Override
     public Response logout(
-            @Context HttpHeaders httpHeaders) {
+            @Context HttpHeaders httpHeaders) throws ServiceException {
 
-        try {
+        String serviceKey = httpHeaders.getHeaderString(GrogHTTPHeaderNames.SERVICE_KEY);
 
-            String serviceKey = httpHeaders.getHeaderString(GrogHTTPHeaderNames.SERVICE_KEY);
+        String authToken = httpHeaders.getHeaderString(GrogHTTPHeaderNames.AUTH_TOKEN);
 
-            String authToken = httpHeaders.getHeaderString(GrogHTTPHeaderNames.AUTH_TOKEN);
+        authenticator.logout(serviceKey, authToken);
 
-            authenticator.logout(serviceKey, authToken);
-
-            return getNoCacheResponseBuilder(Response.Status.NO_CONTENT).build();
-
-        } catch (final GeneralSecurityException ex) {
-
-            return getNoCacheResponseBuilder(Response.Status.INTERNAL_SERVER_ERROR).build();
-
-        }
+        return getNoCacheResponseBuilder(Response.Status.NO_CONTENT).build();
 
     }
 

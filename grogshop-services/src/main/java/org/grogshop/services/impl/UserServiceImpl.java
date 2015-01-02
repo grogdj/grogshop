@@ -7,14 +7,14 @@ package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.ServiceKey;
 import com.grogdj.grogshop.core.model.User;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.grogshop.services.api.UserService;
+import org.grogshop.services.exceptions.ServiceException;
 import org.grogshop.services.util.GrogUtil;
 
 /**
@@ -27,19 +27,22 @@ public class UserServiceImpl implements UserService {
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
 
+    
+    private final static Logger log =  Logger.getLogger( UserServiceImpl.class.getName() );
+    
     public UserServiceImpl() {
     }
 
     @Override
-    public String registerUser(User user) {
+    public void newUser(User user) throws ServiceException {
         if (getByEmail(user.getEmail()) != null) {
-            return "User already registered with email: " + user.getEmail();
+            throw new ServiceException( "User already registered with email: " + user.getEmail(), false);
         }
         user.setPassword(GrogUtil.hash(user.getPassword()));
         em.persist(user);
         String key = generateWebKey(user.getEmail());
-        System.out.println("User " + user.getEmail() + " registered. Service Key: " + key);
-        return "User " + user.getEmail() + " registered. Service Key: " + key;
+        log.log(Level.INFO, "User {0} registered. Service Key: {1}", new Object[]{user.getEmail(), key});
+        
     }
 
     @Override
@@ -59,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     private String generateWebKey(String email) {
         String key = "webkey:" + email;
-        System.out.println("Generating Key: " + key);
+        log.log(Level.INFO, "Generating Key: {0}", key);
         em.persist(new ServiceKey(key, email));
         return key;
     }

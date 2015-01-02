@@ -12,15 +12,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ProfileService;
-import org.grogshop.services.api.UserService;
 import org.grogshop.services.endpoints.api.ShopUserProfileService;
-import org.grogshop.services.filters.auth.GrogAuthenticator;
+import org.grogshop.services.exceptions.ServiceException;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -32,43 +33,36 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     @Inject
-    UserService userService;
-
-    @Inject
-    ProfileService profileService;
-
-    @Inject
-    GrogAuthenticator authenticator;
+    private ProfileService profileService;
+    
+    private final static Logger log =  Logger.getLogger( ShopUserProfileServiceImpl.class.getName() );
 
     public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
     public static final String UPLOAD_DIR = "/tmp";
-
 
     public ShopUserProfileServiceImpl() {
 
     }
 
     @Override
-    public boolean exist(String email) {
-        return profileService.exist(email);
+    public Response exist(String email) throws ServiceException {
+        return Response.ok(profileService.exist(email)).build();
     }
 
     @Override
-    public String newProfile(String email) {
+    public Response newProfile(String email) throws ServiceException {
         if (!profileService.exist(email)) {
-            return profileService.newProfile(new Profile(email));
+            profileService.newProfile(new Profile(email));
+            return Response.ok().build();
         }
-        return "profile for: "+email+" already exists";
+        throw new ServiceException("Profile for " + email + " already exists");
     }
 
     @Override
-    public Response uploadFile(MultipartFormDataInput input) {
-        System.out.println(">>>> sit back - starting file upload...");
+    public Response uploadFile(MultipartFormDataInput input) throws ServiceException {
+        log.info(">>>> sit back - starting file upload...");
 
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
-        for (String k : uploadForm.keySet()) {
-            System.out.println("Key: " + k);
-        }
         List<InputPart> inputParts = uploadForm.get(UPLOADED_FILE_PARAMETER_NAME);
 
         for (InputPart inputPart : inputParts) {
@@ -80,13 +74,13 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
                 byte[] bytes = IOUtils.toByteArray(inputStream);
 
-                System.out.println(">>> File '{" + filename + "}' has been read, size: #{" + bytes.length + "} bytes");
+                log.log(Level.INFO, ">>> File '''{'{0}'}''' has been read, size: #'{'{1}'}' bytes", new Object[]{filename, bytes.length});
                 writeFile(bytes, "/tmp/" + filename);
             } catch (IOException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
             }
         }
-        return Response.status(Response.Status.OK).build();
+        return Response.ok().build();
     }
 
     /**
@@ -100,7 +94,7 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
     }
 
     private void writeFile(byte[] content, String filename) throws IOException {
-        System.out.println(">>> writing " + content.length + " bytes to: " + filename);
+        log.log(Level.INFO, ">>> writing {0} bytes to: {1}", new Object[]{content.length, filename});
         File file = new File(filename);
 
         if (!file.exists()) {
@@ -112,7 +106,7 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
         fop.write(content);
         fop.flush();
         fop.close();
-        System.out.println(">>> writing complete: " + filename);
+        log.log(Level.INFO, ">>> writing complete: {0}", filename);
     }
 
     /**

@@ -6,6 +6,7 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Profile;
+import java.util.logging.Logger;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -21,6 +22,8 @@ public class ProfileServiceImpl implements ProfileService {
 
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
+    
+    private final static Logger log =  Logger.getLogger( ProfileServiceImpl.class.getName() );
 
     @Override
     public boolean exist(String email) {
@@ -37,8 +40,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     }
     @Override
-    public String newProfile(Profile profile){
+    public void newProfile(Profile profile){
         em.persist(profile);
-        return "Profile created";
     }
 }

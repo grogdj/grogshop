@@ -5,15 +5,16 @@
  */
 package org.grogshop.services.filters.auth;
 
-import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import javax.security.auth.login.LoginException;
 import org.grogshop.services.api.UserService;
+import org.grogshop.services.exceptions.ServiceException;
 import org.grogshop.services.util.GrogUtil;
 
 /**
@@ -31,6 +32,7 @@ public final class GrogAuthenticator {
     @Inject
     UserService userService;
     
+    private final static Logger log =  Logger.getLogger( GrogAuthenticator.class.getName() );
 
     private GrogAuthenticator() {
 
@@ -38,18 +40,18 @@ public final class GrogAuthenticator {
     }
 
 
-    public String login(String serviceKey, String email, String password) throws LoginException {
-        System.out.println("serviceKey: "+serviceKey);
-        System.out.println("email: "+email);
-        System.out.println("password: "+password);
+    public String login(String serviceKey, String email, String password) throws ServiceException {
+        log.log(Level.INFO, "serviceKey: {0}", serviceKey);
+        log.log(Level.INFO, "email: {0}", email);
+        log.log(Level.INFO, "password: {0}", password);
         if (userService.existKey(serviceKey)) {
             
             String emailMatch = userService.getKey(serviceKey);
-            System.out.println("emailMatch: "+emailMatch);
+            log.log(Level.INFO, "emailMatch: {0}", emailMatch);
             if (emailMatch.equals(email) && userService.exist(email)) {
 
                 String passwordMatch = userService.getByEmail(email).getPassword();
-                System.out.println("passwordMatch: "+passwordMatch);
+                log.log(Level.INFO, "passwordMatch: {0}", passwordMatch);
                 if (passwordMatch.equals(GrogUtil.hash(password))) {
 
                     /**
@@ -77,7 +79,7 @@ public final class GrogAuthenticator {
 
         }
 
-        throw new LoginException("Don't Come Here Again!");
+        throw new ServiceException("Not Authorized, wrong service key for the provided email and password");
 
     }
 
@@ -139,7 +141,7 @@ public final class GrogAuthenticator {
 
     }
 
-    public void logout(String serviceKey, String authToken) throws GeneralSecurityException {
+    public void logout(String serviceKey, String authToken) throws ServiceException {
 
         if (userService.existKey(serviceKey)) {
 
@@ -168,7 +170,7 @@ public final class GrogAuthenticator {
 
         }
 
-        throw new GeneralSecurityException("Invalid service key and authorization token match.");
+        throw new ServiceException("Invalid service key and authorization token match.", true);
 
     }
 

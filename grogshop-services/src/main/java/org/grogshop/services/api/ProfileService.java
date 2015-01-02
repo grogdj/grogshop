@@ -16,5 +16,5 @@ public interface ProfileService {
     
     Profile getByEmail(String email);
     
-    String newProfile(Profile profile);
+    void newProfile(Profile profile);
 }

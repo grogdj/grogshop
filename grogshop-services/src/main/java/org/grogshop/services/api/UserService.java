@@ -6,6 +6,7 @@
 package org.grogshop.services.api;
 
 import com.grogdj.grogshop.core.model.User;
+import org.grogshop.services.exceptions.ServiceException;
 
 /**
  *
@@ -13,13 +14,13 @@ import com.grogdj.grogshop.core.model.User;
  */
 public interface UserService {
 
-    public String registerUser(User user);
+    public void newUser(User user) throws ServiceException;
 
     public boolean existKey(String serviceKey);
 
     public String getKey(String serviceKey);
 
-    public boolean exist(String email);
+    public boolean exist(String email) ;
 
     public User getByEmail(String email);
     

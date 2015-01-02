@@ -13,8 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -31,10 +34,14 @@ public class User implements Serializable {
     private Long id;
 
     @Size(min = 6, max = 20, message = "An user's password must contain between 5 and 20 characters")
+    @NotNull
+    @NotEmpty
     private String password;
 
     @Column(unique = true)
     @NotNull
+    @NotEmpty
+    @Email
     private String email;
 
     public User() {

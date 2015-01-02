@@ -23,28 +23,8 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
     
-    <!--security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Secured Resources</web-resource-name>
-            <url-pattern>/private/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>user</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint-->
-
-    <!--login-config>
-        <auth-method>FORM</auth-method>
-        <form-login-config>
-            <form-login-page>/login.html</form-login-page>
-            <form-error-page>/error.html</form-error-page>
-        </form-login-config>
-    </login-config>
-
-    <security-role>
-        <role-name>user</role-name>
-    </security-role-->
+    <context-param>
+        <param-name>resteasy.providers</param-name>
+        <param-value>org.grogshop.services.exceptions.ServiceExceptionHandler</param-value>       
+    </context-param>
 </web-app>
