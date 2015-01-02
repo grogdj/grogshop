@@ -27,7 +27,7 @@
             }).success(function (data) {
                
                     $rootScope.$broadcast("quickNotification", "You are  now registered, please login!");
-                    $rootScope.$broadcast("gohome");
+                    $rootScope.$broadcast("goTo", "/");
                     console.log("Welcome to " + data + "!");
                     $scope.newUser = "";
                 

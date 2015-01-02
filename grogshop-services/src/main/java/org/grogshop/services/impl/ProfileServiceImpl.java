@@ -6,6 +6,7 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Profile;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import org.grogshop.services.api.ProfileService;
  *
  * @author salaboy
  */
+@Singleton
 public class ProfileServiceImpl implements ProfileService {
 
     @PersistenceContext(unitName = "primary")

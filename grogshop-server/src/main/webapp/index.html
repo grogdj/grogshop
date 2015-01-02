@@ -54,15 +54,15 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="main-nav">
                         <ul class="nav navbar-nav"  >
-                            <li ng-show="main.auth_token">
+                            <li ng-show="auth_token">
                                   <p class="navbar-text" >
-                                    Hi {{main.user.email}}!
+                                    Hi {{email}}!
                                 </p>
                             </li>
                             <li ng-class="{active: isActive('/')}" ><a href="#" >Home</a></li>
 
                         </ul>
-                    <ul class="nav navbar-nav navbar-right" ng-show="!main.auth_token">
+                    <ul class="nav navbar-nav navbar-right" ng-show="!auth_token">
                         
                         <li ng-class="{active : isActive('/login')}"> <a href="#login" >Login</a></li>
                         <li ng-class="{active : isActive('/signup')}"><a href="#signup" >Register</a></li>
@@ -71,7 +71,7 @@
 
                     </ul>
 
-                    <ul class="nav navbar-nav navbar-right" ng-show="main.auth_token">
+                    <ul class="nav navbar-nav navbar-right" ng-show="auth_token">
                         <li ng-class="{active : isActive('/settings')}" > <a href="#settings">Settings</a></li>
                         <li > <a href="#" ng-click="logoutUser()" >Logout</a></li>
 
@@ -99,6 +99,7 @@
 <script type="text/javascript" src="resources/lib/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/lib/angular.min.js"></script>
 <script type="text/javascript" src="resources/lib/angular-route.min.js"></script>
+<script type="text/javascript" src="resources/lib/angular-cookies.min.js"></script>
 <script type="text/javascript" src="resources/lib/angular-animate.min.js"></script>
 <script type="text/javascript" src="resources/lib/angular-filter.min.js"></script>
 <script type="text/javascript" src="resources/lib/ng-tags-input.min.js"></script>

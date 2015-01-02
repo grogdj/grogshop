@@ -12,7 +12,7 @@
                             </div>
                             <div class="panel-body" >
                                 
-                                 <form novalidate  class="form form-horizontal" >
+                                 <form novalidate  class="form form-horizontal" ng-submit="registerUser(newUser)" >
                                      <div class="form-group">
                                        <label for="email" class="col-sm-4 control-label"> Email:</label>
                                        <div class="col-sm-8">
@@ -49,7 +49,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-4 hidden-xs" ></div>
                                         <div class="col-sm-8">
-                                            <button  type="submit" value="signup" ng-click="registerUser(newUser)" class="btn btn-primary col-sm-3 col-xs-12">Sign up</button>
+                                            <button  type="submit" value="signup" class="btn btn-primary col-sm-3 col-xs-12">Sign up</button>
                                            
                                         </div>
                                     </div>

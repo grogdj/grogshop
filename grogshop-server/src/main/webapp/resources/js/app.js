@@ -1,6 +1,6 @@
 
 
-    var app = angular.module('grogshop', ['shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngRoute','ngAnimate', 'angular.filter']);
+    var app = angular.module('grogshop', ['shopnotifications', 'ngCookies','ngTagsInput', 'growlNotifications', 'ngRoute','ngAnimate', 'angular.filter']);
     
     // configure our routes
     app.config(function($routeProvider ){
@@ -29,14 +29,9 @@
 
     //
 
-    app.controller('MainCtrl', function ($scope, $http, $compile, $rootScope) {
-        $scope.main = {
-            auth_token : "",
-            user: {
-                email: ""
-            }
-        };
-        
+    app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
+        $scope.auth_token=$cookieStore.get('auth_token');
+        $scope.email = $cookieStore.get('email');
         $scope.index = 0;
         $scope.notifications = {};
         
@@ -58,13 +53,15 @@
             $http({
                 method: 'POST',
                 url: 'rest/auth/logout',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:'+$scope.main.user.email, auth_token: $scope.main.auth_token},
+                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:'+$cookieStore.get('email'), auth_token: $cookieStore.get('auth_token')},
                 
             }).success(function (data) {
                 
                 console.log("You have been logged out."+data);
-                $scope.main.auth_token = "";
-                $scope.main.user = {};
+                $cookieStore.remove('auth_token');
+                $cookieStore.remove('email');
+                $scope.auth_token = "";
+                $scope.email = "";
                 $rootScope.$broadcast('goTo', "/");
                 $rootScope.$broadcast("quickNotification", "You have been logged out.");
             }).error(function (data){
@@ -101,11 +98,14 @@
             }).success(function (data) {
                     $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
                     console.log("You are signed in! "+data.auth_token );
-                    $scope.main.auth_token = data.auth_token;
+                    
+                    $cookieStore.put('auth_token', data.auth_token);
+                    $cookieStore.put('email',user.email);
+                    $scope.auth_token = $cookieStore.get('auth_token');
+                    $scope.email = $cookieStore.get('email');
                     $scope.credentials = {};
-                    $scope.main.user.email = user.email;
                     $rootScope.$broadcast('goTo', "/");
-
+                     
                 
             }).error(function (data){
                     console.log("Error: "+data);
