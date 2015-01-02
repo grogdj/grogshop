@@ -5,6 +5,68 @@ body {
 	padding-top: 80px;
 }
 
+
+/* SCREEN ANIMATIONS */
+
+@-webkit-keyframes fadein {
+	from    { opacity: 0;  }
+	
+}
+@-o-keyframes fadein {
+	from    { opacity: 0; }
+	
+}
+
+@-moz-keyframes fadein {
+	from    { opacity: 0;  }
+	
+}
+@keyframes fadein {
+	from    { opacity: 0;  }
+	
+}
+
+@-webkit-keyframes fadeout {
+	to      { opacity: 0;  }
+}
+@-o-keyframes fadeout {
+	to      { opacity: 0;  }
+}
+@-moz-keyframes fadeout {
+	to      { opacity: 0;  }
+}
+@keyframes fadeout {
+	to      { opacity: 0;  }
+}
+
+
+
+
+ .ng-enter  {
+ 	-webkit-animation: fadein .3s both ease-in;
+ 	-o-animation: fadein .3s both ease-in;
+ 	animation: fadein .3s both ease-in;
+ 	-webkit-animation-delay: .3s;
+ 	-o-animation-delay: .3s;
+ 	animation-delay: .3s;
+     
+     z-index: 1000; 
+ }
+
+ .ng-leave           { 	
+    -webkit-animation: fadeout .4s both ease-in;
+ 	-o-animation: fadeout .4s both ease-in;
+ 	animation: fadeout .4s both ease-in; z-index: 1010; 
+ }
+
+ .screen {
+ 	position: absolute;
+ 	top: 0;
+ 	padding-top: 100px;
+ 	width: 100%;
+ }
+
+
 /* NAV BAR */
 
 .app-main-nav {
@@ -328,6 +390,23 @@ growl-notification{
   pointer-events:fill;
   position: relative;
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  cursor: pointer;
+}
+
+growl-notification a {
+	color: #FFF;
+	text-decoration: none;
+	
+}
+growl-notification a:hover {
+	color: #FFF;
+}
+
+growl-notification a.block-link {
+	background-color: #F00;
+	display: inline-block;
+	width: 100%;
+	height: 100%;
 }
 
 

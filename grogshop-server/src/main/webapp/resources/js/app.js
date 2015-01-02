@@ -1,7 +1,33 @@
-'use strict';
-(function () {
 
-    var app = angular.module('grogshop', ['shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngAnimate', 'angular.filter']);
+
+    var app = angular.module('grogshop', ['shopnotifications', 'ngTagsInput', 'growlNotifications', 'ngRoute','ngAnimate', 'angular.filter']);
+    
+    // configure our routes
+    app.config(function($routeProvider ){
+        $routeProvider.when('/',{
+            templateUrl : 'views/home.html',
+            controller : 'homeController'
+        })
+        .when('/signup',{
+            templateUrl : 'views/signup.html',
+            controller : 'signUpController'
+        })
+        .when('/settings',{
+            templateUrl : 'views/settings.html',
+            controller : 'settingsController'
+        })
+         .when('/password',{
+            templateUrl : 'views/password.html',
+            controller : 'passwordController'
+        })
+          .when('/login',{
+            templateUrl : 'views/login.html'
+        })
+         
+    });
+
+
+    //
 
     app.controller('MainCtrl', function ($scope, $http, $compile, $rootScope) {
         $scope.main = {
@@ -39,7 +65,7 @@
                 console.log("You have been logged out."+data);
                 $scope.main.auth_token = "";
                 $scope.main.user = {};
-                $rootScope.$broadcast('gohome', "");
+                $rootScope.$broadcast('goTo', "/");
                 $rootScope.$broadcast("quickNotification", "You have been logged out.");
             }).error(function (data){
                     console.log("Error: "+data);
@@ -78,8 +104,7 @@
                     $scope.main.auth_token = data.auth_token;
                     $scope.credentials = {};
                     $scope.main.user.email = user.email;
-
-                    $('#login-popover').popover('hide');
+                    $rootScope.$broadcast('goTo', "/");
 
                 
             }).error(function (data){
@@ -89,92 +114,36 @@
         };
        
 
-        $scope.registerUser = function (user) {
-            console.log("asd " + user.email + " / " + user.password);
-
-            $http({
-                method: 'POST',
-                url: 'rest/auth/register',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                transformRequest: function (obj) {
-                    var str = [];
-                    for (var key in obj) {
-                        if (obj[key] instanceof Array) {
-                            for (var idx in obj[key]) {
-                                var subObj = obj[key][idx];
-                                for (var subKey in subObj) {
-                                    str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                                }
-                            }
-                        }
-                        else {
-                            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                        }
-                    }
-                    return str.join("&");
-                },
-                data: {email: user.email, password: user.password}
-            }).success(function (data) {
-               
-                    $rootScope.$broadcast("quickNotification", "You are  now registered, please login!");
-                    $rootScope.$broadcast("gohome");
-                    console.log("Welcome to " + data + "!");
-                    $scope.newUser = "";
-                
-            }).error(function (data) {
-                    $rootScope.$broadcast("quickNotification", "Something failed, please retry!");
-                    console.log("Error : " + data + "!");
-                    
-                
-            });
-        };
-
-        $('#login-popover').popover({
- 
-            html : true,
-                title: function() {
-          return $("#login-form-title").html();
-            },
-            content: function() {
-              return $compile($("#login-form-content").html())($scope);
-            },
-            placement : 'bottom',
-            trigger : 'click'
-        });
-    });
-
-    app.controller('NavigationController', function ($rootScope) {
-        this.section = 1;
-        this.notificationCounter = 0;
-
-        var nav = this;
-
+       
         
 
-        this.selectSection = function (setSection) {
-            this.section = setSection;
-            if (this.section === 3) {
-                nav.notificationCounter = 0;
-            }
-        };
-
-        this.isSelected = function (checkSection) {
-            return this.section === checkSection;
-        };
-
-        $rootScope.$on('gohome', function (event, data) {
-            nav.section = 1;
-        });
-
-        $rootScope.$on('newNotification', function (event, data) {
-            nav.notificationCounter = nav.notificationCounter + 1;
-        });
-        
-        
+         
+    
     });
 
-    app.controller('CreateBarController', function () {
-        this.status = false;
+
+
+
+    app.controller('NavigationController', function($scope, $location, $rootScope) {
+       $scope.isActive = function(route) {
+           return route === $location.path();
+       };
+
+        $rootScope.$on('goTo', function (event, data) {
+            $location.path(data);
+        });
+
+       
     });
 
-})();
+
+
+    
+
+      
+
+
+    
+
+
+    
