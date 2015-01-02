@@ -23,5 +23,17 @@
 				_user.email = :email
 		</query>
 	</named-query>
+        
+        
+        <named-query name="Profile.getByEmail">
+		<query>
+			SELECT
+				_profile
+			FROM
+				Profile _profile					
+			WHERE
+				_profile.email = :email
+		</query>
+	</named-query>
 	
 </entity-mappings>

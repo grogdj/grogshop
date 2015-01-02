@@ -25,6 +25,7 @@
     
     <context-param>
         <param-name>resteasy.providers</param-name>
-        <param-value>org.grogshop.services.exceptions.ServiceExceptionHandler</param-value>       
+        <param-value>org.grogshop.services.exceptions.ServiceExceptionHandler</param-value>   
+        <param-value>org.grogshop.services.exceptions.ConstraintValidationExceptionHandler</param-value>       
     </context-param>
 </web-app>

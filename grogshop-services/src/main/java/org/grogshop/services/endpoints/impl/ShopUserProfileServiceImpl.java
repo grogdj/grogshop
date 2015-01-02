@@ -16,12 +16,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ProfileService;
 import org.grogshop.services.endpoints.api.ShopUserProfileService;
 import org.grogshop.services.exceptions.ServiceException;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -45,12 +49,12 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
     }
 
     @Override
-    public Response exist(String email) throws ServiceException {
+    public Response exist( @NotNull @Email @NotEmpty @FormParam("email") String email) throws ServiceException {
         return Response.ok(profileService.exist(email)).build();
     }
 
     @Override
-    public Response newProfile(String email) throws ServiceException {
+    public Response newProfile(@NotNull @Email @NotEmpty @FormParam("email") String email) throws ServiceException {
         if (!profileService.exist(email)) {
             profileService.newProfile(new Profile(email));
             return Response.ok().build();

@@ -6,13 +6,18 @@
 package org.grogshop.services.endpoints.api;
 
 import javax.ejb.Local;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.exceptions.ServiceException;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 /**
@@ -29,14 +34,16 @@ public interface ShopUserProfileService {
     public Response uploadFile(MultipartFormDataInput input) throws ServiceException;
 
     @Path("/exist")
-    @Consumes({MediaType.APPLICATION_JSON})
+    @POST
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response exist(String email) throws ServiceException;
+    Response exist(@NotNull @Email @NotEmpty @FormParam("email")  String email) throws ServiceException;
     
     @Path("/new")
-    @Consumes({MediaType.APPLICATION_JSON})
+    @POST
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response newProfile(String email) throws ServiceException;
+    Response newProfile(@NotNull @Email @NotEmpty @FormParam("email") String email) throws ServiceException;
     
     
     
