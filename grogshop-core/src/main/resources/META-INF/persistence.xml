@@ -26,6 +26,7 @@
     <mapping-file>META-INF/servicekey.xml</mapping-file>
     <class>com.grogdj.grogshop.core.model.User</class>
     <class>com.grogdj.grogshop.core.model.ServiceKey</class>
+    <class>com.grogdj.grogshop.core.model.Profile</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- Properties for Hibernate -->

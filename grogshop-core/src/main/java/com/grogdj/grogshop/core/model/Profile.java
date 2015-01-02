@@ -25,6 +25,9 @@ public class Profile implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @NotNull
+    private String email;
 
     private String introduction;
 
@@ -33,14 +36,15 @@ public class Profile implements Serializable {
     private String avatar;
     
     private String realname;
-    
-    @NotNull
-    private String email;
-    
+
 
     public Profile() {
     }
 
+    public Profile(String email) {
+        this.email = email;
+    }
+    
     public Long getId() {
         return id;
     }
