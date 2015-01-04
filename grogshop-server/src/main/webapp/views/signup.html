@@ -47,8 +47,8 @@
                                         <div class="col-sm-8">
                                              <div class="checkbox">
                                                 <label>
-                                                  <input type="checkbox" required ng-model="newUser.terms" required ng-class="{submitError: submitted}"  > <small>Agree to Terms & Conditions</small>
-                                                  <div class="error-msg" ng-show="!registerForm.terms && submitted">You must agree to the terms and conditions</div>
+                                                  <input type="checkbox" name="terms" id="terms"  ng-model="newUser.terms" required ng-class="{submitError: submitted}"  > <small>Agree to Terms & Conditions</small>
+                                                  <div class="error-msg" ng-hide="registerForm.terms.$valid || !submitted">You must agree to the terms and conditions</div>
                                                 </label>
                                               </div>
                                         </div>

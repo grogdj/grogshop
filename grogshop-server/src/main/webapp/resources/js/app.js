@@ -20,8 +20,13 @@
             templateUrl : 'views/password.html',
             controller : 'passwordController'
         })
-          .when('/login',{
+        .when('/login',{
             templateUrl : 'views/login.html'
+        })
+
+        .when('/firstlogin',{
+            templateUrl : 'views/firstlogin.html',
+            controller : 'firstLoginController'
         })
          
     });
