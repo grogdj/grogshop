@@ -3,27 +3,15 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
 	
 	
-	<named-query name="User.getAll">
+	<named-query name="Tag.getAll">
 		<query>
 			SELECT
-				_user
+				_tag
 			FROM
-				User _user					
+				Tag _tag					
 		</query>
 	</named-query>
 	
 
-	<named-query name="User.getByEmail">
-		<query>
-			SELECT
-				_user
-			FROM
-				User _user					
-			WHERE
-				_user.email = :email
-		</query>
-	</named-query>
-        
-       
 	
 </entity-mappings>

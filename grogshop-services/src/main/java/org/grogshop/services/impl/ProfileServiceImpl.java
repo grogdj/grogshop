@@ -26,19 +26,11 @@ public class ProfileServiceImpl implements ProfileService {
     private final static Logger log =  Logger.getLogger( ProfileServiceImpl.class.getName() );
 
     @Override
-    public boolean exist(String email) {
-        return (getByEmail(email) != null);
+    public boolean exist(Long user_id) {
+        return (em.find(Profile.class, user_id) != null);
     }
 
-    @Override
-    public Profile getByEmail(String email) {
-        try {
-            return em.createNamedQuery("Profile.getByEmail", Profile.class).setParameter("email", email).getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }
-
-    }
+   
     @Override
     public void newProfile(Profile profile){
         em.persist(profile);

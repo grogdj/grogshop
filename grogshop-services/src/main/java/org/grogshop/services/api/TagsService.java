@@ -7,17 +7,17 @@ package org.grogshop.services.api;
 
 import com.grogdj.grogshop.core.model.Tag;
 import java.util.List;
+import org.grogshop.services.exceptions.ServiceException;
 
 /**
  *
  * @author grogdj
  */
 public interface TagsService {
+    
     List<Tag> getAllTags();
-
-    List<Tag> getTopTags(int amount);
     
-    void newTag(Tag tag);
+    void newTag(String tag) throws ServiceException;
     
-    void clearTags();
+    
 }

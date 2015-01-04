@@ -37,6 +37,8 @@
     app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
         $scope.auth_token=$cookieStore.get('auth_token');
         $scope.email = $cookieStore.get('email');
+        $scope.user_id= $cookieStore.get('user_id');
+        $scope.firstLogin = $cookieStore.get('firstLogin');
         $scope.index = 0;
         $scope.notifications = {};
         
@@ -68,6 +70,8 @@
                 $cookieStore.remove('email');
                 $scope.auth_token = "";
                 $scope.email = "";
+                $scope.user_id = "";
+                $scope.firstLogin = "";
                 $rootScope.$broadcast('goTo', "/");
                 $rootScope.$broadcast("quickNotification", "You have been logged out.");
             }).error(function (data){
@@ -111,13 +115,21 @@
                         console.log("You are signed in! "+data.auth_token );
                         
                         $cookieStore.put('auth_token', data.auth_token);
-                        $cookieStore.put('email',user.email);
+                        $cookieStore.put('email',data.email);
+                        $cookieStore.put('user_id',data.user_id);
+                        $cookieStore.put('firstLogin',data.firstLogin);
                         $scope.auth_token = $cookieStore.get('auth_token');
                         $scope.email = $cookieStore.get('email');
+                        $scope.user_id = $cookieStore.get('user_id');
+                        $scope.firstLogin = $cookieStore.get('firstLogin');
                         $scope.credentials = {};
                         $scope.submitted = false;
-                        $rootScope.$broadcast('goTo', "/");
-                         
+                        console.log("firstLogin: "+$scope.firstLogin);
+                        if($scope.firstLogin){
+                            $rootScope.$broadcast('goTo', "/firstlogin");
+                        }else{
+                            $rootScope.$broadcast('goTo', "/");
+                        }
                     
                 }).error(function (data){
                         console.log("Error: "+data);

@@ -24,9 +24,11 @@
     <jta-data-source>java:jboss/datasources/QuickstartDS</jta-data-source>
     <mapping-file>META-INF/users.xml</mapping-file>
     <mapping-file>META-INF/servicekey.xml</mapping-file>
+    <mapping-file>META-INF/tags.xml</mapping-file>
     <class>com.grogdj.grogshop.core.model.User</class>
     <class>com.grogdj.grogshop.core.model.ServiceKey</class>
     <class>com.grogdj.grogshop.core.model.Profile</class>
+    <class>com.grogdj.grogshop.core.model.Tag</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- Properties for Hibernate -->

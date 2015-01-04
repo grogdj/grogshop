@@ -55,7 +55,7 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
         if (clubMembership != null) {
             clubMembership.setUserId(userId);
             for (Tag t : clubMembership.getTags()) {
-                tagsService.newTag(t);
+//                tagsService.newTag(t);
             }
             
             this.memberships.add(clubMembership);
@@ -88,7 +88,7 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
         if (clubMembership != null) {
 
             for (Tag t : clubMembership.getTags()) {
-                tagsService.newTag(t);
+//                tagsService.newTag(t);
             }
             this.memberships.add(clubMembership);
         } else {

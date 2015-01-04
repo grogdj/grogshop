@@ -7,11 +7,14 @@ package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Tag;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Singleton;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.grogshop.services.api.TagsService;
+import org.grogshop.services.exceptions.ServiceException;
 
 /**
  *
@@ -19,23 +22,28 @@ import org.grogshop.services.api.TagsService;
  */
 @Singleton
 public class TagsServiceImpl implements TagsService{
-
-    private Set<Tag> tags = new HashSet<Tag>();
     
+    @PersistenceContext(unitName = "primary")
+    private EntityManager em;
+
+    
+    private final static Logger log =  Logger.getLogger( TagsServiceImpl.class.getName() );
+
+    
+    @Override
+    public void newTag(String tag) throws ServiceException {
+        em.persist(new Tag(tag));
+        log.log(Level.INFO, "Tag {0} created", new Object[]{tag});
+        
+    }
+    
+    @Override
     public List<Tag> getAllTags() {
-        return new ArrayList<Tag>(this.tags);
+        return em.createNamedQuery("Tag.getAll", Tag.class).getResultList();
     }
     
-    public void newTag(Tag tag){
-        this.tags.add(tag);
-    }
+   
 
-    public void clearTags() {
-        this.tags.clear();
-    }
-
-    public List<Tag> getTopTags(int amount) {
-        return new ArrayList<Tag>(this.tags);
-    }
+   
     
 }

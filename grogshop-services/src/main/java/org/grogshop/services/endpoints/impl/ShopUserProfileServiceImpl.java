@@ -38,8 +38,8 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     @Inject
     private ProfileService profileService;
-    
-    private final static Logger log =  Logger.getLogger( ShopUserProfileServiceImpl.class.getName() );
+
+    private final static Logger log = Logger.getLogger(ShopUserProfileServiceImpl.class.getName());
 
     public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
     public static final String UPLOAD_DIR = "/tmp";
@@ -49,17 +49,17 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
     }
 
     @Override
-    public Response exist( @NotNull @Email @NotEmpty @FormParam("email") String email) throws ServiceException {
-        return Response.ok(profileService.exist(email)).build();
+    public Response exist(@NotNull @FormParam("user_id") Long user_id) throws ServiceException {
+        return Response.ok(profileService.exist(user_id)).build();
     }
 
     @Override
-    public Response newProfile(@NotNull @Email @NotEmpty @FormParam("email") String email) throws ServiceException {
-        if (!profileService.exist(email)) {
-            profileService.newProfile(new Profile(email));
+    public Response newProfile(@NotNull @FormParam("user_id") Long user_id) throws ServiceException {
+        if (!profileService.exist(user_id)) {
+            profileService.newProfile(new Profile(user_id));
             return Response.ok().build();
         }
-        throw new ServiceException("Profile for " + email + " already exists");
+        throw new ServiceException("Profile for " + user_id + " already exists");
     }
 
     @Override

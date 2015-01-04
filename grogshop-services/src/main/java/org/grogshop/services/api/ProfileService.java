@@ -12,9 +12,8 @@ import com.grogdj.grogshop.core.model.Profile;
  * @author salaboy
  */
 public interface ProfileService {
-    boolean exist(String email);
-    
-    Profile getByEmail(String email);
-    
+
+    boolean exist(Long user_id);
+
     void newProfile(Profile profile);
 }

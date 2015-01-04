@@ -18,6 +18,7 @@ import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import org.grogshop.services.api.ProfileService;
 import org.grogshop.services.api.UserService;
 import org.grogshop.services.endpoints.api.ShopAuthenticationService;
 import org.grogshop.services.exceptions.ServiceException;
@@ -35,6 +36,9 @@ public class ShopAuthenticationServiceImpl implements ShopAuthenticationService 
 
     @Inject
     UserService userService;
+    
+    @Inject
+    ProfileService profileService;
 
     @Inject
     GrogAuthenticator authenticator;
@@ -61,11 +65,14 @@ public class ShopAuthenticationServiceImpl implements ShopAuthenticationService 
         String serviceKey = httpHeaders.getHeaderString(GrogHTTPHeaderNames.SERVICE_KEY);
 
         String authToken = authenticator.login(serviceKey, email, password);
-
+        User authUser = userService.getByEmail(email);
+        boolean firstLogin = !profileService.exist(authUser.getId());
         JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
         jsonObjBuilder.add("email", email);
         jsonObjBuilder.add("service_key", serviceKey);
         jsonObjBuilder.add("auth_token", authToken);
+        jsonObjBuilder.add("user_id", authUser.getId());
+        jsonObjBuilder.add("firstLogin", firstLogin);
 
         JsonObject jsonObj = jsonObjBuilder.build();
 
