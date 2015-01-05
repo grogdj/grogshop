@@ -555,6 +555,9 @@ tags-input .autocomplete  {
     -ms-user-select: none;
     user-select: none;
     overflow: hidden;
+    -webkit-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
 
 	
 }
@@ -604,6 +607,12 @@ tags-input .autocomplete  {
     background-repeat: no-repeat;
     background-size: cover;
 	opacity: .1;
+	-webkit-transition: opacity .3s ease-in-out;
+	-moz-transition: opacity .3s ease-in-out;
+	-ms-transition: opacity .3s ease-in-out;
+	-o-transition: opacity .3s ease-in-out;
+	transition: opacity .3s ease-in-out;
+	
 }
 
 .mainTag.checked .image {
