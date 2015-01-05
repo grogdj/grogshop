@@ -5,9 +5,7 @@
  */
 package org.grogshop.services.endpoints.api;
 
-import com.grogdj.grogshop.core.model.Tag;
 import java.io.Serializable;
-import java.util.List;
 import javax.ejb.Local;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -19,7 +17,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.exceptions.ServiceException;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -28,15 +25,16 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Local
 @Path("/tags")
-public interface ShopTagsService extends Serializable{
+public interface ShopTagsService extends Serializable {
+
     @Path("/new")
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response newTag(@NotNull @Email @NotEmpty @FormParam("tag") String tag) throws ServiceException;
-    
+    Response newTag(@NotNull @NotEmpty @FormParam("tag") String tag) throws ServiceException;
+
     @GET
     @Path("/all")
     @Produces({"application/json"})
-    List<Tag> getAllTags(); 
+    Response getAllTags();
 }

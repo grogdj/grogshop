@@ -28,7 +28,7 @@ app.controller('signUpController', function ($scope, $http, $rootScope) {
                 },
                 data: {email: $scope.newUser.email, password: $scope.newUser.pass}
             }).success(function (data) {
-                //$scope.newUser = "";
+                
                 $rootScope.$broadcast("quickNotification", "You are  now registered, please login!");
                 $rootScope.$broadcast("goTo", "/");
                 console.log("Welcome to " + $scope.newUser.email + "!");
@@ -36,8 +36,8 @@ app.controller('signUpController', function ($scope, $http, $rootScope) {
                 $scope.registerForm.$setPristine();
 
             }).error(function (data) {
-                $rootScope.$broadcast("quickNotification", "Something failed, please retry!");
-                console.log("Error : " + data + "!");
+                $rootScope.$broadcast("quickNotification", "Something failed: "+data.error);
+                console.log("Error : " + data.error + "!");
 
 
             });
