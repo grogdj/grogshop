@@ -6,6 +6,7 @@
 package org.grogshop.services.api;
 
 import com.grogdj.grogshop.core.model.Profile;
+import org.grogshop.services.exceptions.ServiceException;
 
 /**
  *
@@ -13,7 +14,12 @@ import com.grogdj.grogshop.core.model.Profile;
  */
 public interface ProfileService {
 
-    boolean exist(Long user_id);
+    boolean exist(Long user_id) throws ServiceException;
+    
+    Profile getById(Long user_id) throws ServiceException;
 
-    void newProfile(Profile profile);
+    void create(Long user_id) throws ServiceException;
+    
+    void update(Long user_id, String username, 
+            String location, String bio) throws ServiceException;
 }

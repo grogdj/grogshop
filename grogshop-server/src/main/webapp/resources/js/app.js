@@ -19,6 +19,7 @@
          .when('/password',{
             templateUrl : 'views/password.html',
             controller : 'passwordController'
+            
         })
         .when('/login',{
             templateUrl : 'views/login.html'
@@ -132,8 +133,8 @@
                         }
                     
                 }).error(function (data){
-                        console.log("Error: "+data);
-                        $rootScope.$broadcast("quickNotification", "You are NOT logged in because: +data");
+                        console.log("Error: "+data.error);
+                        $rootScope.$broadcast("quickNotification", "You are NOT logged in because:" +data.error);
                 });
             }
         };

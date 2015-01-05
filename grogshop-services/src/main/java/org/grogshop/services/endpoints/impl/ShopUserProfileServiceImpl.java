@@ -16,16 +16,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ProfileService;
 import org.grogshop.services.endpoints.api.ShopUserProfileService;
 import org.grogshop.services.exceptions.ServiceException;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
@@ -49,22 +51,48 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
     }
 
     @Override
+    public Response get(@PathParam("id") Long user_id) throws ServiceException {
+        Profile p = profileService.getById(user_id);
+        if(p == null){
+            throw new ServiceException("Profile for " + user_id + " doesn't exists");
+        }
+        JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
+        jsonObjBuilder.add("bio", (p.getIntroduction()==null)?"":p.getIntroduction());
+        jsonObjBuilder.add("location", (p.getPostcode()==null)?"":p.getPostcode());
+        jsonObjBuilder.add("username", (p.getRealname()==null)?"":p.getRealname());
+
+        JsonObject jsonObj = jsonObjBuilder.build();
+        return Response.ok(jsonObj.toString()).build();
+    }
+
+    @Override
     public Response exist(@NotNull @FormParam("user_id") Long user_id) throws ServiceException {
         return Response.ok(profileService.exist(user_id)).build();
     }
 
     @Override
-    public Response newProfile(@NotNull @FormParam("user_id") Long user_id) throws ServiceException {
+    public Response create(@NotNull @FormParam("user_id") Long user_id) throws ServiceException {
         if (!profileService.exist(user_id)) {
-            profileService.newProfile(new Profile(user_id));
+            profileService.create(user_id);
             return Response.ok().build();
         }
         throw new ServiceException("Profile for " + user_id + " already exists");
     }
+    
+    @Override
+    public Response update(@NotNull @PathParam("user_id") Long user_id, 
+            @FormParam("username") String username, 
+            @FormParam("location") String location, 
+            @FormParam("bio") String bio ) throws ServiceException {
+            profileService.update(user_id, username, location, bio);
+            return Response.ok().build();
+        
+    }
+    
 
     @Override
-    public Response uploadFile(MultipartFormDataInput input) throws ServiceException {
-        log.info(">>>> sit back - starting file upload...");
+    public Response uploadFile(@NotNull @PathParam("id") Long user_id, MultipartFormDataInput input) throws ServiceException {
+        log.info(">>>> sit back - starting file upload for user_id..."+user_id);
 
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         List<InputPart> inputParts = uploadForm.get(UPLOADED_FILE_PARAMETER_NAME);
