@@ -1,9 +1,11 @@
- <!-- HOME -->
-        <div class="container">
-            <div class="row">
-                <div class="jumbotron">
-                    <h1>First Login</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-                </div>
-            </div>
-        </div>
+ <!-- FIRST LOGIN -->
+<div class="mainTags-container">
+	<div class="mainTag" ng-click="toogleCheck(mainTag.name)" ng-class="{'checked': selectedTagsName.indexOf(mainTag.name) > -1}" ng-repeat="mainTag in mainTags" style="width: {{elementWidth}}px; height: {{elementHeight}}px; ">
+		<div class="tagName"><span>{{mainTag.name}}</span></div>
+		<div class="image" style="background-image: url('{{imagePath}}{{mainTag.image}}');"></div>
+		
+		
+	</div>
+
+
+</div>
