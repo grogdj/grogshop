@@ -33,6 +33,7 @@
                         $rootScope.$broadcast("goTo", "/");
                         console.log("Welcome to " + $scope.newUser.email + "!");
                         $scope.newUser = "";
+                        $scope.registerForm.$pristine();
                     
                 }).error(function (data) {
                         $rootScope.$broadcast("quickNotification", "Something failed, please retry!");
