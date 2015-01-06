@@ -9,6 +9,7 @@ import com.grogdj.grogshop.core.model.Tag;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,36 +21,43 @@ import org.grogshop.services.exceptions.ServiceException;
  * @author grogdj
  */
 @Singleton
-public class TagsServiceImpl implements TagsService{
-    
+public class TagsServiceImpl implements TagsService {
+
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
 
-    
-    private final static Logger log =  Logger.getLogger( TagsServiceImpl.class.getName() );
+    private final static Logger log = Logger.getLogger(TagsServiceImpl.class.getName());
 
-    
+    @PostConstruct
+    private void init() throws ServiceException {
+        newTag("music", "music.jpg");
+        newTag("art", "art.jpg");
+        newTag("science", "science.jpg");
+        newTag("sports", "sports.jpg");
+        newTag("cars", "cars.jpg");
+        newTag("cooking", "cooking.jpg");
+        newTag("design", "design.jpg");
+        newTag("health", "health.jpg");
+
+    }
+
     @Override
     public void newTag(String tag) throws ServiceException {
         em.persist(new Tag(tag));
         log.log(Level.INFO, "Tag {0} created", new Object[]{tag});
-        
+
     }
-    
+
     @Override
     public void newTag(String tag, String imagePath) throws ServiceException {
         em.persist(new Tag(tag, imagePath));
         log.log(Level.INFO, "Tag {0} - {1} created", new Object[]{tag, imagePath});
-        
+
     }
-    
+
     @Override
     public List<Tag> getAllTags() {
         return em.createNamedQuery("Tag.getAll", Tag.class).getResultList();
     }
-    
-   
 
-   
-    
 }

@@ -7,7 +7,6 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Tag;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -28,19 +27,7 @@ public class ShopTagsServiceImpl implements ShopTagsService {
     @Inject
     private TagsService tagsService;
 
-    @PostConstruct
-    private void init() throws ServiceException{
-        tagsService.newTag("music", "music.jpg");
-        tagsService.newTag("art", "art.jpg");
-        tagsService.newTag("science", "science.jpg");
-        tagsService.newTag("sports", "sports.jpg");
-        tagsService.newTag("cars", "cars.jpg");
-        tagsService.newTag("cooking", "cooking.jpg");
-        tagsService.newTag("design", "design.jpg");
-        tagsService.newTag("health", "health.jpg");
-        
-        
-    }
+   
     
     
     @Override

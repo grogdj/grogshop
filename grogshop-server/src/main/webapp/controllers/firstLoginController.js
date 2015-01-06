@@ -1,4 +1,4 @@
-app.controller('firstLoginController', function ($rootScope, $http, $scope) {
+app.controller('firstLoginController', function ($rootScope, $http, $scope, $cookieStore) {
     
     //GRID
     $scope.imagePath = "resources/img/maintag-images/"
@@ -31,7 +31,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope) {
             data: {user_id: user_id}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Profile created!");
-
+            $cookieStore.put('firstLogin', false);
 
 
 
@@ -117,8 +117,10 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope) {
         });
 
     };
-
-    $scope.newProfile($scope.user_id, $scope.email, $scope.auth_token);
+    var firstLogin = $cookieStore.get('firstLogin');
+    if(firstLogin){
+        $scope.newProfile($scope.user_id, $scope.email, $scope.auth_token);
+    }
     $scope.loadMainTags($scope.user_id, $scope.email, $scope.auth_token);
 
 
