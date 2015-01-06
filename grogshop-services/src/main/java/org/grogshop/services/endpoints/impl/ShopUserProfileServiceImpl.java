@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.validation.constraints.NotNull;
@@ -88,8 +90,24 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
             return Response.ok().build();
         
     }
-    
 
+    @Override
+    public Response getInterests(@NotNull @PathParam("user_id") Long user_id) throws ServiceException {
+        String interests = profileService.getInterests(user_id);
+        String[] interestArray = interests.split(",");
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        for(String s : interestArray){
+            jsonArrayBuilder.add(s);
+        }
+        JsonArray build = jsonArrayBuilder.build();
+        return Response.ok(build.toString()).build();
+    }
+
+    public Response setInterests(@NotNull @PathParam("user_id") Long user_id, @FormParam("interests") String interests) throws ServiceException {
+        profileService.setInterests(user_id, interests);
+        return Response.ok().build();  
+    }
+    
     @Override
     public Response uploadFile(@NotNull @PathParam("id") Long user_id, MultipartFormDataInput input) throws ServiceException {
         log.info(">>>> sit back - starting file upload for user_id..."+user_id);

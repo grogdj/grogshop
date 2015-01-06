@@ -22,4 +22,8 @@ public interface ProfileService {
     
     void update(Long user_id, String username, 
             String location, String bio) throws ServiceException;
+    
+    void setInterests(Long user_id, String interests) throws ServiceException;
+    
+    String getInterests(Long user_id) throws ServiceException;
 }

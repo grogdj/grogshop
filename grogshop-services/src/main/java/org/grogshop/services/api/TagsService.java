@@ -19,5 +19,6 @@ public interface TagsService {
     
     void newTag(String tag) throws ServiceException;
     
+    void newTag(String tag, String imagePath) throws ServiceException;
     
 }

@@ -6,7 +6,6 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Tag;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +33,13 @@ public class TagsServiceImpl implements TagsService{
     public void newTag(String tag) throws ServiceException {
         em.persist(new Tag(tag));
         log.log(Level.INFO, "Tag {0} created", new Object[]{tag});
+        
+    }
+    
+    @Override
+    public void newTag(String tag, String imagePath) throws ServiceException {
+        em.persist(new Tag(tag, imagePath));
+        log.log(Level.INFO, "Tag {0} - {1} created", new Object[]{tag, imagePath});
         
     }
     

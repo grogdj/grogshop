@@ -8,8 +8,6 @@ package com.grogdj.grogshop.core.model;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -35,6 +33,8 @@ public class Profile implements Serializable {
     private String avatar;
 
     private String realname;
+
+    private String interests;
 
     public Profile(Long user_id) {
         this.user_id = user_id;
@@ -88,6 +88,61 @@ public class Profile implements Serializable {
 
     public void setRealname(String realname) {
         this.realname = realname;
+    }
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + (this.user_id != null ? this.user_id.hashCode() : 0);
+        hash = 23 * hash + (this.introduction != null ? this.introduction.hashCode() : 0);
+        hash = 23 * hash + (this.postcode != null ? this.postcode.hashCode() : 0);
+        hash = 23 * hash + (this.avatar != null ? this.avatar.hashCode() : 0);
+        hash = 23 * hash + (this.realname != null ? this.realname.hashCode() : 0);
+        hash = 23 * hash + (this.interests != null ? this.interests.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Profile other = (Profile) obj;
+        if (this.user_id != other.user_id && (this.user_id == null || !this.user_id.equals(other.user_id))) {
+            return false;
+        }
+        if ((this.introduction == null) ? (other.introduction != null) : !this.introduction.equals(other.introduction)) {
+            return false;
+        }
+        if ((this.postcode == null) ? (other.postcode != null) : !this.postcode.equals(other.postcode)) {
+            return false;
+        }
+        if ((this.avatar == null) ? (other.avatar != null) : !this.avatar.equals(other.avatar)) {
+            return false;
+        }
+        if ((this.realname == null) ? (other.realname != null) : !this.realname.equals(other.realname)) {
+            return false;
+        }
+        if ((this.interests == null) ? (other.interests != null) : !this.interests.equals(other.interests)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" + "user_id=" + user_id + ", introduction=" + introduction + ", postcode=" + postcode + ", avatar=" + avatar + ", realname=" + realname + ", interests=" + interests + '}';
     }
 
 }

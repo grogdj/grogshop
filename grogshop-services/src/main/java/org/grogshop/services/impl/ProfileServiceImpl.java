@@ -39,6 +39,8 @@ public class ProfileServiceImpl implements ProfileService {
     public void create(Long user_id) throws ServiceException {
         em.persist(new Profile(user_id));
     }
+    
+    
 
     @Override
     public void update(Long user_id, String username, String location, String bio) throws ServiceException {
@@ -51,4 +53,26 @@ public class ProfileServiceImpl implements ProfileService {
         find.setPostcode(location);
 
     }
+
+    @Override
+    public void setInterests(Long user_id, String interests) throws ServiceException {
+        Profile find = em.find(Profile.class, user_id);
+        if (find == null) {
+            throw new ServiceException("User Profile doesn't exist: " + user_id);
+        }
+        find.setInterests(interests);
+    }
+
+    @Override
+    public String getInterests(Long user_id) throws ServiceException {
+        Profile find = em.find(Profile.class, user_id);
+        if (find == null) {
+            throw new ServiceException("User Profile doesn't exist: " + user_id);
+        }
+        return find.getInterests();
+    }
+    
+    
+    
+    
 }
