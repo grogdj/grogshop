@@ -6,10 +6,14 @@
 package com.grogdj.grogshop.core.model;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -30,11 +34,16 @@ public class Profile implements Serializable {
 
     private String postcode;
 
-    private String avatar;
+    private String avatarFileName;
+    
+    @Lob
+    @Column( name = "CONTENT" )
+    private byte[] avatarContent;
 
     private String realname;
 
-    private String interests;
+    @ElementCollection
+    private List<String> interests;
 
     public Profile(Long user_id) {
         this.user_id = user_id;
@@ -74,13 +83,7 @@ public class Profile implements Serializable {
         this.postcode = postcode;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+    
 
     public String getRealname() {
         return realname;
@@ -90,23 +93,50 @@ public class Profile implements Serializable {
         this.realname = realname;
     }
 
-    public String getInterests() {
+    public List<String> getInterests() {
         return interests;
     }
 
-    public void setInterests(String interests) {
+    public void setInterests(List<String> interests) {
         this.interests = interests;
+    }
+    
+    public void addInterest(String interest){
+        if(this.interests != null){
+            this.interests.add(interest);
+        }
+    }
+
+    public String getAvatarFileName() {
+        return avatarFileName;
+    }
+
+    public void setAvatarFileName(String avatarFileName) {
+        this.avatarFileName = avatarFileName;
+    }
+
+    public byte[] getAvatarContent() {
+        return avatarContent;
+    }
+
+    public void setAvatarContent(byte[] avatarContent) {
+        this.avatarContent = avatarContent;
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" + "user_id=" + user_id + ", introduction=" + introduction + ", postcode=" + postcode + ", avatarFileName=" + avatarFileName + ", realname=" + realname + ", interests=" + interests + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + (this.user_id != null ? this.user_id.hashCode() : 0);
-        hash = 23 * hash + (this.introduction != null ? this.introduction.hashCode() : 0);
-        hash = 23 * hash + (this.postcode != null ? this.postcode.hashCode() : 0);
-        hash = 23 * hash + (this.avatar != null ? this.avatar.hashCode() : 0);
-        hash = 23 * hash + (this.realname != null ? this.realname.hashCode() : 0);
-        hash = 23 * hash + (this.interests != null ? this.interests.hashCode() : 0);
+        int hash = 5;
+        hash = 31 * hash + (this.user_id != null ? this.user_id.hashCode() : 0);
+        hash = 31 * hash + (this.introduction != null ? this.introduction.hashCode() : 0);
+        hash = 31 * hash + (this.postcode != null ? this.postcode.hashCode() : 0);
+        hash = 31 * hash + (this.avatarFileName != null ? this.avatarFileName.hashCode() : 0);
+        hash = 31 * hash + (this.realname != null ? this.realname.hashCode() : 0);
+        hash = 31 * hash + (this.interests != null ? this.interests.hashCode() : 0);
         return hash;
     }
 
@@ -128,7 +158,7 @@ public class Profile implements Serializable {
         if ((this.postcode == null) ? (other.postcode != null) : !this.postcode.equals(other.postcode)) {
             return false;
         }
-        if ((this.avatar == null) ? (other.avatar != null) : !this.avatar.equals(other.avatar)) {
+        if ((this.avatarFileName == null) ? (other.avatarFileName != null) : !this.avatarFileName.equals(other.avatarFileName)) {
             return false;
         }
         if ((this.realname == null) ? (other.realname != null) : !this.realname.equals(other.realname)) {
@@ -140,9 +170,6 @@ public class Profile implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Profile{" + "user_id=" + user_id + ", introduction=" + introduction + ", postcode=" + postcode + ", avatar=" + avatar + ", realname=" + realname + ", interests=" + interests + '}';
-    }
+   
 
 }

@@ -6,6 +6,7 @@
 package org.grogshop.services.endpoints.api;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Local;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -28,10 +29,16 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 @Path("/users")
 public interface ShopUserProfileService extends Serializable {
 
-    @Path("{id}/upload")
+    @Path("{id}/avatar/upload")
     @POST
     @Consumes({MediaType.MULTIPART_FORM_DATA})
-    Response uploadFile(@NotNull @PathParam("id") Long user_id, MultipartFormDataInput input) throws ServiceException;
+    Response uploadAvatar(@NotNull @PathParam("id") Long user_id, MultipartFormDataInput input) throws ServiceException;
+    
+    @Path("{id}/avatar")
+    @GET
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+            @Produces({MediaType.APPLICATION_OCTET_STREAM})
+    Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException;
 
     @Path("{id}/exist")
     @GET
@@ -66,6 +73,6 @@ public interface ShopUserProfileService extends Serializable {
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response setInterests(@NotNull @PathParam("id") Long user_id, @FormParam("interests") String interests) throws ServiceException;
+    Response setInterests(@NotNull @PathParam("id") Long user_id, @FormParam("interests") List<String> interests) throws ServiceException;
     
 }

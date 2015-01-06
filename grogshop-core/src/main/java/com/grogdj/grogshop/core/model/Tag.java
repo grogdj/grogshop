@@ -20,7 +20,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author grogdj
  */
 @Entity(name = "Tag")
-@Table(name = "TAG")
+@Table(name = "TAGS")
 public class Tag {
 
     @Id

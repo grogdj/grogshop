@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -24,8 +25,10 @@ import javax.json.JsonObjectBuilder;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ProfileService;
 import org.grogshop.services.endpoints.api.ShopUserProfileService;
@@ -55,13 +58,13 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
     @Override
     public Response get(@PathParam("id") Long user_id) throws ServiceException {
         Profile p = profileService.getById(user_id);
-        if(p == null){
+        if (p == null) {
             throw new ServiceException("Profile for " + user_id + " doesn't exists");
         }
         JsonObjectBuilder jsonObjBuilder = Json.createObjectBuilder();
-        jsonObjBuilder.add("bio", (p.getIntroduction()==null)?"":p.getIntroduction());
-        jsonObjBuilder.add("location", (p.getPostcode()==null)?"":p.getPostcode());
-        jsonObjBuilder.add("username", (p.getRealname()==null)?"":p.getRealname());
+        jsonObjBuilder.add("bio", (p.getIntroduction() == null) ? "" : p.getIntroduction());
+        jsonObjBuilder.add("location", (p.getPostcode() == null) ? "" : p.getPostcode());
+        jsonObjBuilder.add("username", (p.getRealname() == null) ? "" : p.getRealname());
 
         JsonObject jsonObj = jsonObjBuilder.build();
         return Response.ok(jsonObj.toString()).build();
@@ -80,37 +83,39 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
         }
         throw new ServiceException("Profile for " + user_id + " already exists");
     }
-    
+
     @Override
-    public Response update(@NotNull @PathParam("user_id") Long user_id, 
-            @FormParam("username") String username, 
-            @FormParam("location") String location, 
-            @FormParam("bio") String bio ) throws ServiceException {
-            profileService.update(user_id, username, location, bio);
-            return Response.ok().build();
-        
+    public Response update(@NotNull @PathParam("user_id") Long user_id,
+            @FormParam("username") String username,
+            @FormParam("location") String location,
+            @FormParam("bio") String bio) throws ServiceException {
+        profileService.update(user_id, username, location, bio);
+        return Response.ok().build();
+
     }
 
     @Override
     public Response getInterests(@NotNull @PathParam("user_id") Long user_id) throws ServiceException {
-        String interests = profileService.getInterests(user_id);
-        String[] interestArray = interests.split(",");
+        List<String> interests = profileService.getInterests(user_id);
+        log.info("Interests from the database: (" + user_id + ") " + interests);
+
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-        for(String s : interestArray){
+        for (String s : interests) {
             jsonArrayBuilder.add(s);
         }
         JsonArray build = jsonArrayBuilder.build();
         return Response.ok(build.toString()).build();
     }
 
-    public Response setInterests(@NotNull @PathParam("user_id") Long user_id, @FormParam("interests") String interests) throws ServiceException {
+    public Response setInterests(@NotNull @PathParam("user_id") Long user_id, @FormParam("interests") List<String> interests) throws ServiceException {
+        log.info("Storing from the database: (" + user_id + ") " + interests);
         profileService.setInterests(user_id, interests);
-        return Response.ok().build();  
+        return Response.ok().build();
     }
-    
+
     @Override
-    public Response uploadFile(@NotNull @PathParam("id") Long user_id, MultipartFormDataInput input) throws ServiceException {
-        log.info(">>>> sit back - starting file upload for user_id..."+user_id);
+    public Response uploadAvatar(@NotNull @PathParam("id") Long user_id, MultipartFormDataInput input) throws ServiceException {
+        log.info(">>>> sit back - starting file upload for user_id..." + user_id);
 
         Map<String, List<InputPart>> uploadForm = input.getFormDataMap();
         List<InputPart> inputParts = uploadForm.get(UPLOADED_FILE_PARAMETER_NAME);
@@ -125,12 +130,26 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
                 byte[] bytes = IOUtils.toByteArray(inputStream);
 
                 log.log(Level.INFO, ">>> File '''{'{0}'}''' has been read, size: #'{'{1}'}' bytes", new Object[]{filename, bytes.length});
-                writeFile(bytes, "/tmp/" + filename);
+                profileService.updateAvatar(user_id, filename, bytes);
+                // writeFile(bytes, "/tmp/" + filename);
             } catch (IOException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
             }
         }
         return Response.ok().build();
+    }
+
+    @Override
+    public Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException {
+        final byte[] avatar = profileService.getAvatar(user_id);
+        return Response.ok().entity(new StreamingOutput() {
+            @Override
+            public void write(OutputStream output)
+                    throws IOException, WebApplicationException {
+                output.write(avatar);
+                output.flush();
+            }
+        }).build();
     }
 
     /**
