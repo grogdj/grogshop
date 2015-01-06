@@ -47,6 +47,45 @@ public class Club implements Serializable {
     public Club() {
     }
 
+    public Club(String name, List<String> interests, String founderEmail) {
+        this.name = name;
+        this.interests = interests;
+        this.founderEmail = founderEmail;
+    }
+
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<String> interests) {
+        this.interests = interests;
+    }
+
+    public String getFounderEmail() {
+        return founderEmail;
+    }
+
+    public void setFounderEmail(String founderEmail) {
+        this.founderEmail = founderEmail;
+    }
+
     
     
     
