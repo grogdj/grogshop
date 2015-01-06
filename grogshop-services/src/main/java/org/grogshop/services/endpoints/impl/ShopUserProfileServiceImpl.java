@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -107,9 +108,18 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
         return Response.ok(build.toString()).build();
     }
 
-    public Response setInterests(@NotNull @PathParam("user_id") Long user_id, @FormParam("interests") List<String> interests) throws ServiceException {
+    public Response setInterests(@NotNull @PathParam("user_id") Long user_id, @FormParam("interests") String interests) throws ServiceException {
         log.info("Storing from the database: (" + user_id + ") " + interests);
-        profileService.setInterests(user_id, interests);
+        if(interests != null){
+            String[] split = interests.split(",");
+            List<String> interestList = new ArrayList<String>(split.length);
+            for(String s : split){
+                interestList.add(s);
+                        
+            }
+            profileService.setInterests(user_id, interestList);
+        }
+        
         return Response.ok().build();
     }
 

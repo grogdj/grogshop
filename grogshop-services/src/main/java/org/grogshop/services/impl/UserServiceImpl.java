@@ -9,6 +9,7 @@ import com.grogdj.grogshop.core.model.ServiceKey;
 import com.grogdj.grogshop.core.model.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -31,6 +32,17 @@ public class UserServiceImpl implements UserService {
     private final static Logger log =  Logger.getLogger( UserServiceImpl.class.getName() );
     
     public UserServiceImpl() {
+    }
+    
+    @PostConstruct
+    private void init() {
+//        try {
+//            newUser(new User("salaboy@gmail.com", "asdasd"));
+//            newUser(new User("eze@asd.asd", "123123"));
+//        } catch (ServiceException ex) {
+//            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
     }
 
     @Override

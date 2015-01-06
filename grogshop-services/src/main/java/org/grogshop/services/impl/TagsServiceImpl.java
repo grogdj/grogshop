@@ -29,15 +29,19 @@ public class TagsServiceImpl implements TagsService {
     private final static Logger log = Logger.getLogger(TagsServiceImpl.class.getName());
 
     @PostConstruct
-    private void init() throws ServiceException {
-        newTag("music", "music.jpg");
-        newTag("art", "art.jpg");
-        newTag("science", "science.jpg");
-        newTag("sports", "sports.jpg");
-        newTag("cars", "cars.jpg");
-        newTag("cooking", "cooking.jpg");
-        newTag("design", "design.jpg");
-        newTag("health", "health.jpg");
+    private void init() {
+        try {
+            newTag("music", "music.jpg");
+            newTag("art", "art.jpg");
+            newTag("science", "science.jpg");
+            newTag("sports", "sports.jpg");
+            newTag("cars", "cars.jpg");
+            newTag("cooking", "cooking.jpg");
+            newTag("design", "design.jpg");
+            newTag("health", "health.jpg");
+        } catch (ServiceException ex) {
+            Logger.getLogger(TagsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

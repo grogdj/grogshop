@@ -72,7 +72,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
 
             $scope.mainTags = data;
             $scope.initImages();
-
+            $scope.loadUserTags($scope.user_id, $scope.email, $scope.auth_token);
 
         }).error(function (data) {
             console.log("Error: " + data);
@@ -108,6 +108,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
             data: {user_id: user_id}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Users Tags loaded!");
+            console.log("User interests: "+data);
             $scope.selectedTagsName = data;
 
         }).error(function (data) {
@@ -119,7 +120,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
     
     $scope.updateInterests = function (user_id, email, auth_token) {
         console.log("updating interests for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
-
+        console.log("selected tags: "+$scope.selectedTagsName);
         $http({
             method: 'POST',
             url: 'rest/users/'+user_id+"/interests/update",
@@ -141,7 +142,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
                 }
                 return str.join("&");
             },
-            data: {interests: $scope.selectedTagsName}
+            data: { interests: $scope.selectedTagsName.toString()}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Interest updated !");
 
@@ -159,7 +160,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
         $scope.newProfile($scope.user_id, $scope.email, $scope.auth_token);
     }
     $scope.loadMainTags($scope.user_id, $scope.email, $scope.auth_token);
-    $scope.loadUserTags($scope.user_id, $scope.email, $scope.auth_token);
+    
 
     $scope.initImages = function(){
         $scope.numberOfItem = Math.floor($(window).width() / 300);

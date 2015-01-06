@@ -61,6 +61,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (find == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
         }
+        log.info("Storing to the database: "+interests);
         find.setInterests(interests);
         em.merge(find);
     }
@@ -71,6 +72,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (find == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
         }
+        log.info("Interest from the database: "+find.getInterests());
         return find.getInterests();
     }
 

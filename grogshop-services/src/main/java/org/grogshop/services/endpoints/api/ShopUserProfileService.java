@@ -73,6 +73,6 @@ public interface ShopUserProfileService extends Serializable {
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response setInterests(@NotNull @PathParam("id") Long user_id, @FormParam("interests") List<String> interests) throws ServiceException;
+    Response setInterests(@NotNull @PathParam("id") Long user_id, @FormParam("interests") String interests) throws ServiceException;
     
 }
