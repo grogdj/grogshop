@@ -39,6 +39,19 @@ public class TagsServiceImpl implements TagsService {
             newTag("cooking", "cooking.jpg");
             newTag("design", "design.jpg");
             newTag("health", "health.jpg");
+            newTag("antiques", "antiques.jpg");
+            newTag("clothes", "clothes.jpg");
+            newTag("astrology", "astrology.jpg");
+            newTag("gardening", "gardening.jpg");
+            newTag("infusions", "infusions.jpg");
+            newTag("oldcars", "oldcars.jpg");
+            newTag("pets", "pets.jpg");
+            newTag("photography", "photography.jpg");
+            newTag("radio", "radio.jpg");
+            newTag("sailing", "sailing.jpg");
+            newTag("videogames", "videogames.jpg");
+            newTag("writing", "writing.jpg");
+
         } catch (ServiceException ex) {
             Logger.getLogger(TagsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
