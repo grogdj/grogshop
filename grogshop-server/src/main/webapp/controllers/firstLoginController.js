@@ -145,7 +145,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
             data: { interests: $scope.selectedTagsName.toString()}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Interest updated !");
-
+            $rootScope.$broadcast("goTo", "/settings");
 
 
 
@@ -166,7 +166,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
         $scope.numberOfItem = Math.floor($(window).width() / 300);
         $scope.pageClass = "firstLoginScreen";
         $scope.elementWidth = (($(window).width()-4) / $scope.numberOfItem)-4;
-        $scope.elementHeight = (($(window).height() - 54) / Math.ceil(($scope.mainTags.length / $scope.numberOfItem)))-4;
+        $scope.elementHeight = (($(window).height() - 4) / Math.ceil(($scope.mainTags.length / $scope.numberOfItem)))-4;
         
     }
 
@@ -174,7 +174,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
     $(window).resize(function () {
         $scope.numberOfItem = Math.floor($(window).width() / 300);
         $scope.elementWidth = (($(window).width()-4) / $scope.numberOfItem)-4;
-        $scope.elementHeight = (($(window).height() - 54) / Math.ceil(($scope.mainTags.length / $scope.numberOfItem)))-4;
+        $scope.elementHeight = (($(window).height() - 4) / Math.ceil(($scope.mainTags.length / $scope.numberOfItem)))-4;
         $scope.$digest();
         
     });

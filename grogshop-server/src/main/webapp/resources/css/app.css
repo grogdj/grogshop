@@ -74,7 +74,10 @@ body {
  }
 
 .screen.firstLoginScreen {
-	padding-top: 50px;
+	padding-top: 0px;
+	z-index: 1900;
+	background-color: #ebebeb;
+	
 }
 
 /* NAV BAR */
@@ -399,6 +402,7 @@ growl-notifications{
   
   box-sizing: border-box;
   overflow-y:auto;
+  pointer-events:none;
  
 }
 
@@ -414,6 +418,7 @@ growl-notification{
   position: relative;
   box-shadow: 0 1px 3px rgba(0,0,0,.1);
   cursor: pointer;
+   pointer-events:auto;
 }
 
 growl-notification a {
@@ -437,8 +442,9 @@ growl-notification:last-child {
   margin-bottom: 100px;
 }
 growl-notification:first-child {
-	margin-top: 40px;
+	margin-top: 45px;
 	margin-bottom: 15px !important;
+
 }
 
 
@@ -664,7 +670,7 @@ tags-input .autocomplete  {
 	z-index: 1000;
 
 }
-.float-button button {
+.float-button .btn {
 		box-shadow: 0 3px 0px rgba(0,0,0,.5); 
 }
 
