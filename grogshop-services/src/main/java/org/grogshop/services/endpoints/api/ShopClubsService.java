@@ -13,6 +13,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,12 +32,19 @@ public interface ShopClubsService extends Serializable {
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response newClub(@NotNull @NotEmpty @FormParam("name") String name, @NotNull 
-            @NotEmpty @FormParam("interests") String interests, 
+    Response newClub(@NotNull @NotEmpty @FormParam("name") String name, 
+            @NotNull @NotEmpty @FormParam("description") String description,
+            @NotNull @NotEmpty @FormParam("category") String category,
+            @NotNull @NotEmpty @FormParam("tags") String interests, 
             @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail) throws ServiceException;
 
     @GET
     @Path("/all")
     @Produces({"application/json"})
     Response getAllClubs();
+    
+    
+    @GET
+    @Path("{id}")
+    Response get(@PathParam("id") Long club_id) throws ServiceException;
 }

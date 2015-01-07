@@ -6,7 +6,6 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Club;
-import com.grogdj.grogshop.core.model.Tag;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,8 +34,8 @@ public class ClubsServiceImpl implements ClubsService {
     }
 
     @Override
-    public void newClub(String name, List<String> interests, String founderEmail) throws ServiceException {
-        em.persist(new Club(name, interests, founderEmail));
+    public void newClub(String name, String description, String category, List<String> interests, String founderEmail) throws ServiceException {
+        em.persist(new Club(name, description, category, interests, founderEmail));
         log.log(Level.INFO, "Club {0} created", new Object[]{name});
 
     }
@@ -44,6 +43,10 @@ public class ClubsServiceImpl implements ClubsService {
     @Override
     public List<Club> getAllClubs() {
         return em.createNamedQuery("Club.getAll", Club.class).getResultList();
+    }
+
+    public Club getById(Long club_id) {
+        return em.find(Club.class, club_id);
     }
 
 }

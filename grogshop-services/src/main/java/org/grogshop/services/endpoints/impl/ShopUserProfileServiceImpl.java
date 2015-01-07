@@ -141,7 +141,7 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
                 log.log(Level.INFO, ">>> File '''{'{0}'}''' has been read, size: #'{'{1}'}' bytes", new Object[]{filename, bytes.length});
                 profileService.updateAvatar(user_id, filename, bytes);
-                // writeFile(bytes, "/tmp/" + filename);
+
             } catch (IOException e) {
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
             }

@@ -34,11 +34,19 @@ public class Club implements Serializable {
     @NotNull
     @NotEmpty
     private String name;
+    
+    @NotNull
+    @NotEmpty
+    private String description;
 
     @NotNull
     @NotEmpty
     @ElementCollection
-    private List<String> interests;
+    private List<String> tags;
+    
+    @NotNull
+    @NotEmpty
+    private String category; 
 
     @NotNull
     @NotEmpty
@@ -47,9 +55,11 @@ public class Club implements Serializable {
     public Club() {
     }
 
-    public Club(String name, List<String> interests, String founderEmail) {
+    public Club(String name, String description, String category, List<String> tags, String founderEmail) {
         this.name = name;
-        this.interests = interests;
+        this.description = description;
+        this.category = category;
+        this.tags = tags;
         this.founderEmail = founderEmail;
     }
 
@@ -70,13 +80,30 @@ public class Club implements Serializable {
         this.name = name;
     }
 
-    public List<String> getInterests() {
-        return interests;
+    public String getDescription() {
+        return description;
     }
 
-    public void setInterests(List<String> interests) {
-        this.interests = interests;
+    public void setDescription(String description) {
+        this.description = description;
     }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
 
     public String getFounderEmail() {
         return founderEmail;

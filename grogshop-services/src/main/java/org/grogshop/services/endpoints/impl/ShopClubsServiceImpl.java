@@ -28,42 +28,71 @@ public class ShopClubsServiceImpl implements ShopClubsService {
     @Inject
     private ClubsService clubsService;
 
-   
-    
-    
     @Override
     public Response getAllClubs() {
         List<Club> allClubs = clubsService.getAllClubs();
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-        for(Club c : allClubs){
-            jsonArrayBuilder.add(jsonObjectBuilder
-                    .add("name", (c.getName()==null)?"":c.getName())
-                    .add("interests", (c.getName()==null)?"":c.getName())
-                    .add("founderEmail", (c.getFounderEmail()==null)?"":c.getFounderEmail()));
+        for (Club c : allClubs) {
+            jsonObjectBuilder
+                    .add("id", (c.getId() == null) ? "" : c.getId().toString())
+                    .add("name", (c.getName() == null) ? "" : c.getName())
+                    .add("category", (c.getCategory()== null) ? "" : c.getCategory())
+                    .add("description", (c.getDescription()== null) ? "" : c.getDescription())
+                    .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail());
+            
+            if (c.getTags()!= null) {
+                JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+                for (String s : c.getTags()) {
+                    jsonArrayBuilderInterest.add(s);
+                }
+                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build());
+            }
+            jsonArrayBuilder.add(jsonObjectBuilder);
         }
         JsonArray jsonArray = jsonArrayBuilder.build();
         return Response.ok(jsonArray).build();
-        
+
     }
 
     @Override
     public Response newClub(@NotNull @NotEmpty @FormParam("name") String name, 
-            @NotNull @NotEmpty @FormParam("interests") String interests, 
+            @NotNull @NotEmpty @FormParam("description") String description,
+            @NotNull @NotEmpty @FormParam("category") String category,
+            @NotNull @NotEmpty @FormParam("tags") String tags,
             @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail) throws ServiceException {
-        String[] interestArray = interests.split("'");
-        if(interestArray != null){
+        String[] interestArray = tags.split(",");
+        if (interestArray != null) {
             List<String> interestsList = new ArrayList<String>();
-            for(String s : interestArray){
+            for (String s : interestArray) {
                 interestsList.add(s);
             }
-            clubsService.newClub(name, interestsList, founderEmail);
-        
+            clubsService.newClub(name, description, category,  interestsList, founderEmail);
+
         }
         return Response.ok().build();
-        
+
     }
-    
-    
+
+    @Override
+    public Response get(Long club_id) throws ServiceException {
+        Club c = clubsService.getById(club_id);
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        jsonObjectBuilder.add("id", (c.getId() == null) ? "" : c.getId().toString())
+                .add("name", (c.getName() == null) ? "" : c.getName())
+                .add("category", (c.getCategory()== null) ? "" : c.getCategory())
+                .add("description", (c.getDescription()== null) ? "" : c.getDescription())
+                .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail());
+        if (c.getTags()!= null) {
+            JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+            for (String s : c.getTags()) {
+                jsonArrayBuilderInterest.add(s);
+            }
+            jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build());
+        }
+
+        return Response.ok(jsonObjectBuilder).build();
+
+    }
 
 }

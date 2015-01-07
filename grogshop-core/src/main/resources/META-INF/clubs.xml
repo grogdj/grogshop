@@ -12,6 +12,16 @@
 		</query>
 	</named-query>
 	
+        <named-query name="Club.getByCategory">
+		<query>
+			SELECT
+				_club
+			FROM
+				Club _club
+                        WHERE
+                                _club.category = :category
+		</query>
+	</named-query>
         
        
 	
