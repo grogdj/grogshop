@@ -1,6 +1,6 @@
 app.controller('homeController', function ($scope, $http, $rootScope) {
 
-
+    $scope.imagePath = "resources/img/maintag-images/"
     $scope.loadClubs = function (user_id, email, auth_token) {
         console.log("loading clubs for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
 

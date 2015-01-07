@@ -1,5 +1,6 @@
 app.controller('clubController', function ($scope, $routeParams, $http, $rootScope) {
     $scope.pageClass = "clubPreview";
+    $scope.imagePath = "resources/img/maintag-images/"
     $scope.club_id = $routeParams.club_id;
     $scope.preview_club = {};
     $scope.loadClub = function (user_id, email, auth_token) {
