@@ -47,6 +47,7 @@ public interface ShopUserProfileService extends Serializable {
     
     @GET
     @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
     Response get(@PathParam("id") Long user_id) throws ServiceException;
     
     @Path("/new")

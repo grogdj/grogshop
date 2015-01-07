@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
@@ -39,7 +40,8 @@ public class ShopClubsServiceImpl implements ShopClubsService {
                     .add("name", (c.getName() == null) ? "" : c.getName())
                     .add("category", (c.getCategory()== null) ? "" : c.getCategory())
                     .add("description", (c.getDescription()== null) ? "" : c.getDescription())
-                    .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail());
+                    .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail())
+                    .add("image", (c.getImage()== null) ? "" : c.getImage());
             
             if (c.getTags()!= null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
@@ -51,7 +53,7 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             jsonArrayBuilder.add(jsonObjectBuilder);
         }
         JsonArray jsonArray = jsonArrayBuilder.build();
-        return Response.ok(jsonArray).build();
+        return Response.ok(jsonArray.toString()).build();
 
     }
 
@@ -60,14 +62,15 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             @NotNull @NotEmpty @FormParam("description") String description,
             @NotNull @NotEmpty @FormParam("category") String category,
             @NotNull @NotEmpty @FormParam("tags") String tags,
-            @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail) throws ServiceException {
+            @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail,
+            @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException {
         String[] interestArray = tags.split(",");
         if (interestArray != null) {
             List<String> interestsList = new ArrayList<String>();
             for (String s : interestArray) {
                 interestsList.add(s);
             }
-            clubsService.newClub(name, description, category,  interestsList, founderEmail);
+            clubsService.newClub(name, description, category,  interestsList, founderEmail, image);
 
         }
         return Response.ok().build();
@@ -82,7 +85,8 @@ public class ShopClubsServiceImpl implements ShopClubsService {
                 .add("name", (c.getName() == null) ? "" : c.getName())
                 .add("category", (c.getCategory()== null) ? "" : c.getCategory())
                 .add("description", (c.getDescription()== null) ? "" : c.getDescription())
-                .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail());
+                .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail())
+                .add("image", (c.getImage() == null) ? "" : c.getImage());
         if (c.getTags()!= null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
             for (String s : c.getTags()) {
@@ -90,8 +94,8 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             }
             jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build());
         }
-
-        return Response.ok(jsonObjectBuilder).build();
+        JsonObject build = jsonObjectBuilder.build();
+        return Response.ok(build.toString()).build();
 
     }
 

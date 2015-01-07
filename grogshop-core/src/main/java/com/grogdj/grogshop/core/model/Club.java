@@ -51,16 +51,21 @@ public class Club implements Serializable {
     @NotNull
     @NotEmpty
     private String founderEmail;
+    
+    @NotNull
+    @NotEmpty
+    private String image;
 
     public Club() {
     }
-
-    public Club(String name, String description, String category, List<String> tags, String founderEmail) {
+  
+    public Club(String name, String description, String category, List<String> tags, String founderEmail, String image) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.tags = tags;
         this.founderEmail = founderEmail;
+        this.image = image;
     }
 
     
@@ -103,7 +108,15 @@ public class Club implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
-    
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 
     public String getFounderEmail() {
         return founderEmail;

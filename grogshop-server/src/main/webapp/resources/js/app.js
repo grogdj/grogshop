@@ -31,7 +31,7 @@ app.config(function ($routeProvider) {
                 controller: 'firstLoginController'
             })
 
-            .when('/club/preview/:clubid', {
+            .when('/club/preview/:club_id', {
                 templateUrl: 'views/clubpreview.html',
                 controller: 'clubController'
                 

@@ -6,6 +6,7 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Club;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,12 +31,21 @@ public class ClubsServiceImpl implements ClubsService {
 
     @PostConstruct
     private void init() {
-
+        try {
+            List<String> tags = new ArrayList<String>();
+            tags.add("food");
+            tags.add("fun");
+            tags.add("healty");
+            newClub("cooking club", "this is a new cooking club", "cooking", tags , "grogdj@gmail.com", "cooking.jpg");
+            
+        } catch (ServiceException ex) {
+            Logger.getLogger(ClubsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
-    public void newClub(String name, String description, String category, List<String> interests, String founderEmail) throws ServiceException {
-        em.persist(new Club(name, description, category, interests, founderEmail));
+    public void newClub(String name, String description, String category, List<String> interests, String founderEmail, String image) throws ServiceException {
+        em.persist(new Club(name, description, category, interests, founderEmail, image));
         log.log(Level.INFO, "Club {0} created", new Object[]{name});
 
     }

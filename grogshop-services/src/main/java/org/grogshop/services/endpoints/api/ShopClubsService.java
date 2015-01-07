@@ -36,7 +36,8 @@ public interface ShopClubsService extends Serializable {
             @NotNull @NotEmpty @FormParam("description") String description,
             @NotNull @NotEmpty @FormParam("category") String category,
             @NotNull @NotEmpty @FormParam("tags") String interests, 
-            @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail) throws ServiceException;
+            @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail,
+            @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException;
 
     @GET
     @Path("/all")
@@ -46,5 +47,6 @@ public interface ShopClubsService extends Serializable {
     
     @GET
     @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
     Response get(@PathParam("id") Long club_id) throws ServiceException;
 }
