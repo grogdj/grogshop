@@ -1,9 +1,58 @@
  <!-- HOME -->
         <div class="container">
             <div class="row">
-                <div class="jumbotron">
-                    <h1>Grogshop</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur magni earum natus eius sunt hic quaerat impedit at repudiandae laudantium deserunt, repellat optio soluta officia adipisci ipsum tempore quod sapiente.</p>
+                <div class="jumbotron clearfix" style="background-color: transparent;">
+                	<div class="col-md-6 col-md-offset-3 text-center">
+	                    <h1>Clubhouse</h1>
+	                    <h4>This is the place to find those unique things you've always wanted and get to know those unique people who have them.</h4>
+                    </div>
+
                 </div>
             </div>
+            <hr style="border-color:#999;">
+            <div class="row" >
+            	<div class="col-md-12">
+	            	<div class="panel panel-default">
+	            		<div class="panel-heading clearfix">
+	            			<h5 class="pull-left">Top Clubs</h5>
+
+	            			<div class="pull-right dropdown">
+			            			<button class="btn btn-default dropdown-toggle" type="button" id="categories-dd" data-toggle="dropdown" aria-expanded="true">
+									    Categories
+								    <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu" role="menu" aria-labelledby="categories-dd">
+								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Action</a></li>
+								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Another action</a></li>
+								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Something else here</a></li>
+								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Separated link</a></li>
+								  </ul>
+						  </div>
+
+	            		</div>
+	            		<div class="panel-body">
+	            		   <div class="clubscontainer" ng-repeat="club in clubList"> 
+	            		   		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	            		   			<div href="#" class="thumbnail">
+	            		   					<img src="{{club.image}}" class="img-responsive" alt="">
+	            		   					<div class="caption">
+									            <h4 class="no-margin">{{club.name}}</h4>
+									            <p><small>{{ club.founderEmail}}</small></p>
+									            <a href="#club/preview/{{club.id}}" class="btn btn-default btn-block" role="button">Join</a> 
+								          </div>
+	            		   			</div>
+	            		   		</div>
+	            		   </div>
+	            		</div>
+	            	</div>
+            	</div>
+            </div>
+            <hr style="border-color:#999;">
+            <div class="row">
+            	<div class="col-md-12">
+            		<a href="" class="btn btn-primary btn-lg  btn-block">find something specific</a>
+            	</div>
+            </div>
+            <br/><br/>
+
         </div>

@@ -680,3 +680,10 @@ tags-input .autocomplete  {
 .float-button.float-right {
 	right: 20px;
 }
+
+
+
+/* helpers */
+.no-margin {
+	margin: 0;
+}

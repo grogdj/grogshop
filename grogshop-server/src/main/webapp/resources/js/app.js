@@ -28,12 +28,41 @@ app.config(function ($routeProvider) {
 
             .when('/firstlogin', {
                 templateUrl: 'views/firstlogin.html',
-                controller: 'firstLoginController',
+                controller: 'firstLoginController'
+            })
+
+            .when('/club/preview/:clubid', {
+                templateUrl: 'views/clubpreview.html',
+                controller: 'clubController'
                 
 
+            })
+            .otherwise({
+                redirectto:'/'
             });
 
 });
+
+
+//HISTORY 
+
+app.run(function ($rootScope, $location) {
+
+    var history = [];
+
+    $rootScope.$on('$routeChangeSuccess', function() {
+        history.push($location.$$path);
+        console.log("HISTORY " + history)
+    });
+
+    $rootScope.back = function () {
+        var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
+        $location.path(prevUrl);
+    };
+
+});
+
+//END HISTORY
 
 
 app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
