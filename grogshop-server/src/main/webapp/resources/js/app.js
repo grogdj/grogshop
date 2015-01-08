@@ -71,6 +71,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     $scope.user_id = $cookieStore.get('user_id');
     $scope.firstLogin = $cookieStore.get('firstLogin');
     $scope.index = 0;
+    $scope.memberships = {};
     $scope.notifications = {};
 
     $rootScope.$on('quickNotification', function (event, data) {
