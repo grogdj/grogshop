@@ -36,7 +36,7 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
     }
 
     @Override
-    public void joinClub(Long club_id, Long user_id) throws ServiceException {
+    public void createMembership(Long club_id, Long user_id) throws ServiceException {
         em.persist(new ClubMembership(club_id, user_id));
         log.log(Level.INFO, "ClubMembership {0} created", new Object[]{club_id, user_id});
 
@@ -69,6 +69,17 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
             clubIds.add(cm.getClubId());
         }
         return clubIds;
+    }
+
+    public void cancelMembership(Long club_id, Long user_id) throws ServiceException {
+        try {
+            ClubMembership singleResult = em.createNamedQuery("ClubMembership.get", ClubMembership.class)
+                                            .setParameter("club_id", user_id)
+                                            .setParameter("user_id", user_id).getSingleResult();
+            em.remove(singleResult);
+        }catch (NoResultException e) {
+            throw new ServiceException("The Membership that you are trying to remove a non existing membership");
+        } 
     }
 
 

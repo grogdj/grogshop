@@ -37,5 +37,17 @@
         </query>
     </named-query>
         
+    <named-query name="ClubMembership.get">
+        <query>
+            SELECT
+            _membership
+            FROM
+            ClubMembership _membership
+            WHERE
+            _membership.clubId = :club_id and
+            _membership.userId = :user_id  
+              
+        </query>
+    </named-query>    
 	
 </entity-mappings>

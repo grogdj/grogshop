@@ -28,7 +28,6 @@ public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsServic
 
     @Override
     public Response get(@NotNull @PathParam("id") Long user_id) throws ServiceException {
-
         List<Long> clubIds = membershipsService.get(user_id);
         JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
         for (Long id : clubIds) {
@@ -39,9 +38,9 @@ public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsServic
     }
 
     @Override
-    public Response joinClub(@NotNull @FormParam("club_id") Long club_id,
+    public Response create(@NotNull @FormParam("club_id") Long club_id,
             @NotNull @FormParam("user_id") Long user_id) throws ServiceException {
-        membershipsService.joinClub(club_id, user_id);
+        membershipsService.createMembership(club_id, user_id);
         return Response.ok().build();
     }
 
@@ -60,6 +59,12 @@ public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsServic
     public Response getNroMembers(@NotNull @PathParam("id") Long club_id) throws ServiceException {
         Long nroMembers = membershipsService.getNroMembers(club_id);
         return Response.ok(nroMembers.toString()).build();
+    }
+
+    public Response cancel(@NotNull @FormParam("club_id") Long club_id,
+            @NotNull @FormParam("user_id") Long user_id) throws ServiceException {
+        membershipsService.cancelMembership(club_id, user_id);
+        return Response.ok().build();
     }
 
 }

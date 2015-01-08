@@ -31,7 +31,14 @@ public interface ShopClubMembershipsService extends Serializable {
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response joinClub(@NotNull @FormParam("club_id") Long club_id,
+    Response create(@NotNull @FormParam("club_id") Long club_id,
+            @NotNull @FormParam("user_id") Long user_id) throws ServiceException;
+    
+    @Path("/cancel")
+    @POST
+    @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+    @Produces({MediaType.APPLICATION_JSON})
+    Response cancel(@NotNull @FormParam("club_id") Long club_id,
             @NotNull @FormParam("user_id") Long user_id) throws ServiceException;
 
     @GET

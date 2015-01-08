@@ -34,11 +34,11 @@ app.config(function ($routeProvider) {
             .when('/club/preview/:club_id', {
                 templateUrl: 'views/clubpreview.html',
                 controller: 'clubController'
-                
+
 
             })
             .otherwise({
-                redirectto:'/'
+                redirectto: '/'
             });
 
 });
@@ -50,7 +50,7 @@ app.run(function ($rootScope, $location) {
 
     var history = [];
 
-    $rootScope.$on('$routeChangeSuccess', function() {
+    $rootScope.$on('$routeChangeSuccess', function () {
         history.push($location.$$path);
         console.log("HISTORY " + history)
     });
@@ -171,14 +171,19 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
 
 
 
-     $scope.hasMembership = function (club_id) {
-           
-    if($rootScope.memberships.indexOf(club_id) == -1){
-            return false;
-          }else {
+    $scope.hasMembership = function (club_id) {
+        console.log("Memberships = "+$rootScope.memberships);
+        console.log("Checking for : "+club_id);
+        if (typeof $rootScope.memberships !== 'undefined' 
+                && $rootScope.memberships.indexOf(club_id) !== -1) {
+            console.log("Executed - Has Membership = true");
             return true;
-          }
-     };
+        } else {
+            console.log("Executed - Has Membership = false");
+            console.log("$rootScope.memberships.indexOf(club_id) = "+$rootScope.memberships.indexOf(club_id));
+            return false;
+        }
+    };
 
 
 

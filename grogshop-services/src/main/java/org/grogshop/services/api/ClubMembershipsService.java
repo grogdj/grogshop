@@ -14,7 +14,9 @@ import org.grogshop.services.exceptions.ServiceException;
  */
 public interface ClubMembershipsService {
     
-    void joinClub(Long club_id, Long user_id) throws ServiceException;
+    void createMembership(Long club_id, Long user_id) throws ServiceException;
+    
+    void cancelMembership(Long club_id, Long user_id) throws ServiceException;
 
     Long getNroMembers(Long club_id);
 

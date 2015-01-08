@@ -26,15 +26,15 @@
 
 
 			</div>
-			<div ng-show="hasMembership({{preview_club.id}})" class="col-sm-3">
+			<div ng-show="!hasMembership(club_id)" class="col-sm-3">
 				 <button class="btn btn-primary btn-block btn-lg" ng-click="joinClub(club_id, user_id, email, auth_token)"> <span class="glyphicon glyphicon-flag pull-left" aria-hidden="true"></span> Join <span class="hidden-sm" >this club</span></button>
 				 <div class="col-md-10 col-md-offset-1">
 				 	<br/>
 				 	<p class="text-center"><small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </small></p>
 				 </div>	
 			</div>
-			<div ng-show="!hasMembership({{preview_club.id}})" class="col-sm-3">
-				 <button class="btn btn-warning btn-block btn-lg" ng-click="cancelMembership(user_id)"> <span class="glyphicon glyphicon-remove pull-left" aria-hidden="true"></span> Cancel <span class="hidden-sm">Membership</span></button>
+			<div ng-show="hasMembership(club_id)" class="col-sm-3">
+				 <button class="btn btn-warning btn-block btn-lg" ng-click="cancelMembership(club_id, user_id, email, auth_token)"> <span class="glyphicon glyphicon-remove pull-left" aria-hidden="true"></span> Cancel <span class="hidden-sm">Membership</span></button>
 				 <div class="col-md-10 col-md-offset-1">
 				 	<br/>
 				 	<p class="text-center"><small>You are already a member of this club.</small></p>
