@@ -37,6 +37,36 @@ public class ClubsServiceImpl implements ClubsService {
             tags.add("fun");
             tags.add("healty");
             newClub("cooking club", "this is a new cooking club", "cooking", tags , "grogdj@gmail.com", "cooking.jpg");
+            tags = new ArrayList<String>();
+            tags.add("stars");
+            tags.add("galaxy");
+            tags.add("apollo");
+            newClub("astronomy for everyone", "astronomy club for everybody", "astronomy", tags , "esala212121@gmail.com", "astrology.jpg");
+            tags = new ArrayList<String>();
+            tags.add("old");
+            tags.add("classic");
+            tags.add("cars");
+            newClub("My good old cars", "about classic cars and stuff", "old cars", tags , "thelongestttttttemail@gmail.com", "oldcars.jpg");
+            tags = new ArrayList<String>();
+            tags.add("puppies");
+            tags.add("dogs");
+            tags.add("cats");
+            newClub("My small pets", "all pets allowed", "pets", tags , "anotherlongemailhere@gmail.com", "pets.jpg");
+            tags = new ArrayList<String>();
+            tags.add("arcade");
+            tags.add("play");
+            tags.add("games");
+            newClub("Pacman & cia", "for all the gamers", "videogames", tags , "mrpacman@gmail.com", "videogames.jpg");
+            tags = new ArrayList<String>();
+            tags.add("graphic");
+            tags.add("visual");
+            tags.add("design");
+            newClub("Designers United", "let the style be with you", "design", tags , "wearealldesigners@gmail.com", "design.jpg");
+            tags = new ArrayList<String>();
+            tags.add("old");
+            tags.add("fashion");
+            tags.add("furniture");
+            newClub("Antiques", "more than 100 year old items", "antiques", tags , "oldisgood@gmail.com", "antiques.jpg");
             
         } catch (ServiceException ex) {
             Logger.getLogger(ClubsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
