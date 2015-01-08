@@ -1,15 +1,32 @@
  <!-- HOME -->
         <div class="container">
             <div class="row">
-                <div class="jumbotron clearfix" style="background-color: transparent;">
+                <div class="jumbotron clearfix" style="background-color: transparent;" ng-show="!auth_token">
                 	<div class="col-md-6 col-md-offset-3 text-center">
 	                    <h1>Clubhouse</h1>
 	                    <h4>This is the place to find those unique things you've always wanted and get to know those unique people who have them.</h4>
                     </div>
 
                 </div>
+                <div class="logged" ng-show="auth_token">
+	                <div class="col-md-6" >
+	                	<h1 class="no-margin">Clubhouse</h1>
+	                </div>
+	                <div class="col-md-6" >
+	                	<p>Find those unique things you've always wanted and get to know those unique people who have them.</p>
+	                </div>
+                </div>
             </div>
             <hr style="border-color:#999;">
+            <div class="row" ng-show="!auth_token">
+               	<div class="col-md-6">
+               		<a href="#login" class="btn btn-default btn-block" >Log in</a>
+               	</div>
+               	<div class="col-md-6">
+               		<a href="#signup" class="btn btn-primary btn-block" >Sign Up</a>
+               	</div>
+            </div>
+            <hr style="border-color:#999;" ng-show="!auth_token">
             <div class="row" >
             	<div class="col-md-12">
 	            	<div class="panel panel-default">
@@ -32,12 +49,14 @@
 	            		</div>
 	            		<div class="panel-body">
 	            		   <div class="clubscontainer" ng-repeat="club in clubList"> 
-	            		   		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+	            		   		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 club-item">
 	            		   			<div href="#" class="thumbnail">
-	            		   					<img src="{{imagePath}}{{club.image}}" class="img-responsive" alt="">
+	            		   					<div class="img-container">
+	            		   						<img src="{{imagePath}}{{club.image}}" class="img-responsive" alt="">
+	            		   					</div>
 	            		   					<div class="caption">
-									            <h4 class="no-margin">{{club.name}}</h4>
-									            <p><small>{{ club.founderEmail}}</small></p>
+									            <h4 class="no-margin one-line">{{club.name}}</h4>
+									            <p class="one-line" ><small>{{ club.founderEmail}}</small></p>
 									            <a href="#club/preview/{{club.id}}" class="btn btn-default btn-block" role="button">Join</a> 
 								          </div>
 	            		   			</div>
