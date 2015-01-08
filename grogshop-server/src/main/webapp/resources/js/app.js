@@ -171,7 +171,14 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
 
 
 
-
+     $scope.hasMembership = function (club_id) {
+           
+    if($rootScope.memberships.indexOf(club_id) == -1){
+            return false;
+          }else {
+            return true;
+          }
+     };
 
 
 
