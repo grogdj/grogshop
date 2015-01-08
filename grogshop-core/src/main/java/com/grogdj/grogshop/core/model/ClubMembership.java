@@ -5,67 +5,64 @@
  */
 package com.grogdj.grogshop.core.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author grogdj
  */
-public class ClubMembership {
+@Entity(name = "ClubMembership")
+@Table(name = "MEMBERSHIPS")
+public class ClubMembership implements Serializable{
 
-    private static Long CLUB_ID = 0L;
+    @Id
+    private Long userId;
+    @Id
+    private Long clubId;
 
-    private Long id;
-    private String userId;
-    private List<Tag> tags;
-
-    // params
+    private Date since;
+    // filters
     private Double[] priceRange = new Double[]{0d, 10000000d};
     private boolean local = false;
     private String location = "";
     private String distance = "";
 
     public ClubMembership() {
-        this.id = CLUB_ID++;
+
     }
 
-    public ClubMembership(String userId, List<Tag> tags) {
-        this();
+    public ClubMembership(Long clubId, Long userId) {
+        this.clubId = clubId;
         this.userId = userId;
-        this.tags = tags;
-
+        this.since = new Date();
     }
 
-    public void addTag(String tag) {
-        if (this.tags == null) {
-            this.tags = new ArrayList<Tag>();
-        }
-        tags.add(new Tag(tag));
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getClubId() {
+        return clubId;
+    }
+
+    public void setClubId(Long clubId) {
+        this.clubId = clubId;
+    }
+
+    public Date getSince() {
+        return since;
+    }
+
+    public void setSince(Date since) {
+        this.since = since;
     }
 
     public Double[] getPriceRange() {
@@ -99,36 +96,9 @@ public class ClubMembership {
     public void setDistance(String distance) {
         this.distance = distance;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ClubMembership other = (ClubMembership) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-  
-
-    @Override
-    public String toString() {
-        return "ClubMembership{" + "id=" + id + ", userId=" + userId + ", tags=" + tags + ", priceRange=" + priceRange + ", local=" + local + ", location=" + location + ", distance=" + distance + '}';
-    }
-
+    
+    
+    
     
 
 }

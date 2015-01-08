@@ -6,15 +6,17 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.ClubMembership;
-import com.grogdj.grogshop.core.model.Tag;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import javax.inject.Inject;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import org.grogshop.services.api.ClubMembershipsService;
-import org.grogshop.services.api.TagsService;
+import org.grogshop.services.exceptions.ServiceException;
 
 /**
  *
@@ -23,78 +25,51 @@ import org.grogshop.services.api.TagsService;
 @Singleton
 public class ClubMembershipsServiceImpl implements ClubMembershipsService {
 
-    @Inject
-    private TagsService tagsService;
+    @PersistenceContext(unitName = "primary")
+    private EntityManager em;
 
-    private Set<ClubMembership> memberships;
+    private final static Logger log = Logger.getLogger(ClubMembershipsServiceImpl.class.getName());
 
-    public ClubMembershipsServiceImpl() {
-        this.memberships = new HashSet<ClubMembership>();
+    @PostConstruct
+    private void init() {
+        
     }
 
-    public ClubMembership getClubMembership(Long clubMembershipId) {
-        for (ClubMembership m : this.memberships) {
-            if (m.getId().equals(clubMembershipId)) {
-                return m;
-            }
+    @Override
+    public void joinClub(Long club_id, Long user_id) throws ServiceException {
+        em.persist(new ClubMembership(club_id, user_id));
+        log.log(Level.INFO, "ClubMembership {0} created", new Object[]{club_id, user_id});
+
+    }
+
+    @Override
+    public Long getNroMembers(Long club_id) {
+        try {
+            return em.createNamedQuery("ClubMembership.countMembers", Long.class).setParameter("club_id", club_id).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         }
-        return null;
     }
 
-    public List<ClubMembership> getClubMemberships(String userId) {
-        List<ClubMembership> userMemberships = new ArrayList<ClubMembership>();
-        for (ClubMembership m : memberships) {
-            if (m.getUserId().equals(userId)) {
-                userMemberships.add(m);
-            }
+    @Override
+    public List<Long> getAllMembers(Long club_id) {
+        List<ClubMembership> resultList = em.createNamedQuery("ClubMembership.getAllMembers", ClubMembership.class).setParameter("club_id", club_id).getResultList();
+        List<Long> userIds = new ArrayList<Long>(resultList.size());
+        for(ClubMembership cm : resultList){
+            userIds.add(cm.getUserId());
         }
-        return userMemberships;
+        return userIds;
     }
 
-    public Long joinClub(String userId, ClubMembership clubMembership) {
-        if (clubMembership != null) {
-            clubMembership.setUserId(userId);
-            for (Tag t : clubMembership.getTags()) {
-//                tagsService.newTag(t);
-            }
-            
-            this.memberships.add(clubMembership);
-            return clubMembership.getId();
-        } else {
-            System.out.println("> ClubMembership cannot be null :( ");
+    @Override
+    public List<Long> get(Long user_id) {
+        List<ClubMembership> resultList = em.createNamedQuery("ClubMembership.getAll", ClubMembership.class).setParameter("user_id", user_id).getResultList();
+        List<Long> clubIds = new ArrayList<Long>(resultList.size());
+        for(ClubMembership cm : resultList){
+            clubIds.add(cm.getClubId());
         }
-        return -1l;
+        return clubIds;
     }
 
-    public void clearClubMemberships() {
-        this.memberships.clear();
-    }
-
-    public ClubMembership removeClubMembership(Long clubId) {
-        ClubMembership remove = null;
-        for (ClubMembership m : this.memberships) {
-            if (m.getId().equals(clubId)) {
-                remove = m;
-            }
-        }
-        if (remove != null) {
-            this.memberships.remove(remove);
-            return remove;
-        }
-        return null;
-    }
-
-    public void updateClubMembership(ClubMembership clubMembership) {
-        if (clubMembership != null) {
-
-            for (Tag t : clubMembership.getTags()) {
-//                tagsService.newTag(t);
-            }
-            this.memberships.add(clubMembership);
-        } else {
-            System.out.println("> ClubMembership cannot be null :( ");
-        }
-
-    }
 
 }

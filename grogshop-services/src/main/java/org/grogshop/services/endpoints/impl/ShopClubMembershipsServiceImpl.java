@@ -1,103 +1,65 @@
 /*
- * JBoss, Home of Professional Open Source
- * Copyright 2014, Red Hat, Inc. and/or its affiliates, and individual
- * contributors by the @authors tag. See the copyright.txt in the
- * distribution for a full listing of individual contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package org.grogshop.services.endpoints.impl;
 
-import com.grogdj.grogshop.core.model.ClubMembership;
-import java.security.Principal;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import org.grogshop.services.api.ClubMembershipsService;
-import org.grogshop.services.api.NotificationsService;
-import org.grogshop.services.api.RulesService;
+import org.grogshop.services.endpoints.api.ShopClubMembershipsService;
+import org.grogshop.services.exceptions.ServiceException;
 
-@Path("/secured/memberships")
-public class ShopClubMembershipsServiceImpl {
 
-    @Inject
-    ClubMembershipsService membershipsService;
+@Stateless
+public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsService {
 
     @Inject
-    NotificationsService notificationService;
+    private ClubMembershipsService membershipsService;
 
-    @Inject
-    RulesService matchingService;
+    @Override
+    public Response get(@NotNull @PathParam("id") Long user_id) throws ServiceException {
 
-    @Inject
-    Principal principal;
-
-    @Inject
-    HttpSession session;
-
-    public ShopClubMembershipsServiceImpl() {
-
+        List<Long> clubIds = membershipsService.get(user_id);
+        JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+        for (Long id : clubIds) {
+            jsonArrayBuilderInterest.add(id);
+        }
+        JsonArray build = jsonArrayBuilderInterest.build();
+        return Response.ok(build.toString()).build();
     }
 
-    @POST
-    @Path("/join")
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-    public Long joinClub(ClubMembership membership) {
-        Long id = membershipsService.joinClub(principal.getName(), membership);
-        matchingService.insert(membership);
-        return id;
-    }
-    
-    @POST
-    @Path("/update")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void updateClubMembership(ClubMembership membership) {
-        membershipsService.updateClubMembership(membership);
-        matchingService.update(membership);
-        
+    @Override
+    public Response joinClub(@NotNull @FormParam("club_id") Long club_id,
+            @NotNull @FormParam("user_id") Long user_id) throws ServiceException {
+        membershipsService.joinClub(club_id, user_id);
+        return Response.ok().build();
     }
 
-    @GET
-    @Path("/all")
-    @Produces({MediaType.APPLICATION_JSON})
-    public List<ClubMembership> getAllClubMemberships() {
-        return membershipsService.getClubMemberships(principal.getName());
+    @Override
+    public Response getAllMembers(@NotNull @PathParam("id") Long club_id) throws ServiceException {
+        List<Long> memberIds = membershipsService.getAllMembers(club_id);
+        JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+        for (Long id : memberIds) {
+            jsonArrayBuilderInterest.add(id);
+        }
+        JsonArray build = jsonArrayBuilderInterest.build();
+        return Response.ok(build.toString()).build();
     }
 
-    @GET
-    @Path("/clear")
-    public void clearClubMemberships() {
-        membershipsService.clearClubMemberships();
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void removeClubMembership(@PathParam("id") Long id) {
-        ClubMembership removedMembership = membershipsService.removeClubMembership(id);
-        matchingService.retract(removedMembership);
-    }
-
-    @GET
-    @Path("{id}")
-    public ClubMembership getClubMembership(@PathParam("id") Long id) {
-        return membershipsService.getClubMembership(id);
+    @Override
+    public Response getNroMembers(@NotNull @PathParam("id") Long club_id) throws ServiceException {
+        Long nroMembers = membershipsService.getNroMembers(club_id);
+        return Response.ok(nroMembers.toString()).build();
     }
 
 }

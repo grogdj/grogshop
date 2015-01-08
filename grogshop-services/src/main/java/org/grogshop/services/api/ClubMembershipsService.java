@@ -5,25 +5,20 @@
  */
 package org.grogshop.services.api;
 
-import com.grogdj.grogshop.core.model.ClubMembership;
 import java.util.List;
+import org.grogshop.services.exceptions.ServiceException;
 
 /**
  *
  * @author grogdj
  */
 public interface ClubMembershipsService {
-
-    ClubMembership getClubMembership(Long clubId);
-
-    List<ClubMembership> getClubMemberships(String userId);
-
-    Long joinClub(String userId, ClubMembership club);
-
-    void updateClubMembership(ClubMembership club);
     
-    void clearClubMemberships();
+    void joinClub(Long club_id, Long user_id) throws ServiceException;
 
-    ClubMembership removeClubMembership(Long clubId);
+    Long getNroMembers(Long club_id);
 
+    List<Long> getAllMembers(Long club_id);
+
+    List<Long> get(Long user_id);
 }
