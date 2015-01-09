@@ -71,9 +71,9 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     $scope.user_id = $cookieStore.get('user_id');
     $scope.firstLogin = $cookieStore.get('firstLogin');
     $scope.index = 0;
-    $scope.memberships = {};
+    $scope.memberships = [];
     $scope.notifications = {};
-
+    
     $rootScope.$on('quickNotification', function (event, data) {
         var i;
 
@@ -89,7 +89,11 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     });
 
     $scope.logoutUser = function (isValid) {
-
+        $scope.auth_token = "";
+        $scope.email = "";
+        $scope.user_id = "";
+        $scope.firstLogin = "";
+        $scope.memberships = [];
         $http({
             method: 'POST',
             url: 'rest/auth/logout',
@@ -99,10 +103,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
             console.log("You have been logged out." + data);
             $cookieStore.remove('auth_token');
             $cookieStore.remove('email');
-            $scope.auth_token = "";
-            $scope.email = "";
-            $scope.user_id = "";
-            $scope.firstLogin = "";
+            
             $rootScope.$broadcast('goTo', "/");
             $rootScope.$broadcast("quickNotification", "You have been logged out.");
         }).error(function (data) {
@@ -113,7 +114,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     };
 
     $scope.loginUser = function (isValid, user) {
-        console.log("asd22 " + user.email + " / password" + user.password);
+        console.log("logged user " + user.email + " / password" + user.password);
 
         $scope.submitted = true;
 
@@ -123,23 +124,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
                 method: 'POST',
                 url: 'rest/auth/login',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + user.email},
-                transformRequest: function (obj) {
-                    var str = [];
-                    for (var key in obj) {
-                        if (obj[key] instanceof Array) {
-                            for (var idx in obj[key]) {
-                                var subObj = obj[key][idx];
-                                for (var subKey in subObj) {
-                                    str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                                }
-                            }
-                        }
-                        else {
-                            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                        }
-                    }
-                    return str.join("&");
-                },
+                transformRequest: transformRequestToForm,
                 data: {email: user.email, password: user.password}
             }).success(function (data) {
                 $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
@@ -156,12 +141,13 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
                 $scope.credentials = {};
                 $scope.submitted = false;
                 console.log("firstLogin: " + $scope.firstLogin);
+                
                 if ($scope.firstLogin) {
                     $rootScope.$broadcast('goTo', "/firstlogin");
                 } else {
                     $rootScope.$broadcast('goTo', "/");
                 }
-
+                
             }).error(function (data) {
                 console.log("Error: " + data.error);
                 $rootScope.$broadcast("quickNotification", "You are NOT logged in because:" + data.error);
@@ -169,23 +155,45 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
         }
     };
 
+    $scope.loadMemberships = function (user_id, email, auth_token) {
+        console.log("loading memberships for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
 
+        $http({
+            method: 'GET',
+            url: 'rest/members/'+user_id,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
+            transformRequest: transformRequestToForm,
+            data: {}
+        }).success(function (data) {
+            $rootScope.$broadcast("quickNotification", "Memberships loaded! ");
+            console.log("data: "+ data);
+            $scope.memberships = data;
+            console.log("my memberships: "+ $scope.memberships);
+
+        }).error(function (data) {
+            console.log("Error: " + data);
+            $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+        });
+
+    };
 
     $scope.hasMembership = function (club_id) {
-        console.log("Memberships = "+$rootScope.memberships);
+        console.log("Memberships = "+$scope.memberships);
         console.log("Checking for : "+club_id);
-        if (typeof $rootScope.memberships !== 'undefined' 
-                && $rootScope.memberships.indexOf(club_id) !== -1) {
+        if (typeof $scope.memberships !== 'undefined' 
+                && $scope.memberships.indexOf(club_id) !== -1) {
             console.log("Executed - Has Membership = true");
             return true;
         } else {
             console.log("Executed - Has Membership = false");
-            console.log("$rootScope.memberships.indexOf(club_id) = "+$rootScope.memberships.indexOf(club_id));
+            console.log("$rootScope.memberships.indexOf(club_id) = "+$scope.memberships.indexOf(club_id));
             return false;
         }
     };
 
-
+    if($scope.auth_token && $scope.auth_token !== ""){
+        $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
+    }
 
 });
 

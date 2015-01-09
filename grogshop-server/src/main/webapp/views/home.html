@@ -49,16 +49,16 @@
 	            		</div>
 	            		<div class="panel-body">
 	            		   <div class="clubscontainer" ng-repeat="club in clubList"> 
-	            		   		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 club-item">
+	            		   		<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 club-item">
 	            		   			<div href="#" class="thumbnail">
 	            		   					<div class="img-container">
 	            		   						<img src="{{imagePath}}{{club.image}}" class="img-responsive" alt="">
 	            		   					</div>
 	            		   					<div class="caption">
 									            <h4 class="no-margin one-line">{{club.name}}</h4>
-									            <p class="one-line" ><small>{{ club.founderEmail}}</small></p>
-									            <a href="#club/preview/{{club.id}}" ng-show="!hasMembership({{club.id}})" class="btn btn-default btn-block" role="button">Join</a> 
-									            <a href ng-show="hasMembership({{club.id}})" class="btn btn-info btn-block" role="button">Visit</a> 
+									            <p class="one-line" ><small>{{club.founderEmail}}</small></p>
+									            <a href="#club/preview/{{club.id}}" ng-show="!hasMembership(club.id)" class="btn btn-default btn-block" role="button">Join</a> 
+									            <a href ng-show="hasMembership(club.id)" class="btn btn-info btn-block" role="button">Visit</a> 
 								          </div>
 	            		   			</div>
 	            		   		</div>

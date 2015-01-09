@@ -74,7 +74,7 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
     public void cancelMembership(Long club_id, Long user_id) throws ServiceException {
         try {
             ClubMembership singleResult = em.createNamedQuery("ClubMembership.get", ClubMembership.class)
-                                            .setParameter("club_id", user_id)
+                                            .setParameter("club_id", club_id)
                                             .setParameter("user_id", user_id).getSingleResult();
             em.remove(singleResult);
         }catch (NoResultException e) {

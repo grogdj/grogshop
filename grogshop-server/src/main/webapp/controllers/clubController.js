@@ -11,23 +11,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             method: 'GET',
             url: 'rest/clubs/' + $scope.club_id,
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Club loaded!");
@@ -48,27 +32,11 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             method: 'POST',
             url: 'rest/members/join',
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: {club_id: club_id, user_id: user_id}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Club Joined!");
-            $rootScope.memberships.push(club_id);
+            $scope.memberships.push(club_id);
             $rootScope.$digest();
             console.log("after joining the club: "+$rootScope.memberships);
         }).error(function (data) {
@@ -85,29 +53,12 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             method: 'POST',
             url: 'rest/members/cancel',
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: {club_id: club_id, user_id: user_id}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Club Membership Cancelled!");
-            $rootScope.memberships.splice($rootScope.memberships.indexOf(club_id), 1);
-            $rootScope.$digest();
-            console.log("after canceling the club: "+$rootScope.memberships);
+            $scope.memberships.splice($scope.memberships.indexOf(club_id), 1);
+            console.log("after canceling the club: "+$scope.memberships);
         }).error(function (data) {
             console.log("Error: " + data);
             $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
