@@ -3,8 +3,14 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
         username: "",
         location: "",
         bio: "",
-        myFile: ""
+        avatarUrl: "rest/public/users/"+$scope.user_id+"/avatar"
     };
+
+    $scope.uploading = false;
+    $scope.uploadPercentage = 0;
+
+    console.log("AVATAR URL " + $scope.settings.avatarUrl);
+
     $scope.fileSelected= function (files, event) {
         console.log("Files : "+files + "-- event: "+event);
         var file = files[0];
@@ -20,10 +26,17 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
             // See #40#issuecomment-28612000 for sample code
 
         }).progress(function (evt) {
+            $scope.uploadPercentage = parseInt(100.0 * evt.loaded / evt.total);
+             $scope.uploading = true;
             console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
         }).success(function (data) {
             // file is uploaded successfully
             console.log('file ' + file.name + 'is uploaded successfully. Response: ' + data);
+             $scope.uploading = false;
+            $scope.settings.avatarUrl = "";
+           $scope.settings.avatarUrl = "rest/public/users/"+$scope.user_id+"/avatar"+ '?' + new Date().getTime();
+
+
         }).error(function (data) {
             console.log('file ' + file.name + ' upload error. Response: ' + data);
         });
