@@ -1,8 +1,21 @@
-app.controller('clubController', function ($scope, $routeParams, $http, $rootScope) {
-    $scope.pageClass = "clubPreview";
+app.controller('clubController', function ($scope, $routeParams, $http, $rootScope, $location) {
+    
     $scope.imagePath = "resources/img/maintag-images/"
     $scope.club_id = $routeParams.club_id;
-    $scope.preview_club = {};
+    $scope.club = {};
+    $scope.url = $location.path();
+    $scope.isPreview = $scope.url.indexOf('preview');
+    $scope.products = [{'name':'My Product', 'price':'124.12351', 'desc':'My product is unique'}, {'name':'Other Product', 'price':'0.5', 'desc':'Description'}, {'name':'Expensive Product', 'price':'7000.5', 'desc':'Other product description'},{'name':'My Product', 'price':'124.12351', 'desc':'My product is uniqu adsask dlja lsdjaskld jaslkd asd as dajs ldasj dklasj dlkas jdaskl djaslk djasld jaslk djasl djaslk djasl das dljas kldjsa lkdja lkdja sldje'}, {'name':'Other Product', 'price':'0.5', 'desc':'Description'}, {'name':'Expensive Product', 'price':'7000.5', 'desc':'Other product description'},{'name':'My Product', 'price':'124.12351', 'desc':'My product is unique'}, {'name':'Other Product', 'price':'0.5', 'desc':'Description'}, {'name':'Expensive Product', 'price':'7000.5', 'desc':'Other product description'}];
+    
+    $scope.productWidth = $( window ).width()/5;
+    
+    console.log("Es preview? " + $scope.isPreview);
+    
+    if($scope.isPreview > 0 ){
+       $scope.pageClass = "clubPreview";
+    }else {
+       $scope.pageClass = "clubDetail"; 
+    }
     
     $scope.loadClub = function (user_id, email, auth_token) {
         console.log("loading clubs for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
@@ -15,8 +28,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             data: {}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Club loaded!");
-            $scope.preview_club = data;
-
+            $scope.club = data;
         }).error(function (data) {
             console.log("Error: " + data);
             $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);

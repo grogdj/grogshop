@@ -87,6 +87,11 @@ body {
 	
 }
 
+.screen.clubDetail {
+	padding-top: 50px;
+	
+}
+
 /* NAV BAR */
 
 .app-main-nav {
@@ -725,4 +730,35 @@ tags-input .autocomplete  {
 	text-overflow: ellipsis;
 	white-space: nowrap; 
     overflow: hidden;
+}
+
+
+/* CLUB PRODUCTS */
+
+.products-container {
+    padding: 15px;
+}
+.products-container * {
+       box-sizing:  border-box !important;
+     -webkit-box-sizing:  border-box !important;
+}
+.products-container .row {
+     -moz-column-width: 200px;
+     -webkit-column-width: 200px;
+     -moz-column-gap: 30px;
+     -webkit-column-gap:30px; 
+     box-sizing:  border-box !important;
+     -webkit-box-sizing:  border-box !important;
+}
+
+.products-container .row .product {
+     display: inline-block;
+     width:  100%; 
+     box-sizing:  border-box !important;
+     -webkit-box-sizing:  border-box !important;
+}
+
+.products-container .row .product .well {
+ position:relative;
+ display: block;
 }
