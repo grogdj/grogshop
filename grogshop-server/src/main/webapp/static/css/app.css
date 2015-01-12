@@ -398,6 +398,11 @@ section {
 }
 
 
+.filters-bar  .ng-invalid, .filters-bar  .ng-valid {
+    border-color:#CCC;
+    outline-color: #CCC;
+}
+
 
 /* NOTIFICATIONS */
 .notification-container {
@@ -761,4 +766,13 @@ tags-input .autocomplete  {
 .products-container .row .product .well {
  position:relative;
  display: block;
+}
+
+.modal-backdrop {
+    height: 100%;
+}
+
+.img-preview {
+    height: 120px;
+    overflow: hidden
 }
