@@ -26,6 +26,7 @@
 
 
 			</div>
+                    <div ng-show="auth_token">
 			<div ng-show="!hasMembership(club_id)" class="col-sm-3">
 				 <button class="btn btn-primary btn-block btn-lg" ng-click="joinClub(club_id, user_id, email, auth_token)"> <span class="glyphicon glyphicon-flag pull-left" aria-hidden="true"></span> Join <span class="hidden-sm" >this club</span></button>
 				 <div class="col-md-10 col-md-offset-1">
@@ -40,6 +41,7 @@
 				 	<p class="text-center"><small>You are already a member of this club.</small></p>
 				 </div>	
 			</div>
+                    </div>    
 		</div>
 		<hr style="border-color:#999;" >
 
@@ -52,5 +54,5 @@
 
 <div class="float-button float-bottom float-right">
 	
-	<button ng-click="back()" class="btn btn-lg"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</button>
+	<a href="#" class="btn btn-default btn-lg"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</a>
 </div>

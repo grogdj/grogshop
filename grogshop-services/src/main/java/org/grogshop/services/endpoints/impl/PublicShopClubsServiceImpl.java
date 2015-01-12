@@ -6,7 +6,6 @@
 package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Club;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -15,13 +14,10 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.api.ClubsService;
 import org.grogshop.services.endpoints.api.PublicShopClubsService;
 import org.grogshop.services.exceptions.ServiceException;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Stateless
 public class PublicShopClubsServiceImpl implements PublicShopClubsService {
