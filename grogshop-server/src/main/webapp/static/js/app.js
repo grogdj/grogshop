@@ -37,6 +37,12 @@ app.config(function ($routeProvider) {
 
 
             })
+             .when('/club/:club_id', {
+                templateUrl: 'views/club.html',
+                controller: 'clubController'
+
+
+            })
             .otherwise({
                 redirectto: '/'
             });
@@ -178,8 +184,8 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     };
 
     $scope.hasMembership = function (club_id) {
-        console.log("Memberships to string= "+$scope.memberships.toString());
-        console.log("Checking for : "+club_id);
+        //console.log("Memberships to string= "+$scope.memberships.toString());
+        //console.log("Checking for : "+club_id);
         if (typeof $scope.memberships !== 'undefined' 
                 && $scope.memberships.indexOf(parseInt(club_id)) !== -1) {
             

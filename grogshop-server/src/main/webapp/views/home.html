@@ -58,7 +58,7 @@
 									            <h4 class="no-margin one-line">{{club.name}}</h4>
 									            <p class="one-line" ><small>{{club.founderEmail}}</small></p>
 									            <a href="#club/preview/{{club.id}}" ng-show="!hasMembership(club.id)" class="btn btn-default btn-block" role="button">Join</a> 
-									            <a href ng-show="hasMembership(club.id)" class="btn btn-info btn-block" role="button">Visit</a> 
+									            <a href="#club/{{club.id}}" ng-show="hasMembership(club.id)" class="btn btn-info btn-block" role="button">Visit</a> 
 								          </div>
 	            		   			</div>
 	            		   		</div>

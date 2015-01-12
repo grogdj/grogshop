@@ -1,4 +1,4 @@
-app.controller('clubController', function ($scope, $routeParams, $http, $rootScope) {
+app.controller('clubController', function ($scope, $routeParams, $http, $rootScope, $location) {
     
     $scope.imagePath = "static/img/public-images/"
 
