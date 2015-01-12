@@ -3,7 +3,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
         username: "",
         location: "",
         bio: "",
-        avatarUrl: "rest/public/users/"+$scope.user_id+"/avatar"
+        avatarUrl: "rest/public/users/" + $scope.user_id + "/avatar"
     };
 
     $scope.uploading = false;
@@ -11,49 +11,34 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
 
     console.log("AVATAR URL " + $scope.settings.avatarUrl);
 
-    $scope.fileSelected= function (files, event) {
-        console.log("Files : "+files + "-- event: "+event);
+    $scope.fileSelected = function (files, event) {
+        console.log("Files : " + files + "-- event: " + event);
         var file = files[0];
         $scope.upload = $upload.upload({
             url: 'rest/users/' + $scope.user_id + '/avatar/upload', // upload.php script, node.js route, or servlet url
             method: 'POST',
             headers: {'Content-Type': 'multipart/form-data', service_key: 'webkey:' + $scope.email, auth_token: $scope.auth_token},
-            file: file, // single file or a list of files. list is only for html5
-            //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
-            //fileFormDataName: myFile, // file formData name ('Content-Disposition'), server side request form name
-            // could be a list of names for multiple files (html5). Default is 'file'
-            //formDataAppender: function(formData, key, val){}  // customize how data is added to the formData. 
-            // See #40#issuecomment-28612000 for sample code
-
+            file: file,
         }).progress(function (evt) {
             $scope.uploadPercentage = parseInt(100.0 * evt.loaded / evt.total);
-             $scope.uploading = true;
+            $scope.uploading = true;
             console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
         }).success(function (data) {
             // file is uploaded successfully
             console.log('file ' + file.name + 'is uploaded successfully. Response: ' + data);
-             $scope.uploading = false;
+            $scope.uploading = false;
             $scope.settings.avatarUrl = "";
-           $scope.settings.avatarUrl = "rest/public/users/"+$scope.user_id+"/avatar"+ '?' + new Date().getTime();
+            $scope.settings.avatarUrl = "rest/public/users/" + $scope.user_id + "/avatar" + '?' + new Date().getTime();
 
 
         }).error(function (data) {
             console.log('file ' + file.name + ' upload error. Response: ' + data);
-        });
-        //.then(success, error, progress); // returns a promise that does NOT have progress/abort/xhr functions
-        //.xhr(function(xhr){xhr.upload.addEventListener(...)}) // access or attach event listeners to 
-        //the underlying XMLHttpRequest
 
-        /* alternative way of uploading, send the file binary with the file's content-type.
-         Could be used to upload files to CouchDB, imgur, etc... html5 FileReader is needed. 
-         It could also be used to monitor the progress of a normal http post/put request. 
-         Note that the whole file will be loaded in browser first so large files could crash the browser.
-         You should verify the file size before uploading with $upload.http().
-         */
-        // $scope.upload = $upload.http({...})  // See 88#issuecomment-31366487 for sample code.
+        });
+
 
     };
-    
+
 
     var initialData = "";
 

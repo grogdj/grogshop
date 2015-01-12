@@ -1,6 +1,6 @@
 app.controller('homeController', function ($scope, $http, $rootScope) {
 
-    $scope.imagePath = "resources/img/maintag-images/"
+    $scope.imagePath = "static/img/public-images/"
     
     
     $scope.loadClubs = function (user_id, email, auth_token) {
@@ -43,6 +43,7 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
 
     if($scope.auth_token && $scope.auth_token !== ""){
         console.log("loading private clubs because: "+$scope.auth_token);
+        $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
         $scope.loadClubs($scope.user_id, $scope.email, $scope.auth_token);
     }else{
         console.log("loading public clubs because: "+$scope.auth_token);

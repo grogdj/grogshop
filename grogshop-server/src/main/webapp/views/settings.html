@@ -16,7 +16,7 @@
 
                 <img class="img-thumbnail img-responsive" alt="Profile Image {{email}}"  ng-src="{{settings.avatarUrl}}"/> <br/> <br/>
                 <div class="options">
-                    <button class="btn btn-default btn-block" ng-file-select ng-model="files" ng-file-change="fileSelected($files, $event)" multiple="false">Attach Any File</button><br/> <br/>
+                    <button class="btn btn-default btn-block" ng-file-select ng-model="files" ng-file-change="fileSelected($files, $event)" accept="image/*"  multiple="false">Attach Any File</button><br/> <br/>
                     <div class="progress"ng-show="uploading" >
                       <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{uploadPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadPercentage}}%;">
                         <span class="sr-only">{{uploadPercentage}} Complete</span>

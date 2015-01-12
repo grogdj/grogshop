@@ -1,7 +1,7 @@
 app.controller('firstLoginController', function ($rootScope, $http, $scope, $cookieStore) {
     
     //GRID
-    $scope.imagePath = "resources/img/maintag-images/"
+    $scope.imagePath = "static/img/public-images/"
     $scope.mainTags = [];
     
     $scope.newProfile = function (user_id, email, auth_token) {

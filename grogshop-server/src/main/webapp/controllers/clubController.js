@@ -1,6 +1,7 @@
-app.controller('clubController', function ($scope, $routeParams, $http, $rootScope, $location) {
+app.controller('clubController', function ($scope, $routeParams, $http, $rootScope) {
     
-    $scope.imagePath = "resources/img/maintag-images/"
+    $scope.imagePath = "static/img/public-images/"
+
     $scope.club_id = $routeParams.club_id;
     $scope.club = {};
     $scope.url = $location.path();
@@ -48,8 +49,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             data: {club_id: club_id, user_id: user_id}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Club Joined!");
-            $scope.memberships.push(club_id);
-            $rootScope.$digest();
+            $scope.memberships.push(parseInt(club_id));
             console.log("after joining the club: "+$rootScope.memberships);
         }).error(function (data) {
             console.log("Error: " + data);
@@ -69,7 +69,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             data: {club_id: club_id, user_id: user_id}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Club Membership Cancelled!");
-            $scope.memberships.splice($scope.memberships.indexOf(club_id), 1);
+            $scope.memberships.splice($scope.memberships.indexOf(parseInt(club_id)), 1);
             console.log("after canceling the club: "+$scope.memberships);
         }).error(function (data) {
             console.log("Error: " + data);

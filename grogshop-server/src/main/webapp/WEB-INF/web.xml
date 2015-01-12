@@ -23,6 +23,17 @@
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
     
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.ico</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.htc</url-pattern>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    
     <context-param>
         <param-name>resteasy.providers</param-name>
         <param-value>org.grogshop.services.exceptions.ServiceExceptionHandler</param-value>   

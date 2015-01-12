@@ -7,18 +7,24 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Profile;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.servlet.ServletContext;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ProfileService;
 import org.grogshop.services.endpoints.api.PublicShopUserProfileService;
 import org.grogshop.services.exceptions.ServiceException;
@@ -56,15 +62,58 @@ public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileSe
 
     @Override
     public Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException {
-        final byte[] avatar = profileService.getAvatar(user_id);
-        return Response.ok().entity(new StreamingOutput() {
-            @Override
-            public void write(OutputStream output)
-                    throws IOException, WebApplicationException {
-                output.write(avatar);
-                output.flush();
+//
+//        byte[] tmp = profileService.getAvatar(user_id);
+//        final byte[] avatar;
+//        if (tmp != null && tmp.length > 0) {
+//            log.info("avatar found");
+//            avatar = tmp;
+//        } else {
+//            try {
+//                log.info("avatar not found");
+//
+//                InputStream resourceAsStream = PublicShopUserProfileServiceImpl.class.getResourceAsStream("static/img/public-images/pets.jpg");
+//                
+//                avatar = IOUtils.toByteArray(resourceAsStream);
+//
+//            } catch (IOException ex) {
+//                throw new ServiceException("The default avatar image failed to load!" + ex);
+//            }
+//
+//        }
+//
+//        return Response.ok().entity(new StreamingOutput() {
+//            @Override
+//            public void write(OutputStream output)
+//                    throws IOException, WebApplicationException {
+//                output.write(avatar);
+//                output.flush();
+//            }
+//        }).build();
+        byte[] tmp = profileService.getAvatar(user_id);
+        final byte[] avatar;
+        if (tmp != null && tmp.length > 0) {
+            log.info("avatar found");
+            avatar = tmp;
+            return Response.ok().entity(new StreamingOutput() {
+                @Override
+                public void write(OutputStream output)
+                        throws IOException, WebApplicationException {
+                    output.write(avatar);
+                    output.flush();
+                }
+            }).build();
+        } else {
+            try {
+                return Response.temporaryRedirect(new URI("../static/img/public-images/pets.jpg")).build();
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(PublicShopUserProfileServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }).build();
+
+        }
+
+        return Response.serverError().build();
+
     }
 
 }

@@ -29,7 +29,7 @@ public interface PublicShopUserProfileService extends Serializable {
     @Path("{id}/avatar")
     @GET
     @Consumes({MediaType.MULTIPART_FORM_DATA})
-            @Produces({MediaType.APPLICATION_OCTET_STREAM})
+    @Produces({MediaType.MEDIA_TYPE_WILDCARD})
     Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException;
     
     @GET

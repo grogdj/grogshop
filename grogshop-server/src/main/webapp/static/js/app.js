@@ -167,7 +167,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Memberships loaded! ");
             console.log("data: "+ data);
-            $scope.memberships = data;
+            $scope.memberships = JSON.parse(JSON.stringify(data));
             console.log("my memberships: "+ $scope.memberships);
 
         }).error(function (data) {
@@ -178,15 +178,14 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     };
 
     $scope.hasMembership = function (club_id) {
-        console.log("Memberships = "+$scope.memberships);
+        console.log("Memberships to string= "+$scope.memberships.toString());
         console.log("Checking for : "+club_id);
         if (typeof $scope.memberships !== 'undefined' 
-                && $scope.memberships.indexOf(club_id) !== -1) {
-            console.log("Executed - Has Membership = true");
+                && $scope.memberships.indexOf(parseInt(club_id)) !== -1) {
+            
             return true;
         } else {
-            console.log("Executed - Has Membership = false");
-            console.log("$rootScope.memberships.indexOf(club_id) = "+$scope.memberships.indexOf(club_id));
+           
             return false;
         }
     };

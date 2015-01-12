@@ -34,6 +34,7 @@ public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsServic
             jsonArrayBuilderInterest.add(id);
         }
         JsonArray build = jsonArrayBuilderInterest.build();
+        System.out.println("Array: "+build.toString());
         return Response.ok(build.toString()).build();
     }
 
