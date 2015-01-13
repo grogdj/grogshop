@@ -65,15 +65,17 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail,
             @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException {
         String[] interestArray = tags.split(",");
+        List<String> interestsList = new ArrayList<String>();
         if (interestArray != null) {
-            List<String> interestsList = new ArrayList<String>();
+            
             for (String s : interestArray) {
                 interestsList.add(s);
             }
-            clubsService.newClub(name, description, category,  interestsList, founderEmail, image);
+            
 
         }
-        return Response.ok().build();
+        Long newClub = clubsService.newClub(name, description, category,  interestsList, founderEmail, image);
+        return Response.ok(newClub).build();
 
     }
 

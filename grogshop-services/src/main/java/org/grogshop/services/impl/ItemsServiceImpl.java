@@ -44,9 +44,17 @@ public class ItemsServiceImpl implements ItemsService {
         return em.find(Item.class, item_id);
     }
 
-    public void newItem(Long userId, Long clubId, String name, String description, String category, List<String> interests, BigDecimal price) throws ServiceException {
-        em.persist(new Item(userId, clubId, name, description, category, interests, price));
-        log.log(Level.INFO, "Item {0} created", new Object[]{name});
+    @Override
+    public Long newItem(Long userId, Long clubId, String name, String description,  List<String> interests, BigDecimal price) throws ServiceException {
+        Item item = new Item(userId, clubId, name, description, interests, price);
+        em.persist(item);
+        log.log(Level.INFO, "Item {0} created with id {1}", new Object[]{name, item.getId()});
+        return item.getId();
+    }
+
+    @Override
+    public List<Item> getAllItemsByClub(Long clubId) {
+        return em.createNamedQuery("Item.getAllByClub", Item.class).setParameter("clubId", clubId).getResultList();
     }
 
 }

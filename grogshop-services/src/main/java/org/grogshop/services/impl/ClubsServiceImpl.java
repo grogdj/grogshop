@@ -74,10 +74,11 @@ public class ClubsServiceImpl implements ClubsService {
     }
 
     @Override
-    public void newClub(String name, String description, String category, List<String> interests, String founderEmail, String image) throws ServiceException {
-        em.persist(new Club(name, description, category, interests, founderEmail, image));
-        log.log(Level.INFO, "Club {0} created", new Object[]{name});
-
+    public Long newClub(String name, String description, String category, List<String> interests, String founderEmail, String image) throws ServiceException {
+        Club club = new Club(name, description, category, interests, founderEmail, image);
+        em.persist(club);
+        log.log(Level.INFO, "Club {0} created with id {1}", new Object[]{name, club.getId()});
+        return club.getId();
     }
 
     @Override

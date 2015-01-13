@@ -18,6 +18,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.api.ItemsService;
 import org.grogshop.services.endpoints.api.ShopItemsService;
@@ -38,8 +39,38 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         for (Item i : allItems) {
             jsonObjectBuilder
                     .add("id", (i.getId() == null) ? "" : i.getId().toString())
+                    .add("user_id", (i.getUserId()== null) ? "" : i.getUserId().toString())
+                    .add("club_id", (i.getClubId()== null) ? "" : i.getClubId().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
-                    .add("category", (i.getCategory() == null) ? "" : i.getCategory())
+                    .add("description", (i.getDescription() == null) ? "" : i.getDescription())
+                    .add("price", (i.getPrice()== null) ? "" : i.getPrice().toString())
+                    .add("image", (i.getImage() == null) ? "" : i.getImage());
+
+            if (i.getTags() != null) {
+                JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+                for (String s : i.getTags()) {
+                    jsonArrayBuilderInterest.add(s);
+                }
+                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build());
+            }
+            jsonArrayBuilder.add(jsonObjectBuilder);
+        }
+        JsonArray jsonArray = jsonArrayBuilder.build();
+        return Response.ok(jsonArray.toString()).build();
+
+    }
+    
+    @Override
+    public Response getAllItemsByClub(@PathParam("id") Long club_id) {
+        List<Item> allItems = itemsService.getAllItemsByClub(club_id);
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        for (Item i : allItems) {
+            jsonObjectBuilder
+                    .add("id", (i.getId() == null) ? "" : i.getId().toString())
+                    .add("user_id", (i.getUserId()== null) ? "" : i.getUserId().toString())
+                    .add("club_id", (i.getClubId()== null) ? "" : i.getClubId().toString())
+                    .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
                     .add("price", (i.getPrice()== null) ? "" : i.getPrice().toString())
                     .add("image", (i.getImage() == null) ? "" : i.getImage());
@@ -63,29 +94,31 @@ public class ShopItemsServiceImpl implements ShopItemsService {
             @NotNull @FormParam("club_id") Long clubId,
             @NotNull @NotEmpty @FormParam("name") String name,
             @NotNull @NotEmpty @FormParam("description") String description,
-            @NotNull @NotEmpty @FormParam("category") String category,
             @NotNull @NotEmpty @FormParam("tags") String tags,
-            @NotNull @FormParam("price") BigDecimal price) throws ServiceException {
+            @NotNull @FormParam("price") String price) throws ServiceException {
         String[] interestArray = tags.split(",");
+        List<String> interestsList = new ArrayList<String>();
         if (interestArray != null) {
-            List<String> interestsList = new ArrayList<String>();
+            
             for (String s : interestArray) {
                 interestsList.add(s);
             }
-            itemsService.newItem(userId, clubId, name, description, category, interestsList, price);
+            
 
         }
-        return Response.ok().build();
+        Long newItem = itemsService.newItem(userId, clubId, name, description, interestsList, new BigDecimal(price));
+        return Response.ok(newItem).build();
 
     }
 
     @Override
-    public Response get(Long item_id) throws ServiceException {
+    public Response get(@PathParam("id") Long item_id) throws ServiceException {
         Item i = itemsService.getById(item_id);
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         jsonObjectBuilder.add("id", (i.getId() == null) ? "" : i.getId().toString())
+                .add("user_id", (i.getUserId()== null) ? "" : i.getUserId().toString())
+                .add("club_id", (i.getClubId()== null) ? "" : i.getClubId().toString())
                 .add("name", (i.getName() == null) ? "" : i.getName())
-                .add("category", (i.getCategory() == null) ? "" : i.getCategory())
                 .add("description", (i.getDescription() == null) ? "" : i.getDescription())
                 .add("price", (i.getPrice()== null) ? "" : i.getPrice().toString())
                 .add("image", (i.getImage() == null) ? "" : i.getImage());

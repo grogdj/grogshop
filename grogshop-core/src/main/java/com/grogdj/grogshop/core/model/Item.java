@@ -54,9 +54,7 @@ public class Item implements Serializable {
     @ElementCollection
     private List<String> tags;
 
-    @NotNull
-    @NotEmpty
-    private String category;
+   
 
     private String image;
 
@@ -66,13 +64,13 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(Long userId, Long clubId, String name, String description, String category, List<String> tags,  BigDecimal price) {
+    public Item(Long userId, Long clubId, String name, String description,  List<String> tags,  BigDecimal price) {
         this.userId = userId;
         this.clubId = clubId;
         this.name = name;
         this.description = description;
         this.tags = tags;
-        this.category = category;
+        
         this.price = price;
         this.since = new Date();
     }
@@ -135,13 +133,7 @@ public class Item implements Serializable {
         this.tags = tags;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
+  
 
     public String getImage() {
         return image;

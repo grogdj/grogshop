@@ -12,6 +12,18 @@
 		</query>
 	</named-query>
 	
+        
+        <named-query name="Item.getAllByClub">
+		<query>
+			SELECT
+				_item
+			FROM
+				Item _item
+                        WHERE
+                                _item.clubId  = :clubId 
+		</query>
+	</named-query>
+	
        
         
 	

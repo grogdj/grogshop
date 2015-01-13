@@ -37,15 +37,18 @@ public interface ShopItemsService extends Serializable {
             @NotNull @FormParam("club_id") Long club_id, 
             @NotNull @NotEmpty @FormParam("name") String name, 
             @NotNull @NotEmpty @FormParam("description") String description,
-            @NotNull @NotEmpty @FormParam("category") String category,
             @NotNull @NotEmpty @FormParam("tags") String interests,
-            @NotNull @FormParam("price") BigDecimal price) throws ServiceException;
+            @NotNull @FormParam("price") String price) throws ServiceException;
 
     @GET
     @Path("/all")
     @Produces({"application/json"})
     Response getAllItems();
     
+    @GET
+    @Path("/club/{id}")
+    @Produces({"application/json"})
+    Response getAllItemsByClub(@PathParam("id") Long club_id);
     
     @GET
     @Path("{id}")

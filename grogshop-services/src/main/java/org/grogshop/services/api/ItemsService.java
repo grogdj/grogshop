@@ -17,8 +17,10 @@ import org.grogshop.services.exceptions.ServiceException;
 public interface ItemsService {
 
     List<Item> getAllItems();
+    
+    List<Item> getAllItemsByClub(Long clubId);
 
-    void newItem(Long userId, Long clubId, String name, String description, String category, List<String> interests, BigDecimal price) throws ServiceException;
+    Long newItem(Long userId, Long clubId, String name, String description,  List<String> interests, BigDecimal price) throws ServiceException;
 
     Item getById(Long item_id);
 
