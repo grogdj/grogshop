@@ -1,6 +1,6 @@
 
 
-var app = angular.module('grogshop', ['shopnotifications', 'ngCookies', 'ngTagsInput', 'growlNotifications', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload', 'ui-rangeSlider']);
+var app = angular.module('grogshop', ['shopnotifications', 'ngCookies', 'ngTagsInput', 'growlNotifications', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload', 'ui-rangeSlider','masonry']);
 
 
 // configure our routes
@@ -82,6 +82,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     $scope.index = 0;
     $scope.memberships = [];
     $scope.notifications = {};
+    $scope.avatarStyle = {'background-color':'red'};
     
     $rootScope.$on('quickNotification', function (event, data) {
         var i;
@@ -149,6 +150,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
                 $scope.firstLogin = $cookieStore.get('firstLogin');
                 $scope.credentials = {};
                 $scope.submitted = false;
+               
                 console.log("firstLogin: " + $scope.firstLogin);
                 
                 if ($scope.firstLogin) {
@@ -201,6 +203,8 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
 
     if($scope.auth_token && $scope.auth_token !== ""){
         $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
+        $scope.avatarStyle = {'background-image':'url(rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
+        
     }
 
 });

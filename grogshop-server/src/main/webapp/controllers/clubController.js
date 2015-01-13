@@ -9,9 +9,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
 
     $scope.items = [];
 
-    $scope.productWidth = $(window).width() / 5;
-
-    
+    //$scope.productWidth = $(window).width() / 5;
 
     if ($scope.isPreview > 0) {
         $scope.pageClass = "clubPreview";
@@ -63,8 +61,10 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             data: {}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "items loaded!");
+            console.log("My Items");
             console.log(data);
             $scope.items = data;
+                
         }).error(function (data) {
             console.log("Error: " + data);
             $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
@@ -142,7 +142,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             console.log("adding new item  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
             var tagsString = angular.copy($scope.newItem.tags);
             var itemToSend = {club_id: $scope.club_id, user_id: $scope.user_id, name: $scope.newItem.title, description: $scope.newItem.description, 
-                     tags: tagsString.toString(), price: $scope.newItem.price};
+                     tags: JSON.stringify($scope.newItem.tags), price: $scope.newItem.price};
             console.log(itemToSend);
             $http({
                 method: 'POST',
@@ -199,7 +199,4 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
         $scope.loadPublicClub($scope.user_id, $scope.email, $scope.auth_token);
     }
    
-
-
-
 });

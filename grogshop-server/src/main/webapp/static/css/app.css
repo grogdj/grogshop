@@ -741,33 +741,44 @@ tags-input .autocomplete  {
 /* CLUB ITEMS */
 
 .items-container {
-    padding: 15px;
+    margin: 0 -7.5px;
 }
 .items-container * {
        box-sizing:  border-box !important;
      -webkit-box-sizing:  border-box !important;
 }
-.items-container .row {
-     -moz-column-width: 200px;
-     -webkit-column-width: 200px;
-     -moz-column-gap: 30px;
-     -webkit-column-gap:30px; 
-     box-sizing:  border-box !important;
-     -webkit-box-sizing:  border-box !important;
+
+.items-container .item {
+    width:  100%;
+    padding: 0 7.5px;
+    display: inline-block;
 }
 
-.items-container .row .item {
-     display: inline-block;
-     width:  100%; 
-     box-sizing:  border-box !important;
-     -webkit-box-sizing:  border-box !important;
-}
-
-.items-container .row .item .well {
+.items-container  .item .well {
      position:relative;
      display: block;
 }
 
+.items-container  .item .well .options {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    display: none;
+}
+
+.items-container  .item .well:hover .options{
+    display: block;
+}
+
+.items-container  .item .price {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 10;
+}
+.items-container  .item .price .badge {
+   border-radius: 0px !important;
+}
 .modal-backdrop {
     height: 100%;
 }
@@ -775,4 +786,31 @@ tags-input .autocomplete  {
 .img-preview {
     height: 120px;
     overflow: hidden
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width:  768px) { .items-container .item {  width:  50%; } }
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) { .items-container .item {  width:  33.333333%; } }
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { .items-container .item {  width:  25%; } }
+
+
+
+/* AVATAR */
+
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+
+.avatar {
+    margin-left: -15px;
 }

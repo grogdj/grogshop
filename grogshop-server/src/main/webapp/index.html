@@ -54,9 +54,14 @@
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="main-nav">
-                        <ul class="nav navbar-nav"  >
+                        <ul class="nav navbar-nav" ng-show="auth_token" >
+                           <li class="avatar" ng-style="avatarStyle">
+                               
+                           </li>
                             <li ng-show="auth_token">
+                                 
                                   <p class="navbar-text" >
+                                   
                                     Hi {{email}}!
                                 </p>
                             </li>
@@ -108,6 +113,11 @@
 <script type="text/javascript" src="static/lib/angular-file-upload-all.min.js"></script> 
 <script type="text/javascript" src="static/lib/angular-file-upload-shim.min.js"></script> 
 <script type="text/javascript" src="static/lib/angular.rangeSlider.js"></script> 
+<script type="text/javascript" src="static/lib/masonry.pkgd.js"></script>
+<script type="text/javascript" src="static/lib/imagesloaded.pkgd.js"></script>
+
+<script type="text/javascript" src="static/lib/angular-masonry-directive.js"></script> 
+
 
 
 
