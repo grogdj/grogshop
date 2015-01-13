@@ -6,8 +6,6 @@
 package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Profile;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -50,7 +48,7 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
     private final static Logger log = Logger.getLogger(ShopUserProfileServiceImpl.class.getName());
 
     public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
-    public static final String UPLOAD_DIR = "/tmp";
+    
 
     public ShopUserProfileServiceImpl() {
 
@@ -162,31 +160,7 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
         }).build();
     }
 
-    /**
-     * Buil filename local to the server.
-     *
-     * @param filename
-     * @return
-     */
-    private String getServerFilename(String filename) {
-        return UPLOAD_DIR + "/" + filename;
-    }
-
-    private void writeFile(byte[] content, String filename) throws IOException {
-        log.log(Level.INFO, ">>> writing {0} bytes to: {1}", new Object[]{content.length, filename});
-        File file = new File(filename);
-
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-
-        FileOutputStream fop = new FileOutputStream(file);
-
-        fop.write(content);
-        fop.flush();
-        fop.close();
-        log.log(Level.INFO, ">>> writing complete: {0}", filename);
-    }
+   
 
     /**
      * Extract filename from HTTP heaeders.

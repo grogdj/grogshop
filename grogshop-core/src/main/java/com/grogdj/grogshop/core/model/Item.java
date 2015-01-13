@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -38,6 +39,10 @@ public class Item implements Serializable {
     @Id
     private Long clubId;
 
+    @NotNull
+    @NotEmpty
+    private String userEmail;
+
     @Column(unique = true)
     @NotNull
     @NotEmpty
@@ -54,9 +59,11 @@ public class Item implements Serializable {
     @ElementCollection
     private List<String> tags;
 
-   
+    private String imageFileName;
 
-    private String image;
+    @Lob
+    @Column(name = "CONTENT")
+    private byte[] imageContent;
 
     @NotNull
     private BigDecimal price;
@@ -64,18 +71,18 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(Long userId, Long clubId, String name, String description,  List<String> tags,  BigDecimal price) {
+    public Item(Long userId, String userEmail, Long clubId, String name, String description, List<String> tags, BigDecimal price) {
+
         this.userId = userId;
+        this.userEmail = userEmail;
         this.clubId = clubId;
         this.name = name;
         this.description = description;
         this.tags = tags;
-        
+
         this.price = price;
         this.since = new Date();
     }
-    
-    
 
     public Long getId() {
         return id;
@@ -133,14 +140,20 @@ public class Item implements Serializable {
         this.tags = tags;
     }
 
-  
-
-    public String getImage() {
-        return image;
+    public String getImageFileName() {
+        return imageFileName;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
+    }
+
+    public byte[] getImageContent() {
+        return imageContent;
+    }
+
+    public void setImageContent(byte[] imageContent) {
+        this.imageContent = imageContent;
     }
 
     public BigDecimal getPrice() {
@@ -149,6 +162,14 @@ public class Item implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
 }

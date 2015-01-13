@@ -6,6 +6,8 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Item;
+import com.grogdj.grogshop.core.model.Profile;
+import com.grogdj.grogshop.core.model.User;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,7 +33,7 @@ public class ItemsServiceImpl implements ItemsService {
 
     @PostConstruct
     private void init() {
-        
+
     }
 
     @Override
@@ -45,8 +47,12 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     @Override
-    public Long newItem(Long userId, Long clubId, String name, String description,  List<String> interests, BigDecimal price) throws ServiceException {
-        Item item = new Item(userId, clubId, name, description, interests, price);
+    public Long newItem(Long userId, Long clubId, String name, String description, List<String> interests, BigDecimal price) throws ServiceException {
+        User find = em.find(User.class, userId);
+        if (find == null) {
+            throw new ServiceException("User  doesn't exist: " + userId);
+        }
+        Item item = new Item(userId,find.getEmail(), clubId, name, description, interests, price);
         em.persist(item);
         log.log(Level.INFO, "Item {0} created with id {1}", new Object[]{name, item.getId()});
         return item.getId();
@@ -55,6 +61,26 @@ public class ItemsServiceImpl implements ItemsService {
     @Override
     public List<Item> getAllItemsByClub(Long clubId) {
         return em.createNamedQuery("Item.getAllByClub", Item.class).setParameter("clubId", clubId).getResultList();
+    }
+
+    @Override
+    public void updateItemImage(Long item_id, String fileName, byte[] content) throws ServiceException {
+        Item find = em.find(Item.class, item_id);
+        if (find == null) {
+            throw new ServiceException("Item doesn't exist: " + item_id);
+        }
+        find.setImageFileName(fileName);
+        find.setImageContent(content);
+        em.merge(find);
+    }
+
+    @Override
+    public byte[] getItemImage(Long item_id) throws ServiceException {
+        Item find = em.find(Item.class, item_id);
+        if (find == null) {
+            throw new ServiceException("Item doesn't exist: " + item_id);
+        }
+        return find.getImageContent();
     }
 
 }

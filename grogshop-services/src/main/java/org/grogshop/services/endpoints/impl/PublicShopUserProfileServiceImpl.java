@@ -62,34 +62,7 @@ public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileSe
 
     @Override
     public Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException {
-//
-//        byte[] tmp = profileService.getAvatar(user_id);
-//        final byte[] avatar;
-//        if (tmp != null && tmp.length > 0) {
-//            log.info("avatar found");
-//            avatar = tmp;
-//        } else {
-//            try {
-//                log.info("avatar not found");
-//
-//                InputStream resourceAsStream = PublicShopUserProfileServiceImpl.class.getResourceAsStream("static/img/public-images/pets.jpg");
-//                
-//                avatar = IOUtils.toByteArray(resourceAsStream);
-//
-//            } catch (IOException ex) {
-//                throw new ServiceException("The default avatar image failed to load!" + ex);
-//            }
-//
-//        }
-//
-//        return Response.ok().entity(new StreamingOutput() {
-//            @Override
-//            public void write(OutputStream output)
-//                    throws IOException, WebApplicationException {
-//                output.write(avatar);
-//                output.flush();
-//            }
-//        }).build();
+
         byte[] tmp = profileService.getAvatar(user_id);
         final byte[] avatar;
         if (tmp != null && tmp.length > 0) {
@@ -105,7 +78,8 @@ public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileSe
             }).build();
         } else {
             try {
-                return Response.temporaryRedirect(new URI("../static/img/public-images/pets.jpg")).build();
+                log.info("avatar not found");
+                return Response.temporaryRedirect(new URI("../static/img/public-images/default-avatar.jpg")).build();
             } catch (URISyntaxException ex) {
                 Logger.getLogger(PublicShopUserProfileServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -24,4 +24,8 @@ public interface ItemsService {
 
     Item getById(Long item_id);
 
+    void updateItemImage(Long item_id, String fileName, byte[] content) throws ServiceException;
+    
+    byte[] getItemImage(Long item_id) throws ServiceException;
+    
 }

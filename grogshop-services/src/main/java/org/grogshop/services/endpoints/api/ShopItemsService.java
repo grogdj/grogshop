@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.exceptions.ServiceException;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 /**
  *
@@ -56,5 +57,15 @@ public interface ShopItemsService extends Serializable {
     Response get(@PathParam("id") Long item_id) throws ServiceException;
     
     
+    @Path("{id}/image/upload")
+    @POST
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+    Response uploadItemImage(@NotNull @PathParam("id") Long item_id, MultipartFormDataInput input) throws ServiceException;
+    
+    @Path("{id}/image")
+    @GET
+    @Consumes({MediaType.MULTIPART_FORM_DATA})
+            @Produces({MediaType.APPLICATION_OCTET_STREAM})
+    Response getItemImage(@NotNull @PathParam("id") Long item_id) throws ServiceException;
     
 }
