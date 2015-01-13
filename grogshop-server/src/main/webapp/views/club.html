@@ -40,18 +40,10 @@
 		<hr style="border-color:#999;" >
 		<div class="filters-bar clearfix">
 		   
-               <div class="form-group col-md-1">
-                <label class="sr-only" for="minprice">Min Price</label>
-                <div>
-                    <input  type="number" class="form-control" id="minprice" ng-model="minPrice" placeholder="Min Price" novalidate>
-                </div>
-              </div>
-              <div class="form-group col-md-1">
-                <label class="sr-only" for="maxprice">Max Price</label>
-                <div>
-                    <input type="number" class="form-control" id="maxprice" ng-model="maxPrice" placeholder="Max Price">
-                </div>
-              </div>
+               <div class="form-group  col-md-2">
+		           <div style="margin: 0px 0 30px; padding: 8px;" range-slider min="priceRange.minPrice" max="priceRange.maxPrice" model-min="priceRange.range.min" model-max="priceRange.range.max" filter="currency" ></div>
+
+		       </div>
               <div class="form-group col-md-2 ">
                 <label for="order" class="sr-only">Order</label>
                 <select class="form-control" id="order" ng-model="typeSelect" placeholder="Order by">
@@ -74,14 +66,14 @@
 		</div>
 		<hr style="border-color:#999;" >
 		
-		<div class="products-container">
+		<div class="items-container">
             <div class="row" style="-moz-column-width:{{productWidth}}px;-webkit-column-width:{{productWidth}}px;">
-                <div class="product" ng-repeat="item in items |  filter:minPrice:greaterThan | filter:maxPrice:smallerThan | filter:searchName | orderBy:typeSelect " >
+                <div class="item" ng-repeat="item in items | filter:priceRange.range.min:greaterThan | filter:priceRange.range.max:smallerThan | filter:searchName | orderBy:typeSelect" >
                     <div class="well">
                     <h5>{{item.name}} <span class="badge">{{item.price | currency}}</span></h5>
+                    <!--<p><span ng-repeat="itemTag in item.tags"><span class="label label-default">{{itemTag}}</span> </span></p>-->
                     <p><small>{{item.description}}</small></p>
-                    
-                    
+                                        
                     </div>
 
                 </div>

@@ -63,6 +63,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             data: {}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "items loaded!");
+            console.log(data);
             $scope.items = data;
         }).error(function (data) {
             console.log("Error: " + data);
@@ -115,7 +116,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
     };
 
 
-    
+    //FILTER BAR 
     
     $scope.smallerThan = function(a,b) {
       return a <= b;
@@ -123,6 +124,17 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
     $scope.greaterThan = function(a,b) {
       return a >= b;
     };
+    
+       $scope.priceRange = {
+        range: {
+            min: 0,
+            max: 10000
+        },
+        minPrice: 0,
+        maxPrice: 10000
+    };
+    
+    //
     
     
     $scope.newItem = function (isValid) {
@@ -144,6 +156,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
                      tags: tagsString, price: $scope.newItem.price};
                 $scope.items.push(newItem);
                 console.log("new item added: "+newItem);
+                $scope.newItem={};
                 $scope.newPostForm.$setPristine();
                 $('#newProductModal').modal('hide');
             }).error(function (data) {
@@ -156,6 +169,26 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
         }
 
     };
+    
+     
+    $scope.loadPublicClub = function (user_id, email, auth_token) {
+       console.log("loading public club (" + $scope.club_id + ") for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
+
+       $http({
+           method: 'GET',
+           url: 'rest/public/clubs/' + $scope.club_id,
+           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+           transformRequest: transformRequestToForm,
+           data: {}
+       }).success(function (data) {
+           $rootScope.$broadcast("quickNotification", "Public Club loaded!");
+           $scope.club = data;
+       }).error(function (data) {
+           console.log("Error: " + data);
+           $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+       });
+
+    };
 
     if ($scope.auth_token && $scope.auth_token !== "") {
         console.log("loading private clubs because: " + $scope.auth_token);
@@ -165,6 +198,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
         console.log("loading public clubs because: " + $scope.auth_token);
         $scope.loadPublicClub($scope.user_id, $scope.email, $scope.auth_token);
     }
+   
 
 
 

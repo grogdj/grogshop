@@ -1,6 +1,6 @@
 
 
-var app = angular.module('grogshop', ['shopnotifications', 'ngCookies', 'ngTagsInput', 'growlNotifications', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload']);
+var app = angular.module('grogshop', ['shopnotifications', 'ngCookies', 'ngTagsInput', 'growlNotifications', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload', 'ui-rangeSlider']);
 
 
 // configure our routes

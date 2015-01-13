@@ -238,7 +238,7 @@ section {
 }
 
 
-/* ITEMS - LISTINGS */
+/* ITEMS - LISTINGS
 
 .item {
 	background-color: #FFF;
@@ -316,12 +316,12 @@ section {
 .item:hover .delete, .item:focus .delete {
 	display: inline-block;
 }
+ */
 
 
 
 
-
-/* ITEM BIDS */
+/* ITEM BIDS
 
 .item.bid {
 	background-color: #fcffff;
@@ -338,9 +338,9 @@ section {
 
 .item.bid .item-body .tag {
 	background-color: #85c3eb;
-}
+} */
 
-/* MATCHING ITEM */
+/* MATCHING ITEM 
 .matching-item {
 	background-color: #FFF;
 	margin: 15px 0;
@@ -372,7 +372,7 @@ section {
 	border-bottom: 1px solid #EEE;
 
 }
-
+*/
 
 /* ANGULAR FORMS*/
 
@@ -738,16 +738,16 @@ tags-input .autocomplete  {
 }
 
 
-/* CLUB PRODUCTS */
+/* CLUB ITEMS */
 
-.products-container {
+.items-container {
     padding: 15px;
 }
-.products-container * {
+.items-container * {
        box-sizing:  border-box !important;
      -webkit-box-sizing:  border-box !important;
 }
-.products-container .row {
+.items-container .row {
      -moz-column-width: 200px;
      -webkit-column-width: 200px;
      -moz-column-gap: 30px;
@@ -756,16 +756,16 @@ tags-input .autocomplete  {
      -webkit-box-sizing:  border-box !important;
 }
 
-.products-container .row .product {
+.items-container .row .item {
      display: inline-block;
      width:  100%; 
      box-sizing:  border-box !important;
      -webkit-box-sizing:  border-box !important;
 }
 
-.products-container .row .product .well {
- position:relative;
- display: block;
+.items-container .row .item .well {
+     position:relative;
+     display: block;
 }
 
 .modal-backdrop {
