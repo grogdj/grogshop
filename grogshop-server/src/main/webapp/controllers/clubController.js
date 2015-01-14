@@ -155,12 +155,12 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
                 var newItem = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newItem.title, description: $scope.newItem.description, 
                      tags: $scope.newItem.tags, price: $scope.newItem.price};
                  var item_id = data;
-                $scope.items.push(newItem);
+                
                 console.log("new item added: "+newItem);
                 $scope.newItem={};
                 $scope.newPostForm.$setPristine();
-                $scope.uploadFile(item_id, files,event);
-                $('#newProductModal').modal('hide');
+                $scope.uploadFile(item_id, files,newItem);
+                
             }).error(function (data) {
                 console.log("Error: " + data);
                 $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
@@ -216,7 +216,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
 		}
 	};
     
-    $scope.uploadFile = function (item_id, files, event) {
+    $scope.uploadFile = function (item_id, files, newItem) {
         console.log("Files : " + files + "-- event: " + event);
         var file = files[0];
         $scope.upload = $upload.upload({
@@ -232,7 +232,8 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             // file is uploaded successfully
             console.log('file ' + file.name + 'is uploaded successfully. Response: ' + data);
             $scope.uploading = false;
-            
+            $('#newProductModal').modal('hide');
+            $scope.items.push(newItem);
 
 
         }).error(function (data) {

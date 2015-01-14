@@ -72,14 +72,17 @@
             <div masonry-tile ng-repeat="item in items| filter:priceRange.range.min:greaterThan | filter:priceRange.range.max:smallerThan | filter:searchName | orderBy:typeSelect" class="item">
 
                 <div class="well">
+                    <div class="item-image">
+                        <img class="img-responsive" ng-src="/grogshop-server/rest/public/items/{{item.id}}/image"/>
+                    </div>
                     <div class="options" ng-show="user_id == item.user_id"><a href class="btn btn-danger btn-xs" ng-click="removeItem(item.id)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div>
                     <div class="price"><span class="badge">{{item.price| currency}}</span></div>
                     <h4>{{item.name}} </h4>
                     <small><a href>{{item.user_email}}</a> {{item.user_id}}</small><br/>
-
+                    {{item.tags}}
                     <p><span ng-repeat="itemTag in item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></p> 
                     <p><small>{{item.description}}</small></p>
-                    <img ng-src="/grogshop-server/rest/public/items/{{item.id}}/image"/>
+                    
                 </div>                
             </div>
         </div>
@@ -94,7 +97,7 @@
     <div class="modal fade" id="newProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form novalidate name="newPostForm" ng-submit="newItem(newPostForm.$valid, itemPicFile)">
+                <form novalidate name="newPostForm" >
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Add new product</h4>
@@ -121,20 +124,20 @@
                         </div>
                         <div class="container-fluid" style="padding:0;">
                             <div class="row">
-
-                                <img ng-show="itemPicFile[0].dataUrl != null" class="img-thumbnail img-responsive" ng-src="{{itemPicFile[0].dataUrl}}" >
-                                <div class="options">
-                                    <button class="btn btn-default btn-block" ng-file-select ng-model="itemPicFile" name="file" ng-file-change="generateThumb(itemPicFile[0])"  accept="image/*"  multiple="false">Add Item Picture</button><br/> <br/>
-                                    <div class="progress"ng-show="uploading" >
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{uploadPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadPercentage}}%;">
-                                            <span class="sr-only">{{uploadPercentage}} Complete</span>
+                                <div class="col-md-12">
+                                    <div class="image-preview img-thumbnail" ng-show="itemPicFile[0].dataUrl != null" style="background-image:url({{itemPicFile[0].dataUrl}});" > </div>
+                                    <div class="options">
+                                        <a class="btn btn-default btn-block" ng-file-select ng-model="itemPicFile" name="file" ng-file-change="generateThumb(itemPicFile[0])"  accept="image/*"  multiple="false">Add Item Picture</a><br/> <br/>
+                                        <div class="progress"ng-show="uploading" >
+                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{uploadPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadPercentage}}%;">
+                                                <span class="sr-only">{{uploadPercentage}} Complete</span>
+                                            </div>
                                         </div>
+
+
                                     </div>
 
-                                    
                                 </div>
-
-
                             </div>
                         </div>
 
@@ -144,7 +147,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" >Create</button>
+                        <button type="submit" class="btn btn-primary" ng-click="newItem(newPostForm.$valid, itemPicFile)" >Create</button>
                     </div>
                 </form>
             </div>

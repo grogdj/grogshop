@@ -14,7 +14,7 @@
         <form novalidate name="settingsForm" ng-submit="save(settingsForm.$valid, picFile)" ng-init="">
             <div class="col-xs-12 col-md-4 text-center profile-image clearfix">
 
-                <img ng-show="picFile[0].dataUrl == null" class="img-thumbnail img-responsive" alt="Profile Image {{email}}"  ng-src="{{settings.avatarUrl}}"/> <br/> <br/>
+                <img ng-show="picFile[0].dataUrl == null" class="img-thumbnail img-responsive" alt="Profile Image {{email}}"  ng-src="{{settings.avatarUrl}}"/>
                 <img ng-show="picFile[0].dataUrl != null" class="img-thumbnail img-responsive" ng-src="{{picFile[0].dataUrl}}" >
                 <div class="options">
                     <button class="btn btn-default btn-block" ng-file-select ng-model="picFile" name="file" ng-file-change="generateThumb(picFile[0])"  accept="image/*"  multiple="false">Attach Any File</button><br/> <br/>

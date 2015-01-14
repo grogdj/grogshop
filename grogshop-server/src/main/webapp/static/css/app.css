@@ -776,6 +776,11 @@ tags-input .autocomplete  {
     right: 0px;
     z-index: 10;
 }
+
+.items-container .item .item-image {
+    margin: -15px -15px 15px;
+}
+
 .items-container  .item .price .badge {
    border-radius: 0px !important;
 }
@@ -813,4 +818,14 @@ tags-input .autocomplete  {
 
 .avatar {
     margin-left: -15px;
+}
+
+
+/* MODAL */
+
+.image-preview {
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-size: auto 100%;
 }
