@@ -17,7 +17,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
         console.log("Files : " + files + "-- event: " + event);
         var file = files[0];
         $scope.upload = $upload.upload({
-            url: 'rest/users/' + $scope.user_id + '/avatar/upload', // upload.php script, node.js route, or servlet url
+            url: 'rest/users/' + $scope.user_id + '/avatar/upload', 
             method: 'POST',
             headers: {'Content-Type': 'multipart/form-data', service_key: 'webkey:' + $scope.email, auth_token: $scope.auth_token},
             file: file,
@@ -73,23 +73,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
             method: 'GET',
             url: 'rest/users/' + user_id,
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
             $rootScope.$broadcast("quickNotification", "Loading your settings...!");
@@ -120,23 +104,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
                 method: 'POST',
                 url: 'rest/users/' + $scope.user_id + '/update',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + $scope.email, auth_token: $scope.auth_token},
-                transformRequest: function (obj) {
-                    var str = [];
-                    for (var key in obj) {
-                        if (obj[key] instanceof Array) {
-                            for (var idx in obj[key]) {
-                                var subObj = obj[key][idx];
-                                for (var subKey in subObj) {
-                                    str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                                }
-                            }
-                        }
-                        else {
-                            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                        }
-                    }
-                    return str.join("&");
-                },
+                transformRequest: transformRequestToForm,
                 data: {username: $scope.settings.username, location: $scope.settings.location, bio: $scope.settings.bio},
                 
             }).success(function (data) {
