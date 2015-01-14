@@ -20,7 +20,7 @@
 			FROM
 				Item _item
                         WHERE
-                                _item.clubId  = :clubId 
+                                _item.club.id  = :clubId 
 		</query>
 	</named-query>
 	

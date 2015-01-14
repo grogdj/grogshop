@@ -40,7 +40,7 @@ public class ShopClubsServiceImpl implements ShopClubsService {
                     .add("name", (c.getName() == null) ? "" : c.getName())
                     .add("category", (c.getCategory()== null) ? "" : c.getCategory())
                     .add("description", (c.getDescription()== null) ? "" : c.getDescription())
-                    .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail())
+                    .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
                     .add("image", (c.getImage()== null) ? "" : c.getImage());
             
             if (c.getTags()!= null) {
@@ -62,7 +62,7 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             @NotNull @NotEmpty @FormParam("description") String description,
             @NotNull @NotEmpty @FormParam("category") String category,
             @NotNull @NotEmpty @FormParam("tags") String tags,
-            @NotNull @NotEmpty @FormParam("founderEmail") String founderEmail,
+            @NotNull @NotEmpty @FormParam("founderId") Long founderId,
             @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException {
         String[] interestArray = tags.split(",");
         List<String> interestsList = new ArrayList<String>();
@@ -74,7 +74,7 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             
 
         }
-        Long newClub = clubsService.newClub(name, description, category,  interestsList, founderEmail, image);
+        Long newClub = clubsService.newClub(name, description, category,  interestsList, founderId, image);
         return Response.ok(newClub).build();
 
     }
@@ -87,7 +87,7 @@ public class ShopClubsServiceImpl implements ShopClubsService {
                 .add("name", (c.getName() == null) ? "" : c.getName())
                 .add("category", (c.getCategory()== null) ? "" : c.getCategory())
                 .add("description", (c.getDescription()== null) ? "" : c.getDescription())
-                .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail())
+                .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
                 .add("image", (c.getImage() == null) ? "" : c.getImage());
         if (c.getTags()!= null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();

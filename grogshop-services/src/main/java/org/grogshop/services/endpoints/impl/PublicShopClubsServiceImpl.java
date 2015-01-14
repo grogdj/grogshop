@@ -36,7 +36,7 @@ public class PublicShopClubsServiceImpl implements PublicShopClubsService {
                     .add("name", (c.getName() == null) ? "" : c.getName())
                     .add("category", (c.getCategory()== null) ? "" : c.getCategory())
                     .add("description", (c.getDescription()== null) ? "" : c.getDescription())
-                    .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail())
+                    .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
                     .add("image", (c.getImage()== null) ? "" : c.getImage());
             
             if (c.getTags()!= null) {
@@ -62,7 +62,7 @@ public class PublicShopClubsServiceImpl implements PublicShopClubsService {
                 .add("name", (c.getName() == null) ? "" : c.getName())
                 .add("category", (c.getCategory()== null) ? "" : c.getCategory())
                 .add("description", (c.getDescription()== null) ? "" : c.getDescription())
-                .add("founderEmail", (c.getFounderEmail() == null) ? "" : c.getFounderEmail())
+                .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
                 .add("image", (c.getImage() == null) ? "" : c.getImage());
         if (c.getTags()!= null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();

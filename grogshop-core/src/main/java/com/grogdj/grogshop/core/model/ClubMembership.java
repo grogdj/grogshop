@@ -8,8 +8,14 @@ package com.grogdj.grogshop.core.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -17,12 +23,21 @@ import javax.persistence.Table;
  */
 @Entity(name = "ClubMembership")
 @Table(name = "MEMBERSHIPS")
-public class ClubMembership implements Serializable{
+public class ClubMembership implements Serializable {
 
     @Id
-    private Long userId;
-    @Id
-    private Long clubId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @NotNull
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "club_id")
+    @NotNull
+    private Club club;
 
     private Date since;
     // filters
@@ -35,26 +50,34 @@ public class ClubMembership implements Serializable{
 
     }
 
-    public ClubMembership(Long clubId, Long userId) {
-        this.clubId = clubId;
-        this.userId = userId;
+    public ClubMembership(Club club, User user) {
+        this.club = club;
+        this.user = user;
         this.since = new Date();
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public User getUser() {
+        return user;
     }
 
-    public Long getClubId() {
-        return clubId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setClubId(Long clubId) {
-        this.clubId = clubId;
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Date getSince() {
@@ -96,9 +119,5 @@ public class ClubMembership implements Serializable{
     public void setDistance(String distance) {
         this.distance = distance;
     }
-    
-    
-    
-    
 
 }

@@ -55,9 +55,9 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         for (Item i : allItems) {
             jsonObjectBuilder
                     .add("id", (i.getId() == null) ? "" : i.getId().toString())
-                    .add("user_id", (i.getUserId() == null) ? "" : i.getUserId().toString())
-                    .add("user_email", (i.getUserEmail() == null) ? "" : i.getUserEmail())
-                    .add("club_id", (i.getClubId() == null) ? "" : i.getClubId().toString())
+                    .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
+                    .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
+                    .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
                     .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
@@ -84,9 +84,9 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         for (Item i : allItems) {
             jsonObjectBuilder
                     .add("id", (i.getId() == null) ? "" : i.getId().toString())
-                    .add("user_id", (i.getUserId() == null) ? "" : i.getUserId().toString())
-                    .add("user_email", (i.getUserEmail() == null) ? "" : i.getUserEmail())
-                    .add("club_id", (i.getClubId() == null) ? "" : i.getClubId().toString())
+                    .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
+                    .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
+                    .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
                     .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
@@ -131,9 +131,9 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         Item i = itemsService.getById(item_id);
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         jsonObjectBuilder.add("id", (i.getId() == null) ? "" : i.getId().toString())
-                .add("user_id", (i.getUserId() == null) ? "" : i.getUserId().toString())
-                .add("user_email", (i.getUserEmail() == null) ? "" : i.getUserEmail())
-                .add("club_id", (i.getClubId() == null) ? "" : i.getClubId().toString())
+                .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
+                .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
+                .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
                 .add("name", (i.getName() == null) ? "" : i.getName())
                 .add("description", (i.getDescription() == null) ? "" : i.getDescription())
                 .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());

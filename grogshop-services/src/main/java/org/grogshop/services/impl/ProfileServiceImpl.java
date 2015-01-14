@@ -6,6 +6,7 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Profile;
+import com.grogdj.grogshop.core.model.User;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.inject.Singleton;
@@ -38,10 +39,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void create(Long user_id) throws ServiceException {
-        em.persist(new Profile(user_id));
+        User user = em.find(User.class, user_id);
+        if (user == null) {
+            throw new ServiceException("Profile wasn't created because: there is no user with id: " + user_id);
+        }
+        em.persist(new Profile(user));
     }
-    
-    
 
     @Override
     public void update(Long user_id, String username, String location, String bio) throws ServiceException {
@@ -61,7 +64,7 @@ public class ProfileServiceImpl implements ProfileService {
         if (find == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
         }
-        log.info("Storing to the database: "+interests);
+        log.info("Storing to the database: " + interests);
         find.setInterests(interests);
         em.merge(find);
     }
@@ -72,12 +75,12 @@ public class ProfileServiceImpl implements ProfileService {
         if (find == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
         }
-        log.info("Interest from the database: "+find.getInterests());
+        log.info("Interest from the database: " + find.getInterests());
         return find.getInterests();
     }
 
     @Override
-    public void updateAvatar(Long user_id, String fileName, byte[] content) throws ServiceException{
+    public void updateAvatar(Long user_id, String fileName, byte[] content) throws ServiceException {
         Profile find = em.find(Profile.class, user_id);
         if (find == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
@@ -97,7 +100,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public void removeAvatar(Long user_id) throws ServiceException{
+    public void removeAvatar(Long user_id) throws ServiceException {
         Profile find = em.find(Profile.class, user_id);
         if (find == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
@@ -106,5 +109,5 @@ public class ProfileServiceImpl implements ProfileService {
         find.setAvatarContent(null);
         em.merge(find);
     }
- 
+
 }

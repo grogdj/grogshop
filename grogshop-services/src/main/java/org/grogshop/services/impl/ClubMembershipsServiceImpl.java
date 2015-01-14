@@ -5,7 +5,9 @@
  */
 package org.grogshop.services.impl;
 
+import com.grogdj.grogshop.core.model.Club;
 import com.grogdj.grogshop.core.model.ClubMembership;
+import com.grogdj.grogshop.core.model.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,8 +39,17 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
 
     @Override
     public void createMembership(Long club_id, Long user_id) throws ServiceException {
-        em.persist(new ClubMembership(club_id, user_id));
-        log.log(Level.INFO, "ClubMembership {0} created", new Object[]{club_id, user_id});
+        Club club = em.find(Club.class, club_id);
+        if(club  == null){
+            throw new ServiceException("Coudn't create membership because: there is no club with id: "+club_id);
+        }
+        User user = em.find(User.class, user_id);
+        if(user  == null){
+            throw new ServiceException("Coudn't create membership because: there is no user with id: "+user_id);
+        }
+        ClubMembership clubMembership = new ClubMembership(club, user);
+        em.persist(clubMembership);
+        log.log(Level.INFO, "ClubMembership {0} - {1} created with id : {2}", new Object[]{club_id, user_id, clubMembership.getId()});
 
     }
 
@@ -56,7 +67,7 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
         List<ClubMembership> resultList = em.createNamedQuery("ClubMembership.getAllMembers", ClubMembership.class).setParameter("club_id", club_id).getResultList();
         List<Long> userIds = new ArrayList<Long>(resultList.size());
         for(ClubMembership cm : resultList){
-            userIds.add(cm.getUserId());
+            userIds.add(cm.getUser().getId());
         }
         return userIds;
     }
@@ -66,7 +77,7 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
         List<ClubMembership> resultList = em.createNamedQuery("ClubMembership.getAll", ClubMembership.class).setParameter("user_id", user_id).getResultList();
         List<Long> clubIds = new ArrayList<Long>(resultList.size());
         for(ClubMembership cm : resultList){
-            clubIds.add(cm.getClubId());
+            clubIds.add(cm.getClub().getId());
         }
         return clubIds;
     }

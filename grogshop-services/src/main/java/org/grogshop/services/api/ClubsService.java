@@ -17,7 +17,7 @@ public interface ClubsService {
     
     List<Club> getAllClubs();
     
-    Long newClub(String name, String description, String category, List<String> interests, String founderEmail, String image) throws ServiceException;
+    Long newClub(String name, String description, String category, List<String> interests, Long user_id, String image) throws ServiceException;
 
     Club getById(Long club_id);
     

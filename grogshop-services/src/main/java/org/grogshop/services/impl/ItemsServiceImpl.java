@@ -5,8 +5,8 @@
  */
 package org.grogshop.services.impl;
 
+import com.grogdj.grogshop.core.model.Club;
 import com.grogdj.grogshop.core.model.Item;
-import com.grogdj.grogshop.core.model.Profile;
 import com.grogdj.grogshop.core.model.User;
 import java.math.BigDecimal;
 import java.util.List;
@@ -48,11 +48,16 @@ public class ItemsServiceImpl implements ItemsService {
 
     @Override
     public Long newItem(Long userId, Long clubId, String name, String description, List<String> interests, BigDecimal price) throws ServiceException {
-        User find = em.find(User.class, userId);
-        if (find == null) {
+        User user = em.find(User.class, userId);
+        if (user == null) {
             throw new ServiceException("User  doesn't exist: " + userId);
         }
-        Item item = new Item(userId,find.getEmail(), clubId, name, description, interests, price);
+        
+        Club club = em.find(Club.class, clubId);
+        if (club == null) {
+            throw new ServiceException("Club  doesn't exist: " + clubId);
+        }
+        Item item = new Item(user, club, name, description, interests, price);
         em.persist(item);
         log.log(Level.INFO, "Item {0} created with id {1}", new Object[]{name, item.getId()});
         return item.getId();

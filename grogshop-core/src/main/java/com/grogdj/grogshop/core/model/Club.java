@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -34,7 +36,7 @@ public class Club implements Serializable {
     @NotNull
     @NotEmpty
     private String name;
-    
+
     @NotNull
     @NotEmpty
     private String description;
@@ -43,32 +45,32 @@ public class Club implements Serializable {
     @NotEmpty
     @ElementCollection
     private List<String> tags;
-    
-    @NotNull
-    @NotEmpty
-    private String category; 
 
     @NotNull
     @NotEmpty
-    private String founderEmail;
-    
+    private String category;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "founder_id")
+    private User founder;
+
     @NotNull
     @NotEmpty
     private String image;
 
     public Club() {
     }
-  
-    public Club(String name, String description, String category, List<String> tags, String founderEmail, String image) {
+
+    public Club(String name, String description, String category, List<String> tags, User founder, String image) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.tags = tags;
-        this.founderEmail = founderEmail;
+        this.founder = founder;
         this.image = image;
     }
 
-    
     public Long getId() {
         return id;
     }
@@ -117,17 +119,12 @@ public class Club implements Serializable {
         this.image = image;
     }
 
-
-    public String getFounderEmail() {
-        return founderEmail;
+    public User getFounder() {
+        return founder;
     }
 
-    public void setFounderEmail(String founderEmail) {
-        this.founderEmail = founderEmail;
+    public void setFounder(User founder) {
+        this.founder = founder;
     }
-
-    
-    
-    
 
 }

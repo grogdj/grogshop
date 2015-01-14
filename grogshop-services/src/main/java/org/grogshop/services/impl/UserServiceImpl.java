@@ -15,11 +15,6 @@ import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 import org.grogshop.services.api.UserService;
 import org.grogshop.services.exceptions.ServiceException;
@@ -48,10 +43,11 @@ public class UserServiceImpl implements UserService {
 
         try {
             ut.begin();
-            newUser(new User("salaboy@gmail.com", "asdasd"));
-            newUser(new User("eze@asd.asd", "123123"));
+            Long newUser = newUser(new User("salaboy@gmail.com", "asdasd"));
+            Long newUser1 = newUser(new User("eze@asd.asd", "123123"));
             ut.commit();
-
+            log.info("New User Created with ID: "+newUser);
+            log.info("New User Created with ID: "+newUser1);
         } catch (Exception ex) {
             Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -59,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void newUser(User user) throws ServiceException {
+    public Long newUser(User user) throws ServiceException {
         if (getByEmail(user.getEmail()) != null) {
             throw new ServiceException("User already registered with email: " + user.getEmail(), false);
         }
@@ -67,7 +63,7 @@ public class UserServiceImpl implements UserService {
         em.persist(user);
         String key = generateWebKey(user.getEmail());
         log.log(Level.INFO, "User {0} registered. Service Key: {1}", new Object[]{user.getEmail(), key});
-
+        return user.getId();
     }
 
     @Override

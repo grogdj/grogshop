@@ -6,6 +6,7 @@
 package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Club;
+import com.grogdj.grogshop.core.model.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,37 +37,37 @@ public class ClubsServiceImpl implements ClubsService {
             tags.add("food");
             tags.add("fun");
             tags.add("healty");
-            newClub("cooking club", "this is a new cooking club", "cooking", tags , "grogdj@gmail.com", "cooking.jpg");
+            newClub("cooking club", "this is a new cooking club", "cooking", tags , new Long(1), "cooking.jpg");
             tags = new ArrayList<String>();
             tags.add("stars");
             tags.add("galaxy");
             tags.add("apollo");
-            newClub("astronomy for everyone", "astronomy club for everybody", "astronomy", tags , "esala212121@gmail.com", "astrology.jpg");
+            newClub("astronomy for everyone", "astronomy club for everybody", "astronomy", tags , new Long(1), "astrology.jpg");
             tags = new ArrayList<String>();
             tags.add("old");
             tags.add("classic");
             tags.add("cars");
-            newClub("My good old cars", "about classic cars and stuff", "old cars", tags , "thelongestttttttemail@gmail.com", "oldcars.jpg");
+            newClub("My good old cars", "about classic cars and stuff", "old cars", tags , new Long(1), "oldcars.jpg");
             tags = new ArrayList<String>();
             tags.add("puppies");
             tags.add("dogs");
             tags.add("cats");
-            newClub("My small pets", "all pets allowed", "pets", tags , "anotherlongemailhere@gmail.com", "pets.jpg");
+            newClub("My small pets", "all pets allowed", "pets", tags , new Long(1), "pets.jpg");
             tags = new ArrayList<String>();
             tags.add("arcade");
             tags.add("play");
             tags.add("games");
-            newClub("Pacman & cia", "for all the gamers", "videogames", tags , "mrpacman@gmail.com", "videogames.jpg");
+            newClub("Pacman & cia", "for all the gamers", "videogames", tags , new Long(1), "videogames.jpg");
             tags = new ArrayList<String>();
             tags.add("graphic");
             tags.add("visual");
             tags.add("design");
-            newClub("Designers United", "let the style be with you", "design", tags , "wearealldesigners@gmail.com", "design.jpg");
+            newClub("Designers United", "let the style be with you", "design", tags , new Long(1), "design.jpg");
             tags = new ArrayList<String>();
             tags.add("old");
             tags.add("fashion");
             tags.add("furniture");
-            newClub("Antiques", "more than 100 year old items", "antiques", tags , "oldisgood@gmail.com", "antiques.jpg");
+            newClub("Antiques", "more than 100 year old items", "antiques", tags , new Long(1), "antiques.jpg");
             
         } catch (ServiceException ex) {
             Logger.getLogger(ClubsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,8 +75,12 @@ public class ClubsServiceImpl implements ClubsService {
     }
 
     @Override
-    public Long newClub(String name, String description, String category, List<String> interests, String founderEmail, String image) throws ServiceException {
-        Club club = new Club(name, description, category, interests, founderEmail, image);
+    public Long newClub(String name, String description, String category, List<String> interests, Long user_id, String image) throws ServiceException {
+        User founder = em.find(User.class, user_id);
+        if(founder == null){
+            throw new ServiceException("Club cannot be created because there is no user with id: "+user_id);
+        }
+        Club club = new Club(name, description, category, interests, founder, image);
         em.persist(club);
         log.log(Level.INFO, "Club {0} created with id {1}", new Object[]{name, club.getId()});
         return club.getId();

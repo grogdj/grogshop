@@ -12,10 +12,13 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -33,15 +36,15 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    
-    private Long userId;
-
-    
-    private Long clubId;
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @NotNull
-    @NotEmpty
-    private String userEmail;
+    @ManyToOne
+    @JoinColumn(name = "club_id")
+    private Club club;
 
     @Column(unique = true)
     @NotNull
@@ -71,11 +74,10 @@ public class Item implements Serializable {
     public Item() {
     }
 
-    public Item(Long userId, String userEmail, Long clubId, String name, String description, List<String> tags, BigDecimal price) {
+    public Item(User user, Club club, String name, String description, List<String> tags, BigDecimal price) {
 
-        this.userId = userId;
-        this.userEmail = userEmail;
-        this.clubId = clubId;
+        this.user = user;
+        this.club = club;
         this.name = name;
         this.description = description;
         this.tags = tags;
@@ -92,20 +94,20 @@ public class Item implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getClubId() {
-        return clubId;
+    public Club getClub() {
+        return club;
     }
 
-    public void setClubId(Long clubId) {
-        this.clubId = clubId;
+    public void setClub(Club club) {
+        this.club = club;
     }
 
     public String getName() {
@@ -164,12 +166,5 @@ public class Item implements Serializable {
         this.price = price;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
 
 }

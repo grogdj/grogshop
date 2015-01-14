@@ -14,7 +14,7 @@ import org.grogshop.services.exceptions.ServiceException;
  */
 public interface UserService {
 
-    public void newUser(User user) throws ServiceException;
+    public Long newUser(User user) throws ServiceException;
 
     public boolean existKey(String serviceKey);
 
