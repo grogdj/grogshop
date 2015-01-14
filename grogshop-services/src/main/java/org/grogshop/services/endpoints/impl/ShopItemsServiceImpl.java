@@ -6,6 +6,7 @@
 package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Item;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -22,6 +23,7 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
@@ -65,7 +67,7 @@ public class ShopItemsServiceImpl implements ShopItemsService {
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
                 for (String s : i.getTags()) {
-                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("name", s));
+                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text",s));
                 }
                 jsonObjectBuilder.add("tags", jsonArrayBuilderInterest);
             }
@@ -94,9 +96,10 @@ public class ShopItemsServiceImpl implements ShopItemsService {
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
                 for (String s : i.getTags()) {
-                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("name", s));
+                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text",s));
                 }
                 jsonObjectBuilder.add("tags", jsonArrayBuilderInterest);
+                
             }
             jsonArrayBuilder.add(jsonObjectBuilder);
         }
@@ -112,12 +115,19 @@ public class ShopItemsServiceImpl implements ShopItemsService {
             @NotNull @NotEmpty @FormParam("description") String description,
             @NotNull @NotEmpty @FormParam("tags") String tags,
             @NotNull @FormParam("price") String price) throws ServiceException {
-        String[] interestArray = tags.split(",");
+        
+        
+        JsonReader reader = Json.createReader(new ByteArrayInputStream(tags.getBytes()));
+        JsonArray array = reader.readArray();
+        reader.close();
+        
         List<String> interestsList = new ArrayList<String>();
-        if (interestArray != null) {
+        
+        if (array != null) {
 
-            for (String s : interestArray) {
-                interestsList.add(s);
+            for (int i = 0; i < array.size(); i++) {
+                log.info("Tag["+i+"]: "+array.getJsonObject(i).getString("text"));    
+                interestsList.add(array.getJsonObject(i).getString("text"));
             }
 
         }
@@ -140,7 +150,7 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         if (i.getTags() != null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
             for (String s : i.getTags()) {
-                jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("name", s));
+                jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text",s));
             }
             jsonObjectBuilder.add("tags", jsonArrayBuilderInterest);
         }

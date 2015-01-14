@@ -12,7 +12,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,6 +20,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -29,6 +30,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity(name = "Item")
 @Table(name = "ITEMS")
+@Indexed
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,12 +51,14 @@ public class Item implements Serializable {
     @Column(unique = true)
     @NotNull
     @NotEmpty
+    @Field
     private String name;
 
     private Date since;
 
     @NotNull
     @NotEmpty
+    @Field
     private String description;
 
     @NotNull
