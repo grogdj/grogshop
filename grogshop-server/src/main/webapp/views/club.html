@@ -75,11 +75,10 @@
                     <div class="item-image">
                         <img class="img-responsive" ng-src="/grogshop-server/rest/public/items/{{item.id}}/image"/>
                     </div>
-                    <div class="options" ng-show="user_id == item.user_id"><a href class="btn btn-danger btn-xs" ng-click="removeItem(item.id)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div>
+                    <div class="options" ng-show="user_id == item.user_id"><a href class="btn btn-danger btn-xs" ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div>
                     <div class="price"><span class="badge">{{item.price| currency}}</span></div>
                     <h4>{{item.name}} </h4>
-                    <small><a href>{{item.user_email}}</a> {{item.user_id}}</small><br/>
-                    {{item.tags}}
+                    <small><a href>{{item.user_email}}</a></small><br/>
                     <p><span ng-repeat="itemTag in item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></p> 
                     <p><small>{{item.description}}</small></p>
                     

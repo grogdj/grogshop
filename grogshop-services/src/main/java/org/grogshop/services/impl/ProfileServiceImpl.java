@@ -94,7 +94,7 @@ public class ProfileServiceImpl implements ProfileService {
     public byte[] getAvatar(Long user_id) throws ServiceException {
         Profile find = em.find(Profile.class, user_id);
         if (find == null) {
-            throw new ServiceException("User Profile doesn't exist: " + user_id);
+            return null;
         }
         return find.getAvatarContent();
     }

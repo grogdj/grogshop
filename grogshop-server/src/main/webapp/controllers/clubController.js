@@ -172,7 +172,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
 
     };
     
-    $scope.removeItem = function (item_id) {
+    $scope.removeItem = function (item) {
         
             console.log("remove new item  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
             
@@ -180,14 +180,14 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
 
             $http({
                 method: 'POST',
-                url: 'rest/items/'+item_id+'/remove',
+                url: 'rest/items/'+item.id+'/remove',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + $scope.email, auth_token: $scope.auth_token},
                 transformRequest: transformRequestToForm,
-                data: {id: item_id}
+                data: {id: item.id}
             }).success(function (data) {
                 $rootScope.$broadcast("quickNotification", "Item Removed!");
                 
-                $scope.items.splice($scope.items.indexOf(parseInt(item_id)), 1);
+                $scope.items.splice($scope.items.indexOf(item), 1);
                 
             }).error(function (data) {
                 console.log("Error: " + data);

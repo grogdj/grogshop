@@ -82,7 +82,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
     $scope.index = 0;
     $scope.memberships = [];
     $scope.notifications = {};
-    $scope.avatarStyle = {'background-color':'red'};
+    $scope.avatarStyle = "";
     
     $rootScope.$on('quickNotification', function (event, data) {
         var i;
@@ -113,7 +113,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
             console.log("You have been logged out." + data);
             $cookieStore.remove('auth_token');
             $cookieStore.remove('email');
-            
+            $scope.avatarStyle ="";
             $rootScope.$broadcast('goTo', "/");
             $rootScope.$broadcast("quickNotification", "You have been logged out.");
         }).error(function (data) {
@@ -150,7 +150,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
                 $scope.firstLogin = $cookieStore.get('firstLogin');
                 $scope.credentials = {};
                 $scope.submitted = false;
-               
+                $scope.avatarStyle = {'background-image':'url(rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
                 console.log("firstLogin: " + $scope.firstLogin);
                 
                 if ($scope.firstLogin) {
@@ -203,9 +203,14 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
 
     if($scope.auth_token && $scope.auth_token !== ""){
         $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
-        $scope.avatarStyle = {'background-image':'url(rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
+        
         
     }
+    
+    $rootScope.$on("updateProfileImage",function (event, data) {
+        $scope.avatarStyle = {'background-image':'url(rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
+
+    });
 
 });
 

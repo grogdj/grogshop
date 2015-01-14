@@ -8,16 +8,24 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
 
     $scope.uploading = false;
     $scope.uploadPercentage = 0;
-    
+
     $scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
-    
+
     console.log("AVATAR URL " + $scope.settings.avatarUrl);
+//    $scope.$on('$locationChangeStart', function (event) {
+//        if ($scope.settingsForm.$dirty) {
+//            console.log("form not saved!");
+//            event.preventDefault();
+//        }else{
+//            console.log("form saved! move on");
+//        }
+//    });
 
     $scope.uploadFile = function (files, event) {
         console.log("Files : " + files + "-- event: " + event);
         var file = files[0];
         $scope.upload = $upload.upload({
-            url: 'rest/users/' + $scope.user_id + '/avatar/upload', 
+            url: 'rest/users/' + $scope.user_id + '/avatar/upload',
             method: 'POST',
             headers: {'Content-Type': 'multipart/form-data', service_key: 'webkey:' + $scope.email, auth_token: $scope.auth_token},
             file: file,
@@ -31,7 +39,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
             $scope.uploading = false;
             $scope.settings.avatarUrl = "";
             $scope.settings.avatarUrl = "rest/public/users/" + $scope.user_id + "/avatar" + '?' + new Date().getTime();
-
+            $rootScope.$broadcast("updateProfileImage");
 
         }).error(function (data) {
             console.log('file ' + file.name + ' upload error. Response: ' + data);
@@ -40,26 +48,26 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
 
 
     };
-    
-    
-    $scope.generateThumb = function(file) {
+
+
+    $scope.generateThumb = function (file) {
         console.log(file);
-		if (file != null) {
-			if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
-                            console.log("file oh yeah");
-				$timeout(function() {
-					var fileReader = new FileReader();
-					fileReader.readAsDataURL(file);
-					fileReader.onload = function(e) {
-						$timeout(function() {
-                                                    console.log("file oh yeah 2: "+e.target.result);
-							file.dataUrl = e.target.result;
-						});
-					}
-				});
-			}
-		}
-	};
+        if (file != null) {
+            if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
+                console.log("file oh yeah");
+                $timeout(function () {
+                    var fileReader = new FileReader();
+                    fileReader.readAsDataURL(file);
+                    fileReader.onload = function (e) {
+                        $timeout(function () {
+                            console.log("file oh yeah 2: " + e.target.result);
+                            file.dataUrl = e.target.result;
+                        });
+                    }
+                });
+            }
+        }
+    };
 
 
     var initialData = "";
@@ -106,11 +114,12 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
                 headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + $scope.email, auth_token: $scope.auth_token},
                 transformRequest: transformRequestToForm,
                 data: {username: $scope.settings.username, location: $scope.settings.location, bio: $scope.settings.bio},
-                
             }).success(function (data) {
                 $rootScope.$broadcast("quickNotification", "Your settings are now updated!");
+
                 initialData = angular.copy($scope.settings)
                 $scope.uploadFile(files, event);
+                $scope.settingsForm.$setPristine();
             }).error(function (data) {
                 console.log("Error: " + data.error);
                 $rootScope.$broadcast("quickNotification", "Settings not saved because:" + data);
