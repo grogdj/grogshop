@@ -16,16 +16,18 @@ import org.grogshop.services.exceptions.ServiceException;
  */
 public interface ItemsService {
 
-    List<Item> getAllItems();
+    List<Item> getAllItems() throws ServiceException;
     
-    List<Item> getAllItemsByClub(Long clubId);
+    List<Item> getAllItemsByClub(Long clubId) throws ServiceException;
 
     Long newItem(Long userId, Long clubId, String name, String description,  List<String> interests, BigDecimal price) throws ServiceException;
 
-    Item getById(Long item_id);
+    Item getById(Long item_id) throws ServiceException;
 
     void updateItemImage(Long item_id, String fileName, byte[] content) throws ServiceException;
     
     byte[] getItemImage(Long item_id) throws ServiceException;
+    
+    void removeItem(Long item_id) throws ServiceException;
     
 }

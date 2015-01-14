@@ -31,4 +31,6 @@ public interface ProfileService {
     void updateAvatar(Long user_id, String fileName, byte[] content) throws ServiceException;
     
     byte[] getAvatar(Long user_id) throws ServiceException;
+    
+    void removeAvatar(Long user_id) throws ServiceException;
 }

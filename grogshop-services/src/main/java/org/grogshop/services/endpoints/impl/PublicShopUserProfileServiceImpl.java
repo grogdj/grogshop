@@ -79,7 +79,7 @@ public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileSe
         } else {
             try {
                 log.info("avatar not found");
-                return Response.temporaryRedirect(new URI("../static/img/public-images/default-avatar.jpg")).build();
+                return Response.temporaryRedirect(new URI("../static/img/public-images/default-avatar.png")).build();
             } catch (URISyntaxException ex) {
                 Logger.getLogger(PublicShopUserProfileServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }

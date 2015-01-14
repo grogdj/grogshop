@@ -1,4 +1,4 @@
-app.controller('settingsController', function ($rootScope, $http, $scope, $upload) {
+app.controller('settingsController', function ($rootScope, $http, $scope, $upload, $timeout) {
     $scope.settings = {
         username: "",
         location: "",
@@ -8,10 +8,12 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
 
     $scope.uploading = false;
     $scope.uploadPercentage = 0;
-
+    
+    $scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
+    
     console.log("AVATAR URL " + $scope.settings.avatarUrl);
 
-    $scope.fileSelected = function (files, event) {
+    $scope.uploadFile = function (files, event) {
         console.log("Files : " + files + "-- event: " + event);
         var file = files[0];
         $scope.upload = $upload.upload({
@@ -38,6 +40,26 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
 
 
     };
+    
+    
+    $scope.generateThumb = function(file) {
+        console.log(file);
+		if (file != null) {
+			if ($scope.fileReaderSupported && file.type.indexOf('image') > -1) {
+                            console.log("file oh yeah");
+				$timeout(function() {
+					var fileReader = new FileReader();
+					fileReader.readAsDataURL(file);
+					fileReader.onload = function(e) {
+						$timeout(function() {
+                                                    console.log("file oh yeah 2: "+e.target.result);
+							file.dataUrl = e.target.result;
+						});
+					}
+				});
+			}
+		}
+	};
 
 
     var initialData = "";
@@ -90,7 +112,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
 
     };
 
-    $scope.save = function (isValid) {
+    $scope.save = function (isValid, files, event) {
 
         console.log("save-changes");
         if (isValid) {
@@ -115,18 +137,16 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
                     }
                     return str.join("&");
                 },
-                data: {username: $scope.settings.username, location: $scope.settings.location, bio: $scope.settings.bio}
+                data: {username: $scope.settings.username, location: $scope.settings.location, bio: $scope.settings.bio},
+                
             }).success(function (data) {
                 $rootScope.$broadcast("quickNotification", "Your settings are now updated!");
                 initialData = angular.copy($scope.settings)
+                $scope.uploadFile(files, event);
             }).error(function (data) {
                 console.log("Error: " + data.error);
                 $rootScope.$broadcast("quickNotification", "Settings not saved because:" + data);
             });
-
-
-
-
         } else {
             alert("form not valid");
         }

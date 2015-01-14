@@ -42,33 +42,32 @@ public class ShopItemsServiceImpl implements ShopItemsService {
 
     @Inject
     private ItemsService itemsService;
-    
+
     public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
-    
+
     private final static Logger log = Logger.getLogger(ShopItemsServiceImpl.class.getName());
 
     @Override
-    public Response getAllItems() {
+    public Response getAllItems() throws ServiceException {
         List<Item> allItems = itemsService.getAllItems();
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         for (Item i : allItems) {
             jsonObjectBuilder
                     .add("id", (i.getId() == null) ? "" : i.getId().toString())
-                    .add("user_id", (i.getUserId()== null) ? "" : i.getUserId().toString())
-                    .add("user_email", (i.getUserEmail()== null) ? "" : i.getUserEmail())
-                    .add("club_id", (i.getClubId()== null) ? "" : i.getClubId().toString())
+                    .add("user_id", (i.getUserId() == null) ? "" : i.getUserId().toString())
+                    .add("user_email", (i.getUserEmail() == null) ? "" : i.getUserEmail())
+                    .add("club_id", (i.getClubId() == null) ? "" : i.getClubId().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                    .add("price", (i.getPrice()== null) ? "" : i.getPrice().toString());
-                    
+                    .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
 
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
                 for (String s : i.getTags()) {
-                    jsonArrayBuilderInterest.add(s);
+                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("name", s));
                 }
-                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build().toString());
+                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest);
             }
             jsonArrayBuilder.add(jsonObjectBuilder);
         }
@@ -76,28 +75,28 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         return Response.ok(jsonArray.toString()).build();
 
     }
-    
+
     @Override
-    public Response getAllItemsByClub(@PathParam("id") Long club_id) {
+    public Response getAllItemsByClub(@PathParam("id") Long club_id) throws ServiceException {
         List<Item> allItems = itemsService.getAllItemsByClub(club_id);
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         for (Item i : allItems) {
             jsonObjectBuilder
                     .add("id", (i.getId() == null) ? "" : i.getId().toString())
-                    .add("user_id", (i.getUserId()== null) ? "" : i.getUserId().toString())
-                    .add("user_email", (i.getUserEmail()== null) ? "" : i.getUserEmail())
-                    .add("club_id", (i.getClubId()== null) ? "" : i.getClubId().toString())
+                    .add("user_id", (i.getUserId() == null) ? "" : i.getUserId().toString())
+                    .add("user_email", (i.getUserEmail() == null) ? "" : i.getUserEmail())
+                    .add("club_id", (i.getClubId() == null) ? "" : i.getClubId().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                    .add("price", (i.getPrice()== null) ? "" : i.getPrice().toString());
+                    .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
 
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
                 for (String s : i.getTags()) {
-                    jsonArrayBuilderInterest.add(s);
+                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("name", s));
                 }
-                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build().toString());
+                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest);
             }
             jsonArrayBuilder.add(jsonObjectBuilder);
         }
@@ -116,11 +115,10 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         String[] interestArray = tags.split(",");
         List<String> interestsList = new ArrayList<String>();
         if (interestArray != null) {
-            
+
             for (String s : interestArray) {
                 interestsList.add(s);
             }
-            
 
         }
         Long newItem = itemsService.newItem(userId, clubId, name, description, interestsList, new BigDecimal(price));
@@ -133,25 +131,31 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         Item i = itemsService.getById(item_id);
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         jsonObjectBuilder.add("id", (i.getId() == null) ? "" : i.getId().toString())
-                .add("user_id", (i.getUserId()== null) ? "" : i.getUserId().toString())
-                .add("user_email", (i.getUserEmail()== null) ? "" : i.getUserEmail())
-                .add("club_id", (i.getClubId()== null) ? "" : i.getClubId().toString())
+                .add("user_id", (i.getUserId() == null) ? "" : i.getUserId().toString())
+                .add("user_email", (i.getUserEmail() == null) ? "" : i.getUserEmail())
+                .add("club_id", (i.getClubId() == null) ? "" : i.getClubId().toString())
                 .add("name", (i.getName() == null) ? "" : i.getName())
                 .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                .add("price", (i.getPrice()== null) ? "" : i.getPrice().toString());
+                .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
         if (i.getTags() != null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
             for (String s : i.getTags()) {
-                jsonArrayBuilderInterest.add(s);
+                jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("name", s));
             }
-            jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build().toString());
+            jsonObjectBuilder.add("tags", jsonArrayBuilderInterest);
         }
         JsonObject build = jsonObjectBuilder.build();
         return Response.ok(build.toString()).build();
 
     }
-    
-     @Override
+
+    @Override
+    public Response remove(Long item_id) throws ServiceException {
+        itemsService.removeItem(item_id);
+        return Response.ok().build();
+    }
+
+    @Override
     public Response uploadItemImage(@NotNull @PathParam("id") Long item_id, MultipartFormDataInput input) throws ServiceException {
         log.info(">>>> sit back - starting file upload for user_id..." + item_id);
 
@@ -189,8 +193,6 @@ public class ShopItemsServiceImpl implements ShopItemsService {
             }
         }).build();
     }
-
-   
 
     /**
      * Extract filename from HTTP heaeders.

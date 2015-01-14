@@ -37,12 +37,12 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Item> getAllItems() throws ServiceException {
         return em.createNamedQuery("Item.getAll", Item.class).getResultList();
     }
 
     @Override
-    public Item getById(Long item_id) {
+    public Item getById(Long item_id) throws ServiceException {
         return em.find(Item.class, item_id);
     }
 
@@ -58,8 +58,18 @@ public class ItemsServiceImpl implements ItemsService {
         return item.getId();
     }
 
+    public void removeItem(Long item_id) throws ServiceException {
+        Item find = em.find(Item.class, item_id);
+        if (find == null) {
+            throw new ServiceException("Item  doesn't exist: " + item_id);
+        }
+        em.remove(find);
+    }
+    
+    
+
     @Override
-    public List<Item> getAllItemsByClub(Long clubId) {
+    public List<Item> getAllItemsByClub(Long clubId) throws ServiceException {
         return em.createNamedQuery("Item.getAllByClub", Item.class).setParameter("clubId", clubId).getResultList();
     }
 

@@ -140,10 +140,10 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
     $scope.newItem = function (isValid) {
         if(isValid){
             console.log("adding new item  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
-            var tagsString = angular.copy($scope.newItem.tags);
+            
             var itemToSend = {club_id: $scope.club_id, user_id: $scope.user_id, name: $scope.newItem.title, description: $scope.newItem.description, 
                      tags: JSON.stringify($scope.newItem.tags), price: $scope.newItem.price};
-            console.log(itemToSend);
+
             $http({
                 method: 'POST',
                 url: 'rest/items/new',
@@ -152,8 +152,8 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
                 data: itemToSend
             }).success(function (data) {
                 $rootScope.$broadcast("quickNotification", "Item Created!");
-                var newItem = {item_id: data, club_id: $scope.club_id, user_id: $scope.user_id, name: $scope.newItem.title, description: $scope.newItem.description, 
-                     tags: tagsString, price: $scope.newItem.price};
+                var newItem = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newItem.title, description: $scope.newItem.description, 
+                     tags: $scope.newItem.tags, price: $scope.newItem.price};
                 $scope.items.push(newItem);
                 console.log("new item added: "+newItem);
                 $scope.newItem={};
@@ -167,6 +167,31 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             $rootScope.$broadcast("quickNotification", "Form not valid: Something went wrong!");
             
         }
+
+    };
+    
+    $scope.removeItem = function (item_id) {
+        
+            console.log("remove new item  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
+            
+           
+
+            $http({
+                method: 'POST',
+                url: 'rest/items/'+item_id+'/remove',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + $scope.email, auth_token: $scope.auth_token},
+                transformRequest: transformRequestToForm,
+                data: {id: item_id}
+            }).success(function (data) {
+                $rootScope.$broadcast("quickNotification", "Item Removed!");
+                
+                $scope.items.splice($scope.items.indexOf(parseInt(item_id)), 1);
+                
+            }).error(function (data) {
+                console.log("Error: " + data);
+                $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+            });
+        
 
     };
     

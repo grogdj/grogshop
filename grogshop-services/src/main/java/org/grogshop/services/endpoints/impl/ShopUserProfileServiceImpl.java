@@ -146,6 +146,13 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
         }
         return Response.ok().build();
     }
+    
+    @Override
+    public Response removeAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException {
+        profileService.removeAvatar(user_id);
+        return Response.ok().build();
+    }
+    
 
     @Override
     public Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException {

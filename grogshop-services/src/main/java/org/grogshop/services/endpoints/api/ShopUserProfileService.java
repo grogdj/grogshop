@@ -36,9 +36,12 @@ public interface ShopUserProfileService extends Serializable {
     
     @Path("{id}/avatar")
     @GET
-    @Consumes({MediaType.MULTIPART_FORM_DATA})
-            @Produces({MediaType.APPLICATION_OCTET_STREAM})
+    @Produces({MediaType.APPLICATION_OCTET_STREAM})
     Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException;
+    
+    @Path("{id}/avatar/remove")
+    @POST
+    Response removeAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException;
 
     @Path("{id}/exist")
     @GET

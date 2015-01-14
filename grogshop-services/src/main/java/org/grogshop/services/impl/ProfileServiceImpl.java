@@ -76,6 +76,7 @@ public class ProfileServiceImpl implements ProfileService {
         return find.getInterests();
     }
 
+    @Override
     public void updateAvatar(Long user_id, String fileName, byte[] content) throws ServiceException{
         Profile find = em.find(Profile.class, user_id);
         if (find == null) {
@@ -86,6 +87,7 @@ public class ProfileServiceImpl implements ProfileService {
         em.merge(find);
     }
 
+    @Override
     public byte[] getAvatar(Long user_id) throws ServiceException {
         Profile find = em.find(Profile.class, user_id);
         if (find == null) {
@@ -93,9 +95,16 @@ public class ProfileServiceImpl implements ProfileService {
         }
         return find.getAvatarContent();
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public void removeAvatar(Long user_id) throws ServiceException{
+        Profile find = em.find(Profile.class, user_id);
+        if (find == null) {
+            throw new ServiceException("User Profile doesn't exist: " + user_id);
+        }
+        find.setAvatarFileName("");
+        find.setAvatarContent(null);
+        em.merge(find);
+    }
+ 
 }

@@ -33,10 +33,10 @@ public class Item implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Id
+    
     private Long userId;
 
-    @Id
+    
     private Long clubId;
 
     @NotNull
