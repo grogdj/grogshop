@@ -2,6 +2,45 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
 
     $scope.imagePath = "static/img/public-images/"
     
+    $scope.interests = [];
+    
+     $scope.loadUserInterests = function (user_id, email, auth_token) {
+        console.log("loading interests for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
+
+        $http({
+            method: 'GET',
+            url: 'rest/users/'+user_id+'/interests',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
+            transformRequest: transformRequestToForm,
+            data: {}
+        }).success(function (data) {
+            //$rootScope.$broadcast("quickNotification", "User Interest loaded!");
+            $scope.interests = data;
+        }).error(function (data) {
+            console.log("Error: " + data);
+            $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+        });
+
+    };
+    
+    $scope.loadAllInterests = function () {
+        console.log("loading all interests");
+
+        $http({
+            method: 'GET',
+            url: 'rest/public/interests/all',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: transformRequestToForm,
+            data: {}
+        }).success(function (data) {
+            //$rootScope.$broadcast("quickNotification", "User Interest loaded!");
+            $scope.interests = data;
+        }).error(function (data) {
+            console.log("Error: " + data);
+            $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+        });
+
+    };
     
     $scope.loadClubs = function (user_id, email, auth_token) {
         console.log("loading clubs for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
@@ -45,8 +84,10 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
         console.log("loading private clubs because: "+$scope.auth_token);
         $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
         $scope.loadClubs($scope.user_id, $scope.email, $scope.auth_token);
+        $scope.loadUserInterests($scope.user_id, $scope.email, $scope.auth_token);
     }else{
         console.log("loading public clubs because: "+$scope.auth_token);
         $scope.loadPublicClubs();
+        $scope.loadAllInterests();
     }
 });

@@ -203,7 +203,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
 
     if($scope.auth_token && $scope.auth_token !== ""){
         $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
-        
+        $scope.avatarStyle = {'background-image':'url(rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
         
     }
     

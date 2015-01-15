@@ -35,20 +35,18 @@
 
 	            			<div class="pull-right dropdown">
 			            			<button class="btn btn-default dropdown-toggle" type="button" id="categories-dd" data-toggle="dropdown" aria-expanded="true">
-									    Categories
+									    Interests
 								    <span class="caret"></span>
 								  </button>
 								  <ul class="dropdown-menu" role="menu" aria-labelledby="categories-dd">
-								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Action</a></li>
-								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Another action</a></li>
-								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Something else here</a></li>
-								    <li role="presentation"><a role="menuitem" tabindex="-1" href>Separated link</a></li>
+								    <li ng-repeat="interest in interests"  role="presentation"><a role="menuitem" tabindex="-1" href ng-click="selectInterest = interest.name">{{interest.name}}</a></li>
+								  
 								  </ul>
 						  </div>
 
 	            		</div>
 	            		<div class="panel-body">
-	            		   <div class="clubscontainer" ng-repeat="club in clubList"> 
+	            		   <div class="clubscontainer" ng-repeat="club in clubList | filter: selectInterest "> 
 	            		   		<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 club-item">
 	            		   			<div href="#" class="thumbnail">
 	            		   					<div class="img-container">

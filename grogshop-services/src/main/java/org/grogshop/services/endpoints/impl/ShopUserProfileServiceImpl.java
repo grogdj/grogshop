@@ -10,6 +10,7 @@ import com.grogdj.grogshop.core.model.Profile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         for (Interest i : interests) {
-            jsonArrayBuilder.add(i.getName());
+            jsonArrayBuilder.add(Json.createObjectBuilder().add("name", i.getName()).add("imagePath", i.getImageURL()));
         }
         JsonArray build = jsonArrayBuilder.build();
         return Response.ok(build.toString()).build();
