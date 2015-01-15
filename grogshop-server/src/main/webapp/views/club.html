@@ -69,17 +69,18 @@
         <hr style="border-color:#999;" >
         <div masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".item"}' class="items-container">
             <!-- items -->
-            <div masonry-tile ng-repeat="item in items| filter:priceRange.range.min:greaterThan | filter:priceRange.range.max:smallerThan | filter:searchName | orderBy:typeSelect" class="item">
+            <div masonry-tile ng-repeat="item in items | filter:priceRange.range.min:greaterThan | filter:priceRange.range.max:smallerThan | filter:searchName | orderBy:typeSelect" class="item">
 
                 <div class="well">
                     <div class="item-image">
                         <img class="img-responsive" ng-src="/grogshop-server/rest/public/items/{{item.id}}/image"/>
                     </div>
                     <div class="options" ng-show="user_id == item.user_id"><a href class="btn btn-danger btn-xs" ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div>
-                    <div class="price"><span class="badge">{{item.price| currency}}</span></div>
+                    <div class="price"><span class="label label-primary">{{item.price| currency}}</span></div>
+                    <div class="tags"><span ng-repeat="itemTag in item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
                     <h4>{{item.name}} </h4>
                     <small><a href>{{item.user_email}}</a></small><br/>
-                    <p><span ng-repeat="itemTag in item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></p> 
+                    
                     <p><small>{{item.description}}</small></p>
                     
                 </div>                
@@ -99,44 +100,61 @@
                 <form novalidate name="newPostForm" >
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Add new product</h4>
+                        <h4 class="modal-title" id="myModalLabel">New Item</h4>
                     </div>
                     <div class="modal-body">
-
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" ng-model="newItem.title" id="title" name="title" class="form-control" required>
+                        <div class="container-fluid" style="padding:0;">
+                            <div class="row">
+                               <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input type="text" ng-model="newItem.title" id="title" name="title" class="form-control" ng-class="{submitError: submitted}" required>
+                                         <div class="error-msg" ng-hide="newPostForm.title.$valid || !submitted">Title can't be empty.</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="price">Price</label>
+                                        <input type="number" ng-model="newItem.price" id="price" name="price" class="form-control" ng-class="{submitError: submitted}" required>
+                                         <div class="error-msg" ng-hide="newPostForm.price.$valid || !submitted">Price must be a number.</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="price">Price</label>
-                            <input type="number" ng-model="newItem.price" id="price" name="price" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" name="description" id="description" ng-model="newItem.description" rows="3"></textarea>
+                            <label for="description">Description <small>(150 characters)</small></label>
+                            <textarea ng-maxlength="150" class="form-control" name="description" ng-class="{submitError: submitted}" id="description" ng-model="newItem.description" rows="3" required></textarea>
+                            <div class="error-msg" ng-show="newPostForm.description.$error.maxlength  ">Description is too long.</div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span></div>
-                                <tags-input ng-model="newItem.tags" name="tags" id="tags"  max-tags="3"></tags-input>
+                                <tags-input ng-class="{submitError: submitted}" ng-model="newItem.tags" name="tags" id="tags"  min-tags="1" max-tags="3" placeholder="Add 3 tags" required></tags-input>
                             </div>
                         </div>
                         <div class="container-fluid" style="padding:0;">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="image-preview img-thumbnail" ng-show="itemPicFile[0].dataUrl != null" style="background-image:url({{itemPicFile[0].dataUrl}});" > </div>
-                                    <div class="options">
-                                        <a class="btn btn-default btn-block" ng-file-select ng-model="itemPicFile" name="file" ng-file-change="generateThumb(itemPicFile[0])"  accept="image/*"  multiple="false">Add Item Picture</a><br/> <br/>
-                                        <div class="progress"ng-show="uploading" >
-                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{uploadPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadPercentage}}%;">
-                                                <span class="sr-only">{{uploadPercentage}} Complete</span>
+                                
+                                    <div class="col-md-3 " style="position:relative;">
+                                        <div ng-class="{'submitError ng-invalid' : submitted && itemPicFile[0].dataUrl == null }" class="image-preview img-responsive" style="background-image:url({{itemPicFile[0].dataUrl}});" > </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="options">
+                                            <a class="btn btn-default" ng-file-select ng-model="itemPicFile" name="file" ng-file-change="generateThumb(itemPicFile[0])"  accept="image/*"  multiple="false">Add Item Picture</a>
+                                            <br/><br/>
+                                            <a href ng-show="itemPicFile[0].dataUrl != null" ng-click="deletePostImage()" ><small>Delete Image</small></a>
+                                             <br/>
+                                            <div class="progress"ng-show="uploading" >
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{uploadPercentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{uploadPercentage}}%;">
+                                                    <span class="sr-only">{{uploadPercentage}} Complete</span>
+                                                </div>
                                             </div>
+
+
                                         </div>
-
-
                                     </div>
 
-                                </div>
+                               
                             </div>
                         </div>
 
@@ -145,8 +163,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" ng-click="newItem(newPostForm.$valid, itemPicFile)" >Create</button>
+                        <button type="button" class="btn btn-default" ng-click="resetPostForm()" >Reset</button>
+                        <button type="submit" class="btn btn-primary" ng-click="postItem(newPostForm.$valid, itemPicFile)" >Create</button>
                     </div>
                 </form>
             </div>

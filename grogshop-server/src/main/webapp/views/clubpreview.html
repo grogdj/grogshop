@@ -49,6 +49,23 @@
                 
 		</div>
 		<hr style="border-color:#999;" >
+		
+		<div masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".item"}' class="items-container">
+            <!-- items -->
+            <div masonry-tile ng-repeat="item in items" class="item">
+
+                <div class="well">
+                    <div class="item-image">
+                        <img class="img-responsive" ng-src="/grogshop-server/rest/public/items/{{item.id}}/image"/>
+                    </div>
+                            
+                    <h4>{{item.name}} </h4>
+                    <p><small>{{item.description}}</small></p>
+                    
+                    
+                </div>                
+            </div>
+        </div>
 
 	</div>
 

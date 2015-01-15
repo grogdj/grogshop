@@ -381,7 +381,16 @@ section {
     outline-color: red;
 }
 
-.ng-invalid.submitError {
+tags-input.ng-invalid .tags{
+    border-color: red ;
+    outline-color: red;
+}
+tags-input.ng-invalid.ng-pristine .tags{
+        border-color: #CCC ;
+    outline-color: transparent ;
+}
+
+.ng-invalid.submitError, tags-input.submitError.ng-invalid .tags{
     border-color: red !important;
     outline-color: red !important;
 }
@@ -777,15 +786,42 @@ tags-input .autocomplete  {
     z-index: 10;
 }
 
+.items-container  .item .tags {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 60%;
+    z-index: 10;
+    display: none;
+}
+
+.items-container  .item:hover .tags {
+    display: block;
+}
+
+.items-container  .item .tags .label-default {
+    background-color: #FFF;
+    color: #333;
+    box-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+
+
+.items-container  .item .price .label {
+     border-radius: 0px !important;
+}
+
+.items-container .item p {
+    word-break: break-word;
+}
+
 .items-container .item .item-image {
     margin: -15px -15px 15px;
 }
 
-.items-container  .item .price .badge {
-   border-radius: 0px !important;
-}
+
 .modal-backdrop {
     height: 100%;
+    position: fixed;
 }
 
 .img-preview {
@@ -824,8 +860,13 @@ tags-input .autocomplete  {
 /* MODAL */
 
 .image-preview {
-    width: 100px;
     height: 100px;
     background-position: center center;
-    background-size: auto 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid #CCC;
+    padding: 5px;
+    background-color: #EEE;
+    border-radius: 4px;
 }
+

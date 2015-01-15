@@ -137,8 +137,10 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
     //
     
     
-    $scope.newItem = function (isValid, files, event) {
-        if(isValid){
+    $scope.postItem = function (isValid, files) {
+        $scope.submitted = true;
+        if(isValid && $scope.newItem.tags.length > 0 && $scope.itemPicFile != null){
+            
             console.log("adding new item  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
             
             var itemToSend = {club_id: $scope.club_id, user_id: $scope.user_id, name: $scope.newItem.title, description: $scope.newItem.description, 
@@ -157,20 +159,33 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
                  var item_id = data;
                 
                 console.log("new item added: "+newItem);
-                $scope.newItem={};
-                $scope.newPostForm.$setPristine();
+                
                 $scope.uploadFile(item_id, files,newItem);
+                
+                
                 
             }).error(function (data) {
                 console.log("Error: " + data);
                 $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
             });
         }else{
+             
             $rootScope.$broadcast("quickNotification", "Form not valid: Something went wrong!");
             
         }
 
     };
+    
+    $scope.resetPostForm = function() {
+        $scope.newItem={};
+        $scope.itemPicFile= null;
+        $scope.newPostForm.$setPristine();
+        $scope.submitted = false;
+    }
+    
+    $scope.deletePostImage = function() {
+        $scope.itemPicFile= null;
+    }
     
     $scope.removeItem = function (item) {
         
@@ -234,6 +249,11 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             $scope.uploading = false;
             $('#newProductModal').modal('hide');
             $scope.items.push(newItem);
+            //
+            $scope.newItem={};
+            $scope.itemPicFile= null;
+            $scope.newPostForm.$setPristine();
+            $scope.submitted = false;
 
 
         }).error(function (data) {
