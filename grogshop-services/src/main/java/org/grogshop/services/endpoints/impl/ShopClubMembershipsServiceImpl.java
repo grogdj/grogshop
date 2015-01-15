@@ -57,8 +57,8 @@ public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsServic
     }
 
     @Override
-    public Response getNroMembers(@NotNull @PathParam("id") Long club_id) throws ServiceException {
-        Long nroMembers = membershipsService.getNroMembers(club_id);
+    public Response getMembersCount(@NotNull @PathParam("id") Long club_id) throws ServiceException {
+        Long nroMembers = membershipsService.getMembersCount(club_id);
         return Response.ok(nroMembers.toString()).build();
     }
 

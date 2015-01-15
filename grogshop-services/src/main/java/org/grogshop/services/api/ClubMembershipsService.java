@@ -18,7 +18,7 @@ public interface ClubMembershipsService {
     
     void cancelMembership(Long club_id, Long user_id) throws ServiceException;
 
-    Long getNroMembers(Long club_id);
+    Long getMembersCount(Long club_id);
 
     List<Long> getAllMembers(Long club_id);
 

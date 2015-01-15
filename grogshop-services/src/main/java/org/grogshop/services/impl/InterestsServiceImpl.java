@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import org.grogshop.services.api.InterestsService;
 import org.grogshop.services.exceptions.ServiceException;
 
@@ -27,36 +29,7 @@ public class InterestsServiceImpl implements InterestsService {
     private EntityManager em;
 
     private final static Logger log = Logger.getLogger(InterestsServiceImpl.class.getName());
-
-    @PostConstruct
-    private void init() {
-        try {
-            newInterest("music", "music.jpg");
-            newInterest("art", "art.jpg");
-            newInterest("science", "science.jpg");
-            newInterest("sports", "sports.jpg");
-            newInterest("cars", "cars.jpg");
-            newInterest("cooking", "cooking.jpg");
-            newInterest("design", "design.jpg");
-            newInterest("health", "health.jpg");
-            newInterest("antiques", "antiques.jpg");
-            newInterest("clothes", "clothes.jpg");
-            newInterest("astrology", "astrology.jpg");
-            newInterest("gardening", "gardening.jpg");
-            newInterest("infusions", "infusions.jpg");
-            newInterest("oldcars", "oldcars.jpg");
-            newInterest("pets", "pets.jpg");
-            newInterest("photography", "photography.jpg");
-            newInterest("radio", "radio.jpg");
-            newInterest("sailing", "sailing.jpg");
-            newInterest("videogames", "videogames.jpg");
-            newInterest("writing", "writing.jpg");
-
-        } catch (ServiceException ex) {
-            Logger.getLogger(InterestsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+   
 
     @Override
     public void newInterest(String tag) throws ServiceException {

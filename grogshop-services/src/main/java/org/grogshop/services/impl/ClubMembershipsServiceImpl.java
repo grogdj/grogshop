@@ -54,7 +54,7 @@ public class ClubMembershipsServiceImpl implements ClubMembershipsService {
     }
 
     @Override
-    public Long getNroMembers(Long club_id) {
+    public Long getMembersCount(Long club_id) {
         try {
             return em.createNamedQuery("ClubMembership.countMembers", Long.class).setParameter("club_id", club_id).getSingleResult();
         } catch (NoResultException e) {

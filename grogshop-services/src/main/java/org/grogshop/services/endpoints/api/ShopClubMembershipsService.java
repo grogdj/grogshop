@@ -47,9 +47,9 @@ public interface ShopClubMembershipsService extends Serializable {
     Response getAllMembers(@NotNull @PathParam("id") Long club_id) throws ServiceException;
 
     @GET
-    @Path("/club/{id}/nromembers")
+    @Path("/club/{id}/memberscount")
     @Produces({"application/json"})
-    Response getNroMembers(@NotNull @PathParam("id") Long club_id) throws ServiceException;
+    Response getMembersCount(@NotNull @PathParam("id") Long club_id) throws ServiceException;
 
     @GET
     @Path("{id}")

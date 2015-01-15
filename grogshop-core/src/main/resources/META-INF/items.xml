@@ -23,8 +23,5 @@
                                 _item.club.id  = :clubId 
 		</query>
 	</named-query>
-	
-       
-        
-	
+		
 </entity-mappings>
