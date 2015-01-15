@@ -9,27 +9,11 @@ app.controller('signUpController', function ($scope, $http, $rootScope) {
                 method: 'POST',
                 url: 'rest/auth/register',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                transformRequest: function (obj) {
-                    var str = [];
-                    for (var key in obj) {
-                        if (obj[key] instanceof Array) {
-                            for (var idx in obj[key]) {
-                                var subObj = obj[key][idx];
-                                for (var subKey in subObj) {
-                                    str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                                }
-                            }
-                        }
-                        else {
-                            str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                        }
-                    }
-                    return str.join("&");
-                },
+                transformRequest: transformRequestToForm,
                 data: {email: $scope.newUser.email, password: $scope.newUser.pass}
             }).success(function (data) {
                 
-                $rootScope.$broadcast("quickNotification", "You are  now registered, please login!");
+               // $rootScope.$broadcast("quickNotification", "You are  now registered, please login!");
                 $rootScope.$broadcast("goTo", "/");
                 console.log("Welcome to " + $scope.newUser.email + "!");
                 

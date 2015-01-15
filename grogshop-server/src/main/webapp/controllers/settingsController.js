@@ -84,7 +84,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
             transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Loading your settings...!");
+           // $rootScope.$broadcast("quickNotification", "Loading your settings...!");
             console.log("username = " + data.username);
             console.log("location = " + data.location);
             console.log("bio = " + data.bio);
@@ -115,7 +115,7 @@ app.controller('settingsController', function ($rootScope, $http, $scope, $uploa
                 transformRequest: transformRequestToForm,
                 data: {username: $scope.settings.username, location: $scope.settings.location, bio: $scope.settings.bio},
             }).success(function (data) {
-                $rootScope.$broadcast("quickNotification", "Your settings are now updated!");
+                //$rootScope.$broadcast("quickNotification", "Your settings are now updated!");
 
                 initialData = angular.copy($scope.settings)
                 $scope.uploadFile(files, event);

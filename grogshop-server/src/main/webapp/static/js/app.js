@@ -115,7 +115,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
             $cookieStore.remove('email');
             $scope.avatarStyle ="";
             $rootScope.$broadcast('goTo', "/");
-            $rootScope.$broadcast("quickNotification", "You have been logged out.");
+           // $rootScope.$broadcast("quickNotification", "You have been logged out.");
         }).error(function (data) {
             console.log("Error: " + data);
             $rootScope.$broadcast("quickNotification", "Error: " + data);
@@ -137,7 +137,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
                 transformRequest: transformRequestToForm,
                 data: {email: user.email, password: user.password}
             }).success(function (data) {
-                $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
+               // $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
                 console.log("You are signed in! " + data.auth_token);
 
                 $cookieStore.put('auth_token', data.auth_token);
@@ -176,7 +176,7 @@ app.controller('MainCtrl', function ($scope, $http, $cookieStore, $rootScope) {
             transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Memberships loaded! ");
+           // $rootScope.$broadcast("quickNotification", "Memberships loaded! ");
             console.log("data: "+ data);
             $scope.memberships = JSON.parse(JSON.stringify(data));
             console.log("my memberships: "+ $scope.memberships);

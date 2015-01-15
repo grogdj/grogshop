@@ -13,7 +13,7 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
             transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Clubs loaded!");
+            //$rootScope.$broadcast("quickNotification", "Clubs loaded!");
             $scope.clubList = data;
         }).error(function (data) {
             console.log("Error: " + data);
@@ -32,7 +32,7 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
             transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Public Clubs loaded!");
+            //$rootScope.$broadcast("quickNotification", "Public Clubs loaded!");
             $scope.clubList = data;
         }).error(function (data) {
             console.log("Error: " + data);

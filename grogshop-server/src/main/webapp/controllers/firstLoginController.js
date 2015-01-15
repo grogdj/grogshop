@@ -11,26 +11,10 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
             method: 'POST',
             url: 'rest/users/new',
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: {user_id: user_id}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Profile created!");
+            //$rootScope.$broadcast("quickNotification", "Profile created!");
             $cookieStore.put('firstLogin', false);
 
 
@@ -49,26 +33,10 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
             method: 'GET',
             url: 'rest/tags/all',
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Tags loaded!");
+            //$rootScope.$broadcast("quickNotification", "Tags loaded!");
 
             $scope.mainTags = data;
             $scope.initImages();
@@ -88,26 +56,10 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
             method: 'GET',
             url: 'rest/users/'+user_id+"/interests",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: {user_id: user_id}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Users Tags loaded!");
+            //$rootScope.$broadcast("quickNotification", "Users Tags loaded!");
             console.log("User interests: "+data);
             $scope.selectedTagsName = data;
 
@@ -125,26 +77,10 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
             method: 'POST',
             url: 'rest/users/'+user_id+"/interests/update",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
-            transformRequest: function (obj) {
-                var str = [];
-                for (var key in obj) {
-                    if (obj[key] instanceof Array) {
-                        for (var idx in obj[key]) {
-                            var subObj = obj[key][idx];
-                            for (var subKey in subObj) {
-                                str.push(encodeURIComponent(key) + "[" + idx + "][" + encodeURIComponent(subKey) + "]=" + encodeURIComponent(subObj[subKey]));
-                            }
-                        }
-                    }
-                    else {
-                        str.push(encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]));
-                    }
-                }
-                return str.join("&");
-            },
+            transformRequest: transformRequestToForm,
             data: { interests: $scope.selectedTagsName.toString()}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Interest updated !");
+            //$rootScope.$broadcast("quickNotification", "Interest updated !");
             $rootScope.$broadcast("goTo", "/settings");
 
 

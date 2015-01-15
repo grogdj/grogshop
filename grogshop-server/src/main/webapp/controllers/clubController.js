@@ -41,7 +41,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Club loaded!");
+            //$rootScope.$broadcast("quickNotification", "Club loaded!");
             $scope.club = data;
         }).error(function (data) {
             console.log("Error: " + data);
@@ -60,7 +60,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "items loaded!");
+            //$rootScope.$broadcast("quickNotification", "items loaded!");
             console.log("My Items");
             console.log(data);
             $scope.items = data;
@@ -83,7 +83,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             transformRequest: transformRequestToForm,
             data: {club_id: club_id, user_id: user_id}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Club Joined!");
+            //$rootScope.$broadcast("quickNotification", "Club Joined!");
             $scope.memberships.push(parseInt(club_id));
             $rootScope.$broadcast('goTo', "/club/" + $scope.club_id);
             console.log("after joining the club: "+$rootScope.memberships);
@@ -104,7 +104,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
             transformRequest: transformRequestToForm,
             data: {club_id: club_id, user_id: user_id}
         }).success(function (data) {
-            $rootScope.$broadcast("quickNotification", "Club Membership Cancelled!");
+            //$rootScope.$broadcast("quickNotification", "Club Membership Cancelled!");
             $scope.memberships.splice($scope.memberships.indexOf(parseInt(club_id)), 1);
             console.log("after canceling the club: "+$scope.memberships);
             $rootScope.$broadcast('goTo', "/club/preview/" + $scope.club_id);
@@ -151,7 +151,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
                 transformRequest: transformRequestToForm,
                 data: itemToSend
             }).success(function (data) {
-                $rootScope.$broadcast("quickNotification", "Item Created!");
+                //$rootScope.$broadcast("quickNotification", "Item Created!");
                 var newItem = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newItem.title, description: $scope.newItem.description, 
                      tags: $scope.newItem.tags, price: $scope.newItem.price};
                  var item_id = data;
@@ -185,7 +185,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
                 transformRequest: transformRequestToForm,
                 data: {id: item.id}
             }).success(function (data) {
-                $rootScope.$broadcast("quickNotification", "Item Removed!");
+                //$rootScope.$broadcast("quickNotification", "Item Removed!");
                 
                 $scope.items.splice($scope.items.indexOf(item), 1);
                 
@@ -254,7 +254,7 @@ app.controller('clubController', function ($scope, $routeParams, $http, $rootSco
            transformRequest: transformRequestToForm,
            data: {}
        }).success(function (data) {
-           $rootScope.$broadcast("quickNotification", "Public Club loaded!");
+           //$rootScope.$broadcast("quickNotification", "Public Club loaded!");
            $scope.club = data;
        }).error(function (data) {
            console.log("Error: " + data);
