@@ -27,26 +27,29 @@
                	</div>
             </div>
             <hr style="border-color:#999;" ng-show="!auth_token">
+            
+            
+        
             <div class="row" >
             	<div class="col-md-12">
 	            	<div class="panel panel-default">
+                        
 	            		<div class="panel-heading clearfix">
 	            			<h5 class="pull-left">Top Clubs</h5>
-
-	            			<div class="pull-right dropdown">
-			            			<button class="btn btn-default dropdown-toggle" type="button" id="categories-dd" data-toggle="dropdown" aria-expanded="true">
-									    Interests
-								    <span class="caret"></span>
-								  </button>
-								  <ul class="dropdown-menu" role="menu" aria-labelledby="categories-dd">
-								    <li ng-repeat="interest in interests"  role="presentation"><a role="menuitem" tabindex="-1" href ng-click="selectInterest = interest.name">{{interest.name}}</a></li>
+                            <div class="col-md-4 pull-right">
+	            			 <select name="interest-select" id="interest-select" ng-model="selectInterest.interest" class=" form-control">
+	            			         <option value="">All</option>
+	            			         <option ng-repeat="interest in interests"  role="presentation" value="{{interest.name}}">
+								        {{interest.name}} 
+								    </option>
 								  
-								  </ul>
-						  </div>
+								  </select>
+                		    </div>
 
 	            		</div>
 	            		<div class="panel-body">
-	            		   <div class="clubscontainer" ng-repeat="club in clubList | filter: selectInterest "> 
+            		       <p ng-hide="filteredClubs.length">There is no result</p>
+	            		   <div class="clubscontainer" ng-repeat="club in filteredClubs = (clubList | filter:checkUserInterest | filter:selectInterest ) "> 
 	            		   		<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 club-item">
 	            		   			<div href="#" class="thumbnail">
 	            		   					<div class="img-container">
@@ -61,10 +64,13 @@
 	            		   			</div>
 	            		   		</div>
 	            		   </div>
+	            		   
 	            		</div>
 	            	</div>
             	</div>
             </div>
+            
+            
             <hr style="border-color:#999;">
             <div class="row">
             	<div class="col-md-12">
