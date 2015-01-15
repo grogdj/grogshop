@@ -34,16 +34,20 @@ public interface ShopClubsService extends Serializable {
     @Produces({MediaType.APPLICATION_JSON})
     Response newClub(@NotNull @NotEmpty @FormParam("name") String name, 
             @NotNull @NotEmpty @FormParam("description") String description,
-            @NotNull @NotEmpty @FormParam("category") String category,
-            @NotNull @NotEmpty @FormParam("tags") String interests, 
+            @NotNull @NotEmpty @FormParam("interest") String interest,
+            @NotNull @NotEmpty @FormParam("tags") String tags, 
             @NotNull @NotEmpty @FormParam("founderId") Long founderId,
             @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException;
 
     @GET
     @Path("/all")
     @Produces({"application/json"})
-    Response getAllClubs();
+    Response getAllClubs() throws ServiceException;
     
+    @GET
+    @Path("/byinterests")
+    @Produces({"application/json"})
+    Response getAllClubsByInterests(@NotNull @NotEmpty @FormParam("interests") String interests) throws ServiceException;
     
     @GET
     @Path("{id}")

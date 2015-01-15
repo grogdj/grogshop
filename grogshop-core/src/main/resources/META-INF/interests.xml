@@ -3,15 +3,18 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd">
 	
 	
-	<named-query name="Tag.getAll">
+	<named-query name="Interest.getAll">
 		<query>
 			SELECT
-				_tag
+				_interest
 			FROM
-				Tag _tag					
+				Interest _interest					
 		</query>
 	</named-query>
 	
+        
+        
+        
 
 	
 </entity-mappings>

@@ -5,7 +5,7 @@
  */
 package org.grogshop.services.api;
 
-import com.grogdj.grogshop.core.model.Tag;
+import com.grogdj.grogshop.core.model.Interest;
 import java.util.List;
 import org.grogshop.services.exceptions.ServiceException;
 
@@ -13,12 +13,14 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author grogdj
  */
-public interface TagsService {
+public interface InterestsService {
     
-    List<Tag> getAllTags();
+    List<Interest> getAllInterests() throws ServiceException;
     
-    void newTag(String tag) throws ServiceException;
+    Interest get(String interest) throws ServiceException;
     
-    void newTag(String tag, String imagePath) throws ServiceException;
+    void newInterest(String interest) throws ServiceException;
+    
+    void newInterest(String interest, String imagePath) throws ServiceException;
     
 }

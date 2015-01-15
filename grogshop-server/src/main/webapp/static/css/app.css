@@ -569,7 +569,7 @@ tags-input .autocomplete  {
 
 
 /* INTEREST MAIN TAGS */
-.mainTags-container {
+.interests-container {
 	width: 100%;
 	height: 100%;
 	padding: 2px;
@@ -579,7 +579,7 @@ tags-input .autocomplete  {
 	
 
 }
-.mainTag {
+.interest {
 	display: inline-block;
 	min-height: 200px;
 	border: none;
@@ -604,19 +604,19 @@ tags-input .autocomplete  {
 
 	
 }
-.mainTag.checked {
+.interest.checked {
 	background-color: #17FF85;
 }
 
-.mainTag:hover .image  {
+.interest:hover .image  {
 		 opacity: .3;
 }
 
-.mainTag:hover {
+.interest:hover {
 	background-color: #000;
 }
 
-.mainTag .tagName {
+.interest .tagName {
 	position: absolute;
 	width: 100%;
 	bottom: 12px;
@@ -629,19 +629,19 @@ tags-input .autocomplete  {
 	display: none;
 }
 
-.mainTag.checked .tagName {
+.interest.checked .tagName {
 		display: block;
 
 	
 }
-.mainTag .tagName span {
+.interest .tagName span {
 	background-color: rgba(0,0,0,.8);
 	padding: 3px 10px; 
 	border-radius: 6px;
 }
 
 
-.mainTag .image {
+.interest .image {
 	position: absolute;
 	top: 0;
 	width: 100%;
@@ -660,11 +660,11 @@ tags-input .autocomplete  {
 	
 }
 
-.mainTag.checked .image {
+.interest.checked .image {
 	opacity: .2;
 }
 
-.mainTag .actionIcon {
+.interest .actionIcon {
 	position: absolute;
 	width: 80px;
 	height: 80px;
@@ -675,15 +675,15 @@ tags-input .autocomplete  {
 	margin-left: -40px;
 	margin-top: -40px;
 	display: none;
-	background-image: url(../img/maintags-action.png);
+	background-image: url(../img/interest-action.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }
-.mainTag:hover .actionIcon {
+.interest:hover .actionIcon {
 	display: block;
 }
 
-.mainTag.checked .actionIcon {
+.interest.checked .actionIcon {
 	background-color: #FFF;
 	background-position: bottom left;
 }

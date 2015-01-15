@@ -24,17 +24,17 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author salaboy
  */
 @Local
-@Path("/tags")
-public interface ShopTagsService extends Serializable {
+@Path("/interests")
+public interface ShopInterestsService extends Serializable {
 
     @Path("/new")
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response newTag(@NotNull @NotEmpty @FormParam("tag") String tag) throws ServiceException;
+    Response newInterest(@NotNull @NotEmpty @FormParam("tag") String tag) throws ServiceException;
 
     @GET
     @Path("/all")
     @Produces({"application/json"})
-    Response getAllTags();
+    Response getAllInterests() throws ServiceException;
 }

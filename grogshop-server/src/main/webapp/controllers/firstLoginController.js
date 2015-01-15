@@ -2,7 +2,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
     
     //GRID
     $scope.imagePath = "static/img/public-images/"
-    $scope.mainTags = [];
+    $scope.interests = [];
     
     $scope.newProfile = function (user_id, email, auth_token) {
         console.log("creating profile for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
@@ -26,19 +26,19 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
 
     };
     
-    $scope.loadMainTags = function (user_id, email, auth_token) {
+    $scope.loadInterests = function (user_id, email, auth_token) {
         console.log("creating profile for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
 
         $http({
             method: 'GET',
-            url: 'rest/tags/all',
+            url: 'rest/interests/all',
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
             transformRequest: transformRequestToForm,
             data: {}
         }).success(function (data) {
             //$rootScope.$broadcast("quickNotification", "Tags loaded!");
 
-            $scope.mainTags = data;
+            $scope.interests = data;
             $scope.initImages();
             $scope.loadUserTags($scope.user_id, $scope.email, $scope.auth_token);
 
@@ -95,14 +95,14 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
     if(firstLogin){
         $scope.newProfile($scope.user_id, $scope.email, $scope.auth_token);
     }
-    $scope.loadMainTags($scope.user_id, $scope.email, $scope.auth_token);
+    $scope.loadInterests($scope.user_id, $scope.email, $scope.auth_token);
     
 
     $scope.initImages = function(){
         $scope.numberOfItem = Math.floor($(window).width() / 300);
         $scope.pageClass = "firstLoginScreen";
         $scope.elementWidth = (($(window).width()-4) / $scope.numberOfItem)-4;
-        $scope.elementHeight = (($(window).height() - 4) / Math.ceil(($scope.mainTags.length / $scope.numberOfItem)))-4;
+        $scope.elementHeight = (($(window).height() - 4) / Math.ceil(($scope.interests.length / $scope.numberOfItem)))-4;
         
     }
 
@@ -110,7 +110,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
     $(window).resize(function () {
         $scope.numberOfItem = Math.floor($(window).width() / 300);
         $scope.elementWidth = (($(window).width()-4) / $scope.numberOfItem)-4;
-        $scope.elementHeight = (($(window).height() - 4) / Math.ceil(($scope.mainTags.length / $scope.numberOfItem)))-4;
+        $scope.elementHeight = (($(window).height() - 4) / Math.ceil(($scope.interests.length / $scope.numberOfItem)))-4;
         $scope.$digest();
         
     });

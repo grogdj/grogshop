@@ -12,16 +12,18 @@
 		</query>
 	</named-query>
 	
-        <named-query name="Club.getByCategory">
+        <named-query name="Club.getAllByInterest">
 		<query>
 			SELECT
 				_club
 			FROM
 				Club _club
                         WHERE
-                                _club.category = :category
+                                _club.interest.name in (:interests)
 		</query>
 	</named-query>
+        
+        
         
 	
 </entity-mappings>

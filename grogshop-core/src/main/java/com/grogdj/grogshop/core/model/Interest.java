@@ -19,12 +19,12 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @author grogdj
  */
-@Entity(name = "Tag")
-@Table(name = "TAGS")
-public class Tag {
+@Entity(name = "Interest")
+@Table(name = "INTERESTS")
+public class Interest {
 
     @Id
-    @Size(min = 3, max = 20, message = "A tag  must contain between 3 and 20 characters")
+    @Size(min = 3, max = 20, message = "A interest  must contain between 3 and 20 characters")
     @NotNull
     @NotEmpty
     @Column(unique = true)
@@ -32,14 +32,14 @@ public class Tag {
 
     private String imageURL;
 
-    public Tag() {
+    public Interest() {
     }
 
-    public Tag(String name) {
+    public Interest(String name) {
         this.name = name;
     }
 
-    public Tag(String name, String imageURL) {
+    public Interest(String name, String imageURL) {
         this.name = name;
         this.imageURL = imageURL;
     }
@@ -76,7 +76,7 @@ public class Tag {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Tag other = (Tag) obj;
+        final Interest other = (Interest) obj;
         if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
             return false;
         }
@@ -88,7 +88,7 @@ public class Tag {
 
     @Override
     public String toString() {
-        return "Tag{" + "name=" + name + ", imageURL=" + imageURL + '}';
+        return "Interest{" + "name=" + name + ", imageURL=" + imageURL + '}';
     }
 
 }

@@ -46,9 +46,9 @@ public class Club implements Serializable {
     @ElementCollection
     private List<String> tags;
 
-    @NotNull
-    @NotEmpty
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "interest_id")
+    private Interest interest;
 
     @NotNull
     @ManyToOne
@@ -62,10 +62,10 @@ public class Club implements Serializable {
     public Club() {
     }
 
-    public Club(String name, String description, String category, List<String> tags, User founder, String image) {
+    public Club(String name, String description, Interest interest, List<String> tags, User founder, String image) {
         this.name = name;
         this.description = description;
-        this.category = category;
+        this.interest = interest;
         this.tags = tags;
         this.founder = founder;
         this.image = image;
@@ -103,13 +103,14 @@ public class Club implements Serializable {
         this.tags = tags;
     }
 
-    public String getCategory() {
-        return category;
+    public Interest getInterest() {
+        return interest;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setInterest(Interest interest) {
+        this.interest = interest;
     }
+
 
     public String getImage() {
         return image;

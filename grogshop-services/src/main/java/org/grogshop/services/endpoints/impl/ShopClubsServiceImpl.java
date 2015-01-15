@@ -7,6 +7,7 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Club;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,7 +31,7 @@ public class ShopClubsServiceImpl implements ShopClubsService {
     private ClubsService clubsService;
 
     @Override
-    public Response getAllClubs() {
+    public Response getAllClubs() throws ServiceException {
         List<Club> allClubs = clubsService.getAllClubs();
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
@@ -38,12 +39,12 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             jsonObjectBuilder
                     .add("id", (c.getId() == null) ? "" : c.getId().toString())
                     .add("name", (c.getName() == null) ? "" : c.getName())
-                    .add("category", (c.getCategory()== null) ? "" : c.getCategory())
-                    .add("description", (c.getDescription()== null) ? "" : c.getDescription())
+                    .add("interest", (c.getInterest() == null) ? "" : c.getInterest().getName())
+                    .add("description", (c.getDescription() == null) ? "" : c.getDescription())
                     .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
-                    .add("image", (c.getImage()== null) ? "" : c.getImage());
-            
-            if (c.getTags()!= null) {
+                    .add("image", (c.getImage() == null) ? "" : c.getImage());
+
+            if (c.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
                 for (String s : c.getTags()) {
                     jsonArrayBuilderInterest.add(s);
@@ -58,23 +59,19 @@ public class ShopClubsServiceImpl implements ShopClubsService {
     }
 
     @Override
-    public Response newClub(@NotNull @NotEmpty @FormParam("name") String name, 
+    public Response newClub(@NotNull @NotEmpty @FormParam("name") String name,
             @NotNull @NotEmpty @FormParam("description") String description,
-            @NotNull @NotEmpty @FormParam("category") String category,
+            @NotNull @NotEmpty @FormParam("interest") String interest,
             @NotNull @NotEmpty @FormParam("tags") String tags,
             @NotNull @NotEmpty @FormParam("founderId") Long founderId,
             @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException {
-        String[] interestArray = tags.split(",");
-        List<String> interestsList = new ArrayList<String>();
-        if (interestArray != null) {
-            
-            for (String s : interestArray) {
-                interestsList.add(s);
-            }
-            
+        String[] tagsArray = tags.split(",");
+        List<String> tagsList = new ArrayList<String>();
+        if (tagsArray != null) {
+            tagsList.addAll(Arrays.asList(tagsArray));
 
         }
-        Long newClub = clubsService.newClub(name, description, category,  interestsList, founderId, image);
+        Long newClub = clubsService.newClub(name, description, interest, tagsList, founderId, image);
         return Response.ok(newClub).build();
 
     }
@@ -85,11 +82,11 @@ public class ShopClubsServiceImpl implements ShopClubsService {
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         jsonObjectBuilder.add("id", (c.getId() == null) ? "" : c.getId().toString())
                 .add("name", (c.getName() == null) ? "" : c.getName())
-                .add("category", (c.getCategory()== null) ? "" : c.getCategory())
-                .add("description", (c.getDescription()== null) ? "" : c.getDescription())
+                .add("interest", (c.getInterest() == null) ? "" : c.getInterest().getName())
+                .add("description", (c.getDescription() == null) ? "" : c.getDescription())
                 .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
                 .add("image", (c.getImage() == null) ? "" : c.getImage());
-        if (c.getTags()!= null) {
+        if (c.getTags() != null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
             for (String s : c.getTags()) {
                 jsonArrayBuilderInterest.add(s);
@@ -98,6 +95,37 @@ public class ShopClubsServiceImpl implements ShopClubsService {
         }
         JsonObject build = jsonObjectBuilder.build();
         return Response.ok(build.toString()).build();
+
+    }
+
+    @Override
+    public Response getAllClubsByInterests(String interests) throws ServiceException {
+        String[] interestArray = interests.split(",");
+        List<String> interestsList = new ArrayList<String>(interestArray.length);
+        interestsList.addAll(Arrays.asList(interestArray));
+        List<Club> allClubsByInterests = clubsService.getAllClubsByInterests(interestsList);
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        for (Club c : allClubsByInterests) {
+            jsonObjectBuilder
+                    .add("id", (c.getId() == null) ? "" : c.getId().toString())
+                    .add("name", (c.getName() == null) ? "" : c.getName())
+                    .add("interest", (c.getInterest() == null) ? "" : c.getInterest().getName())
+                    .add("description", (c.getDescription() == null) ? "" : c.getDescription())
+                    .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
+                    .add("image", (c.getImage() == null) ? "" : c.getImage());
+
+            if (c.getTags() != null) {
+                JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+                for (String s : c.getTags()) {
+                    jsonArrayBuilderInterest.add(s);
+                }
+                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest.build());
+            }
+            jsonArrayBuilder.add(jsonObjectBuilder);
+        }
+        JsonArray jsonArray = jsonArrayBuilder.build();
+        return Response.ok(jsonArray.toString()).build();
 
     }
 

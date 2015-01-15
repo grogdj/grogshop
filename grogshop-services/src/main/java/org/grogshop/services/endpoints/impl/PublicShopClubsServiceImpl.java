@@ -34,7 +34,7 @@ public class PublicShopClubsServiceImpl implements PublicShopClubsService {
             jsonObjectBuilder
                     .add("id", (c.getId() == null) ? "" : c.getId().toString())
                     .add("name", (c.getName() == null) ? "" : c.getName())
-                    .add("category", (c.getCategory()== null) ? "" : c.getCategory())
+                    .add("interest", (c.getInterest()== null) ? "" : c.getInterest().getName())
                     .add("description", (c.getDescription()== null) ? "" : c.getDescription())
                     .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
                     .add("image", (c.getImage()== null) ? "" : c.getImage());
@@ -60,7 +60,7 @@ public class PublicShopClubsServiceImpl implements PublicShopClubsService {
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         jsonObjectBuilder.add("id", (c.getId() == null) ? "" : c.getId().toString())
                 .add("name", (c.getName() == null) ? "" : c.getName())
-                .add("category", (c.getCategory()== null) ? "" : c.getCategory())
+                .add("interest", (c.getInterest()== null) ? "" : c.getInterest().getName())
                 .add("description", (c.getDescription()== null) ? "" : c.getDescription())
                 .add("founderEmail", (c.getFounder().getEmail() == null) ? "" : c.getFounder().getEmail())
                 .add("image", (c.getImage() == null) ? "" : c.getImage());

@@ -13,7 +13,7 @@
             </div>
             <div class="col-sm-6 col-sm-offset-3">
 
-                <p><span class="label label-primary">{{club.category}}</span> <span ng-repeat="tag in club.tags"><span class="label label-default">{{tag}}</span> </span></p>
+                <p><span class="label label-primary">{{club.interest}}</span> <span ng-repeat="tag in club.tags"><span class="label label-default">{{tag}}</span> </span></p>
 
                 <h2>{{club.name}}</h2>
                 <p class="lead">{{club.description}}</p>
@@ -29,11 +29,7 @@
 
             <div ng-show="hasMembership(club_id)" class="col-sm-3">
                 <button class="btn btn-warning btn-block btn-lg" ng-click="cancelMembership(club_id, user_id, email, auth_token)"> <span class="glyphicon glyphicon-remove pull-left" aria-hidden="true"></span> Cancel <span class="hidden-sm">Membership</span></button>
-                <div class="col-md-10 col-md-offset-1">
-                    <br/>
-                    <p class="text-center"><small>You are already a member of this club.</small></p>
-                </div>	
-
+                
             </div>
 
         </div>

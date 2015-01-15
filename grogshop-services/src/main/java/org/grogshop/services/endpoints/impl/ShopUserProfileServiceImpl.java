@@ -5,6 +5,7 @@
  */
 package org.grogshop.services.endpoints.impl;
 
+import com.grogdj.grogshop.core.model.Interest;
 import com.grogdj.grogshop.core.model.Profile;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +30,7 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import org.apache.commons.io.IOUtils;
+import org.grogshop.services.api.InterestsService;
 import org.grogshop.services.api.ProfileService;
 import org.grogshop.services.endpoints.api.ShopUserProfileService;
 import org.grogshop.services.exceptions.ServiceException;
@@ -44,6 +46,9 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     @Inject
     private ProfileService profileService;
+    
+    @Inject
+    private InterestsService interestService;
 
     private final static Logger log = Logger.getLogger(ShopUserProfileServiceImpl.class.getName());
 
@@ -95,12 +100,12 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     @Override
     public Response getInterests(@NotNull @PathParam("user_id") Long user_id) throws ServiceException {
-        List<String> interests = profileService.getInterests(user_id);
+        List<Interest> interests = profileService.getInterests(user_id);
         log.info("Interests from the database: (" + user_id + ") " + interests);
 
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-        for (String s : interests) {
-            jsonArrayBuilder.add(s);
+        for (Interest i : interests) {
+            jsonArrayBuilder.add(i.getName());
         }
         JsonArray build = jsonArrayBuilder.build();
         return Response.ok(build.toString()).build();
@@ -110,9 +115,10 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
         log.info("Storing from the database: (" + user_id + ") " + interests);
         if(interests != null){
             String[] split = interests.split(",");
-            List<String> interestList = new ArrayList<String>(split.length);
+            List<Interest> interestList = new ArrayList<Interest>(split.length);
             for(String s : split){
-                interestList.add(s);
+                Interest i = interestService.get(s);
+                interestList.add(i);
                         
             }
             profileService.setInterests(user_id, interestList);

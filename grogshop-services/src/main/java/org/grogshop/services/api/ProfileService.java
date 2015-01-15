@@ -5,6 +5,7 @@
  */
 package org.grogshop.services.api;
 
+import com.grogdj.grogshop.core.model.Interest;
 import com.grogdj.grogshop.core.model.Profile;
 import java.util.List;
 import org.grogshop.services.exceptions.ServiceException;
@@ -24,9 +25,9 @@ public interface ProfileService {
     void update(Long user_id, String username, 
             String location, String bio) throws ServiceException;
     
-    void setInterests(Long user_id, List<String> interests) throws ServiceException;
+    void setInterests(Long user_id, List<Interest> interests) throws ServiceException;
     
-    List<String> getInterests(Long user_id) throws ServiceException;
+    List<Interest> getInterests(Long user_id) throws ServiceException;
     
     void updateAvatar(Long user_id, String fileName, byte[] content) throws ServiceException;
     

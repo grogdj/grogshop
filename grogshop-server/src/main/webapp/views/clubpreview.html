@@ -13,7 +13,7 @@
 			</div>
 			<div class="col-sm-6 col-sm-offset-3">
 			
-				<p><span class="label label-primary">{{club.category}}</span> <span ng-repeat="tag in club.tags"><span class="label label-default">{{tag}}</span> </span></p>
+				<p><span class="label label-primary">{{club.interest}}</span> <span ng-repeat="tag in club.tags"><span class="label label-default">{{tag}}</span> </span></p>
 				
 				<h2>{{club.name}}</h2>
 				<p class="lead">{{club.description}}</p>
@@ -31,7 +31,7 @@
                      <button class="btn btn-primary btn-block btn-lg" ng-click="joinClub(club_id, user_id, email, auth_token)"> <span class="glyphicon glyphicon-flag pull-left" aria-hidden="true"></span> Join <span class="hidden-sm" >this club</span></button>
                      <div class="col-md-10 col-md-offset-1">
                         <br/>
-                        <p class="text-center"><small>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </small></p>
+                        <p class="text-center"><small>Join this club to be able to interact with other members. </small></p>
                      </div>	
                 </div>
                 <div ng-show="hasMembership(club_id)" class="col-sm-3">

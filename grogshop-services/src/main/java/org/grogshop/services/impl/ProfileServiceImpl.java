@@ -5,6 +5,7 @@
  */
 package org.grogshop.services.impl;
 
+import com.grogdj.grogshop.core.model.Interest;
 import com.grogdj.grogshop.core.model.Profile;
 import com.grogdj.grogshop.core.model.User;
 import java.util.List;
@@ -59,24 +60,24 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public void setInterests(Long user_id, List<String> interests) throws ServiceException {
-        Profile find = em.find(Profile.class, user_id);
-        if (find == null) {
+    public void setInterests(Long user_id, List<Interest> interests) throws ServiceException {
+        Profile profile = em.find(Profile.class, user_id);
+        if (profile == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
         }
         log.info("Storing to the database: " + interests);
-        find.setInterests(interests);
-        em.merge(find);
+        profile.setInterests(interests);
+        em.merge(profile);
     }
 
     @Override
-    public List<String> getInterests(Long user_id) throws ServiceException {
-        Profile find = em.find(Profile.class, user_id);
-        if (find == null) {
+    public List<Interest> getInterests(Long user_id) throws ServiceException {
+        Profile profile = em.find(Profile.class, user_id);
+        if (profile == null) {
             throw new ServiceException("User Profile doesn't exist: " + user_id);
         }
-        log.info("Interest from the database: " + find.getInterests());
-        return find.getInterests();
+        log.info("Interest from the database: " + profile.getInterests());
+        return profile.getInterests();
     }
 
     @Override

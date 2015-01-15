@@ -8,11 +8,11 @@ package com.grogdj.grogshop.core.model;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -45,8 +45,8 @@ public class Profile implements Serializable {
 
     private String realname;
 
-    @ElementCollection
-    private List<String> interests;
+    @ManyToMany
+    private List<Interest> interests;
 
     public Profile(User user) {
         this.user = user;
@@ -86,15 +86,15 @@ public class Profile implements Serializable {
         this.realname = realname;
     }
 
-    public List<String> getInterests() {
+    public List<Interest> getInterests() {
         return interests;
     }
 
-    public void setInterests(List<String> interests) {
+    public void setInterests(List<Interest> interests) {
         this.interests = interests;
     }
 
-    public void addInterest(String interest) {
+    public void addInterest(Interest interest) {
         if (this.interests != null) {
             this.interests.add(interest);
         }

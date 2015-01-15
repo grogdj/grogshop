@@ -5,7 +5,7 @@
  */
 package org.grogshop.services.endpoints.impl;
 
-import com.grogdj.grogshop.core.model.Tag;
+import com.grogdj.grogshop.core.model.Interest;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,26 +16,24 @@ import javax.json.JsonObjectBuilder;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
-import org.grogshop.services.api.TagsService;
-import org.grogshop.services.endpoints.api.ShopTagsService;
+import org.grogshop.services.api.InterestsService;
+import org.grogshop.services.endpoints.api.ShopInterestsService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Stateless
-public class ShopTagsServiceImpl implements ShopTagsService {
+public class ShopInterestsServiceImpl implements ShopInterestsService {
 
     @Inject
-    private TagsService tagsService;
+    private InterestsService tagsService;
 
-   
-    
     
     @Override
-    public Response getAllTags() {
-        List<Tag> allTags = tagsService.getAllTags();
+    public Response getAllInterests() throws ServiceException {
+        List<Interest> allTags = tagsService.getAllInterests();
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-        for(Tag t : allTags){
+        for(Interest t : allTags){
             jsonArrayBuilder.add(jsonObjectBuilder.add("name", (t.getName()==null)?"":t.getName()).add("imagePath", (t.getImageURL()==null)?"":t.getImageURL()));
         }
         JsonArray jsonArray = jsonArrayBuilder.build();
@@ -44,11 +42,9 @@ public class ShopTagsServiceImpl implements ShopTagsService {
     }
 
     @Override
-    public Response newTag(@NotNull @NotEmpty @FormParam("tag") String tag) throws ServiceException {
-        tagsService.newTag(tag);
+    public Response newInterest(@NotNull @NotEmpty @FormParam("interest") String interest) throws ServiceException {
+        tagsService.newInterest(interest);
         return Response.ok().build();
     }
     
-    
-
 }
