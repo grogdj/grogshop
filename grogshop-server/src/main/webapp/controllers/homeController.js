@@ -3,6 +3,7 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
     $scope.imagePath = "static/img/public-images/"
     
     $scope.interests = [];
+    $scope.allInterests = [];
     $scope.userInterests = [];
     
      $scope.loadUserInterests = function (user_id, email, auth_token) {
@@ -39,7 +40,7 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
             data: {}
         }).success(function (data) {
             //$rootScope.$broadcast("quickNotification", "User Interest loaded!");
-            $scope.interests = data;
+            $scope.allInterests = data;
         }).error(function (data) {
             console.log("Error: " + data);
             $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
@@ -84,33 +85,46 @@ app.controller('homeController', function ($scope, $http, $rootScope) {
         });
 
     };
-
+    
     if($scope.auth_token && $scope.auth_token !== ""){
+        
         console.log("loading private clubs because: "+$scope.auth_token);
         $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
         $scope.loadClubs($scope.user_id, $scope.email, $scope.auth_token);
         $scope.loadUserInterests($scope.user_id, $scope.email, $scope.auth_token);
+        //
     }else{
         console.log("loading public clubs because: "+$scope.auth_token);
         $scope.loadPublicClubs();
-        $scope.loadAllInterests();
+       
     }
-  
-      //CUSTOM FILTER FOR INTERESTS
-    $scope.checkUserInterest = function(interest){
-            //interest == userInterests[i];
-            var temp = false;
-            if($scope.userInterests.length > 0){
-                for(i=0; i < $scope.userInterests.length; i++) {
-                    if(interest.interest == $scope.userInterests[i]){
+    $scope.loadAllInterests();
 
-                        temp = true;
-                        break;
+  
+    //CUSTOM FILTER FOR USER INTERESTS
+    $scope.checkUserInterest = function(interest){
+            
+            var temp = false;
+        
+                if($scope.showAllInterests){
+                    temp = true;
+                }else{
+
+                if($scope.userInterests.length > 0){
+                    for(i=0; i < $scope.userInterests.length; i++) {
+                        if(interest.interest == $scope.userInterests[i]){
+
+                            temp = true;
+                            break;
+                        }
                     }
+                }else{
+                    temp = true;
                 }
-            }else{
-                temp = true;
             }
         return temp;        
     };
+    
+ 
+    
 });
