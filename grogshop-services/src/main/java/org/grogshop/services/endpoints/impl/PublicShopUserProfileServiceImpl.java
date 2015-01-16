@@ -25,7 +25,7 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import org.apache.commons.io.IOUtils;
-import org.grogshop.services.api.ProfileService;
+import org.grogshop.services.api.ProfilesService;
 import org.grogshop.services.endpoints.api.PublicShopUserProfileService;
 import org.grogshop.services.exceptions.ServiceException;
 
@@ -37,7 +37,7 @@ import org.grogshop.services.exceptions.ServiceException;
 public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileService {
 
     @Inject
-    private ProfileService profileService;
+    private ProfilesService profileService;
 
     private final static Logger log = Logger.getLogger(PublicShopUserProfileServiceImpl.class.getName());
 

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
-import org.grogshop.services.api.ClubMembershipsService;
+import org.grogshop.services.api.MembershipsService;
 import org.grogshop.services.endpoints.api.ShopClubMembershipsService;
 import org.grogshop.services.exceptions.ServiceException;
 
@@ -24,7 +24,7 @@ import org.grogshop.services.exceptions.ServiceException;
 public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsService {
 
     @Inject
-    private ClubMembershipsService membershipsService;
+    private MembershipsService membershipsService;
 
     @Override
     public Response get(@NotNull @PathParam("id") Long user_id) throws ServiceException {

@@ -17,7 +17,7 @@ import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import org.grogshop.services.api.ClubMembershipsService;
+import org.grogshop.services.api.MembershipsService;
 import org.grogshop.services.exceptions.ServiceException;
 
 /**
@@ -25,12 +25,12 @@ import org.grogshop.services.exceptions.ServiceException;
  * @author grogdj
  */
 @Singleton
-public class ClubMembershipsServiceImpl implements ClubMembershipsService {
+public class MembershipsServiceImpl implements MembershipsService {
 
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
 
-    private final static Logger log = Logger.getLogger(ClubMembershipsServiceImpl.class.getName());
+    private final static Logger log = Logger.getLogger(MembershipsServiceImpl.class.getName());
 
     @PostConstruct
     private void init() {

@@ -7,6 +7,7 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Interest;
 import com.grogdj.grogshop.core.model.Profile;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,6 +24,7 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonReader;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
@@ -32,7 +34,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.InterestsService;
-import org.grogshop.services.api.ProfileService;
+import org.grogshop.services.api.ProfilesService;
 import org.grogshop.services.endpoints.api.ShopUserProfileService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
@@ -46,15 +48,14 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     @Inject
-    private ProfileService profileService;
-    
+    private ProfilesService profileService;
+
     @Inject
     private InterestsService interestService;
 
     private final static Logger log = Logger.getLogger(ShopUserProfileServiceImpl.class.getName());
 
     public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
-    
 
     public ShopUserProfileServiceImpl() {
 
@@ -114,17 +115,25 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     public Response setInterests(@NotNull @PathParam("user_id") Long user_id, @FormParam("interests") String interests) throws ServiceException {
         log.info("Storing from the database: (" + user_id + ") " + interests);
-        if(interests != null){
-            String[] split = interests.split(",");
-            List<Interest> interestList = new ArrayList<Interest>(split.length);
-            for(String s : split){
-                Interest i = interestService.get(s);
-                interestList.add(i);
-                        
+        if (interests != null) {
+            JsonReader reader = Json.createReader(new ByteArrayInputStream(interests.getBytes()));
+            JsonArray array = reader.readArray();
+            reader.close();
+
+            List<Interest> interestsList = new ArrayList<Interest>(array.size());
+
+            if (array != null) {
+
+                for (int i = 0; i < array.size(); i++) {
+                    log.info("Interest[" + i + "]: " + array.getJsonObject(i).getString("name"));
+                    interestsList.add(interestService.get(array.getJsonObject(i).getString("name")));
+                }
+
             }
-            profileService.setInterests(user_id, interestList);
+
+            profileService.setInterests(user_id, interestsList);
         }
-        
+
         return Response.ok().build();
     }
 
@@ -153,13 +162,12 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
         }
         return Response.ok().build();
     }
-    
+
     @Override
     public Response removeAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException {
         profileService.removeAvatar(user_id);
         return Response.ok().build();
     }
-    
 
     @Override
     public Response getAvatar(@NotNull @PathParam("id") Long user_id) throws ServiceException {
@@ -173,8 +181,6 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
             }
         }).build();
     }
-
-   
 
     /**
      * Extract filename from HTTP heaeders.

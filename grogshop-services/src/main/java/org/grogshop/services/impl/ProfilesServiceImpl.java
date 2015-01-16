@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.grogshop.services.api.ProfileService;
+import org.grogshop.services.api.ProfilesService;
 import org.grogshop.services.exceptions.ServiceException;
 
 /**
@@ -21,12 +21,12 @@ import org.grogshop.services.exceptions.ServiceException;
  * @author salaboy
  */
 @Singleton
-public class ProfileServiceImpl implements ProfileService {
+public class ProfilesServiceImpl implements ProfilesService {
 
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
 
-    private final static Logger log = Logger.getLogger(ProfileServiceImpl.class.getName());
+    private final static Logger log = Logger.getLogger(ProfilesServiceImpl.class.getName());
 
     @Override
     public boolean exist(Long user_id) throws ServiceException {

@@ -12,7 +12,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author salaboy
  */
-public interface UserService {
+public interface UsersService {
 
     public Long newUser(User user) throws ServiceException;
 

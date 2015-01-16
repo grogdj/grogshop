@@ -18,8 +18,8 @@ import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
-import org.grogshop.services.api.ProfileService;
-import org.grogshop.services.api.UserService;
+import org.grogshop.services.api.ProfilesService;
+import org.grogshop.services.api.UsersService;
 import org.grogshop.services.endpoints.api.ShopAuthenticationService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.grogshop.services.filters.auth.GrogAuthenticator;
@@ -35,10 +35,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class ShopAuthenticationServiceImpl implements ShopAuthenticationService {
 
     @Inject
-    UserService userService;
+    UsersService userService;
     
     @Inject
-    ProfileService profileService;
+    ProfilesService profileService;
 
     @Inject
     GrogAuthenticator authenticator;

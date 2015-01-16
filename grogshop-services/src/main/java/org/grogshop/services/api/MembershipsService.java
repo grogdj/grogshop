@@ -12,7 +12,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author grogdj
  */
-public interface ClubMembershipsService {
+public interface MembershipsService {
     
     void createMembership(Long club_id, Long user_id) throws ServiceException;
     

@@ -616,7 +616,7 @@ tags-input .autocomplete  {
 	background-color: #000;
 }
 
-.interest .tagName {
+.interest .name {
 	position: absolute;
 	width: 100%;
 	bottom: 12px;
@@ -629,12 +629,12 @@ tags-input .autocomplete  {
 	display: none;
 }
 
-.interest.checked .tagName {
+.interest.checked .name {
 		display: block;
 
 	
 }
-.interest .tagName span {
+.interest .name span {
 	background-color: rgba(0,0,0,.8);
 	padding: 3px 10px; 
 	border-radius: 6px;

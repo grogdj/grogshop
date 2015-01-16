@@ -40,7 +40,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
 
             $scope.interests = data;
             $scope.initImages();
-            $scope.loadUserTags($scope.user_id, $scope.email, $scope.auth_token);
+            $scope.loadUserInterests($scope.user_id, $scope.email, $scope.auth_token);
 
         }).error(function (data) {
             console.log("Error: " + data);
@@ -49,7 +49,7 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
 
     };
 
-     $scope.loadUserTags = function (user_id, email, auth_token) {
+     $scope.loadUserInterests = function (user_id, email, auth_token) {
         console.log("creating profile for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
 
         $http({
@@ -60,9 +60,9 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
             data: {user_id: user_id}
         }).success(function (data) {
             //$rootScope.$broadcast("quickNotification", "Users Tags loaded!");
-            console.log("User interests: "+data);
-            $scope.selectedTagsName = data;
-
+            
+            $scope.selectedInterests = data;
+            console.log("User interests: "+$scope.selectedInterests);
         }).error(function (data) {
             console.log("Error: " + data);
             $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
@@ -72,13 +72,13 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
     
     $scope.updateInterests = function (user_id, email, auth_token) {
         console.log("updating interests for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
-        console.log("selected tags: "+$scope.selectedTagsName);
+        console.log("selected interests: "+$scope.selectedInterests);
         $http({
             method: 'POST',
             url: 'rest/users/'+user_id+"/interests/update",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + email, auth_token: auth_token},
             transformRequest: transformRequestToForm,
-            data: { interests: $scope.selectedTagsName.toString()}
+            data: { interests: JSON.stringify($scope.selectedInterests)}
         }).success(function (data) {
             //$rootScope.$broadcast("quickNotification", "Interest updated !");
             $rootScope.$broadcast("goTo", "/settings");
@@ -116,17 +116,20 @@ app.controller('firstLoginController', function ($rootScope, $http, $scope, $coo
     });
 
     //CLICK CHECK
-    $scope.selectedTagsName = [];
-    $scope.toogleCheck = function (valueName) {
-        if ($scope.selectedTagsName.indexOf(valueName) > -1) {
-            $scope.selectedTagsName.splice($scope.selectedTagsName.indexOf(valueName), 1);
+    $scope.selectedInterests = [];
+    $scope.toggleCheck = function (value) {
+        
+        if ($scope.selectedInterests.map(function(e) { return e.name; }).indexOf(value.name) > -1) {
+            $scope.selectedInterests.splice($scope.selectedInterests.map(function(e) { return e.name; }).indexOf(value.name), 1);
         } else {
-            $scope.selectedTagsName.push(valueName);
+            $scope.selectedInterests.push(value);
         }
-        ;
-        console.log($scope.selectedTagsName);
+        
+        console.log($scope.selectedInterests);
     }
 
-
+    $scope.isChecked = function (value) {
+            return $scope.selectedInterests.map(function(e) { return e.name; }).indexOf(value.name) > -1;
+    };
 
 });

@@ -9,14 +9,11 @@ import com.grogdj.grogshop.core.model.ServiceKey;
 import com.grogdj.grogshop.core.model.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
-import org.grogshop.services.api.UserService;
+import org.grogshop.services.api.UsersService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.grogshop.services.util.GrogUtil;
 
@@ -25,34 +22,18 @@ import org.grogshop.services.util.GrogUtil;
  * @author grogdj
  */
 @Singleton
-public class UserServiceImpl implements UserService {
+public class UsersServiceImpl implements UsersService {
 
     @PersistenceContext(unitName = "primary")
     private EntityManager em;
 
-    @Resource
-    UserTransaction ut;
 
-    private final static Logger log = Logger.getLogger(UserServiceImpl.class.getName());
+    private final static Logger log = Logger.getLogger(UsersServiceImpl.class.getName());
 
-    public UserServiceImpl() {
+    public UsersServiceImpl() {
     }
 
-    @PostConstruct
-    private void init() {
-
-        try {
-            ut.begin();
-            Long newUser = newUser(new User("salaboy@gmail.com", "asdasd"));
-            Long newUser1 = newUser(new User("eze@asd.asd", "123123"));
-            ut.commit();
-            log.info("New User Created with ID: "+newUser);
-            log.info("New User Created with ID: "+newUser1);
-        } catch (Exception ex) {
-            Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
+   
 
     @Override
     public Long newUser(User user) throws ServiceException {

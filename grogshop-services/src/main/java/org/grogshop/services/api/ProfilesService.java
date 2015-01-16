@@ -14,7 +14,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author salaboy
  */
-public interface ProfileService {
+public interface ProfilesService {
 
     boolean exist(Long user_id) throws ServiceException;
     
