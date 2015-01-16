@@ -76,6 +76,13 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
             interests.add(interestsService.get("cooking"));
             interests.add(interestsService.get("antiques"));
             profilesService.setInterests(grogdjId, interests);
+            
+            profilesService.create(ezeId);
+            interests = new ArrayList<Interest>();
+            interests.add(interestsService.get("cooking"));
+            interests.add(interestsService.get("antiques"));
+            interests.add(interestsService.get("infusions"));
+            profilesService.setInterests(ezeId, interests);
 
             List<String> tags = new ArrayList<String>();
             tags.add("food");
@@ -112,6 +119,16 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
             tags.add("fashion");
             tags.add("furniture");
             Long antiquesId = clubsService.newClub("Antiques", "more than 100 year old items", "antiques", tags, ezeId, "antiques.jpg");
+            tags = new ArrayList<String>();
+            tags.add("old");
+            tags.add("fashion");
+            tags.add("furniture");
+            Long antiques2Id = clubsService.newClub("Old Stuff", "more than 100 year old items", "antiques", tags, ezeId, "antiques.jpg");
+            tags = new ArrayList<String>();
+            tags.add("old");
+            tags.add("cars");
+            tags.add("classics");
+            Long oldCars2Id = clubsService.newClub("antiques", "more than 100 year old items", "old cars", tags, ezeId, "oldcars.jpg");
 
             membershipsService.createMembership(cookingId, grogdjId);
             membershipsService.createMembership(antiquesId, grogdjId);
