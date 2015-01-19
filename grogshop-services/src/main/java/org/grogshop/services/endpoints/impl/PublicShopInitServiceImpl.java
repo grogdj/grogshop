@@ -50,93 +50,97 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
         try {
             Long grogdjId = usersService.newUser(new User("grogdj@gmail.com", "asdasd"));
             Long ezeId = usersService.newUser(new User("eze@asd.asd", "123123"));
-            interestsService.newInterest("cooking", "cooking.jpg");
+
+            interestsService.newInterest("food & drink", "foodAndDrink.jpg");
             interestsService.newInterest("music", "music.jpg");
-            interestsService.newInterest("art", "art.jpg");
-            interestsService.newInterest("science", "science.jpg");
-            interestsService.newInterest("sports", "sports.jpg");
-            interestsService.newInterest("cars", "cars.jpg");
-            interestsService.newInterest("design", "design.jpg");
-            interestsService.newInterest("health", "health.jpg");
-            interestsService.newInterest("antiques", "antiques.jpg");
-            interestsService.newInterest("clothes", "clothes.jpg");
-            interestsService.newInterest("astronomy", "astrology.jpg");
-            interestsService.newInterest("gardening", "gardening.jpg");
-            interestsService.newInterest("infusions", "infusions.jpg");
-            interestsService.newInterest("old cars", "oldcars.jpg");
-            interestsService.newInterest("pets", "pets.jpg");
+            interestsService.newInterest("film", "film.jpg");
+            interestsService.newInterest("fashion", "fashion.jpg");
             interestsService.newInterest("photography", "photography.jpg");
-            interestsService.newInterest("radio", "radio.jpg");
-            interestsService.newInterest("sailing", "sailing.jpg");
-            interestsService.newInterest("video games", "videogames.jpg");
-            interestsService.newInterest("writing", "writing.jpg");
+            interestsService.newInterest("literature", "literature.jpg");
+            interestsService.newInterest("animals & nature", "animaslAndNature.jpg");
+            interestsService.newInterest("tech & gadgets", "techAndGadgets.jpg");
+            interestsService.newInterest("antique", "antique.jpg");
+            interestsService.newInterest("extreme", "extreme.jpg");
+            interestsService.newInterest("motors", "motors.jpg");
+            interestsService.newInterest("dating", "dating.jpg");
+            interestsService.newInterest("home & garden", "homeAndGarden.jpg");
+            interestsService.newInterest("sports", "sports.jpg");
+            interestsService.newInterest("travel", "travel.jpg");
+            interestsService.newInterest("kids", "kids.jpg");
+            interestsService.newInterest("baby", "baby.jpg");
+            interestsService.newInterest("art & design", "artAndDesign.jpg");
+            interestsService.newInterest("business", "business.jpg");
+            interestsService.newInterest("wedding", "wedding.jpg");
+            interestsService.newInterest("hot now", "hotNow.jpg");
+            interestsService.newInterest("community", "community.jpg");
+            interestsService.newInterest("gaming", "gaming.jpg");
+            interestsService.newInterest("health & lifestyle", "healthAndLifestyle.jpg");
+
 
             profilesService.create(grogdjId);
             List<Interest> interests = new ArrayList<Interest>();
-            interests.add(interestsService.get("cooking"));
-            interests.add(interestsService.get("antiques"));
+            interests.add(interestsService.get("food & drink"));
+            interests.add(interestsService.get("antique"));
             profilesService.setInterests(grogdjId, interests);
-            
+
             profilesService.create(ezeId);
             interests = new ArrayList<Interest>();
-            interests.add(interestsService.get("cooking"));
-            interests.add(interestsService.get("antiques"));
-            interests.add(interestsService.get("infusions"));
+            interests.add(interestsService.get("food & drink"));
+            interests.add(interestsService.get("antique"));
+            interests.add(interestsService.get("music"));
             profilesService.setInterests(ezeId, interests);
 
-            List<String> tags = new ArrayList<String>();
-            tags.add("food");
-            tags.add("fun");
-            tags.add("healty");
-            Long cookingId = clubsService.newClub("cooking club", "this is a new cooking club", "cooking", tags, grogdjId, "cooking.jpg");
-            tags = new ArrayList<String>();
-            tags.add("stars");
-            tags.add("galaxy");
-            tags.add("apollo");
-            Long astronomyId = clubsService.newClub("astronomy for everyone", "astronomy club for everybody", "astronomy", tags, grogdjId, "astrology.jpg");
-            tags = new ArrayList<String>();
-            tags.add("old");
-            tags.add("classic");
-            tags.add("cars");
-            Long oldCarsId = clubsService.newClub("My good old cars", "about classic cars and stuff", "old cars", tags, grogdjId, "oldcars.jpg");
-            tags = new ArrayList<String>();
-            tags.add("puppies");
-            tags.add("dogs");
-            tags.add("cats");
-            Long petsId = clubsService.newClub("My small pets", "all pets allowed", "pets", tags, grogdjId, "pets.jpg");
-            tags = new ArrayList<String>();
-            tags.add("arcade");
-            tags.add("play");
-            tags.add("games");
-            Long videogamesId = clubsService.newClub("Pacman & cia", "for all the gamers", "video games", tags, ezeId, "videogames.jpg");
-            tags = new ArrayList<String>();
-            tags.add("graphic");
-            tags.add("visual");
-            tags.add("design");
-            Long designId = clubsService.newClub("Designers United", "let the style be with you", "design", tags, ezeId, "design.jpg");
-            tags = new ArrayList<String>();
-            tags.add("old");
-            tags.add("fashion");
-            tags.add("furniture");
-            Long antiquesId = clubsService.newClub("Antiques", "more than 100 year old items", "antiques", tags, ezeId, "antiques.jpg");
-            tags = new ArrayList<String>();
-            tags.add("old");
-            tags.add("fashion");
-            tags.add("furniture");
-            Long antiques2Id = clubsService.newClub("Old Stuff", "more than 100 year old items", "antiques", tags, ezeId, "antiques.jpg");
-            tags = new ArrayList<String>();
-            tags.add("old");
-            tags.add("cars");
-            tags.add("classics");
-            Long oldCars2Id = clubsService.newClub("antiques", "more than 100 year old items", "old cars", tags, ezeId, "oldcars.jpg");
+            List<Long> foodAndDrinkClubsIds = initializeFoodAndDrinkClubs("food & drink", grogdjId, "foodAndDrink.jpg");
 
-            membershipsService.createMembership(cookingId, grogdjId);
-            membershipsService.createMembership(antiquesId, grogdjId);
+//            membershipsService.createMembership(cookingId, grogdjId);
+//            membershipsService.createMembership(antiquesId, grogdjId);
 
         } catch (Exception ex) {
             Logger.getLogger(InterestsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Response.ok().build();
+    }
+
+    private List<Long> initializeFoodAndDrinkClubs(String clubInterest, Long userId, String image) throws ServiceException {
+        List<Long> clubsIds = new ArrayList<Long>();
+        List<String> tags = new ArrayList<String>();
+        tags.add("food");
+        tags.add("fun");
+        tags.add("healty");
+        Long recipesId = clubsService.newClub("recipes", "this is a new cooking club", clubInterest, tags, userId, image);
+        clubsIds.add(recipesId);
+        tags = new ArrayList<String>();
+        tags.add("stars");
+        tags.add("galaxy");
+        tags.add("apollo");
+        Long wineId = clubsService.newClub("wine", "wine club description", clubInterest, tags, userId, image);
+        clubsIds.add(wineId);
+        tags = new ArrayList<String>();
+        tags.add("old");
+        tags.add("classic");
+        tags.add("cars");
+        Long healthyId = clubsService.newClub("healthy", "healthy food club description", clubInterest, tags, userId, image);
+        clubsIds.add(healthyId);
+        tags = new ArrayList<String>();
+        tags.add("puppies");
+        tags.add("dogs");
+        tags.add("cats");
+        Long restaurantsId = clubsService.newClub("restaurants", "all pets allowed", clubInterest, tags, userId, image);
+        clubsIds.add(restaurantsId);
+        tags = new ArrayList<String>();
+        tags.add("arcade");
+        tags.add("play");
+        tags.add("games");
+        Long pubsId = clubsService.newClub("pubs", "for all the gamers", "video games", tags, userId, image);
+        clubsIds.add(pubsId);
+        tags = new ArrayList<String>();
+        tags.add("graphic");
+        tags.add("visual");
+        tags.add("design");
+        
+        return clubsIds;
+        
+        
     }
 
 }
