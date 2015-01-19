@@ -37,14 +37,14 @@
 	            		<div class="panel-heading clearfix">
 	            			<h5 class="pull-left">Top Clubs</h5>
                           
-                            <div class="col-md-3 pull-right">
+                            <div ng-cloak class="col-md-3 pull-right">
                                 
-	            			 <select ng-show="!auth_token || showAllInterests"  ng-options="opt.name as opt.name for opt in allInterests" name="interest-select" id="interest-select" ng-model="selectInterest.interest" class=" form-control">        
+	            			 <select ng-cloak ng-show="!auth_token || showAllInterests"  ng-options="opt.name as opt.name for opt in allInterests" name="interest-select" id="interest-select" ng-model="selectInterest.interest" class=" form-control">        
 	            			     <option value="">All </option>
 	            			    
 	            			 </select>
                              
-                            <select ng-show="auth_token && !showAllInterests"  ng-options="opt.name as opt.name for opt in interests" name="interest-select" id="interest-select" ng-model="selectInterest.interest" class=" form-control">        
+                            <select ng-cloak ng-show="auth_token && !showAllInterests"  ng-options="opt.name as opt.name for opt in interests" name="interest-select" id="interest-select" ng-model="selectInterest.interest" class=" form-control">        
 	            			     <option value="">All my Interests </option>
 	            			    
 	            			 </select>

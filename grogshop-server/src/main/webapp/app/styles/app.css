@@ -1,5 +1,14 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
+/* 
+  Allow angular.js to be loaded in body, hiding cloaked elements until 
+  templates compile.  The !important is important given that there may be 
+  other selectors that are more specific or come later and might alter display.  
+ */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 html, body {
 	height: 100%;
 	width: 100%;
@@ -309,7 +318,7 @@ section {
 	overflow: hidden; 
 	border-radius: 18px;
 	display: none;
-	background-image: url(../img/delete.png);
+	background-image: url(../../static/img/delete.png);
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -487,7 +496,7 @@ growl-notification .close-link span {
 	width: 20px;
 	height: 20px;
 	background-color: #679852;
-	background-image: url(../img/close-notification.png);
+	background-image: url(../../static/img/close-notification.png);
 	background-repeat: no-repeat;
 	background-position: center;
 	display: inline-block;
@@ -675,7 +684,7 @@ tags-input .autocomplete  {
 	margin-left: -40px;
 	margin-top: -40px;
 	display: none;
-	background-image: url(../img/interest-action.png);
+	background-image: url(../../static/img/interest-action.png);
 	background-repeat: no-repeat;
 	background-position: top left;
 }

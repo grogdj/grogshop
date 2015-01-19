@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="row">
-        <form novalidate name="settingsForm" ng-submit="save(settingsForm.$valid, picFile)" ng-init="">
+        <form novalidate name="settingsForm" ng-init="">
             <div class="col-xs-12 col-md-4 text-center profile-image clearfix">
 
                 <img ng-show="picFile[0].dataUrl == null" class="img-thumbnail img-responsive" alt="Profile Image {{email}}"  ng-src="{{settings.avatarUrl}}"/>
@@ -64,7 +64,7 @@
                                     <div class="col-xs-12">
                                         <div class="form-group text-right">
                                             <a  href class="btn btn-default" ng-click="cancel()">Cancel</a>
-                                            <button type="submit"  ng-disabled="!settingsForm.$dirty" class="btn btn-primary">Save Changes</button>
+                                            <button type="submit"  ng-disabled="!settingsForm.$dirty" ng-click="save(settingsForm.$valid, picFile)" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>
