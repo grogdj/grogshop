@@ -57,7 +57,7 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
             interestsService.newInterest("fashion", "fashion.jpg");
             interestsService.newInterest("photography", "photography.jpg");
             interestsService.newInterest("literature", "literature.jpg");
-            interestsService.newInterest("animals & nature", "animaslAndNature.jpg");
+            interestsService.newInterest("animals & nature", "animalsAndNature.jpg");
             interestsService.newInterest("tech & gadgets", "techAndGadgets.jpg");
             interestsService.newInterest("antique", "antique.jpg");
             interestsService.newInterest("extreme", "extreme.jpg");
