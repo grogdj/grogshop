@@ -1,5 +1,5 @@
 (function (){
-    var userInterestsController = function ($rootScope, $scope, $cookieStore, $users) {
+    var userInterestsController = function ($rootScope, $scope, $cookieStore, $users, $interests) {
         //GRID
         $scope.imagePath = "static/img/public-images/"
         $scope.interests = [];
@@ -29,6 +29,20 @@
             });
 
         };
+        
+        $scope.loadAllInterests = function () {
+            console.log("loading all interests");
+
+            $interests.loadAll().success(function (data) {
+                //$rootScope.$broadcast("quickNotification", "User Interest loaded!");
+                $scope.interests = data;
+                $scope.initImages();
+            }).error(function (data) {
+                console.log("Error: " + data);
+                $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+            });
+
+        };
 
         $scope.updateInterests = function () {
             //console.log("updating interests for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
@@ -46,7 +60,8 @@
         if(firstLogin){
             $scope.newProfile();
         }
-       
+        $scope.loadUserInterests();
+        $scope.loadAllInterests();
 
 
         $scope.initImages = function(){
@@ -84,7 +99,7 @@
         };
     };
     
-    userInterestsController.$inject = ['$rootScope','$scope','$cookieStore', '$users'];
+    userInterestsController.$inject = ['$rootScope','$scope','$cookieStore', '$users', '$interests'];
     angular.module( "clubhouse").controller("userInterestsController", userInterestsController);
 
 }());

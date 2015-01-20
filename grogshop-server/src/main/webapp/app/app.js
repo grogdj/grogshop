@@ -27,8 +27,8 @@
             })
 
             .when('/firstlogin', {
-                templateUrl: 'app/views/firstlogin.html',
-                controller: 'firstLoginController'
+                templateUrl: 'app/views/userinterests.html',
+                controller: 'userInterestsController'
             })
 
             .when('/club/preview/:club_id', {
