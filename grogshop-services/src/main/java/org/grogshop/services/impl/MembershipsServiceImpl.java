@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.inject.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -24,7 +24,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author grogdj
  */
-@Singleton
+@ApplicationScoped
 public class MembershipsServiceImpl implements MembershipsService {
 
     @PersistenceContext(unitName = "primary")

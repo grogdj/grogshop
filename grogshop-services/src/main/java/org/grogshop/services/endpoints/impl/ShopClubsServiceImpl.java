@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -24,7 +25,7 @@ import org.grogshop.services.endpoints.api.ShopClubsService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Stateless
+@ApplicationScoped
 public class ShopClubsServiceImpl implements ShopClubsService {
 
     @Inject

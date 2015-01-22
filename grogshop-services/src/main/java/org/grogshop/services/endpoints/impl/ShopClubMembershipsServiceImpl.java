@@ -6,7 +6,7 @@
 package org.grogshop.services.endpoints.impl;
 
 import java.util.List;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -20,7 +20,7 @@ import org.grogshop.services.endpoints.api.ShopClubMembershipsService;
 import org.grogshop.services.exceptions.ServiceException;
 
 
-@Stateless
+@ApplicationScoped
 public class ShopClubMembershipsServiceImpl implements ShopClubMembershipsService {
 
     @Inject

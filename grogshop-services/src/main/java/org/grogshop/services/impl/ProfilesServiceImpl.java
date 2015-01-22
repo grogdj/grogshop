@@ -10,7 +10,7 @@ import com.grogdj.grogshop.core.model.Profile;
 import com.grogdj.grogshop.core.model.User;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.inject.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.grogshop.services.api.ProfilesService;
@@ -20,7 +20,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author salaboy
  */
-@Singleton
+@ApplicationScoped
 public class ProfilesServiceImpl implements ProfilesService {
 
     @PersistenceContext(unitName = "primary")

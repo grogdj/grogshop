@@ -9,10 +9,10 @@ import com.grogdj.grogshop.core.model.ServiceKey;
 import com.grogdj.grogshop.core.model.User;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Singleton;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
 import org.grogshop.services.api.UsersService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.grogshop.services.util.GrogUtil;
@@ -21,10 +21,10 @@ import org.grogshop.services.util.GrogUtil;
  *
  * @author grogdj
  */
-@Singleton
+@ApplicationScoped
 public class UsersServiceImpl implements UsersService {
 
-    @PersistenceContext(unitName = "primary")
+    @Inject
     private EntityManager em;
 
 

@@ -9,12 +9,9 @@ import com.grogdj.grogshop.core.model.Interest;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.inject.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
 import org.grogshop.services.api.InterestsService;
 import org.grogshop.services.exceptions.ServiceException;
 
@@ -22,7 +19,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author grogdj
  */
-@Singleton
+@ApplicationScoped
 public class InterestsServiceImpl implements InterestsService {
 
     @PersistenceContext(unitName = "primary")

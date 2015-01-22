@@ -7,7 +7,7 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Interest;
 import java.util.List;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -21,7 +21,7 @@ import org.grogshop.services.endpoints.api.ShopInterestsService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Stateless
+@ApplicationScoped
 public class ShopInterestsServiceImpl implements ShopInterestsService {
 
     @Inject

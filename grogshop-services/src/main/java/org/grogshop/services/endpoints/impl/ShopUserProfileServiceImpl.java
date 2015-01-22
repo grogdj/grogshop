@@ -11,13 +11,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -44,7 +43,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
  *
  * @author grogdj
  */
-@Stateless
+@ApplicationScoped
 public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     @Inject
@@ -55,7 +54,7 @@ public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     private final static Logger log = Logger.getLogger(ShopUserProfileServiceImpl.class.getName());
 
-    public static final String UPLOADED_FILE_PARAMETER_NAME = "file";
+    private final String UPLOADED_FILE_PARAMETER_NAME = "file";
 
     public ShopUserProfileServiceImpl() {
 

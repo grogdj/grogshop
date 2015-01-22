@@ -7,7 +7,7 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.User;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -31,7 +31,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @author grogdj
  */
-@Stateless
+@ApplicationScoped
 public class ShopAuthenticationServiceImpl implements ShopAuthenticationService {
 
     @Inject
@@ -108,4 +108,29 @@ public class ShopAuthenticationServiceImpl implements ShopAuthenticationService 
 
     }
 
+    public UsersService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UsersService userService) {
+        this.userService = userService;
+    }
+
+    public ProfilesService getProfileService() {
+        return profileService;
+    }
+
+    public void setProfileService(ProfilesService profileService) {
+        this.profileService = profileService;
+    }
+
+    public GrogAuthenticator getAuthenticator() {
+        return authenticator;
+    }
+
+    public void setAuthenticator(GrogAuthenticator authenticator) {
+        this.authenticator = authenticator;
+    }
+
+    
 }

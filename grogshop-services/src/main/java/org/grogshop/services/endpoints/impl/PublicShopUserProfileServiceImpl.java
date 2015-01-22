@@ -7,24 +7,21 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Profile;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.servlet.ServletContext;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ProfilesService;
 import org.grogshop.services.endpoints.api.PublicShopUserProfileService;
 import org.grogshop.services.exceptions.ServiceException;
@@ -33,7 +30,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author grogdj
  */
-@Stateless
+@ApplicationScoped
 public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileService {
 
     @Inject

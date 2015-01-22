@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Singleton;
+import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.EncodeException;
 import org.grogshop.services.api.NotificationsService;
 import javax.websocket.Session;
@@ -19,7 +19,7 @@ import javax.websocket.Session;
  *
  * @author grogdj
  */
-@Singleton
+@ApplicationScoped
 public class NotificationServiceImpl implements NotificationsService {
 
     private Set<Session> activeSessions;

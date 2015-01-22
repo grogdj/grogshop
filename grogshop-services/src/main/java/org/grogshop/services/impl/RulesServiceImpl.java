@@ -7,8 +7,8 @@ package org.grogshop.services.impl;
 
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import org.grogshop.services.api.RulesService;
 import org.grogshop.services.api.NotificationsService;
 import org.kie.api.KieBase;
@@ -24,7 +24,7 @@ import org.kie.api.runtime.rule.FactHandle;
  *
  * @author grogdj
  */
-@Singleton
+@ApplicationScoped
 public class RulesServiceImpl implements RulesService {
 
     @Inject

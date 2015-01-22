@@ -8,17 +8,13 @@ package org.grogshop.services.impl;
 import com.grogdj.grogshop.core.model.Club;
 import com.grogdj.grogshop.core.model.Interest;
 import com.grogdj.grogshop.core.model.User;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
 import org.grogshop.services.api.ClubsService;
 import org.grogshop.services.api.InterestsService;
 import org.grogshop.services.exceptions.ServiceException;
@@ -27,7 +23,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author grogdj
  */
-@Singleton
+@ApplicationScoped
 public class ClubsServiceImpl implements ClubsService {
 
     @PersistenceContext(unitName = "primary")

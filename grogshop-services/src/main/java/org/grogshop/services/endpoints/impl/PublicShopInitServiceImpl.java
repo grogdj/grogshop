@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.api.MembershipsService;
@@ -25,7 +25,7 @@ import org.grogshop.services.exceptions.ServiceException;
 import org.grogshop.services.impl.InterestsServiceImpl;
 
 //http://localhost:8080/grogshop-server/rest/public/app/init
-@Stateless
+@ApplicationScoped
 public class PublicShopInitServiceImpl implements PublicShopInitService {
 
     @Inject
