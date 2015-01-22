@@ -5,12 +5,13 @@
  */
 package org.grogshop.services.tests;
 
+import com.grogdj.grogshop.core.model.User;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Response;
-import org.grogshop.services.endpoints.api.ShopAuthenticationService;
+import org.grogshop.services.api.UsersService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -57,7 +58,7 @@ public class SearchServiceTest {
     }
     
     @Inject
-    private ShopAuthenticationService usersService;
+    private UsersService usersService;
   
 
     @BeforeClass
@@ -80,8 +81,8 @@ public class SearchServiceTest {
     public void hello() throws ServiceException {
         
         
-        Response registerUser = usersService.registerUser("grogdj@gmail.com", "asdasd");
-        Assert.assertNotNull(registerUser);
+        Long newUser = usersService.newUser(new User("grogdj@gmail.com", "asdasd"));
+//        Assert.assertNotNull(newUser);
         
 
     }

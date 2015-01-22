@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -26,7 +26,7 @@ import org.grogshop.services.api.ItemsService;
 import org.grogshop.services.endpoints.api.PublicShopItemsService;
 import org.grogshop.services.exceptions.ServiceException;
 
-@ApplicationScoped
+@Stateless
 public class PublicShopItemsServiceImpl implements PublicShopItemsService {
 
     @Inject

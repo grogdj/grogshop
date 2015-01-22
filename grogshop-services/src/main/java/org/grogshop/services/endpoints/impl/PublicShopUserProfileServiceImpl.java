@@ -12,7 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.ApplicationScoped;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -30,7 +30,7 @@ import org.grogshop.services.exceptions.ServiceException;
  *
  * @author grogdj
  */
-@ApplicationScoped
+@Stateless
 public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileService {
 
     @Inject

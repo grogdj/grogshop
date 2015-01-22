@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -43,7 +44,7 @@ import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
  *
  * @author grogdj
  */
-@ApplicationScoped
+@Stateless
 public class ShopUserProfileServiceImpl implements ShopUserProfileService {
 
     @Inject

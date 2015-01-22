@@ -21,7 +21,6 @@
         data source, this example data source is just for devleopment and testing! -->
         <!-- The datasource is deployed as WEB-INF/hibernate4-quickstart-ds.xml, you
         can find it in the source at src/main/webapp/WEB-INF/hibernate4-quickstart-ds.xml -->
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/datasources/QuickstartDS</jta-data-source>
     
         <mapping-file>META-INF/users.xml</mapping-file>
