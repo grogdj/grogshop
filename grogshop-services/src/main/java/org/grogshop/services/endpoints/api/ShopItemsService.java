@@ -40,7 +40,7 @@ public interface ShopItemsService extends Serializable {
             @NotNull @NotEmpty @FormParam("name") String name,
             @NotNull @NotEmpty @FormParam("description") String description,
             @NotNull @NotEmpty @FormParam("tags") String tags,
-            @NotNull @FormParam("minPrice") String minPrice,
+            @FormParam("minPrice") String minPrice,
             @FormParam("maxPrice") String maxPrice) throws ServiceException;
 
     @GET

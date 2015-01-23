@@ -226,15 +226,17 @@
                 $items.post(itemToSend)
                 .success(function (data) {
                     //$rootScope.$broadcast("quickNotification", "Item Created!");
-                    var newTopic = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newTopic.title, description: $scope.newTopic.description, tags: $scope.newTopic.tags, type: 'TOPIC'};
-                     var topic_id = data;
+                    var newTopic = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, 
+                        user_email: $scope.email, name: $scope.newTopic.title, 
+                        description: $scope.newTopic.description, tags: $scope.newTopic.tags, type: 'TOPIC'};
+                    var topic_id = data;
 
                     console.log("new topic added: "+newTopic);
 
                     
                     
                     console.log('TOPIC created');
-                    $scope.uploading = false;
+
                     $scope.items.push(newTopic);
                     //
                      $('#newTopicModal').modal('hide');

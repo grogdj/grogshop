@@ -119,7 +119,7 @@ public class ShopItemsServiceImpl implements ShopItemsService {
             @NotNull @NotEmpty @FormParam("name") String name,
             @NotNull @NotEmpty @FormParam("description") String description,
             @NotNull @NotEmpty @FormParam("tags") String tags,
-            @NotNull @FormParam("minPrice") String minPrice,
+            @FormParam("minPrice") String minPrice,
             @FormParam("maxPrice") String maxPrice) throws ServiceException {
         
         
@@ -138,7 +138,7 @@ public class ShopItemsServiceImpl implements ShopItemsService {
 
         }
         Long newItem = itemsService.newItem(userId, clubId, type, name, description, interestsList,
-                new BigDecimal(minPrice), (maxPrice == null)?new BigDecimal(0):new BigDecimal(maxPrice));
+                (minPrice == null)?new BigDecimal(0):new BigDecimal(minPrice), (maxPrice == null)?new BigDecimal(0):new BigDecimal(maxPrice));
         return Response.ok(newItem).build();
 
     }
