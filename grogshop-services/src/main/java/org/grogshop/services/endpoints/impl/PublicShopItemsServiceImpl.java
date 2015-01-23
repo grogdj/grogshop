@@ -125,15 +125,19 @@ public class PublicShopItemsServiceImpl implements PublicShopItemsService {
 
     @Override
     public Response getItemImage(@NotNull @PathParam("id") Long item_id) throws ServiceException {
-        final byte[] avatar = itemsService.getItemImage(item_id);
-        return Response.ok().entity(new StreamingOutput() {
-            @Override
-            public void write(OutputStream output)
-                    throws IOException, WebApplicationException {
-                output.write(avatar);
-                output.flush();
-            }
-        }).build();
+        final byte[] itemImage = itemsService.getItemImage(item_id);
+        if(itemImage != null){
+            return Response.ok().entity(new StreamingOutput() {
+                @Override
+                public void write(OutputStream output)
+                        throws IOException, WebApplicationException {
+                    output.write(itemImage);
+                    output.flush();
+                }
+            }).build();
+        }else{
+            return Response.ok().entity("itemImage not found").build();
+        }
     }
 
 }
