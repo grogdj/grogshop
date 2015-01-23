@@ -213,7 +213,55 @@
             $scope.requestPicFile= null;
         }
         
+        ///////////////////////////////////////////////////////////// POST TOPIC
         
+        $scope.postTopic = function (isValid) {
+            $scope.submittedTopic = true;
+            if(isValid && $scope.newTopic.tags.length > 0){
+
+                console.log("adding new topic  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
+
+                var itemToSend = {club_id: $scope.club_id, user_id: $scope.user_id, name: $scope.newTopic.title, description: $scope.newTopic.description, 
+                         tags: JSON.stringify($scope.newTopic.tags), type: 'TOPIC'};
+                $items.post(itemToSend)
+                .success(function (data) {
+                    //$rootScope.$broadcast("quickNotification", "Item Created!");
+                    var newTopic = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newTopic.title, description: $scope.newTopic.description, tags: $scope.newTopic.tags, type: 'TOPIC'};
+                     var topic_id = data;
+
+                    console.log("new topic added: "+newTopic);
+
+                    
+                    
+                    console.log('TOPIC created');
+                    $scope.uploading = false;
+                    $scope.items.push(newTopic);
+                    //
+                     $('#newTopicModal').modal('hide');
+                    $scope.newTopic={};
+                    $scope.newTopicForm.$setPristine();
+                    $scope.submittedTopic = false;
+                    
+
+                }).error(function (data) {
+                    console.log("Error in topic form: " + data);
+                    $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+                });
+            }else{
+
+                $rootScope.$broadcast("quickNotification", "Form not valid: Something went wrong!");
+
+            }
+
+        };
+
+        $scope.resetTopicForm = function() {            
+           $scope.newTopic={};
+            $scope.newTopicForm.$setPristine();
+            $scope.submittedTopic = false;
+        }
+
+      
         ///////////////////////////////////////////////////////////// 
         
 
@@ -257,39 +305,62 @@
 
         $scope.uploadFile = function (item_id, files, newItem) {
             console.log("Files : " + files + "-- event: " + event);
-            var file = files[0];
-            $scope.upload = $items.uploadImage(item_id,file)
-            .progress(function (evt) {
-                $scope.uploadPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                $scope.uploading = true;
-                console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
-            }).success(function (data) {
-                // file is uploaded successfully
-                console.log('file ' + file.name + 'is uploaded successfully. Response: ' + data);
-                $scope.uploading = false;
-                
-                
-                $scope.items.push(newItem);
-                //
-                $('#newItemModal').modal('hide');
-                $scope.newItem={};
-                $scope.itemPicFile= null;
-                $scope.newPostForm.$setPristine();
-                $scope.submitted = false;
-                
-                //
-                $('#newRequestModal').modal('hide');
-                $scope.newRequest={};
-                $scope.requestPicFile= null;
-                $scope.newRequestForm.$setPristine();
-                $scope.submittedRequest = false;
-                
+            if(files != undefined && newItem.type != "TOPIC"){
+                var file = files[0];
+                $scope.upload = $items.uploadImage(item_id,file)
+                .progress(function (evt) {
+                    $scope.uploadPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                    $scope.uploading = true;
+                    console.log('progress: ' + parseInt(100.0 * evt.loaded / evt.total) + '% file :' + evt.config.file.name);
+                }).success(function (data) {
+                    // file is uploaded successfully
+                    console.log('file ' + file.name + 'is uploaded successfully. Response: ' + data);
+                    $scope.uploading = false;
+                    $scope.items.push(newItem);
+                    //
+                    $('#newItemModal').modal('hide');
+                    $scope.newItem={};
+                    $scope.itemPicFile= null;
+                    $scope.newPostForm.$setPristine();
+                    $scope.submitted = false;
+
+                    //
+                    $('#newRequestModal').modal('hide');
+                    $scope.newRequest={};
+                    $scope.requestPicFile= null;
+                    $scope.newRequestForm.$setPristine();
+                    $scope.submittedRequest = false;
 
 
-            }).error(function (data) {
-                console.log('file ' + file.name + ' upload error. Response: ' + data);
 
-            });
+                }).error(function (data) {
+                    console.log('file ' + file.name + ' upload error. Response: ' + data);
+
+                });
+            }else {
+                    console.log('REQUEST with no image');
+                    $scope.uploading = false;
+                    $scope.items.push(newItem);
+                    //
+                   
+            }
+            $('#newItemModal').modal('hide');
+            $scope.newItem={};
+            $scope.itemPicFile= null;
+            $scope.newPostForm.$setPristine();
+            $scope.submitted = false;
+
+            //
+            $('#newRequestModal').modal('hide');
+            $scope.newRequest={};
+            $scope.requestPicFile= null;
+            $scope.newRequestForm.$setPristine();
+            $scope.submittedRequest = false;
+            //
+            $('#newTopicModal').modal('hide');
+            $scope.newTopic={};
+            $scope.newTopicForm.$setPristine();
+            $scope.submittedTopic = false;
 
 
         };
