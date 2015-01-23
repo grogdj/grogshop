@@ -1,5 +1,5 @@
 (function(){
-    var clubController = function ($scope, $routeParams, $rootScope, $location, $upload, $timeout, $clubs, $memberships, $items) {
+    var clubController = function ($scope, $routeParams, $rootScope, $location, $upload, $timeout, $clubs, $memberships, $items, $comments) {
         $scope.imagePath = "static/img/public-images/"
 
         $scope.club_id = $routeParams.club_id;
@@ -139,7 +139,7 @@
                 .success(function (data) {
                     //$rootScope.$broadcast("quickNotification", "Item Created!");
                     var newItem = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newItem.title, description: $scope.newItem.description, 
-                         tags: $scope.newItem.tags, minPrice: $scope.newItem.minPrice, type: 'POST'};
+                         tags: $scope.newItem.tags, minPrice: parseInt($scope.newItem.minPrice), type: 'POST'};
                      var item_id = data;
 
                     console.log("new item added: "+newItem);
@@ -261,6 +261,61 @@
            $scope.newTopic={};
             $scope.newTopicForm.$setPristine();
             $scope.submittedTopic = false;
+        }
+        
+        ///////////////////////////////////////////////////////////// POST COMMENTS
+        $scope.addComment= function(item_id, item_title){
+            $scope.commentCurrentItem = item_id;
+            $scope.commentCurrentTitile = item_title;
+            $scope.newComment={};
+            $scope.newCommentForm.$setPristine();
+            $scope.submittedComment = false;
+             $('#newCommentModal').modal('show');
+        };
+        
+        $scope.postComment = function (isValid) {
+            $scope.submittedComment = true;
+            if(isValid){
+
+                console.log("adding new comment  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
+
+                var commentToSend = {club_id: $scope.club_id, user_id: $scope.user_id, description: $scope.newComment.description, 
+                         item_id: $scope.commentCurrentItem};
+                $comments.post(commentToSend)
+                .success(function (data) {
+                    //$rootScope.$broadcast("quickNotification", "Item Created!");
+                    var newComment = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, 
+                        user_email: $scope.email, description: $scope.newTopic.description, item_id: $scope.commentCurrentItem};
+                    var comment_id = data;
+
+                    console.log("new comment added: "+newComment);
+
+                    console.log('comment created');
+
+                   // $scope.items.push(newTopic);
+                    //
+                     $('#newCommentModal').modal('hide');
+                    $scope.newComment={};
+                    $scope.newCommentForm.$setPristine();
+                    $scope.submittedComment = false;
+                    
+
+                }).error(function (data) {
+                    console.log("Error in comment form: " + data);
+                    $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+                });
+            }else{
+
+                $rootScope.$broadcast("quickNotification", "Form not valid: Something went wrong!");
+
+            }
+
+        };
+
+        $scope.resetCommentForm = function() {            
+           $scope.newComment={};
+            $scope.newCommentForm.$setPristine();
+            $scope.submittedComment = false;
         }
 
       
@@ -392,7 +447,7 @@
         }
     };
     
-    clubController.$inject = ['$scope','$routeParams','$rootScope','$location','$upload','$timeout', '$clubs','$memberships','$items'];
+    clubController.$inject = ['$scope','$routeParams','$rootScope','$location','$upload','$timeout', '$clubs','$memberships','$items','$comments'];
     angular.module( "clubhouse" ).controller( "clubController", clubController);
     
 }());

@@ -6,7 +6,7 @@
 
         $scope.newProfile = function () {
             //console.log("creating profile for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
-            $users.create().success(function (data) {
+            $users.createProfile().success(function (data) {
                 //$rootScope.$broadcast("quickNotification", "Profile created!");
                 $cookieStore.put('firstLogin', false);
             }).error(function (data) {

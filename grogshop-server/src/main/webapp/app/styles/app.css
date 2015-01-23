@@ -771,31 +771,42 @@ tags-input .autocomplete  {
 
 .items-container .item {
     width:  100%;
-    padding: 0 7.5px;
+    padding: 0 2px;
     display: inline-block;
+    margin-bottom: 4px;
 }
 
-.items-container  .item .well {
+.items-container .item .well {
      position:relative;
      display: block;
+    margin-bottom: 0px;
+       border-radius: 0px !important;
+    
+}
+.items-container .item .well p {
+    opacity: .7;
 }
 
-.items-container  .item .well .options {
+.items-container .item .well .options {
     position: absolute;
     bottom: 5px;
     right: 5px;
     display: none;
 }
 
-.items-container  .item .well:hover .options{
+.items-container .item .well:hover .options{
     display: block;
 }
 
-.items-container  .item .price {
+.items-container .item .price {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: -1px;
+    right: 1px;
     z-index: 10;
+}
+
+.items-container  .item .data {
+    font-size: 90%;
 }
 
 .items-container  .item .tags {
@@ -827,7 +838,7 @@ tags-input .autocomplete  {
 }
 
 .items-container .item .item-image {
-    margin: -15px -15px 15px;
+    margin: -18px -18px 9px;
 }
 
 
@@ -850,6 +861,28 @@ tags-input .autocomplete  {
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) { .items-container .item {  width:  25%; } }
 
+
+/* ITEM TYPES */
+
+.items-container  .item.POST .well{
+
+}
+
+.items-container  .item.REQUEST .well{
+    background-color: #EAC1C1;
+    border-color: #CEC0C0;
+    
+}
+
+.items-container  .item.REQUEST .well a.postedBy {
+    color: #D9534F ;
+}
+
+.items-container  .item.TOPIC .well{
+    padding-top: 30px;
+    background-color: #EDEBB2;
+    border-color: #D1CF9B;
+}
 
 
 /* AVATAR */
