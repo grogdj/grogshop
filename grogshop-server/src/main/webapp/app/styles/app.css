@@ -421,6 +421,9 @@ tags-input.ng-invalid.ng-pristine .tags{
     outline-color: #CCC;
 }
 
+.filters-bar {
+    margin: 0px -15px -22px;
+}
 
 /* NOTIFICATIONS */
 .notification-container {

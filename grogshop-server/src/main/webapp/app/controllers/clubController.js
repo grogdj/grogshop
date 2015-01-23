@@ -110,9 +110,7 @@
             maxPrice: 10000
         };
 
-        //
-
-
+        ///////////////////////////////////////////////////////////// POST ITEM
         $scope.postItem = function (isValid, files) {
             $scope.submitted = true;
             if(isValid && $scope.newItem.tags.length > 0 && $scope.itemPicFile != null){
@@ -120,19 +118,17 @@
                 console.log("adding new item  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
 
                 var itemToSend = {club_id: $scope.club_id, user_id: $scope.user_id, name: $scope.newItem.title, description: $scope.newItem.description, 
-                         tags: JSON.stringify($scope.newItem.tags), price: $scope.newItem.price};
+                         tags: JSON.stringify($scope.newItem.tags), minPrice: $scope.newItem.minPrice, type: 'POST'};
                 $items.post(itemToSend)
                 .success(function (data) {
                     //$rootScope.$broadcast("quickNotification", "Item Created!");
                     var newItem = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newItem.title, description: $scope.newItem.description, 
-                         tags: $scope.newItem.tags, price: $scope.newItem.price};
+                         tags: $scope.newItem.tags, price: $scope.newItem.price, type: 'POST'};
                      var item_id = data;
 
                     console.log("new item added: "+newItem);
 
                     $scope.uploadFile(item_id, files,newItem);
-
-
 
                 }).error(function (data) {
                     console.log("Error: " + data);
@@ -156,6 +152,54 @@
         $scope.deletePostImage = function() {
             $scope.itemPicFile= null;
         }
+        
+        ///////////////////////////////////////////////////////////// POST REQUEST
+        
+        $scope.postRequest = function (isValid, files) {
+            $scope.submittedRequest = true;
+            if(isValid && $scope.newItem.tags.length > 0){
+
+                console.log("adding new request  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
+
+                var itemToSend = {club_id: $scope.club_id, user_id: $scope.user_id, name: $scope.newRequest.title, description: $scope.newRequest.description, 
+                         tags: JSON.stringify($scope.newRequest.tags), minPrice: $scope.newRequest.minPrice, maxPrice: $scope.newRequest.maxPrice, type: 'REQUEST'};
+                $items.post(itemToSend)
+                .success(function (data) {
+                    //$rootScope.$broadcast("quickNotification", "Item Created!");
+                    var newRequest = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newRequest.title, description: $scope.newRequest.description, 
+                         tags: $scope.newRequest.tags, minPrice: $scope.newRequest.minPrice, maxPrice: $scope.newRequest.maxPrice, type: 'REQUEST'};
+                     var request_id = data;
+
+                    console.log("new request added: "+newRequest);
+
+                    $scope.uploadFile(request_id, files,newRequest);
+
+                }).error(function (data) {
+                    console.log("Error: " + data);
+                    $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+                });
+            }else{
+
+                $rootScope.$broadcast("quickNotification", "Form not valid: Something went wrong!");
+
+            }
+
+        };
+
+        $scope.resetRequestForm = function() {            
+            $scope.newRequest={};
+            $scope.requestPicFile= null;
+            $scope.newRequestForm.$setPristine();
+            $scope.submittedRequest = false;
+        }
+
+        $scope.deleteRequestImage = function() {
+            $scope.requestPicFile= null;
+        }
+        
+        
+        ///////////////////////////////////////////////////////////// 
+        
 
         $scope.removeItem = function (item) {
 
@@ -174,6 +218,7 @@
 
 
         };
+        
 
         $scope.generateThumb = function(file) {
             console.log(file);
@@ -185,7 +230,7 @@
                         fileReader.readAsDataURL(file);
                         fileReader.onload = function(e) {
                             $timeout(function() {
-                                                        console.log("file oh yeah 2: "+e.target.result);
+                                 console.log("file oh yeah 2: "+e.target.result);
                                 file.dataUrl = e.target.result;
                             });
                         }
@@ -213,6 +258,11 @@
                 $scope.itemPicFile= null;
                 $scope.newPostForm.$setPristine();
                 $scope.submitted = false;
+                //
+                $scope.newRequest={};
+                $scope.requestPicFile= null;
+                $scope.newRequestForm.$setPristine();
+                $scope.submittedRequest = false;
 
 
             }).error(function (data) {
