@@ -5,19 +5,37 @@
  */
 package org.grogshop.services.tests;
 
+import com.grogdj.grogshop.core.model.Interest;
+import com.grogdj.grogshop.core.model.Profile;
+import com.grogdj.grogshop.core.model.ServiceKey;
 import com.grogdj.grogshop.core.model.User;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.Cookie;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import org.grogshop.services.api.ProfilesService;
 import org.grogshop.services.api.UsersService;
+import org.grogshop.services.endpoints.api.ShopAuthenticationService;
+import org.grogshop.services.endpoints.impl.ShopAuthenticationServiceImpl;
 import org.grogshop.services.exceptions.ServiceException;
+import org.grogshop.services.filters.auth.GrogAuthenticator;
+import org.grogshop.services.impl.ProfilesServiceImpl;
+import org.grogshop.services.impl.UsersServiceImpl;
+import org.grogshop.services.util.GrogUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -34,32 +52,36 @@ import org.junit.runner.RunWith;
 public class SearchServiceTest {
 
     @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class, "test.jar")
+    public static WebArchive createDeployment() {
+        return ShrinkWrap.create(WebArchive.class, "test.war")
+               .addClass(UsersService.class).addClass(UsersServiceImpl.class)
+                .addClass(ServiceException.class)
+                .addClass(User.class)
+                .addClass(GrogUtil.class)
+                .addClass(ShopAuthenticationServiceImpl.class)
+                .addClass(ShopAuthenticationService.class)
+                .addClass(ProfilesService.class)
+                .addClass(ProfilesServiceImpl.class)
+                .addClass(Profile.class)
+                .addClass(GrogAuthenticator.class)
+                .addClass(Interest.class)
+                .addClass(ServiceKey.class)
+                .addAsResource("users.xml", "META-INF/users.xml")
+                .addAsResource("interests.xml", "META-INF/interests.xml")
+                .addAsResource("persistence.xml", "META-INF/persistence.xml")
                 
-                .addPackages(true, "org.grogshop.services")
-                
-                .addPackages(true, "com.grogdj.grogshop.core")
-                .addAsManifestResource("test-persistence.xml", "persistence.xml")
-                
-
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
     public SearchServiceTest() {
     }
-    
-    
-    
-    
-    @Produces  
-    public EntityManager produceEntityManager(){
-        return Persistence.createEntityManagerFactory("primary").createEntityManager();
-    }
-    
+
+    @PersistenceContext(name = "primary")
+    @Produces
+    EntityManager em;
+
     @Inject
-    private UsersService usersService;
-  
+    private ShopAuthenticationService authService;
 
     @BeforeClass
     public static void setUpClass() {
@@ -79,11 +101,11 @@ public class SearchServiceTest {
 
     @Test
     public void hello() throws ServiceException {
-        
-        
-        Long newUser = usersService.newUser(new User("grogdj@gmail.com", "asdasd"));
-//        Assert.assertNotNull(newUser);
-        
 
+        Response newUser = authService.registerUser("grogdj@gmail.com", "asdasd");
+        Assert.assertNotNull(newUser);
+        
+//        authService.login(, "grogdj@gmail.com", "asdasd");
+        
     }
 }

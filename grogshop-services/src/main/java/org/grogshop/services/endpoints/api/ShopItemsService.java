@@ -34,12 +34,14 @@ public interface ShopItemsService extends Serializable {
     @POST
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Produces({MediaType.APPLICATION_JSON})
-    Response newItem(@NotNull @FormParam("user_id") Long user_id, 
-            @NotNull @FormParam("club_id") Long club_id, 
-            @NotNull @NotEmpty @FormParam("name") String name, 
+    Response newItem(@NotNull @FormParam("user_id") Long userId,
+            @NotNull @FormParam("club_id") Long clubId,
+            @NotNull @FormParam("type") String type,
+            @NotNull @NotEmpty @FormParam("name") String name,
             @NotNull @NotEmpty @FormParam("description") String description,
-            @NotNull @NotEmpty @FormParam("tags") String interests,
-            @NotNull @FormParam("price") String price) throws ServiceException;
+            @NotNull @NotEmpty @FormParam("tags") String tags,
+            @NotNull @FormParam("minPrice") String minPrice,
+            @FormParam("maxPrice") String maxPrice) throws ServiceException;
 
     @GET
     @Path("/all")

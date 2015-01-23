@@ -12,6 +12,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +34,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table(name = "ITEMS")
 @Indexed
 public class Item implements Serializable {
+
+    public enum ItemType {
+
+        POST,
+        REQUEST,
+        TOPIC
+    }
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -73,20 +82,28 @@ public class Item implements Serializable {
     private byte[] imageContent;
 
     @NotNull
-    private BigDecimal price;
+    private BigDecimal minPrice;
+
+    @NotNull
+    private BigDecimal maxPrice;
+
+    @Enumerated(EnumType.STRING)
+    private ItemType type;
 
     public Item() {
     }
 
-    public Item(User user, Club club, String name, String description, List<String> tags, BigDecimal price) {
+    public Item(User user, Club club, String type, String name,
+            String description, List<String> tags, BigDecimal minPrice, BigDecimal maxPrice) {
 
         this.user = user;
         this.club = club;
         this.name = name;
         this.description = description;
         this.tags = tags;
-
-        this.price = price;
+        this.type = ItemType.valueOf(type);
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
         this.since = new Date();
     }
 
@@ -162,13 +179,28 @@ public class Item implements Serializable {
         this.imageContent = imageContent;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getMinPrice() {
+        return minPrice;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setMinPrice(BigDecimal minPrice) {
+        this.minPrice = minPrice;
     }
 
+    public BigDecimal getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(BigDecimal maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public ItemType getType() {
+        return type;
+    }
+
+    public void setType(ItemType type) {
+        this.type = type;
+    }
 
 }

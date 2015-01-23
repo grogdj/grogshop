@@ -20,7 +20,11 @@ public interface ItemsService {
     
     List<Item> getAllItemsByClub(Long clubId) throws ServiceException;
 
-    Long newItem(Long userId, Long clubId, String name, String description,  List<String> interests, BigDecimal price) throws ServiceException;
+    Long newItem(Long userId, Long clubId, String type, String name, String description,  
+            List<String> tags, BigDecimal minPrice,  BigDecimal maxPrice) throws ServiceException;
+    
+    Long newItem(Long userId, Long clubId, String type, String name, String description, 
+            List<String> tags, BigDecimal minPrice, BigDecimal maxPrice, String image) throws ServiceException;
 
     Item getById(Long item_id) throws ServiceException;
 

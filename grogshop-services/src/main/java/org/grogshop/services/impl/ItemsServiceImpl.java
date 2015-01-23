@@ -8,7 +8,10 @@ package org.grogshop.services.impl;
 import com.grogdj.grogshop.core.model.Club;
 import com.grogdj.grogshop.core.model.Item;
 import com.grogdj.grogshop.core.model.User;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ItemsService;
 import org.grogshop.services.exceptions.ServiceException;
 
@@ -47,7 +51,8 @@ public class ItemsServiceImpl implements ItemsService {
     }
 
     @Override
-    public Long newItem(Long userId, Long clubId, String name, String description, List<String> interests, BigDecimal price) throws ServiceException {
+    public Long newItem(Long userId, Long clubId, String type, String name, 
+            String description, List<String> tags, BigDecimal minPrice , BigDecimal maxPrice) throws ServiceException {
         User user = em.find(User.class, userId);
         if (user == null) {
             throw new ServiceException("User  doesn't exist: " + userId);
@@ -57,12 +62,32 @@ public class ItemsServiceImpl implements ItemsService {
         if (club == null) {
             throw new ServiceException("Club  doesn't exist: " + clubId);
         }
-        Item item = new Item(user, club, name, description, interests, price);
+        Item item = new Item(user, club, type, name, description, tags, minPrice, maxPrice);
         em.persist(item);
         log.log(Level.INFO, "Item {0} created with id {1}", new Object[]{name, item.getId()});
         return item.getId();
     }
+    
+    @Override
+    public Long newItem(Long userId, Long clubId, String type, String name, 
+            String description, List<String> tags, BigDecimal minPrice , BigDecimal maxPrice, String image) throws ServiceException {
+        Long newItem = newItem(userId, clubId, type, name, description, tags, minPrice, maxPrice);
+        byte[] bytes = null;
+        try {
+            InputStream inputStream = new URL(image).openStream();
 
+            bytes = IOUtils.toByteArray(inputStream);
+            inputStream.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ItemsServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        updateItemImage(newItem, image, bytes);
+        return newItem;
+    }
+    
+    
+
+    @Override
     public void removeItem(Long item_id) throws ServiceException {
         Item find = em.find(Item.class, item_id);
         if (find == null) {

@@ -7,8 +7,11 @@ package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Interest;
 import com.grogdj.grogshop.core.model.User;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -45,6 +48,8 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
 
     @Inject
     private MembershipsService membershipsService;
+    
+    private String server_url = "localhost:8080";
 
     public Response initApplication() throws ServiceException {
         try {
@@ -90,10 +95,33 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
             interests.add(interestsService.get("music"));
             profilesService.setInterests(ezeId, interests);
 
-            List<Long> foodAndDrinkClubsIds = initializeFoodAndDrinkClubs("food & drink", grogdjId, "foodAndDrink/");
-            List<Long> travelClubsIds = initializeTravelClubs("travel", grogdjId, "travel/");
-            List<Long> sportsClubsIds = initializeSportsClubs("sports", grogdjId, "sports/");
-
+            Map<String, Long> foodAndDrinkClubsMap = initializeFoodAndDrinkClubs("food & drink", grogdjId, "foodAndDrink/");
+            Map<String, Long> travelClubsMap = initializeTravelClubs("travel", grogdjId, "travel/");
+            Map<String, Long> sportsClubsMap = initializeSportsClubs("sports", grogdjId, "sports/");
+            
+            
+            Long soccerId = sportsClubsMap.get("soccer");
+            List<String> itemTags = new ArrayList<String>();
+            itemTags.add("item tag here");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Diadora Boots", "Buy Diadora Soccer Boots", 
+                    itemTags, new BigDecimal(100), new BigDecimal(100),"http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyDiadoraSoccerBoot"+".jpg");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Umbro Boots (Size 8)", "Buy Umbro Soccer Boot (Size 8)", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyFootballBootsUmbroSize8"+".jpg");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Fuse Ball table", "For sale a brand new Fuse Ball Table ", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyFuseballTable"+".jpg");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Jako Soccer Ball", "Buy a Jacko Soccer Ball", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyJakoSoccerBall"+".jpg");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Real Madrid Shirt", "Buy a Real Madrid Shirt", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyRealMadridShirt"+".jpg");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Medium England Shirt", "For sale a Medium Retro England Shirt", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyRetroEnglandFootballShirtMedium"+".jpg");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Soccer Ball", "Used Soccer Ball", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buySoccerBall"+".jpg");
+            itemsService.newItem(grogdjId, soccerId,"POST", "Real Madrid Stadium Tour Tickets", "For sale a couple of Real Madrid Stadium Tour Tickets", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyStadiumTourTicketsRealMadrid"+".jpg");
+            itemsService.newItem(grogdjId, soccerId, "POST","New Players Required ", "for a 5 aside team match in Acton", 
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"soccer5AsideTeamNeedsNewPlayers"+".jpg");
+            
 //            membershipsService.createMembership(cookingId, grogdjId);
 //            membershipsService.createMembership(antiquesId, grogdjId);
 
@@ -103,217 +131,217 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
         return Response.ok().build();
     }
     
-    private List<Long> initializeTravelClubs(String clubInterest, Long userId, String imageDir) throws ServiceException {
-        List<Long> clubsIds = new ArrayList<Long>();
+    private Map<String, Long> initializeTravelClubs(String clubInterest, Long userId, String imageDir) throws ServiceException {
+        Map<String, Long> clubsMap = new HashMap<String, Long>();
         List<String> tags = new ArrayList<String>();
         tags.add("tag here");
         Long luxuryId = clubsService.newClub("luxury", "description here", clubInterest, tags, userId, imageDir + "luxury" + ".jpg");
-        clubsIds.add(luxuryId);
+        clubsMap.put("luxury", luxuryId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long dealsId = clubsService.newClub("deals", "description here", clubInterest, tags, userId, imageDir  + "deals" + ".jpg");
-        clubsIds.add(dealsId);
+        clubsMap.put("deals", dealsId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long campingId = clubsService.newClub("camping", "description here", clubInterest, tags, userId, imageDir  + "camping" + ".jpg");
-        clubsIds.add(campingId);
+        clubsMap.put("camping", campingId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long cityId = clubsService.newClub("city", "description here", clubInterest, tags, userId, imageDir + "city" + ".jpg");
-        clubsIds.add(cityId);
+        clubsMap.put("city", cityId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long sunAndBeachId = clubsService.newClub("sun & beach", "description here", clubInterest, tags, userId, imageDir + "sunAndBeach" + ".jpg");
-        clubsIds.add(sunAndBeachId);
+        clubsMap.put("sun & beach", sunAndBeachId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long familyId = clubsService.newClub("family", "description here", clubInterest, tags, userId, imageDir + "family" + ".jpg");
-        clubsIds.add(familyId);
+        clubsMap.put("family", familyId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long over55sId = clubsService.newClub("over 55s", "description here", clubInterest, tags, userId, imageDir   + "over55s" + ".jpg");
-        clubsIds.add(over55sId);
+        clubsMap.put("over 55s", over55sId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long romanceId = clubsService.newClub("romance", "description here", clubInterest, tags, userId, imageDir  + "romance" + ".jpg");
-        clubsIds.add(romanceId);
+        clubsMap.put("romance", romanceId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long selfCateringId = clubsService.newClub("self catering", "description here", clubInterest, tags, userId, imageDir  + "selfCatering" + ".jpg");
-        clubsIds.add(selfCateringId);
+        clubsMap.put("self catering", selfCateringId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long activeId = clubsService.newClub("active", "description here", clubInterest, tags, userId, imageDir  + "active" + ".jpg");
-        clubsIds.add(activeId);
+        clubsMap.put("active", activeId);
          tags = new ArrayList<String>();
         tags.add("tag here");
         Long backpackingId = clubsService.newClub("backpacking", "description here", clubInterest, tags, userId, imageDir  + "backpacking" + ".jpg");
-        clubsIds.add(backpackingId);
+        clubsMap.put("backpacking", backpackingId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long USAId = clubsService.newClub("USA", "description here", clubInterest, tags, userId, imageDir  + "USA" + ".jpg");
-        clubsIds.add(USAId);
+        clubsMap.put("USA", USAId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long australiaId = clubsService.newClub("australia", "description here", clubInterest, tags, userId, imageDir + "australia" + ".jpg");
-        clubsIds.add(australiaId);
+        clubsMap.put("australia", australiaId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long asiaId = clubsService.newClub("asia", "description here", clubInterest, tags, userId, imageDir  + "asia" + ".jpg");
-        clubsIds.add(asiaId);
+        clubsMap.put("asia", asiaId);
         tags = new ArrayList<String>();
         tags.add("tag here");
-        Long africaId = clubsService.newClub("africa", "description here", clubInterest, tags, userId, imageDir  + "asia" + ".jpg");
-        clubsIds.add(africaId);
+        Long africaId = clubsService.newClub("africa", "description here", clubInterest, tags, userId, imageDir  + "africa" + ".jpg");
+        clubsMap.put("africa", africaId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long southAmericaId = clubsService.newClub("south america", "description here", clubInterest, tags, userId, imageDir  + "southAmerica" + ".jpg");
-        clubsIds.add(southAmericaId);
+        clubsMap.put("south america", southAmericaId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long europeId = clubsService.newClub("europe", "description here", clubInterest, tags, userId, imageDir + "europe" + ".jpg");
-        clubsIds.add(europeId);
+        clubsMap.put("europe", europeId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long walkingAndHikingId = clubsService.newClub("walking & hiking", "description here", clubInterest, tags, userId, imageDir  + "walkingAndHiking" + ".jpg");
-        clubsIds.add(walkingAndHikingId);
+        clubsMap.put("walking & hiking", walkingAndHikingId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long snowAndSkiId = clubsService.newClub("snow & ski", "description here", clubInterest, tags, userId, imageDir  + "snowAndSki" + ".jpg");
-        clubsIds.add(snowAndSkiId);
+        clubsMap.put("snow & ski", snowAndSkiId);
         
         
-        return clubsIds;
+        return clubsMap;
     }
     
-    private List<Long> initializeSportsClubs(String clubInterest, Long userId, String imageDir) throws ServiceException {
-        List<Long> clubsIds = new ArrayList<Long>();
+    private Map<String, Long> initializeSportsClubs(String clubInterest, Long userId, String imageDir) throws ServiceException {
+        Map<String, Long> clubsMap = new HashMap<String, Long>();
         List<String> tags = new ArrayList<String>();
         tags.add("tag here");
         Long eventsId = clubsService.newClub("events", "description here", clubInterest, tags, userId, imageDir + "events" + ".jpg");
-        clubsIds.add(eventsId);
+        clubsMap.put("events", eventsId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long soccerId = clubsService.newClub("soccer", "description here", clubInterest, tags, userId, imageDir + "soccer" + ".jpg");
-        clubsIds.add(soccerId);
+        clubsMap.put("soccer", soccerId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long tennisId = clubsService.newClub("tennis", "description here", clubInterest, tags, userId, imageDir + "tennis" + ".jpg");
-        clubsIds.add(tennisId);
+        clubsMap.put("tennis",tennisId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long rugbyId = clubsService.newClub("rugby", "description here", clubInterest, tags, userId, imageDir + "rugby" + ".jpg");
-        clubsIds.add(rugbyId);
+        clubsMap.put("rugby", rugbyId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long americanFootballId = clubsService.newClub("american football", "description here", clubInterest, tags, userId, imageDir + "americanFootball" + ".jpg");
-        clubsIds.add(americanFootballId);
+        clubsMap.put("american football", americanFootballId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long basketballId = clubsService.newClub("basketball", "description here", clubInterest, tags, userId, imageDir + "basketball" + ".jpg");
-        clubsIds.add(basketballId);
+        clubsMap.put("basketball", basketballId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long baseballId = clubsService.newClub("baseball", "description here", clubInterest, tags, userId, imageDir + "baseball" + ".jpg");
-        clubsIds.add(baseballId);
+        clubsMap.put("baseball", baseballId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long golfId = clubsService.newClub("golf", "description here", clubInterest, tags, userId, imageDir + "golf" + ".jpg");
-        clubsIds.add(golfId);
+        clubsMap.put("golf", golfId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long swimmingId = clubsService.newClub("swimming", "description here", clubInterest, tags, userId, imageDir + "swimming" + ".jpg");
-        clubsIds.add(swimmingId);
+        clubsMap.put("swimming", swimmingId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long winterSportsId = clubsService.newClub("winter sports", "description here", clubInterest, tags, userId, imageDir + "winterSports" + ".jpg");
-        clubsIds.add(winterSportsId);
+        clubsMap.put("winter sports", winterSportsId);
         
-        return clubsIds;
+        return clubsMap;
     }
 
-    private List<Long> initializeFoodAndDrinkClubs(String clubInterest, Long userId, String imageDir) throws ServiceException {
-        List<Long> clubsIds = new ArrayList<Long>();
+    private Map<String, Long> initializeFoodAndDrinkClubs(String clubInterest, Long userId, String imageDir) throws ServiceException {
+        Map<String, Long> clubsMap = new HashMap<String, Long>();
         List<String> tags = new ArrayList<String>();
         tags.add("tag here");
         Long recipesId = clubsService.newClub("recipes", "description here", clubInterest, tags, userId, imageDir + "recipes" + ".jpg");
-        clubsIds.add(recipesId);
+        clubsMap.put("recipes", recipesId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long wineId = clubsService.newClub("wine", "description here", clubInterest, tags, userId, imageDir + "wine" + ".jpg");
-        clubsIds.add(wineId);
+        clubsMap.put("wine", wineId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long healthyId = clubsService.newClub("healthy", "description here", clubInterest, tags, userId, imageDir + "healthy" + ".jpg");
-        clubsIds.add(healthyId);
+        clubsMap.put("healthy", healthyId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long restaurantsId = clubsService.newClub("restaurants", "description here", clubInterest, tags, userId, imageDir + "restaurants" + ".jpg");
-        clubsIds.add(restaurantsId);
+        clubsMap.put("restaurants", restaurantsId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long pubsId = clubsService.newClub("pubs", "description here", clubInterest, tags, userId, imageDir + "pubs" + ".jpg" );
-        clubsIds.add(pubsId);
+        clubsMap.put("pubs", pubsId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long cocktailsId = clubsService.newClub("cocktails", "description here", clubInterest, tags, userId, imageDir + "cocktails" + ".jpg");
-        clubsIds.add(cocktailsId);
+        clubsMap.put("cocktails", cocktailsId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long beerId = clubsService.newClub("beer", "description here", clubInterest, tags, userId, imageDir + "beer" + ".jpg");
-        clubsIds.add(beerId);
+        clubsMap.put("beer", beerId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long asianId = clubsService.newClub("asian", "description here", clubInterest, tags, userId, imageDir + "asian" + ".jpg");
-        clubsIds.add(asianId);
+        clubsMap.put("asian", asianId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long indianId = clubsService.newClub("indian", "description here", clubInterest, tags, userId, imageDir + "indian" + ".jpg");
-        clubsIds.add(indianId);
+        clubsMap.put("indian", indianId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long mediterraneanId = clubsService.newClub("mediterranean", "description here", clubInterest, tags, userId, imageDir + "mediterranean" + ".jpg");
-        clubsIds.add(mediterraneanId);
+        clubsMap.put("mediterranean", mediterraneanId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long frenchId = clubsService.newClub("french", "description here", clubInterest, tags, userId, imageDir + "french" + ".jpg");
-        clubsIds.add(frenchId);
+        clubsMap.put("french", frenchId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long fishId = clubsService.newClub("fish", "description here", clubInterest, tags, userId, imageDir + "fish" + ".jpg");
-        clubsIds.add(fishId);
+        clubsMap.put("fish", fishId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long vegetarianId = clubsService.newClub("vegetarian", "description here", clubInterest, tags, userId, imageDir + "vegetarian" + ".jpg");
-        clubsIds.add(vegetarianId);
+        clubsMap.put("vegetarian", vegetarianId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long freeFromId = clubsService.newClub("free from", "description here", clubInterest, tags, userId, imageDir + "freeFrom" + ".jpg");
-        clubsIds.add(freeFromId);
+        clubsMap.put("free from", freeFromId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long coffeeId = clubsService.newClub("coffee", "description here", clubInterest, tags, userId, imageDir + "coffee" + ".jpg");
-        clubsIds.add(coffeeId);
+        clubsMap.put("coffee", coffeeId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long teaId = clubsService.newClub("tea", "description here", clubInterest, tags, userId, imageDir + "tea" + ".jpg");
-        clubsIds.add(teaId);
+        clubsMap.put("tea", teaId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long spiritsId = clubsService.newClub("spirits", "description here", clubInterest, tags, userId, imageDir + "spirits" + ".jpg");
-        clubsIds.add(spiritsId);
+        clubsMap.put("spirits", spiritsId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long desertsId = clubsService.newClub("deserts", "description here", clubInterest, tags, userId, imageDir + "deserts" + ".jpg");
-        clubsIds.add(desertsId);
+        clubsMap.put("deserts", desertsId);
         tags = new ArrayList<String>();
         tags.add("tag here");
         Long sportsFoodId = clubsService.newClub("sports food", "description here", clubInterest, tags, userId, imageDir+ "sportsFood" + ".jpg" );
-        clubsIds.add(sportsFoodId);
+        clubsMap.put("sports food", sportsFoodId);
         
         
         
-        return clubsIds;
+        return clubsMap;
         
         
     }

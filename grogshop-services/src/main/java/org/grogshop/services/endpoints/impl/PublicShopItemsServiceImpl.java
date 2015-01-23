@@ -47,9 +47,11 @@ public class PublicShopItemsServiceImpl implements PublicShopItemsService {
                     .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
                     .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
                     .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
+                    .add("type", (i.getType() == null) ? "" : i.getType().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                    .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
+                    .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
+                    .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
 
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
@@ -76,9 +78,11 @@ public class PublicShopItemsServiceImpl implements PublicShopItemsService {
                     .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
                     .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
                     .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
+                    .add("type", (i.getType() == null) ? "" : i.getType().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                    .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
+                    .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
+                    .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
 
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
@@ -99,12 +103,14 @@ public class PublicShopItemsServiceImpl implements PublicShopItemsService {
         Item i = itemsService.getById(item_id);
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         jsonObjectBuilder.add("id", (i.getId() == null) ? "" : i.getId().toString())
-                .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
+                    .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
                     .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
                     .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
-                .add("name", (i.getName() == null) ? "" : i.getName())
-                .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
+                    .add("type", (i.getType() == null) ? "" : i.getType().toString())
+                    .add("name", (i.getName() == null) ? "" : i.getName())
+                    .add("description", (i.getDescription() == null) ? "" : i.getDescription())
+                    .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
+                    .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
         if (i.getTags() != null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
             for (String s : i.getTags()) {

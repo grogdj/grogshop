@@ -60,9 +60,11 @@ public class ShopItemsServiceImpl implements ShopItemsService {
                     .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
                     .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
                     .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
+                    .add("type", (i.getType() == null) ? "" : i.getType().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                    .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
+                    .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
+                    .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
 
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
@@ -89,9 +91,11 @@ public class ShopItemsServiceImpl implements ShopItemsService {
                     .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
                     .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
                     .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
+                    .add("type", (i.getType() == null) ? "" : i.getType().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                    .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
+                    .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
+                    .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
 
             if (i.getTags() != null) {
                 JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
@@ -111,10 +115,12 @@ public class ShopItemsServiceImpl implements ShopItemsService {
     @Override
     public Response newItem(@NotNull @FormParam("user_id") Long userId,
             @NotNull @FormParam("club_id") Long clubId,
+            @NotNull @FormParam("type") String type,
             @NotNull @NotEmpty @FormParam("name") String name,
             @NotNull @NotEmpty @FormParam("description") String description,
             @NotNull @NotEmpty @FormParam("tags") String tags,
-            @NotNull @FormParam("price") String price) throws ServiceException {
+            @NotNull @FormParam("minPrice") String minPrice,
+            @FormParam("maxPrice") String maxPrice) throws ServiceException {
         
         
         JsonReader reader = Json.createReader(new ByteArrayInputStream(tags.getBytes()));
@@ -131,7 +137,8 @@ public class ShopItemsServiceImpl implements ShopItemsService {
             }
 
         }
-        Long newItem = itemsService.newItem(userId, clubId, name, description, interestsList, new BigDecimal(price));
+        Long newItem = itemsService.newItem(userId, clubId, type, name, description, interestsList,
+                new BigDecimal(minPrice), (maxPrice == null)?new BigDecimal(0):new BigDecimal(maxPrice));
         return Response.ok(newItem).build();
 
     }
@@ -141,12 +148,14 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         Item i = itemsService.getById(item_id);
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
         jsonObjectBuilder.add("id", (i.getId() == null) ? "" : i.getId().toString())
-                .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
-                .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
-                .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
-                .add("name", (i.getName() == null) ? "" : i.getName())
-                .add("description", (i.getDescription() == null) ? "" : i.getDescription())
-                .add("price", (i.getPrice() == null) ? "" : i.getPrice().toString());
+                    .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
+                    .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
+                    .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
+                    .add("type", (i.getType() == null) ? "" : i.getType().toString())
+                    .add("name", (i.getName() == null) ? "" : i.getName())
+                    .add("description", (i.getDescription() == null) ? "" : i.getDescription())
+                    .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
+                    .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
         if (i.getTags() != null) {
             JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
             for (String s : i.getTags()) {

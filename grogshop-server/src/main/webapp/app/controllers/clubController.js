@@ -46,7 +46,23 @@
 
         $scope.loadClubItems = function () {
             //console.log("loading clubs for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
-            $clubs.loadItems($scope.club_id)
+            $items.loadItems($scope.club_id)
+            .success(function (data) {
+                //$rootScope.$broadcast("quickNotification", "items loaded!");
+                console.log("My Items");
+                console.log(data);
+                $scope.items = data;
+
+            }).error(function (data) {
+                console.log("Error: " + data);
+                $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+            });
+
+        };
+        
+        $scope.loadPublicItems = function () {
+            //console.log("loading clubs for user " + user_id + " with email: " + email + " and auth_token: " + auth_token);
+            $items.loadPublicItems($scope.club_id)
             .success(function (data) {
                 //$rootScope.$broadcast("quickNotification", "items loaded!");
                 console.log("My Items");
@@ -123,7 +139,7 @@
                 .success(function (data) {
                     //$rootScope.$broadcast("quickNotification", "Item Created!");
                     var newItem = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newItem.title, description: $scope.newItem.description, 
-                         tags: $scope.newItem.tags, price: $scope.newItem.price, type: 'POST'};
+                         tags: $scope.newItem.tags, minPrice: $scope.newItem.minPrice, type: 'POST'};
                      var item_id = data;
 
                     console.log("new item added: "+newItem);
@@ -157,7 +173,7 @@
         
         $scope.postRequest = function (isValid, files) {
             $scope.submittedRequest = true;
-            if(isValid && $scope.newItem.tags.length > 0){
+            if(isValid && $scope.newRequest.tags.length > 0){
 
                 console.log("adding new request  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
 
@@ -251,18 +267,23 @@
                 // file is uploaded successfully
                 console.log('file ' + file.name + 'is uploaded successfully. Response: ' + data);
                 $scope.uploading = false;
-                $('#newProductModal').modal('hide');
+                
+                
                 $scope.items.push(newItem);
                 //
+                $('#newItemModal').modal('hide');
                 $scope.newItem={};
                 $scope.itemPicFile= null;
                 $scope.newPostForm.$setPristine();
                 $scope.submitted = false;
+                
                 //
+                $('#newRequestModal').modal('hide');
                 $scope.newRequest={};
                 $scope.requestPicFile= null;
                 $scope.newRequestForm.$setPristine();
                 $scope.submittedRequest = false;
+                
 
 
             }).error(function (data) {
@@ -289,11 +310,12 @@
 
         if ($scope.auth_token && $scope.auth_token !== "") {
             console.log("loading private clubs because: " + $scope.auth_token);
-            $scope.loadClub($scope.user_id, $scope.email, $scope.auth_token);
-            $scope.loadClubItems($scope.user_id, $scope.email, $scope.auth_token);
+            $scope.loadClub();
+            $scope.loadClubItems();
         } else {
             console.log("loading public clubs because: " + $scope.auth_token);
-            $scope.loadPublicClub($scope.user_id, $scope.email, $scope.auth_token);
+            $scope.loadPublicClub();
+            $scope.loadPublicItems();
         }
     };
     
