@@ -50,6 +50,7 @@ public class PublicShopItemsServiceImpl implements PublicShopItemsService {
                     .add("type", (i.getType() == null) ? "" : i.getType().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
+                    .add("hasImage", i.hasImage())
                     .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
                     .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
 
@@ -81,6 +82,7 @@ public class PublicShopItemsServiceImpl implements PublicShopItemsService {
                     .add("type", (i.getType() == null) ? "" : i.getType().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
+                    .add("hasImage", i.hasImage())
                     .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
                     .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
 
@@ -109,6 +111,7 @@ public class PublicShopItemsServiceImpl implements PublicShopItemsService {
                     .add("type", (i.getType() == null) ? "" : i.getType().toString())
                     .add("name", (i.getName() == null) ? "" : i.getName())
                     .add("description", (i.getDescription() == null) ? "" : i.getDescription())
+                    .add("hasImage", i.hasImage())
                     .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
                     .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
         if (i.getTags() != null) {

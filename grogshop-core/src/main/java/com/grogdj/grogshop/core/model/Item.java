@@ -203,4 +203,13 @@ public class Item implements Serializable {
         this.type = type;
     }
 
+    public boolean hasImage() {
+        return (imageContent != null && imageFileName != null 
+                && !imageFileName.equals(""));
+    }
+
+    
+    
+    
+
 }
