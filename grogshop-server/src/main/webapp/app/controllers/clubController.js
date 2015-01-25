@@ -139,7 +139,7 @@
                 .success(function (data) {
                     //$rootScope.$broadcast("quickNotification", "Item Created!");
                     var newItem = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newItem.title, description: $scope.newItem.description, 
-                         tags: $scope.newItem.tags, minPrice: parseInt($scope.newItem.minPrice), type: 'POST'};
+                         tags: $scope.newItem.tags, minPrice: parseInt($scope.newItem.minPrice), type: 'POST', hasImage: true};
                      var item_id = data;
 
                     console.log("new item added: "+newItem);
@@ -182,13 +182,18 @@
                 $items.post(itemToSend)
                 .success(function (data) {
                     //$rootScope.$broadcast("quickNotification", "Item Created!");
-                    var newRequest = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newRequest.title, description: $scope.newRequest.description, 
-                         tags: $scope.newRequest.tags, minPrice: $scope.newRequest.minPrice, maxPrice: $scope.newRequest.maxPrice, type: 'REQUEST'};
+                   
                      var request_id = data;
 
-                    console.log("new request added: "+newRequest);
-
-                    $scope.uploadFile(request_id, files,newRequest);
+                    if(files != undefined ){
+                         var newRequest = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newRequest.title, description: $scope.newRequest.description, tags: $scope.newRequest.tags, minPrice: $scope.newRequest.minPrice, maxPrice: $scope.newRequest.maxPrice, type: 'REQUEST', hasImage: true};
+                        $scope.uploadFile(request_id, files,newRequest);
+                    } else {
+                         var newRequest = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newRequest.title, description: $scope.newRequest.description, tags: $scope.newRequest.tags, minPrice: $scope.newRequest.minPrice, maxPrice: $scope.newRequest.maxPrice, type: 'REQUEST', hasImage: false};
+                         console.log('REQUEST with no image');
+                        $scope.uploading = false;
+                        $scope.items.push(newItem);
+                    }
 
                 }).error(function (data) {
                     console.log("Error: " + data);
@@ -266,7 +271,7 @@
         ///////////////////////////////////////////////////////////// POST COMMENTS
         $scope.addComment= function(item_id, item_title){
             $scope.commentCurrentItem = item_id;
-            $scope.commentCurrentTitile = item_title;
+            $scope.commentCurrentTitle = item_title;
             $scope.newComment={};
             $scope.newCommentForm.$setPristine();
             $scope.submittedComment = false;
@@ -277,7 +282,7 @@
             $scope.submittedComment = true;
             if(isValid){
 
-                console.log("adding new comment  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
+                console.log("adding new comment  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token + " item_id: " + $scope.commentCurrentItem);
 
                 var commentToSend = {club_id: $scope.club_id, user_id: $scope.user_id, text: $scope.newComment.text, 
                          item_id: $scope.commentCurrentItem};
@@ -317,7 +322,24 @@
             $scope.newCommentForm.$setPristine();
             $scope.submittedComment = false;
         }
+         ///////////////////////////////////////////////////////////// ITEM DETAIL MODAL
+        $scope.showItemDetails= function(item_id, item_title){
+            $scope.currentDetail = {};
+            $scope.currentDetail.id = item_id;
+            $scope.currentDetail.title = item_title;
+            $comments.load(item_id)
+                .success(function (data) {
+                   $scope.currentDetail.itemComments = data;
+                   $('#newCommentModal').modal('show');
+                    
 
+                }).error(function (data) {
+                    console.log("Error in loading comments: " + data);
+                    $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+                });
+             
+        };
+        
       
         ///////////////////////////////////////////////////////////// 
         
@@ -362,7 +384,7 @@
 
         $scope.uploadFile = function (item_id, files, newItem) {
             console.log("Files : " + files + "-- event: " + event);
-            if(files != undefined && newItem.type != "TOPIC"){
+            
                 var file = files[0];
                 $scope.upload = $items.uploadImage(item_id,file)
                 .progress(function (evt) {
@@ -394,13 +416,15 @@
                     console.log('file ' + file.name + ' upload error. Response: ' + data);
 
                 });
-            }else {
-                    console.log('REQUEST with no image');
-                    $scope.uploading = false;
-                    $scope.items.push(newItem);
+            
+            //
+            //}else {
+            //        console.log('REQUEST with no image');
+            //        $scope.uploading = false;
+            //        $scope.items.push(newItem);
                     //
                    
-            }
+            //}
             $('#newItemModal').modal('hide');
             $scope.newItem={};
             $scope.itemPicFile= null;

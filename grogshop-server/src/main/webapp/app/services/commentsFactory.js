@@ -10,6 +10,16 @@
                     data: comment
                 })
             }
+            
+            factory.load = function(item_id){
+                return $http({
+                    method: 'GET',
+                    url: 'rest/comments/item/' + item_id,
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    transformRequest: $transformRequestToForm.transformRequest,
+                    data: {}
+                })
+            }
             return factory;
         }
         
