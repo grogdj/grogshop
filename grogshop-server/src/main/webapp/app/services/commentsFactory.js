@@ -15,7 +15,7 @@
                 return $http({
                     method: 'GET',
                     url: 'rest/comments/item/' + item_id,
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + $cookieStore.get('email'), auth_token: $cookieStore.get('auth_token')},
                     transformRequest: $transformRequestToForm.transformRequest,
                     data: {}
                 })

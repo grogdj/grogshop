@@ -29,6 +29,7 @@
         <mapping-file>META-INF/clubs.xml</mapping-file>
         <mapping-file>META-INF/clubmemberships.xml</mapping-file>
         <mapping-file>META-INF/items.xml</mapping-file>
+        <mapping-file>META-INF/comments.xml</mapping-file>
     
         <class>com.grogdj.grogshop.core.model.User</class>
         <class>com.grogdj.grogshop.core.model.ServiceKey</class>

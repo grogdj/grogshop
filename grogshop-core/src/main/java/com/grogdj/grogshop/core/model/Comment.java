@@ -6,19 +6,13 @@
 package com.grogdj.grogshop.core.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -30,7 +24,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @author grogdj
  */
-@Entity(name = "Comment")
+@Entity(name = "Note")
 @Table(name = "COMMENTS")
 @Indexed
 public class Comment implements Serializable {
