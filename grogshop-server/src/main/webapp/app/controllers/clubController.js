@@ -329,6 +329,8 @@
             $scope.currentDetail.title = item_title;
             $comments.load(item_id)
                 .success(function (data) {
+                   console.log(data);
+           console.log("Loading comments form item is ok: "+item_id);
                    $scope.currentDetail.itemComments = data;
                    $('#newCommentModal').modal('show');
                     
