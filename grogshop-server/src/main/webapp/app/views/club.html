@@ -349,12 +349,19 @@
                 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Detail for {{detailCurrentTitle}}</h4>
+                        <h4 class="modal-title" id="myModalLabel">Detail for {{currentDetail.title}} <span class="badge">{{currentDetail.number }}</span></h4>
                     </div>
                     <div class="modal-body">
-                        
-                        <div ng-repeat="comment in currentDetail.itemComments">
-                            {{comment.text}}<br/><br/>
+                    
+                        <div ng-repeat="comment in currentDetail.itemComments" class="comment">
+                            {{comment.text}}
+                            <div class="data">
+                                <div class="date">{{comment.date}}</div>
+                                <div class="user">Created by</div>
+                            </div>
+                        </div>
+                         <div ng-show="currentDetail.number == 0" class="comment">
+                            No comments yet.
                         </div>
                         
                         

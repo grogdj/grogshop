@@ -915,3 +915,21 @@ tags-input .autocomplete  {
     border-radius: 4px;
 }
 
+
+/* COMMENTS */
+.comment {
+    
+    margin: 15px 0;
+    padding: 0 0 15px 0;
+    border-bottom: 1px solid #CCC;
+}
+.comment .data {
+    font-size: 80%;
+    opacity: .5;
+}
+
+.comment .data div {
+    padding-top: 5px;
+    display: inline-block;
+    
+}

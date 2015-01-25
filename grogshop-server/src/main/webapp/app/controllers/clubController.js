@@ -111,9 +111,11 @@
         //FILTER BAR 
 
         $scope.smallerThan = function(a,b) {
+            
           return a <= b;
         };
         $scope.greaterThan = function(a,b) {
+        
           return a >= b;
         };
 
@@ -327,12 +329,15 @@
             $scope.currentDetail = {};
             $scope.currentDetail.id = item_id;
             $scope.currentDetail.title = item_title;
+             $scope.currentDetail.number = 0;
             $comments.load(item_id)
                 .success(function (data) {
                    console.log(data);
            console.log("Loading comments form item is ok: "+item_id);
                    $scope.currentDetail.itemComments = data;
-                   $('#newCommentModal').modal('show');
+                   $scope.currentDetail.number = $scope.currentDetail.itemComments.length;
+                
+                   $('#itemDetailModal').modal('show');
                     
 
                 }).error(function (data) {
