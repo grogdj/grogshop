@@ -37,6 +37,7 @@
         <class>com.grogdj.grogshop.core.model.ClubMembership</class>
         <class>com.grogdj.grogshop.core.model.Item</class>
         <class>com.grogdj.grogshop.core.model.Interest</class>
+        <class>com.grogdj.grogshop.core.model.Comment</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <!-- Properties for Hibernate -->

@@ -6,16 +6,7 @@
 package org.grogshop.services.endpoints.impl;
 
 import com.grogdj.grogshop.core.model.Comment;
-import com.grogdj.grogshop.core.model.Item;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -24,23 +15,14 @@ import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonReader;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
-import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.CommentsService;
-import org.grogshop.services.api.ItemsService;
 import org.grogshop.services.endpoints.api.ShopCommentsService;
-import org.grogshop.services.endpoints.api.ShopItemsService;
 import org.grogshop.services.exceptions.ServiceException;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 @Stateless
 public class ShopCommentsServiceImpl implements ShopCommentsService {
