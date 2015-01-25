@@ -68,20 +68,27 @@
             <div masonry-tile ng-repeat="item in items | filter:priceRange.range.min:greaterThan | filter:priceRange.range.max:smallerThan | filter:searchName | orderBy:typeSelect" class="item {{item.type}}">
 
                 <div class="well">
-                    <div class="item-image" ng-show="item.type != 'TOPIC'">
+                    <div class="item-image" ng-show="item.type != 'TOPIC' && item.hasImage">
                         <img class="img-responsive" ng-src="/grogshop-server/rest/public/items/{{item.id}}/image"/>
                     </div>
-                    <div class="options" ng-show="user_id == item.user_id"><a href class="btn btn-danger btn-xs" ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></div>
                     <div class="price">
                         <span class="label label-primary" ng-show="item.type == 'POST'">{{item.minPrice| currency}}</span>
                         <span class="label label-danger" ng-show="item.type == 'REQUEST'">{{item.minPrice| currency}} - {{item.maxPrice| currency}}</span>
                     </div>
                     <div class="tags"><span ng-repeat="itemTag in item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
-                    <h4>{{item.name}} </h4>
-                    <small><a href>{{item.user_email}}</a></small><br/>
-                    
-                    <p><small>{{item.description}}</small></p>
-                    
+                    <div class="data">
+                        <div class="options" >
+                            <a href class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
+                            <a href class="btn btn-primary btn-xs" ng-click="addComment(item.id, item.name)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a ng-show="user_id == item.user_id" href class="btn btn-danger btn-xs" ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        </div>
+                        
+                        
+                        <h5>{{item.name}}</h5>
+                        <small><a href class="postedBy">{{item.user_email}}</a></small><br/>
+
+                        <p><small>{{item.description}}</small></p>
+                    </div>
                 </div>                
             </div>
         </div>
@@ -97,7 +104,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form novalidate name="newPostForm" >
-                    <div class="modal-header">
+                    <div class="modal-header post-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">New Item</h4>
                     </div>
@@ -176,7 +183,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <form novalidate name="newRequestForm" >
-                    <div class="modal-header">
+                    <div class="modal-header request-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">New Request</h4>
                     </div>
@@ -254,13 +261,13 @@
             </div>
         </div>
     </div>
-<!-- CONVERSATION MODAL -->
+<!-- TOPIC MODAL -->
 
 <div class="modal fade" id="newTopicModal" tabindex="-1" role="dialog" aria-labelledby="newTopic" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form novalidate name="newTopicForm" >
-                    <div class="modal-header">
+                    <div class="modal-header topic-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">New Topic</h4>
                     </div>
@@ -296,6 +303,41 @@
             </div>
         </div>
     </div>
+    
+    <!-- COMMENT MODAL -->
+
+<div class="modal fade" id="newCommentModal" tabindex="-1" role="dialog" aria-labelledby="newComment" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form novalidate name="newCommentForm" >
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">New Comment for {{commentCurrentTitile}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                        
+                        <div class="form-group">
+                            <label for="text">Comment <small>(150 characters)</small></label>
+                            <textarea ng-maxlength="150" class="form-control" name="text" ng-class="{submitError: submittedComment}" id="text" ng-model="newComment.text" rows="3" required></textarea>
+                            <div class="error-msg" ng-show="newCommentForm.description.$error.maxlength  ">Description is too long.</div>
+                        </div>
+                       
+                       
+
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" ng-click="resetCommentForm()" >Reset</button>
+                        <button type="submit" class="btn btn-primary" ng-click="postComment(newCommentForm.$valid)" >Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
 <!-- DROPDOWN -->
 

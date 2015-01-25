@@ -279,7 +279,7 @@
 
                 console.log("adding new comment  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
 
-                var commentToSend = {club_id: $scope.club_id, user_id: $scope.user_id, description: $scope.newComment.description, 
+                var commentToSend = {club_id: $scope.club_id, user_id: $scope.user_id, text: $scope.newComment.text, 
                          item_id: $scope.commentCurrentItem};
                 $comments.post(commentToSend)
                 .success(function (data) {
