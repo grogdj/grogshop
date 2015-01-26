@@ -20,6 +20,17 @@
                     data: {}
                 })
             }
+            
+            factory.remove = function(item_id){
+                return $http({
+                    method: 'POST',
+                    url: 'rest/comments/'+item_id+'/remove',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded', service_key: 'webkey:' + $cookieStore.get('email'), auth_token: $cookieStore.get('auth_token')},
+                    transformRequest: $transformRequestToForm.transformRequest,
+                    data: {id: item_id}
+                })
+            };
+            
             return factory;
         }
         

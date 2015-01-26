@@ -271,37 +271,32 @@
         }
         
         ///////////////////////////////////////////////////////////// POST COMMENTS
-        $scope.addComment= function(item_id, item_title){
-            $scope.commentCurrentItem = item_id;
-            $scope.commentCurrentTitle = item_title;
-            $scope.newComment={};
-            $scope.newCommentForm.$setPristine();
-            $scope.submittedComment = false;
-             $('#newCommentModal').modal('show');
-        };
+
         
         $scope.postComment = function (isValid) {
             $scope.submittedComment = true;
             if(isValid){
 
-                console.log("adding new comment  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token + " item_id: " + $scope.commentCurrentItem);
+                console.log("adding new comment  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token + " item_id: " + $scope.currentDetail.id);
 
                 var commentToSend = {club_id: $scope.club_id, user_id: $scope.user_id, text: $scope.newComment.text, 
-                         item_id: $scope.commentCurrentItem};
+                         item_id: $scope.currentDetail.id };
                 $comments.post(commentToSend)
                 .success(function (data) {
                     //$rootScope.$broadcast("quickNotification", "Item Created!");
                     var newComment = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, 
-                        user_email: $scope.email, description: $scope.newTopic.description, item_id: $scope.commentCurrentItem};
+                        user_email: $scope.email, text: $scope.newComment.text, item_id: $scope.currentDetail.id, date: new Date() };
                     var comment_id = data;
 
                     console.log("new comment added: "+newComment);
 
-                    console.log('comment created');
+                    console.log('comment created' + newComment.date);
+                    
+                    $scope.currentDetail.itemComments.unshift(newComment);
+                     $scope.currentDetail.number++ ;
+                    
 
-                   // $scope.items.push(newTopic);
-                    //
-                     $('#newCommentModal').modal('hide');
+                   
                     $scope.newComment={};
                     $scope.newCommentForm.$setPristine();
                     $scope.submittedComment = false;
@@ -321,19 +316,20 @@
 
         $scope.resetCommentForm = function() {            
            $scope.newComment={};
-            $scope.newCommentForm.$setPristine();
-            $scope.submittedComment = false;
+           $scope.newCommentForm.$setPristine();
+           $scope.submittedComment = false;
         }
          ///////////////////////////////////////////////////////////// ITEM DETAIL MODAL
         $scope.showItemDetails= function(item_id, item_title){
             $scope.currentDetail = {};
             $scope.currentDetail.id = item_id;
             $scope.currentDetail.title = item_title;
-             $scope.currentDetail.number = 0;
+            $scope.currentDetail.number = 0;
+            
             $comments.load(item_id)
                 .success(function (data) {
                    console.log(data);
-           console.log("Loading comments form item is ok: "+item_id);
+                    console.log("Loading comments form item is ok: "+item_id);
                    $scope.currentDetail.itemComments = data;
                    $scope.currentDetail.number = $scope.currentDetail.itemComments.length;
                 
@@ -347,6 +343,9 @@
              
         };
         
+        $scope.clearDetailModal = function(){
+             $scope.currentDetail = {};
+        };
       
         ///////////////////////////////////////////////////////////// 
         
@@ -360,6 +359,7 @@
                     //$rootScope.$broadcast("quickNotification", "Item Removed!");
 
                     $scope.items.splice($scope.items.indexOf(item), 1);
+                    
 
                 }).error(function (data) {
                     console.log("Error: " + data);
@@ -368,6 +368,21 @@
 
 
         };
+        
+        $scope.removeComment = function(comment){
+            console.log("remove new item  for user " + $scope.user_id + " with email: " + $scope.email + " and auth_token: " + $scope.auth_token);
+            $comments.remove(comment.id)
+            .success(function (data) {
+                    //$rootScope.$broadcast("quickNotification", "Item Removed!");
+
+                    $scope.currentDetail.itemComments.splice($scope.currentDetail.itemComments.indexOf(comment), 1);
+                $scope.currentDetail.number -= 1 ;
+
+            }).error(function (data) {
+                console.log("Error: " + data);
+                $rootScope.$broadcast("quickNotification", "Something went wrong!" + data);
+            });
+        }
         
 
         $scope.generateThumb = function(file) {
