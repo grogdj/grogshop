@@ -68,7 +68,8 @@ public class ShopCommentsServiceImpl implements ShopCommentsService {
                     .add("user_email", (c.getUser().getEmail() == null) ? "" : c.getUser().getEmail())
                     .add("club_id", (c.getClub().getId() == null) ? "" : c.getClub().getId().toString())
                     .add("item_id", (c.getItem().getId() == null) ? "" : c.getItem().getId().toString())
-                    .add("text", (c.getText()== null) ? "" : c.getText());
+                    .add("text", (c.getText()== null) ? "" : c.getText())
+                    .add("date", (c.getSince()== null) ? "" : c.getSince().toString());
 
             
             jsonArrayBuilder.add(jsonObjectBuilder);
@@ -90,7 +91,8 @@ public class ShopCommentsServiceImpl implements ShopCommentsService {
                     .add("user_email", (c.getUser().getEmail() == null) ? "" : c.getUser().getEmail())
                     .add("club_id", (c.getClub().getId() == null) ? "" : c.getClub().getId().toString())
                     .add("item_id", (c.getItem().getId() == null) ? "" : c.getItem().getId().toString())
-                    .add("text", (c.getText()== null) ? "" : c.getText());
+                    .add("text", (c.getText()== null) ? "" : c.getText())
+                    .add("date", (c.getSince()== null) ? "" : c.getSince().toString());
 
             
             jsonArrayBuilder.add(jsonObjectBuilder);
@@ -121,7 +123,8 @@ public class ShopCommentsServiceImpl implements ShopCommentsService {
                     .add("user_email", (c.getUser().getEmail() == null) ? "" : c.getUser().getEmail())
                     .add("club_id", (c.getClub().getId() == null) ? "" : c.getClub().getId().toString())
                     .add("item_id", (c.getItem().getId() == null) ? "" : c.getItem().getId().toString())
-                    .add("text", (c.getText()== null) ? "" : c.getText());
+                    .add("text", (c.getText()== null) ? "" : c.getText())
+                    .add("date", (c.getSince()== null) ? "" : c.getSince().toString());
         
         JsonObject build = jsonObjectBuilder.build();
         return Response.ok(build.toString()).build();
