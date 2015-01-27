@@ -20,6 +20,7 @@ import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.api.ProfilesService;
@@ -33,6 +34,7 @@ import org.grogshop.services.impl.UsersServiceImpl;
 import org.grogshop.services.util.GrogUtil;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -68,6 +70,7 @@ public class SearchServiceTest {
                 .addClass(ServiceKey.class)
                 .addAsResource("users.xml", "META-INF/users.xml")
                 .addAsResource("interests.xml", "META-INF/interests.xml")
+                .addAsResource("servicekey.xml", "META-INF/servicekey.xml")
                 .addAsResource("persistence.xml", "META-INF/persistence.xml")
                 
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -104,8 +107,13 @@ public class SearchServiceTest {
 
         Response newUser = authService.registerUser("grogdj@gmail.com", "asdasd");
         Assert.assertNotNull(newUser);
+        MultivaluedMap<String, String> headers = new MultivaluedHashMap<String, String>();
+        headers.add("service_key", "webkey:grogdj@gmail.com");
+        HttpHeaders httpHeaders = new ResteasyHttpHeaders(headers);
         
-//        authService.login(, "grogdj@gmail.com", "asdasd");
+        Response login = authService.login(httpHeaders, "grogdj@gmail.com", "asdasd");
+        
+        Assert.assertEquals(Response.Status.OK.getStatusCode(), login.getStatus());
         
     }
 }
