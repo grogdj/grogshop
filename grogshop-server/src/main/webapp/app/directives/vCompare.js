@@ -10,8 +10,8 @@
             link: function(scope, elm, attrs, ctrl) {
               ctrl.$parsers.unshift(function(viewValue, $scope) {
 
-                var noMatch = viewValue != scope.reference
-                ctrl.$setValidity('noMatch', !noMatch)
+                var noMatch = (viewValue != scope.reference);
+                ctrl.$setValidity('noMatch', !noMatch);
               });
 
               scope.$watch("reference", function(value) {;

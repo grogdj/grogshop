@@ -13,8 +13,6 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
-import org.grogshop.services.filters.auth.GrogAuthenticator;
-import org.grogshop.services.filters.auth.GrogHTTPHeaderNames;
 
 /**
  *
@@ -41,7 +39,7 @@ public class AuthRESTRequestFilter implements ContainerRequestFilter {
         if (requestCtx.getRequest().getMethod().equals("OPTIONS")) {
 
             requestCtx.abortWith(Response.status(Response.Status.OK).build());
-
+            log.info("OPTIONS related request" + path);
             return;
 
         }
@@ -55,7 +53,7 @@ public class AuthRESTRequestFilter implements ContainerRequestFilter {
 
                 // Kick anyone without a valid service key
                 requestCtx.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-
+                log.severe("Wrong service_key " + path);
                 return;
 
             }
@@ -67,7 +65,7 @@ public class AuthRESTRequestFilter implements ContainerRequestFilter {
 
                 // if it isn't valid, just kick them out.
                 if (!grogAuthenticator.isAuthTokenValid(serviceKey, authToken)) {
-
+                    log.severe("Wrong auth_token " + path);
                     requestCtx.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 
                 }

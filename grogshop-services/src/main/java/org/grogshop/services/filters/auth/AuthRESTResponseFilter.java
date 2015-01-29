@@ -10,16 +10,13 @@ import java.util.logging.Logger;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.ext.Provider;
-import org.grogshop.services.filters.auth.GrogHTTPHeaderNames;
 
 /**
  *
  * @author grogdj
  */
 @Provider
-@PreMatching
 public class AuthRESTResponseFilter implements ContainerResponseFilter {
 
     private final static Logger log = Logger.getLogger(AuthRESTResponseFilter.class.getName());

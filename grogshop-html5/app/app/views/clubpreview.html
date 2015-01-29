@@ -1,0 +1,80 @@
+<div  class="big-image visible-xs">
+	<div class="img-container" style="background-image:url({{imagePath}}{{club.image}});">
+					
+	</div>
+</div>
+<div id="club-preview-container">
+	<div class="container-fluid">
+		<div class="row" style="position: relative;">
+			<div class="col-sm-3 hidden-xs club-image" >
+				<div class="img-container" style="background-image:url({{imagePath}}{{club.image}});">
+					
+				</div>
+			</div>
+			<div class="col-sm-6 col-sm-offset-3">
+			
+				<p><span class="label label-primary">{{club.interest}}</span> <span ng-repeat="tag in club.tags"><span class="label label-default">{{tag}}</span> </span></p>
+				
+				<h2>{{club.name}}</h2>
+				<p class="lead">{{club.description}}</p>
+				<div class="well">
+				<p><strong>Founder:</strong> <a href>{{club.founderEmail}}</a><br/>
+				<strong>Members:</strong> 150</p>
+				<p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span></p>
+				
+				</div>
+
+
+			</div>
+            <div ng-show="auth_token">
+                <div ng-show="!hasMembership(club_id)" class="col-sm-3">
+                     <button class="btn btn-primary btn-block btn-lg" ng-click="joinClub(club_id, user_id, email, auth_token)"> <span class="glyphicon glyphicon-flag pull-left" aria-hidden="true"></span> Join <span class="hidden-sm" >this club</span></button>
+                     <div class="col-md-10 col-md-offset-1">
+                        <br/>
+                        <p class="text-center"><small>Join this club to be able to interact with other members. </small></p>
+                     </div>	
+                </div>
+                <div ng-show="hasMembership(club_id)" class="col-sm-3">
+                     <button class="btn btn-warning btn-block btn-lg" ng-click="cancelMembership(club_id, user_id, email, auth_token)"> <span class="glyphicon glyphicon-remove pull-left" aria-hidden="true"></span> Cancel <span class="hidden-sm">Membership</span></button>
+                     <div class="col-md-10 col-md-offset-1">
+                        <br/>
+                        <p class="text-center"><small>You are already a member of this club.</small></p>
+                     </div>	
+                </div>
+            </div>  
+            <div ng-show="!auth_token">
+                 <p class="text-center"><small>You must <a href="#login">sign in</a> for join a club.</small></p>
+                 <p class="text-center"><small>If you don't have an account please <a href="#signup">sign up here</a>.</small></p>
+            </div>
+                
+		</div>
+		<hr style="border-color:#999;" >
+		
+		<div masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".item"}' class="items-container">
+            <!-- items -->
+            <div masonry-tile ng-repeat="item in items" class="item">
+
+                <div class="well">
+                    <div class="item-image">
+                        <img class="img-responsive" ng-src="{{server}}rest/public/items/{{item.id}}/image"/>
+                    </div>
+                            
+                    <h4>{{item.name}} </h4>
+                    <p><small>{{item.description}}</small></p>
+                    
+                    
+                </div>                
+            </div>
+        </div>
+
+	</div>
+
+	
+	
+	
+</div>
+
+<div class="float-button float-bottom float-right">
+	
+	<a href="#" class="btn btn-default btn-lg"> <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Back</a>
+</div>
