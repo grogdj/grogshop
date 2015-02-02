@@ -62,7 +62,7 @@
 	            		</div>
 	            		<div class="panel-body">
             		       <p ng-hide="filteredClubs.length">There is no result</p>
-	            		   <div class="clubscontainer" ng-repeat="club in filteredClubs = (clubList | filter:checkUserInterest | filter: {interest : selectInterest.interest || undefined}:true ) "> 
+	            		   <div class="clubscontainer" ng-repeat="club in filteredClubs = (clubList | filter:checkUserInterest | filter: selectInterest.interest :true ) "> 
 	            		   		<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 club-item">
 	            		   			<div href="#" class="thumbnail">
 	            		   					<div class="img-container">

@@ -1,28 +1,24 @@
 (function(){
-    var vCompare = function() {
-        return {
-            require: 'ngModel',
+    var compareTo = function() {
+    return {
+            require: "ngModel",
             scope: {
-
-              reference: '=vCompare'
-
+                otherModelValue: "=compareTo"
             },
-            link: function(scope, elm, attrs, ctrl) {
-              ctrl.$parsers.unshift(function(viewValue, $scope) {
+            link: function(scope, element, attributes, ngModel) {
 
-                var noMatch = viewValue != scope.reference;
-                ctrl.$setValidity('noMatch', !noMatch);
-              });
+                ngModel.$validators.compareTo = function(modelValue) {
+                    return modelValue == scope.otherModelValue;
+                };
 
-              scope.$watch("reference", function(value) {;
-                ctrl.$setValidity('noMatch', value === ctrl.$viewValue);
-
-              });
+                scope.$watch("otherModelValue", function() {
+                    ngModel.$validate();
+                });
             }
-         }
+        };
     };
     
-    angular.module( "clubhouse" ).directive('vCompare', vCompare);
+    angular.module( "clubhouse" ).directive('compareTo', compareTo);
     
 }());
 

@@ -231,7 +231,8 @@
                             scope.decimalPlaces = defaults.decimalPlaces;
                         }
                     });
-
+                    
+                    scope.showValues = defaults.showValues;
                     attrs.$observe('showValues', function(val) {
                         if (!angular.isDefined(val)) {
                             scope.showValues = defaults.showValues;

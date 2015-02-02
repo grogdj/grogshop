@@ -194,7 +194,13 @@
                          var newRequest = {id: data, club_id: $scope.club_id, user_id: $scope.user_id, user_email: $scope.email, name: $scope.newRequest.title, description: $scope.newRequest.description, tags: $scope.newRequest.tags, minPrice: $scope.newRequest.minPrice, maxPrice: $scope.newRequest.maxPrice, type: 'REQUEST', hasImage: false};
                          console.log('REQUEST with no image');
                         $scope.uploading = false;
-                        $scope.items.push(newItem);
+                        $scope.items.push(newRequest);
+                        //CLOSE POPUP AND RESET
+                        $('#newRequestModal').modal('hide');
+                        $scope.newRequest={};
+                        $scope.requestPicFile= null;
+                        $scope.newRequestForm.$setPristine();
+                        $scope.submittedRequest = false;
                     }
 
                 }).error(function (data) {

@@ -40,6 +40,10 @@
                 controller: 'clubController'
 
             })
+             .when('/matchings/', {
+                templateUrl: 'app/views/matchings.html',
+                controller: 'matchingsController'
+            })
              .when('/club/:club_id', {
                 templateUrl: 'app/views/club.html',
                 controller: 'clubController'
