@@ -41,6 +41,10 @@
                 controller: 'clubController'
 
             })
+            .when('/matchings/', {
+                templateUrl: 'app/views/matchings.html',
+                controller: 'matchingsController'
+            })
             .otherwise({
                 redirectto: '/'
             });

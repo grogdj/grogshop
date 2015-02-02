@@ -1,0 +1,58 @@
+
+       
+<div class="matchings-container">
+        
+        <hr style="border-color:#999;" >
+       <div class="filters-bar clearfix">
+
+            
+            <div class="form-group col-md-2 ">
+                <label for="order" class="sr-only">Order</label>
+                <select class="form-control" id="order" ng-model="matchingType.item_type" >
+                    <option value="">All</option>
+                    <option value="REQUEST">Requests</option>
+                    <option value="ITEM">Items</option>
+                    <option value="TOPIC">Topics</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="searchname" class="sr-only">Search Item</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                    <input type="text" class="form-control" id="searchname" ng-model="searchName" placeholder="Search">
+                </div>
+
+
+            </div>
+
+
+
+        </div> 
+        <hr style="border-color:#999;" >            
+        
+                    
+                    
+            <div class="matching-item" ng-repeat="matching in userMatchings | filter:{item_type:matchingType.item_type||undefined}:true | filter:searchName">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>Matchings para</h6><h4>{{matching.item_name}}</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="container-fluid">
+                               <div class="row">
+                                    <div class="matching-match item col-md-4" ng-repeat="match in matching.item_matchings">
+                                       <div class="well">
+                                        {{match.item_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            
+      
+</div>
