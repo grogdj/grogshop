@@ -33,14 +33,16 @@
     </head>
 
     <body ng-controller="MainCtrl">
-        <!-- APP NOTIFICATIONS -->
+        <!-- APP NOTIFICATIONS 
     <growl-notifications></growl-notifications>
 
     <div ng-repeat="(id, notification) in notifications track by id">
         <growl-notification ttl="3000" ng-click="$growlNotification.remove()" >
             {{notification}}
         </growl-notification>
-    </div>
+    </div>-->
+    
+     <div growl></div>
 
     <!-- APP MAIN NAVIGATION -->
 
@@ -69,7 +71,7 @@
     <script src="bower_components/angular-rangeslider/angular.rangeSlider.js"></script>
     <script src="bower_components/FileAPI/dist/FileAPI.min.js"></script> 
     <script src="bower_components/masonry/dist/masonry.pkgd.js"></script>
-    <script src="bower_components/angular-growl-v2/angular-growl.min.js"></script>
+    <script src="bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
 
 
     <script src="components/version/version.js"></script>

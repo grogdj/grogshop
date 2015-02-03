@@ -8,12 +8,14 @@
             if (isValid) {
                $users.signup($scope.newUser.email, $scope.newUser.pass).success(function (data) {
                    // $rootScope.$broadcast("quickNotification", "You are  now registered, please login!");
-                    $rootScope.$broadcast("goTo", "/");
+                    
+                   $rootScope.$broadcast("goTo", "/");
                     $scope.registerForm.$setPristine();
                     console.log("Welcome to " + $scope.newUser.email + "!");
+                    
                    
                 }).error(function (data) {
-                    $rootScope.$broadcast("quickNotification", "Something failed: "+data.error);
+                    $rootScope.$broadcast("quickNotification", "Something failed: "+data.error, 'error');
                     console.log("Error : " + data.error + "!");
 
                 });

@@ -1,7 +1,11 @@
 
 (function () {
     
-    var MainCtrl = function ($scope,  $cookieStore, $rootScope, $users, $memberships, appConstants) {
+    angular.module( 'clubhouse' ).config(['growlProvider', function (growlProvider) {
+      growlProvider.globalTimeToLive(3000);
+    }]);
+    
+    var MainCtrl = function ($scope,  $cookieStore, $rootScope, $users, $memberships, appConstants, growl) {
         $scope.auth_token = $cookieStore.get('auth_token');
         $scope.email = $cookieStore.get('email');
         $scope.user_id = $cookieStore.get('user_id');
@@ -10,18 +14,41 @@
         $scope.memberships = [];
         $scope.notifications = {};
         $scope.avatarStyle = "";
-
-        $rootScope.$on('quickNotification', function (event, data) {
-            var i;
+        
+        
+        
+        $rootScope.$on('quickNotification', function (event, data, type) {
+             var config = {};
 
             if (!data) {
                 $scope.invalidNotification = true;
                 return;
             }
-
-            i = $scope.index++;
-            $scope.invalidNotification = false;
-            $scope.notifications[i] = data;
+        
+            //i = $scope.index++;
+            //$scope.invalidNotification = false;
+            //$scope.notifications[i] = data;
+            console.log("notification " + data );
+            
+             switch (type) {
+              case "success":
+                growl.success(data, config);
+                break;
+              case "info":
+                growl.info(data, config);
+                break;
+              case "warning":
+                growl.warning(data, config);
+                break;
+              case "error":
+                growl.error(data, config);
+                break;
+              default: 
+                growl.error(data, config);
+            }
+            
+            
+            
 
         });
 
@@ -38,10 +65,10 @@
                 $cookieStore.remove('email');
                 $scope.avatarStyle ="";
                 $rootScope.$broadcast('goTo', "/");
-               // $rootScope.$broadcast("quickNotification", "You have been logged out.");
+                $rootScope.$broadcast("quickNotification", "You have been logged out.", 'info');
             }).error(function (data) {
                 console.log("Error: " + data);
-                $rootScope.$broadcast("quickNotification", "Error: " + data);
+                $rootScope.$broadcast("quickNotification", "Error: " + data, 'error');
             });
 
         };
@@ -53,7 +80,7 @@
 
             if (isValid) {
                 $users.login(user).success(function (data) {
-                   // $rootScope.$broadcast("quickNotification", "You are logged now, have fun!");
+                    $rootScope.$broadcast("quickNotification", "You are logged now, have fun!", 'success');
                     console.log("You are signed in! " + data.auth_token);
 
                     $cookieStore.put('auth_token', data.auth_token);
@@ -77,7 +104,7 @@
 
                 }).error(function (data) {
                     console.log("Error: " + data.error);
-                    $rootScope.$broadcast("quickNotification", "You are NOT logged in because:" + data.error);
+                    $rootScope.$broadcast("quickNotification", "You are NOT logged in because:" + data.error, 'error');
                 });
             }
         };
@@ -114,7 +141,7 @@
     };
     
     
-    MainCtrl.$inject = ['$scope', '$cookieStore', '$rootScope', '$users', '$memberships', 'appConstants'];
+    MainCtrl.$inject = ['$scope', '$cookieStore', '$rootScope', '$users', '$memberships', 'appConstants', 'growl'];
     angular.module( "clubhouse" ).controller("MainCtrl", MainCtrl);
 }());
 

@@ -1,6 +1,6 @@
 (function() {
     
-    var clubhouse = angular.module('clubhouse', ['shopnotifications', 'ngCookies', 'ngTagsInput', 'growlNotifications', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload', 'ui-rangeSlider','masonry']);
+    var clubhouse = angular.module('clubhouse', ['shopnotifications', 'ngCookies', 'ngTagsInput', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload', 'ui-rangeSlider','masonry','angular-growl']);
     
    clubhouse.constant("appConstants", {
         server: "http://localhost:8080/",
@@ -54,6 +54,8 @@
             });
 
     });
+    
+    
     
     //HISTORY 
     clubhouse.run(function ($rootScope, $location) {
