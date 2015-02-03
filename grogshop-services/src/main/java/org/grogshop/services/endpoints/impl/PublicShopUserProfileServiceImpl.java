@@ -35,7 +35,8 @@ public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileSe
 
     @Inject
     private ProfilesService profileService;
-
+    private final static String serverUrl = "localhost";
+    
     private final static Logger log = Logger.getLogger(PublicShopUserProfileServiceImpl.class.getName());
 
     public PublicShopUserProfileServiceImpl() {
@@ -76,7 +77,7 @@ public class PublicShopUserProfileServiceImpl implements PublicShopUserProfileSe
         } else {
             try {
                 log.info("avatar not found");
-                return Response.temporaryRedirect(new URI("../static/img/public-images/default-avatar.png")).build();
+                return Response.temporaryRedirect(new URI("http://"+serverUrl+"/static/img/public-images/default-avatar.png")).build();
             } catch (URISyntaxException ex) {
                 Logger.getLogger(PublicShopUserProfileServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
