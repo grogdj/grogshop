@@ -49,7 +49,7 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
     @Inject
     private MembershipsService membershipsService;
     
-    private String server_url = "localhost:8080";
+    private String server_url = "localhost";
 
     public Response initApplication() throws ServiceException {
         try {
@@ -104,23 +104,23 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
             List<String> itemTags = new ArrayList<String>();
             itemTags.add("item tag here");
             itemsService.newItem(grogdjId, soccerId,"POST", "Diadora Boots", "Buy Diadora Soccer Boots", 
-                    itemTags, new BigDecimal(100), new BigDecimal(100),"http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyDiadoraSoccerBoot"+".jpg");
+                    itemTags, new BigDecimal(100), new BigDecimal(100),"http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyDiadoraSoccerBoot"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Umbro Boots (Size 8)", "Buy Umbro Soccer Boot (Size 8)", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyFootballBootsUmbroSize8"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyFootballBootsUmbroSize8"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Fuse Ball table", "For sale a brand new Fuse Ball Table ", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyFuseballTable"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyFuseballTable"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Jako Soccer Ball", "Buy a Jacko Soccer Ball", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyJakoSoccerBall"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyJakoSoccerBall"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Real Madrid Shirt", "Buy a Real Madrid Shirt", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyRealMadridShirt"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyRealMadridShirt"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Medium England Shirt", "For sale a Medium Retro England Shirt", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyRetroEnglandFootballShirtMedium"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyRetroEnglandFootballShirtMedium"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Soccer Ball", "Used Soccer Ball", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buySoccerBall"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"buySoccerBall"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Real Madrid Stadium Tour Tickets", "For sale a couple of Real Madrid Stadium Tour Tickets", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"buyStadiumTourTicketsRealMadrid"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyStadiumTourTicketsRealMadrid"+".jpg");
             itemsService.newItem(grogdjId, soccerId, "POST","New Players Required ", "for a 5 aside team match in Acton", 
-                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/grogshop-server/static/img/public-images/sports/soccer/"+"soccer5AsideTeamNeedsNewPlayers"+".jpg");
+                    itemTags, new BigDecimal(100),new BigDecimal(100), "http://"+server_url+"/static/img/public-images/sports/soccer/"+"soccer5AsideTeamNeedsNewPlayers"+".jpg");
             
 //            membershipsService.createMembership(cookingId, grogdjId);
 //            membershipsService.createMembership(antiquesId, grogdjId);
