@@ -9,6 +9,7 @@ package org.grogshop.services.impl;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import org.grogshop.services.api.MatchingsService;
 import org.grogshop.services.api.RulesService;
 import org.grogshop.services.api.NotificationsService;
 import org.kie.api.KieBase;
@@ -28,7 +29,10 @@ import org.kie.api.runtime.rule.FactHandle;
 public class RulesServiceImpl implements RulesService {
 
     @Inject
-    NotificationsService notificationService;
+    private NotificationsService notificationsService;
+    
+    @Inject
+    private MatchingsService matchingsService;
 
   
 
@@ -62,37 +66,38 @@ public class RulesServiceImpl implements RulesService {
 //                }
             }
         });
-        kieSession.setGlobal("notificationsService", notificationService);
+        kieSession.setGlobal("notificationsService", notificationsService);
+        kieSession.setGlobal("matchingsService", matchingsService);
         
     }
 
     @Override
-    public void insert(Object o) {
-        System.out.println(">> Matching Service inserted: " + o);
+    public int insert(Object o) {
+        System.out.println(">> Rules Service inserted: " + o);
         kieSession.insert(o);
-        kieSession.fireAllRules();
+        return kieSession.fireAllRules();
     }
 
     @Override
     public void reset() {
-        System.out.println(">> Matching Service init!");
+        System.out.println(">> Rules Service init!");
         init();
     }
 
     @Override
     public void retract(Object o) {
-        System.out.println(">> Matching Service retracted: " + o);
+        System.out.println(">> Rules Service retracted: " + o);
         FactHandle factHandle = kieSession.getFactHandle(o);
         kieSession.delete(factHandle);
         kieSession.fireAllRules();
     }
 
     @Override
-    public void update(Object o) {
-        System.out.println(">> Matching Service updated: " + o);
+    public int update(Object o) {
+        System.out.println(">> Rules Service updated: " + o);
         FactHandle factHandle = kieSession.getFactHandle(o);
         kieSession.update(factHandle, o);
-        kieSession.fireAllRules();
+        return kieSession.fireAllRules();
     }
 
 }

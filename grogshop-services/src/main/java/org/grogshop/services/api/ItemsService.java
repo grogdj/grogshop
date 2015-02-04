@@ -18,6 +18,8 @@ public interface ItemsService {
 
     List<Item> getAllItems() throws ServiceException;
     
+    List<Item> getAllItemsByUser(Long userId) throws ServiceException;
+    
     List<Item> getAllItemsByClub(Long clubId) throws ServiceException;
 
     Long newItem(Long userId, Long clubId, String type, String name, String description,  

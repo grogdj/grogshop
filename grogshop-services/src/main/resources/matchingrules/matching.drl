@@ -8,18 +8,17 @@ global NotificationsService notificationsService;
 global MatchingsService matchingsService;
 
 
-rule "matching membership and listing"
+rule "item matching request"
   when
-    // When I have a list that matches with all the bidders 
-    $l: Listing($listingTags: tags, $listingPriceRange: priceRange)
-    $m: ClubMembership(tags matchp $listingTags)
+
+    $p: Item(type == Item.ItemType.POST, $club: club, $postTags: tags, $postPrice: minPrice )
+    $r: Item(type == Item.ItemType.REQUEST, tags matchp $postTags, minPrice < $postPrice, maxPrice > $postPrice)
   then
-    notificationsService.notifyUser($l.getUserId(), "Matching: club member interested in the listing", "user");
-    notificationsService.notifyUser($m.getUserId(), "Matching: new listing in club ", "user");
-    Matching newMatching = new Matching($l, $m, "Full Match");
+    
+    Matching newMatching = new Matching($club, $p, $r);
     matchingsService.newMatching(newMatching);
     insertLogical(newMatching);
-    notificationsService.notifyMatching($l.getUserId(), $m.getUserId(),  newMatching);
+    System.out.println("New Matching for:  item(post): "+ $p + " itemMatched (request): "+$r);
 end
 
 

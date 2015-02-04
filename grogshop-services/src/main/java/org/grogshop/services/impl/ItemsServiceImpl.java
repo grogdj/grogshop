@@ -17,10 +17,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.io.IOUtils;
 import org.grogshop.services.api.ItemsService;
+import org.grogshop.services.api.RulesService;
 import org.grogshop.services.exceptions.ServiceException;
 
 /**
@@ -34,7 +36,11 @@ public class ItemsServiceImpl implements ItemsService {
     private EntityManager em;
 
     private final static Logger log = Logger.getLogger(ItemsServiceImpl.class.getName());
-
+    
+    
+    @Inject
+    private RulesService rulesService;
+    
     @PostConstruct
     private void init() {
 
@@ -65,6 +71,7 @@ public class ItemsServiceImpl implements ItemsService {
         Item item = new Item(user, club, type, name, description, tags, minPrice, maxPrice);
         em.persist(item);
         log.log(Level.INFO, "Item {0} created with id {1}", new Object[]{name, item.getId()});
+        rulesService.insert(item);
         return item.getId();
     }
     
@@ -101,6 +108,11 @@ public class ItemsServiceImpl implements ItemsService {
     @Override
     public List<Item> getAllItemsByClub(Long clubId) throws ServiceException {
         return em.createNamedQuery("Item.getAllByClub", Item.class).setParameter("clubId", clubId).getResultList();
+    }
+    
+    @Override
+    public List<Item> getAllItemsByUser(Long userId) throws ServiceException {
+        return em.createNamedQuery("Item.getAllByUser", Item.class).setParameter("userId", userId).getResultList();
     }
 
     @Override

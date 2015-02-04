@@ -54,6 +54,11 @@ public interface ShopItemsService extends Serializable {
     Response getAllItemsByClub(@PathParam("id") Long club_id) throws ServiceException;
     
     @GET
+    @Path("/user/{id}")
+    @Produces({"application/json"})
+    Response getAllItemsByUser(@PathParam("id") Long userId) throws ServiceException;
+    
+    @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
     Response get(@PathParam("id") Long item_id) throws ServiceException;

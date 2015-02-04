@@ -128,4 +128,57 @@ public class Club implements Serializable {
         this.founder = founder;
     }
 
+    @Override
+    public String toString() {
+        return "Club{" + "id=" + id + ", name=" + name + ", description=" + description + ", tags=" + tags + ", interest=" + interest + ", founder=" + founder + ", image=" + image + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 29 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 29 * hash + (this.description != null ? this.description.hashCode() : 0);
+        hash = 29 * hash + (this.tags != null ? this.tags.hashCode() : 0);
+        hash = 29 * hash + (this.interest != null ? this.interest.hashCode() : 0);
+        hash = 29 * hash + (this.founder != null ? this.founder.hashCode() : 0);
+        hash = 29 * hash + (this.image != null ? this.image.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Club other = (Club) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+            return false;
+        }
+        if (this.tags != other.tags && (this.tags == null || !this.tags.equals(other.tags))) {
+            return false;
+        }
+        if (this.interest != other.interest && (this.interest == null || !this.interest.equals(other.interest))) {
+            return false;
+        }
+        if (this.founder != other.founder && (this.founder == null || !this.founder.equals(other.founder))) {
+            return false;
+        }
+        if ((this.image == null) ? (other.image != null) : !this.image.equals(other.image)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+
 }

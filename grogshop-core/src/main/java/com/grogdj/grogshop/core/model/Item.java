@@ -7,6 +7,7 @@ package com.grogdj.grogshop.core.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -208,8 +209,76 @@ public class Item implements Serializable {
                 && !imageFileName.equals(""));
     }
 
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Item{" + "id=" + id + ", user=" + user + ", club=" + club + ", name=" + name + ", since=" + since + ", description=" + description + ", tags=" + tags + ", imageFileName=" + imageFileName + ", imageContent=" + imageContent + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice + ", type=" + type + '}';
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 97 * hash + (this.user != null ? this.user.hashCode() : 0);
+        hash = 97 * hash + (this.club != null ? this.club.hashCode() : 0);
+        hash = 97 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 97 * hash + (this.since != null ? this.since.hashCode() : 0);
+        hash = 97 * hash + (this.description != null ? this.description.hashCode() : 0);
+        hash = 97 * hash + (this.tags != null ? this.tags.hashCode() : 0);
+        hash = 97 * hash + (this.imageFileName != null ? this.imageFileName.hashCode() : 0);
+        hash = 97 * hash + Arrays.hashCode(this.imageContent);
+        hash = 97 * hash + (this.minPrice != null ? this.minPrice.hashCode() : 0);
+        hash = 97 * hash + (this.maxPrice != null ? this.maxPrice.hashCode() : 0);
+        hash = 97 * hash + (this.type != null ? this.type.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if (this.user != other.user && (this.user == null || !this.user.equals(other.user))) {
+            return false;
+        }
+        if (this.club != other.club && (this.club == null || !this.club.equals(other.club))) {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        if (this.since != other.since && (this.since == null || !this.since.equals(other.since))) {
+            return false;
+        }
+        if ((this.description == null) ? (other.description != null) : !this.description.equals(other.description)) {
+            return false;
+        }
+        if (this.tags != other.tags && (this.tags == null || !this.tags.equals(other.tags))) {
+            return false;
+        }
+        if ((this.imageFileName == null) ? (other.imageFileName != null) : !this.imageFileName.equals(other.imageFileName)) {
+            return false;
+        }
+        if (!Arrays.equals(this.imageContent, other.imageContent)) {
+            return false;
+        }
+        if (this.minPrice != other.minPrice && (this.minPrice == null || !this.minPrice.equals(other.minPrice))) {
+            return false;
+        }
+        if (this.maxPrice != other.maxPrice && (this.maxPrice == null || !this.maxPrice.equals(other.maxPrice))) {
+            return false;
+        }
+        if (this.type != other.type) {
+            return false;
+        }
+        return true;
+    }
+
+    
 }

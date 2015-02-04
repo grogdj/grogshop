@@ -90,5 +90,7 @@ public class Interest {
     public String toString() {
         return "Interest{" + "name=" + name + ", imageURL=" + imageURL + '}';
     }
+    
+    
 
 }

@@ -84,13 +84,13 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
 
             profilesService.create(grogdjId);
             List<Interest> interests = new ArrayList<Interest>();
-            interests.add(interestsService.get("food & drink"));
+            interests.add(interestsService.get("sports"));
             interests.add(interestsService.get("antique"));
             profilesService.setInterests(grogdjId, interests);
 
             profilesService.create(ezeId);
             interests = new ArrayList<Interest>();
-            interests.add(interestsService.get("food & drink"));
+            interests.add(interestsService.get("sports"));
             interests.add(interestsService.get("antique"));
             interests.add(interestsService.get("music"));
             profilesService.setInterests(ezeId, interests);
@@ -102,7 +102,8 @@ public class PublicShopInitServiceImpl implements PublicShopInitService {
             
             Long soccerId = sportsClubsMap.get("soccer");
             List<String> itemTags = new ArrayList<String>();
-            itemTags.add("item tag here");
+            itemTags.add("sports");
+            itemTags.add("soccer");
             itemsService.newItem(grogdjId, soccerId,"POST", "Diadora Boots", "Buy Diadora Soccer Boots", 
                     itemTags, new BigDecimal(100), new BigDecimal(100),"http://"+server_url+"/static/img/public-images/sports/soccer/"+"buyDiadoraSoccerBoot"+".jpg");
             itemsService.newItem(grogdjId, soccerId,"POST", "Umbro Boots (Size 8)", "Buy Umbro Soccer Boot (Size 8)", 

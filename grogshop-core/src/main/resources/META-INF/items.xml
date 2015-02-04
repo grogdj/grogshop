@@ -23,5 +23,16 @@
                                 _item.club.id  = :clubId 
 		</query>
 	</named-query>
+        
+        <named-query name="Item.getAllByUser">
+		<query>
+			SELECT
+				_item
+			FROM
+				Item _item
+                        WHERE
+                                _item.user.id  = :userId 
+		</query>
+	</named-query>
 		
 </entity-mappings>

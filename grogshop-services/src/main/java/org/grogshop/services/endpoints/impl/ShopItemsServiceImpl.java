@@ -113,6 +113,39 @@ public class ShopItemsServiceImpl implements ShopItemsService {
         return Response.ok(jsonArray.toString()).build();
 
     }
+    
+    @Override
+    public Response getAllItemsByUser(@PathParam("id") Long userId) throws ServiceException {
+        List<Item> allItems = itemsService.getAllItemsByUser(userId);
+        JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        for (Item i : allItems) {
+            jsonObjectBuilder
+                    .add("id", (i.getId() == null) ? "" : i.getId().toString())
+                    .add("user_id", (i.getUser().getId() == null) ? "" : i.getUser().getId().toString())
+                    .add("user_email", (i.getUser().getEmail() == null) ? "" : i.getUser().getEmail())
+                    .add("club_id", (i.getClub().getId() == null) ? "" : i.getClub().getId().toString())
+                    .add("type", (i.getType() == null) ? "" : i.getType().toString())
+                    .add("name", (i.getName() == null) ? "" : i.getName())
+                    .add("description", (i.getDescription() == null) ? "" : i.getDescription())
+                    .add("hasImage", i.hasImage())
+                    .add("minPrice", (i.getMinPrice() == null) ? "" : i.getMinPrice().toString())
+                    .add("maxPrice", (i.getMaxPrice() == null) ? "" : i.getMaxPrice().toString());
+
+            if (i.getTags() != null) {
+                JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+                for (String s : i.getTags()) {
+                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text",s));
+                }
+                jsonObjectBuilder.add("tags", jsonArrayBuilderInterest);
+                
+            }
+            jsonArrayBuilder.add(jsonObjectBuilder);
+        }
+        JsonArray jsonArray = jsonArrayBuilder.build();
+        return Response.ok(jsonArray.toString()).build();
+
+    }
 
     @Override
     public Response newItem(@NotNull @FormParam("user_id") Long userId,

@@ -10,8 +10,8 @@ package org.grogshop.services.api;
  * @author grogdj
  */
 public interface RulesService {
-    void insert(Object o);
+    int insert(Object o);
     void retract(Object o);
-    void update(Object o);
+    int update(Object o);
     void reset();
 }
