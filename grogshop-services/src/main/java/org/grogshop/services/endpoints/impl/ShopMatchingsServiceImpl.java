@@ -123,7 +123,7 @@ public class ShopMatchingsServiceImpl implements ShopMatchingsService {
 
                 }
 
-                jsonArrayBuilder.add(jsonObjectBuilder);
+                jsonArrayBuilder.add(jsonItemMatchedObjectBuilder);
             }
         }
         jsonObjectBuilder.add("machedItems", jsonArrayBuilder);
