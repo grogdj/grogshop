@@ -50,14 +50,24 @@
                  console.log($scope.userItems[i].id);
                 $matchings.load($scope.userItems[i].id).success(function (data) {
                     console.log("MATCHING DATA" + data)
-                    console.log(data);
+                    console.log(data);            
+                    //$scope.itemsMatchings.push(data);
                     
-                    $scope.itemsMatchings.push(data);
+                     for (j = 0; j < $scope.userItems.length; j++) { 
+                         console.log(" FOR" + $scope.userItems[j].id + " / " + data.item_id)
+                        if($scope.userItems[j].id == data.item_id){
+                              console.log("IN FOR DATA "+ j +" / " + data)
+                            $scope.userItems[j].item_matchings = [];
+                            $scope.userItems[j].item_matchings = data;
+                        }
+                     }
                 }).error(function (data) {
                     console.log("Error: " + data);
                 });
             }
         }
+        
+        
         //
         
         $scope.comparatorClub =function (a , b) {

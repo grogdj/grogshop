@@ -9,10 +9,10 @@
             
             <div class="form-group col-md-2 ">
                 <label for="order" class="sr-only">Order</label>
-                <select class="form-control" id="order" ng-model="matchingType.item_type" >
+                <select class="form-control" id="order" ng-model="matchingType.type" >
                     <option value="">All</option>
                     <option value="REQUEST">Requests</option>
-                    <option value="ITEM">Items</option>
+                    <option value="POST">Items</option>
                     <option value="TOPIC">Topics</option>
                 </select>
             </div>
@@ -46,9 +46,9 @@
         <hr style="border-color:#999;" >            
         
 
-                    <!--filter:{item_type:matchingType.item_type||undefined}:true-->
-    {{userItems}}
-            <div class="matching-item" ng-repeat="matching in userItems | filter:matchingClub.id:comparatorClub() | filter:matchingType.item_type | filter:searchName">
+                    <!--filter:{item_type:matchingType.item_type||undefined}:true    -->
+     
+            <div class="matching-item" ng-repeat="matching in userItems | filter:matchingClub.id:comparatorClub() | filter:matchingType.type | filter:searchName">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-4">
@@ -61,13 +61,13 @@
                         <div class="col-md-8">
                             <div class="container-fluid">
                                <div class="row">
-                                   <!--
-                                    <div class="matching-match item col-md-4" ng-repeat="match in matching.item_matchings">
+                                   
+                                    <div class="matching-match item col-md-4" ng-repeat="match in matching.item_matchings.machedItems ">
                                        <div class="well">
-                                        {{match.item_name}}
+                                        {{match.name }}
                                         </div>
-                                    </div>-->
-                                   {{itemsMatchings}}
+                                    </div>
+                                   
                                 </div>
                             </div>
                         </div>
