@@ -84,6 +84,7 @@ public class ShopMatchingsServiceImpl implements ShopMatchingsService {
 
             jsonArrayBuilder.add(jsonObjectBuilder);
         }
+
         JsonArray jsonArray = jsonArrayBuilder.build();
         return Response.ok(jsonArray.toString()).build();
     }
@@ -92,32 +93,34 @@ public class ShopMatchingsServiceImpl implements ShopMatchingsService {
         List<Matching> allMatchings = matchingsService.getAllItemsByItem(itemId);
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
         JsonObjectBuilder jsonItemMatchedObjectBuilder = Json.createObjectBuilder();
-        for (Matching m : allMatchings) {
+        if (allMatchings != null) {
+            for (Matching m : allMatchings) {
 
-            if (m.getItemMatched() != null) {
+                if (m.getItemMatched() != null) {
 
-                jsonItemMatchedObjectBuilder.add("id", (m.getItemMatched().getId() == null) ? "" : m.getItemMatched().getId().toString())
-                        .add("user_id", (m.getItemMatched().getUser().getId() == null) ? "" : m.getItemMatched().getUser().getId().toString())
-                        .add("user_email", (m.getItemMatched().getUser().getEmail() == null) ? "" : m.getItemMatched().getUser().getEmail())
-                        .add("club_id", (m.getItemMatched().getClub().getId() == null) ? "" : m.getItemMatched().getClub().getId().toString())
-                        .add("type", (m.getItemMatched().getType() == null) ? "" : m.getItemMatched().getType().toString())
-                        .add("name", (m.getItemMatched().getName() == null) ? "" : m.getItemMatched().getName())
-                        .add("description", (m.getItemMatched().getDescription() == null) ? "" : m.getItemMatched().getDescription())
-                        .add("hasImage", m.getItemMatched().hasImage())
-                        .add("minPrice", (m.getItemMatched().getMinPrice() == null) ? "" : m.getItemMatched().getMinPrice().toString())
-                        .add("maxPrice", (m.getItemMatched().getMaxPrice() == null) ? "" : m.getItemMatched().getMaxPrice().toString());
+                    jsonItemMatchedObjectBuilder.add("id", (m.getItemMatched().getId() == null) ? "" : m.getItemMatched().getId().toString())
+                            .add("user_id", (m.getItemMatched().getUser().getId() == null) ? "" : m.getItemMatched().getUser().getId().toString())
+                            .add("user_email", (m.getItemMatched().getUser().getEmail() == null) ? "" : m.getItemMatched().getUser().getEmail())
+                            .add("club_id", (m.getItemMatched().getClub().getId() == null) ? "" : m.getItemMatched().getClub().getId().toString())
+                            .add("type", (m.getItemMatched().getType() == null) ? "" : m.getItemMatched().getType().toString())
+                            .add("name", (m.getItemMatched().getName() == null) ? "" : m.getItemMatched().getName())
+                            .add("description", (m.getItemMatched().getDescription() == null) ? "" : m.getItemMatched().getDescription())
+                            .add("hasImage", m.getItemMatched().hasImage())
+                            .add("minPrice", (m.getItemMatched().getMinPrice() == null) ? "" : m.getItemMatched().getMinPrice().toString())
+                            .add("maxPrice", (m.getItemMatched().getMaxPrice() == null) ? "" : m.getItemMatched().getMaxPrice().toString());
 
-                if (m.getItemMatched().getTags() != null) {
-                    JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
-                    for (String s : m.getItemMatched().getTags()) {
-                        jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text", s));
+                    if (m.getItemMatched().getTags() != null) {
+                        JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+                        for (String s : m.getItemMatched().getTags()) {
+                            jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text", s));
+                        }
+                        jsonItemMatchedObjectBuilder.add("tags", jsonArrayBuilderInterest);
                     }
-                    jsonItemMatchedObjectBuilder.add("tags", jsonArrayBuilderInterest);
+
                 }
 
+                jsonArrayBuilder.add(jsonItemMatchedObjectBuilder);
             }
-
-            jsonArrayBuilder.add(jsonItemMatchedObjectBuilder);
         }
         JsonArray jsonArray = jsonArrayBuilder.build();
         return Response.ok(jsonArray.toString()).build();
@@ -125,59 +128,59 @@ public class ShopMatchingsServiceImpl implements ShopMatchingsService {
 
     public Response get(Long matchingId) throws ServiceException {
         Matching m = matchingsService.getById(matchingId);
-        
+
         JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-        
-            jsonObjectBuilder
-                    .add("id", (m.getId() == null) ? "" : m.getId().toString())
-                    .add("club_id", (m.getClub() == null) ? "" : m.getClub().getId().toString())
-                    .add("club_name", (m.getClub() == null) ? "" : m.getClub().getName());
-            if (m.getItem() != null) {
-                JsonObjectBuilder jsonItemObjectBuilder = Json.createObjectBuilder();
-                jsonItemObjectBuilder.add("id", (m.getItem().getId() == null) ? "" : m.getItem().getId().toString())
-                        .add("user_id", (m.getItem().getUser().getId() == null) ? "" : m.getItem().getUser().getId().toString())
-                        .add("user_email", (m.getItem().getUser().getEmail() == null) ? "" : m.getItem().getUser().getEmail())
-                        .add("club_id", (m.getItem().getClub().getId() == null) ? "" : m.getItem().getClub().getId().toString())
-                        .add("type", (m.getItem().getType() == null) ? "" : m.getItem().getType().toString())
-                        .add("name", (m.getItem().getName() == null) ? "" : m.getItem().getName())
-                        .add("description", (m.getItem().getDescription() == null) ? "" : m.getItem().getDescription())
-                        .add("hasImage", m.getItem().hasImage())
-                        .add("minPrice", (m.getItem().getMinPrice() == null) ? "" : m.getItem().getMinPrice().toString())
-                        .add("maxPrice", (m.getItem().getMaxPrice() == null) ? "" : m.getItem().getMaxPrice().toString());
 
-                if (m.getItem().getTags() != null) {
-                    JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
-                    for (String s : m.getItem().getTags()) {
-                        jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text", s));
-                    }
-                    jsonItemObjectBuilder.add("tags", jsonArrayBuilderInterest);
-                }
-                jsonObjectBuilder.add("item", jsonItemObjectBuilder);
-            }
-            if (m.getItemMatched() != null) {
-                JsonObjectBuilder jsonItemMatchedObjectBuilder = Json.createObjectBuilder();
-                jsonItemMatchedObjectBuilder.add("id", (m.getItemMatched().getId() == null) ? "" : m.getItemMatched().getId().toString())
-                        .add("user_id", (m.getItemMatched().getUser().getId() == null) ? "" : m.getItemMatched().getUser().getId().toString())
-                        .add("user_email", (m.getItemMatched().getUser().getEmail() == null) ? "" : m.getItemMatched().getUser().getEmail())
-                        .add("club_id", (m.getItemMatched().getClub().getId() == null) ? "" : m.getItemMatched().getClub().getId().toString())
-                        .add("type", (m.getItemMatched().getType() == null) ? "" : m.getItemMatched().getType().toString())
-                        .add("name", (m.getItemMatched().getName() == null) ? "" : m.getItemMatched().getName())
-                        .add("description", (m.getItemMatched().getDescription() == null) ? "" : m.getItemMatched().getDescription())
-                        .add("hasImage", m.getItemMatched().hasImage())
-                        .add("minPrice", (m.getItemMatched().getMinPrice() == null) ? "" : m.getItemMatched().getMinPrice().toString())
-                        .add("maxPrice", (m.getItemMatched().getMaxPrice() == null) ? "" : m.getItemMatched().getMaxPrice().toString());
+        jsonObjectBuilder
+                .add("id", (m.getId() == null) ? "" : m.getId().toString())
+                .add("club_id", (m.getClub() == null) ? "" : m.getClub().getId().toString())
+                .add("club_name", (m.getClub() == null) ? "" : m.getClub().getName());
+        if (m.getItem() != null) {
+            JsonObjectBuilder jsonItemObjectBuilder = Json.createObjectBuilder();
+            jsonItemObjectBuilder.add("id", (m.getItem().getId() == null) ? "" : m.getItem().getId().toString())
+                    .add("user_id", (m.getItem().getUser().getId() == null) ? "" : m.getItem().getUser().getId().toString())
+                    .add("user_email", (m.getItem().getUser().getEmail() == null) ? "" : m.getItem().getUser().getEmail())
+                    .add("club_id", (m.getItem().getClub().getId() == null) ? "" : m.getItem().getClub().getId().toString())
+                    .add("type", (m.getItem().getType() == null) ? "" : m.getItem().getType().toString())
+                    .add("name", (m.getItem().getName() == null) ? "" : m.getItem().getName())
+                    .add("description", (m.getItem().getDescription() == null) ? "" : m.getItem().getDescription())
+                    .add("hasImage", m.getItem().hasImage())
+                    .add("minPrice", (m.getItem().getMinPrice() == null) ? "" : m.getItem().getMinPrice().toString())
+                    .add("maxPrice", (m.getItem().getMaxPrice() == null) ? "" : m.getItem().getMaxPrice().toString());
 
-                if (m.getItemMatched().getTags() != null) {
-                    JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
-                    for (String s : m.getItemMatched().getTags()) {
-                        jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text", s));
-                    }
-                    jsonItemMatchedObjectBuilder.add("tags", jsonArrayBuilderInterest);
+            if (m.getItem().getTags() != null) {
+                JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+                for (String s : m.getItem().getTags()) {
+                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text", s));
                 }
-                jsonObjectBuilder.add("itemMatched", jsonItemMatchedObjectBuilder);
+                jsonItemObjectBuilder.add("tags", jsonArrayBuilderInterest);
             }
-            jsonObjectBuilder.add("since", m.getMatchedSince().toString());
-        
+            jsonObjectBuilder.add("item", jsonItemObjectBuilder);
+        }
+        if (m.getItemMatched() != null) {
+            JsonObjectBuilder jsonItemMatchedObjectBuilder = Json.createObjectBuilder();
+            jsonItemMatchedObjectBuilder.add("id", (m.getItemMatched().getId() == null) ? "" : m.getItemMatched().getId().toString())
+                    .add("user_id", (m.getItemMatched().getUser().getId() == null) ? "" : m.getItemMatched().getUser().getId().toString())
+                    .add("user_email", (m.getItemMatched().getUser().getEmail() == null) ? "" : m.getItemMatched().getUser().getEmail())
+                    .add("club_id", (m.getItemMatched().getClub().getId() == null) ? "" : m.getItemMatched().getClub().getId().toString())
+                    .add("type", (m.getItemMatched().getType() == null) ? "" : m.getItemMatched().getType().toString())
+                    .add("name", (m.getItemMatched().getName() == null) ? "" : m.getItemMatched().getName())
+                    .add("description", (m.getItemMatched().getDescription() == null) ? "" : m.getItemMatched().getDescription())
+                    .add("hasImage", m.getItemMatched().hasImage())
+                    .add("minPrice", (m.getItemMatched().getMinPrice() == null) ? "" : m.getItemMatched().getMinPrice().toString())
+                    .add("maxPrice", (m.getItemMatched().getMaxPrice() == null) ? "" : m.getItemMatched().getMaxPrice().toString());
+
+            if (m.getItemMatched().getTags() != null) {
+                JsonArrayBuilder jsonArrayBuilderInterest = Json.createArrayBuilder();
+                for (String s : m.getItemMatched().getTags()) {
+                    jsonArrayBuilderInterest.add(Json.createObjectBuilder().add("text", s));
+                }
+                jsonItemMatchedObjectBuilder.add("tags", jsonArrayBuilderInterest);
+            }
+            jsonObjectBuilder.add("itemMatched", jsonItemMatchedObjectBuilder);
+        }
+        jsonObjectBuilder.add("since", m.getMatchedSince().toString());
+
         return Response.ok(jsonObjectBuilder.build().toString()).build();
     }
 

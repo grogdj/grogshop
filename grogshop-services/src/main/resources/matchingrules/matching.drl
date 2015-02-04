@@ -4,18 +4,16 @@ import com.grogdj.grogshop.core.model.*;
 import org.grogshop.services.api.*;
 import org.grogshop.services.impl.*;
 
-global NotificationsService notificationsService;
 global MatchingsService matchingsService;
 
 
-rule "item matching request"
+rule "post matching with request in price range"
   when
-
-    $p: Item(type == Item.ItemType.POST, $club: club, $postTags: tags, $postPrice: minPrice )
-    $r: Item(type == Item.ItemType.REQUEST, tags matchp $postTags, minPrice < $postPrice, maxPrice > $postPrice)
+    $p: Item(type == Item.ItemType.POST, $club: club, $clubId: club.id, $postTags: tags, $postPrice: minPrice )
+    $r: Item(type == Item.ItemType.REQUEST, club.id == $clubId, tags matchp $postTags, minPrice < $postPrice, maxPrice > $postPrice)
   then
     
-    Matching newMatching = new Matching($club, $p, $r);
+    Matching newMatching = new Matching($club, $p, $r, Matching.MatchingType.FULL);
     matchingsService.newMatching(newMatching);
     insertLogical(newMatching);
     System.out.println("New Matching for:  item(post): "+ $p + " itemMatched (request): "+$r);

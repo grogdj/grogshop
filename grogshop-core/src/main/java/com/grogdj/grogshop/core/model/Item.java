@@ -211,7 +211,7 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "Item{" + "id=" + id + ", user=" + user + ", club=" + club + ", name=" + name + ", since=" + since + ", description=" + description + ", tags=" + tags + ", imageFileName=" + imageFileName + ", imageContent=" + imageContent + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice + ", type=" + type + '}';
+        return "Item{" + "id=" + id + ", user=" + user + ", clubId=" + club.getId() + ", name=" + name + ", since=" + since + ", description=" + description + ", tags=" + tags + ", imageFileName=" + imageFileName + ", imageContent=" + imageContent + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice + ", type=" + type + '}';
     }
 
     @Override

@@ -20,7 +20,7 @@ public interface MatchingsService {
     
     List<Matching> getAllItemsByItem(Long itemId) throws ServiceException;
 
-    Long newMatching(Long clubId, Long itemId, Long itemMatchedId) throws ServiceException;
+    Long newMatching(Long clubId, Long itemId, Long itemMatchedId, String type) throws ServiceException;
     
     Long newMatching(Matching matching) throws ServiceException;
     

@@ -30,7 +30,6 @@ public class MatchingsServiceImpl implements MatchingsService {
 
     private final static Logger log = Logger.getLogger(MatchingsServiceImpl.class.getName());
 
-
     @PostConstruct
     private void init() {
 
@@ -44,29 +43,29 @@ public class MatchingsServiceImpl implements MatchingsService {
         return null;
     }
 
-    public Long newMatching(Long clubId, Long itemId, Long itemMatchedId) throws ServiceException {
+    public Long newMatching(Long clubId, Long itemId, Long itemMatchedId, String type) throws ServiceException {
+
         Club club = em.find(Club.class, clubId);
         if (club == null) {
             throw new ServiceException("Club  doesn't exist: " + clubId);
         }
-        
+
         Item item = em.find(Item.class, itemId);
         if (item == null) {
             throw new ServiceException("Item  doesn't exist: " + itemId);
         }
-        
+
         Item itemMatched = em.find(Item.class, itemMatchedId);
         if (itemMatched == null) {
             throw new ServiceException("Item matched doesn't exist: " + itemMatchedId);
         }
-        
-        
-        Matching matching = new Matching(club, item, itemMatched);
+
+        Matching matching = new Matching(club, item, itemMatched, Matching.MatchingType.valueOf(type));
         em.persist(matching);
-        log.log(Level.INFO, "Matching {0} created (club: {1})for item id {2} and {3}", new Object[]{ matching.getId(),club, item,itemMatched });
-        return  matching.getId();
+        log.log(Level.INFO, "Matching {0} created (club: {1})for item id {2} and {3}", new Object[]{matching.getId(), club.getId(), item, itemMatched});
+        return matching.getId();
     }
-    
+
     public Long newMatching(Matching matching) throws ServiceException {
         em.persist(matching);
         return matching.getId();
@@ -77,11 +76,7 @@ public class MatchingsServiceImpl implements MatchingsService {
     }
 
     public void removeMatching(Long matchingId) throws ServiceException {
-        
+
     }
-
-   
-
-   
 
 }

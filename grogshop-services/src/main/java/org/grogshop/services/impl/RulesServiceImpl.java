@@ -28,8 +28,8 @@ import org.kie.api.runtime.rule.FactHandle;
 @ApplicationScoped
 public class RulesServiceImpl implements RulesService {
 
-    @Inject
-    private NotificationsService notificationsService;
+//    @Inject
+//    private NotificationsService notificationsService;
     
     @Inject
     private MatchingsService matchingsService;
@@ -66,7 +66,7 @@ public class RulesServiceImpl implements RulesService {
 //                }
             }
         });
-        kieSession.setGlobal("notificationsService", notificationsService);
+//        kieSession.setGlobal("notificationsService", notificationsService);
         kieSession.setGlobal("matchingsService", matchingsService);
         
     }

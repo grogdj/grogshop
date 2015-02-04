@@ -52,13 +52,17 @@ public class Matching implements Serializable {
 
     private Date matchedSince;
 
+    private MatchingType type;
+
     public Matching() {
     }
 
-    public Matching(Club club, Item item, Item itemMatched) {
+    public Matching(Club club, Item item, Item itemMatched, MatchingType type) {
         this.club = club;
         this.item = item;
         this.itemMatched = itemMatched;
+        this.matchedSince = new Date();
+        this.type = type;
     }
 
     public Long getId() {
@@ -67,14 +71,6 @@ public class Matching implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Club getClub() {
-        return club;
-    }
-
-    public void setClub(Club club) {
-        this.club = club;
     }
 
     public Item getItem() {
@@ -101,19 +97,36 @@ public class Matching implements Serializable {
         this.matchedSince = matchedSince;
     }
 
+    public MatchingType getType() {
+        return type;
+    }
+
+    public void setType(MatchingType type) {
+        this.type = type;
+    }
+
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
+    }
+
     @Override
     public String toString() {
-        return "Matching{" + "id=" + id + ", club=" + club + ", item=" + item + ", itemMatched=" + itemMatched + ", matchedSince=" + matchedSince + '}';
+        return "Matching{" + "id=" + id + ", clubId=" + club.getId() + ", item=" + item + ", itemMatched=" + itemMatched + ", matchedSince=" + matchedSince + ", type=" + type + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 53 * hash + (this.club != null ? this.club.hashCode() : 0);
-        hash = 53 * hash + (this.item != null ? this.item.hashCode() : 0);
-        hash = 53 * hash + (this.itemMatched != null ? this.itemMatched.hashCode() : 0);
-        hash = 53 * hash + (this.matchedSince != null ? this.matchedSince.hashCode() : 0);
+        hash = 67 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 67 * hash + (this.club != null ? this.club.hashCode() : 0);
+        hash = 67 * hash + (this.item != null ? this.item.hashCode() : 0);
+        hash = 67 * hash + (this.itemMatched != null ? this.itemMatched.hashCode() : 0);
+        hash = 67 * hash + (this.matchedSince != null ? this.matchedSince.hashCode() : 0);
+        hash = 67 * hash + (this.type != null ? this.type.hashCode() : 0);
         return hash;
     }
 
@@ -141,9 +154,13 @@ public class Matching implements Serializable {
         if (this.matchedSince != other.matchedSince && (this.matchedSince == null || !this.matchedSince.equals(other.matchedSince))) {
             return false;
         }
+        if (this.type != other.type) {
+            return false;
+        }
         return true;
     }
-    
+
+   
     
 
 }
