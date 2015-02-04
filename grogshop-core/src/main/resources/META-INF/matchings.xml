@@ -11,5 +11,16 @@
 				Matching _matching					
 		</query>
 	</named-query>
+        
+        <named-query name="Matching.getAllByItem">
+		<query>
+			SELECT
+				_matching
+			FROM
+				Matching _matching
+                        WHERE
+                                _matching.item.id = :itemId
+		</query>
+	</named-query>
 		
 </entity-mappings>

@@ -40,7 +40,7 @@ public class MatchingsServiceImpl implements MatchingsService {
     }
 
     public List<Matching> getAllItemsByItem(Long itemId) throws ServiceException {
-        return null;
+        return em.createNamedQuery("Matching.getAllByItem", Matching.class).setParameter("itemId", itemId).getResultList();
     }
 
     public Long newMatching(Long clubId, Long itemId, Long itemMatchedId, String type) throws ServiceException {
