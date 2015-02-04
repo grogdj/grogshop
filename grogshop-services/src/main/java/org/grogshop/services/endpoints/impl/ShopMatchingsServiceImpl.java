@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.core.Response;
 import org.grogshop.services.api.MatchingsService;
@@ -91,11 +92,14 @@ public class ShopMatchingsServiceImpl implements ShopMatchingsService {
 
     public Response getAllMatchingsByItem(Long itemId) throws ServiceException {
         List<Matching> allMatchings = matchingsService.getAllItemsByItem(itemId);
+        JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
+        jsonObjectBuilder.add("item_id", itemId);
         JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
-        JsonObjectBuilder jsonItemMatchedObjectBuilder = Json.createObjectBuilder();
+
         if (allMatchings != null) {
             for (Matching m : allMatchings) {
 
+                JsonObjectBuilder jsonItemMatchedObjectBuilder = Json.createObjectBuilder();
                 if (m.getItemMatched() != null) {
 
                     jsonItemMatchedObjectBuilder.add("id", (m.getItemMatched().getId() == null) ? "" : m.getItemMatched().getId().toString())
@@ -119,11 +123,12 @@ public class ShopMatchingsServiceImpl implements ShopMatchingsService {
 
                 }
 
-                jsonArrayBuilder.add(jsonItemMatchedObjectBuilder);
+                jsonArrayBuilder.add(jsonObjectBuilder);
             }
         }
-        JsonArray jsonArray = jsonArrayBuilder.build();
-        return Response.ok(jsonArray.toString()).build();
+        jsonObjectBuilder.add("machedItems", jsonArrayBuilder);
+        JsonObject jsonObject = jsonObjectBuilder.build();
+        return Response.ok(jsonObject.toString()).build();
     }
 
     public Response get(Long matchingId) throws ServiceException {
