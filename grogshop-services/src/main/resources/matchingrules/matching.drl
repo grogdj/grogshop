@@ -21,8 +21,8 @@ end
 
 rule "request matching with post in price range"
   when
-    $r: Item(type == Item.ItemType.REQUEST, $club: club, $clubId: club.id, $postTags: tags, $postPrice: minPrice )
-    $p: Item(type == Item.ItemType.POST, club.id == $clubId, tags matchp $postTags, minPrice < $postPrice, maxPrice > $postPrice)
+    $r: Item(type == Item.ItemType.REQUEST, $club: club, $clubId: club.id, $requestTags: tags, $requestMinPrice: minPrice, $requestMaxPrice: maxPrice )
+    $p: Item(type == Item.ItemType.POST, club.id == $clubId, tags matchp $requestTags, minPrice < $requestMaxPrice, minPrice > $requestMinPrice)
   then
     
     Matching newMatching = new Matching($club, $r, $p, Matching.MatchingType.FULL);
