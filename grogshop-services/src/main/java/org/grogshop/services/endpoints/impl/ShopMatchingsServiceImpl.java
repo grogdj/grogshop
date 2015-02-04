@@ -126,7 +126,7 @@ public class ShopMatchingsServiceImpl implements ShopMatchingsService {
                 jsonArrayBuilder.add(jsonItemMatchedObjectBuilder);
             }
         }
-        jsonObjectBuilder.add("machedItems", jsonArrayBuilder);
+        jsonObjectBuilder.add("machedItems", jsonArrayBuilder.build());
         JsonObject jsonObject = jsonObjectBuilder.build();
         return Response.ok(jsonObject.toString()).build();
     }
