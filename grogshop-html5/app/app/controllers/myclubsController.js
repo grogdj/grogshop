@@ -18,8 +18,7 @@
         $scope.loadUserClubs = function(club_ids){
             for (i = 0; i < club_ids.length; i++) { 
                 $clubs.load(club_ids[i]).success(function (data) {
-                    console.log("DATA IN LOOP " + i )
-                    console.log(data )
+                   
                     $scope.userClubs.push(data)
                    
                 }).error(function (data) {

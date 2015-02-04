@@ -28,27 +28,46 @@
 
             </div>
 
+            <!--<div class="form-group col-md-2">
+                <label for="order" class="sr-only">By club</label>
+                
+                <select ng-model="matchingClub.id" class="form-control" ng-options="club.id for club in userClubs">
+                    <option value="">-- choose club --</option>
+                </select>
+                
+                
+
+
+            </div>-->
+
 
             </div>
         </div> 
         <hr style="border-color:#999;" >            
         
-                    
+
                     <!--filter:{item_type:matchingType.item_type||undefined}:true-->
-            <div class="matching-item" ng-repeat="matching in userMatchings |filter:matchingType.item_type | filter:searchName">
+    {{userItems}}
+            <div class="matching-item" ng-repeat="matching in userItems | filter:matchingClub.id:comparatorClub() | filter:matchingType.item_type | filter:searchName">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-4">
-                            <h6>Matchings para</h6><h4>{{matching.item_name}}</h4>
+                            <h6>Matchings para</h6><h4>{{matching.name}}</h4>
+                            <div class="tags"><span ng-repeat="itemTag in matching.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
+                            <br/><br/>
+                            <p><small>{{matching.description}}</small></p>
+                            
                         </div>
                         <div class="col-md-8">
                             <div class="container-fluid">
                                <div class="row">
+                                   <!--
                                     <div class="matching-match item col-md-4" ng-repeat="match in matching.item_matchings">
                                        <div class="well">
                                         {{match.item_name}}
                                         </div>
-                                    </div>
+                                    </div>-->
+                                   {{itemsMatchings}}
                                 </div>
                             </div>
                         </div>
