@@ -22,12 +22,7 @@ import org.grogshop.services.exceptions.ServiceException;
 @Local
 @Path("/matchings")
 public interface ShopMatchingsService extends Serializable {
-
-    @GET
-    @Path("/all")
-    @Produces({"application/json"})
-    Response getAllMatchings() throws ServiceException;
-    
+   
     @GET
     @Path("/item/{id}")
     @Produces({"application/json"})
