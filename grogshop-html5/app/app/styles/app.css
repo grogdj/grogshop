@@ -887,3 +887,40 @@ tags-input .autocomplete  {
   margin: -18px -34px 9px;
 } 
 
+
+/* NOTIFICATIONS DROPDOWN */
+
+.notifications-menu {
+    width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 0;
+    
+    
+}
+
+.dropdown button {
+    margin: 10px 0;
+    border: none !important;
+}
+.new-notification{
+    background-color: #F00 !important;
+}
+
+.notifications-menu .notification-item {
+    padding: 15px;
+    border-bottom: 1px solid #CCC;
+}
+
+.notifications-menu .notification-item:last-child {
+    border-bottom: none;
+}
+
+.notifications-menu .notification-item.new {
+    color:#F00;
+}
+
+.notifications-menu .no-notifications {
+    padding: 15px;
+    text-transform: none !important;
+}
