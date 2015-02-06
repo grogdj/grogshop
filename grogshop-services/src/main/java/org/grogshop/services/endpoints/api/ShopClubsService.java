@@ -37,8 +37,10 @@ public interface ShopClubsService extends Serializable {
             @NotNull @NotEmpty @FormParam("interest") String interest,
             @NotNull @NotEmpty @FormParam("tags") String tags, 
             @NotNull @NotEmpty @FormParam("founderId") Long founderId,
-            @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException;
-
+            @NotNull @NotEmpty @FormParam("image") String image,
+            @FormParam("longitude") Double longitude,
+            @FormParam("latitude") Double latitude) throws ServiceException;
+   
     @GET
     @Path("/all")
     @Produces({"application/json"})

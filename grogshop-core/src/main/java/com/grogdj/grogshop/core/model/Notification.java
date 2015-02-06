@@ -5,31 +5,54 @@
  */
 package com.grogdj.grogshop.core.model;
 
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import org.hibernate.search.annotations.Indexed;
+
 /**
  *
  * @author grogdj
  */
+@Entity(name = "Notification")
+@Table(name = "NOTIFICATIONS")
+@Indexed
 public class Notification {
 
-    private static Long notificationKeyGenerator = 0L;
+    public enum NotificationType {
+        MATCHING
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String userId;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String message;
-    private String type;
+    private String action;
+    private Date notificationDate;
+    private NotificationType type;
 
     public Notification() {
-        this.id = this.notificationKeyGenerator++;
+
     }
 
-    public Notification(String userId, String message) {
-        this();
-        this.userId = userId;
+    public Notification(User user, String message, String action, NotificationType type) {
+        this.user = user;
         this.message = message;
-    }
-
-    public Notification(String userId, String message, String type) {
-        this(userId, message);
+        this.action = action;
         this.type = type;
+        this.notificationDate = new Date();
     }
 
     public Long getId() {
@@ -40,14 +63,6 @@ public class Notification {
         this.id = id;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -56,21 +71,47 @@ public class Notification {
         this.message = message;
     }
 
-    public String getType() {
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
+    public NotificationType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(NotificationType type) {
         this.type = type;
+    }
+
+    public Date getNotificationDate() {
+        return notificationDate;
+    }
+
+    public void setNotificationDate(Date notificationDate) {
+        this.notificationDate = notificationDate;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 41 * hash + (this.userId != null ? this.userId.hashCode() : 0);
-        hash = 41 * hash + (this.message != null ? this.message.hashCode() : 0);
-        hash = 41 * hash + (this.type != null ? this.type.hashCode() : 0);
+        int hash = 5;
+        hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 79 * hash + (this.user != null ? this.user.hashCode() : 0);
+        hash = 79 * hash + (this.message != null ? this.message.hashCode() : 0);
+        hash = 79 * hash + (this.action != null ? this.action.hashCode() : 0);
+        hash = 79 * hash + (this.notificationDate != null ? this.notificationDate.hashCode() : 0);
+        hash = 79 * hash + (this.type != null ? this.type.hashCode() : 0);
         return hash;
     }
 
@@ -86,13 +127,19 @@ public class Notification {
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }
-        if ((this.userId == null) ? (other.userId != null) : !this.userId.equals(other.userId)) {
+        if (this.user != other.user && (this.user == null || !this.user.equals(other.user))) {
             return false;
         }
         if ((this.message == null) ? (other.message != null) : !this.message.equals(other.message)) {
             return false;
         }
-        if ((this.type == null) ? (other.type != null) : !this.type.equals(other.type)) {
+        if ((this.action == null) ? (other.action != null) : !this.action.equals(other.action)) {
+            return false;
+        }
+        if (this.notificationDate != other.notificationDate && (this.notificationDate == null || !this.notificationDate.equals(other.notificationDate))) {
+            return false;
+        }
+        if (this.type != other.type) {
             return false;
         }
         return true;
@@ -100,7 +147,7 @@ public class Notification {
 
     @Override
     public String toString() {
-        return "Notification{" + "id=" + id + ", userId=" + userId + ", message=" + message + ", type=" + type + '}';
+        return "Notification{" + "id=" + id + ", user=" + user + ", message=" + message + ", action=" + action + ", notificationDate=" + notificationDate + ", type=" + type + '}';
     }
 
 }

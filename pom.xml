@@ -21,7 +21,7 @@
     <properties>
         <!-- Define the version of the JBoss BOMs we want to import to specify tested stacks. -->
         
-        <version.wildfly>8.1.0.Final</version.wildfly>
+        <version.wildfly>8.2.0.Final</version.wildfly>
         <kie.version>6.3.0-SNAPSHOT</kie.version>
         <java.min.version>1.7</java.min.version>
         <maven.min.version>3.0.0</maven.min.version>
@@ -43,7 +43,7 @@
             extras from the Hibernate family of projects) -->
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
-                <artifactId>jboss-javaee-7.0-with-hibernate</artifactId>
+                <artifactId>jboss-javaee-7.0-with-all</artifactId>
                 <version>${version.wildfly}</version>
                 <type>pom</type>
                 <scope>import</scope>

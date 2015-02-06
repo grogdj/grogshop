@@ -17,6 +17,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -25,6 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity(name = "Club")
 @Table(name = "CLUBS")
+@Indexed
 public class Club implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,29 +38,40 @@ public class Club implements Serializable {
     @Column(unique = true)
     @NotNull
     @NotEmpty
+    @Field
     private String name;
 
     @NotNull
     @NotEmpty
+    @Field
     private String description;
 
     @NotNull
     @NotEmpty
     @ElementCollection
+    @Field
     private List<String> tags;
 
     @ManyToOne
     @JoinColumn(name = "interest_id")
+    @Field
     private Interest interest;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "founder_id")
+    @Field
     private User founder;
 
     @NotNull
     @NotEmpty
     private String image;
+
+    @Field
+    private Double longitude = 0.0;
+
+    @Field
+    private Double latitude = 0.0;
 
     public Club() {
     }
@@ -69,6 +83,12 @@ public class Club implements Serializable {
         this.tags = tags;
         this.founder = founder;
         this.image = image;
+    }
+
+    public Club(String name, String description, Interest interest, List<String> tags, User founder, String image, Double longitude, Double latitude) {
+        this(name, description, interest, tags, founder, image);
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public Long getId() {
@@ -111,7 +131,6 @@ public class Club implements Serializable {
         this.interest = interest;
     }
 
-
     public String getImage() {
         return image;
     }
@@ -128,21 +147,34 @@ public class Club implements Serializable {
         this.founder = founder;
     }
 
-    @Override
-    public String toString() {
-        return "Club{" + "id=" + id + ", name=" + name + ", description=" + description + ", tags=" + tags + ", interest=" + interest + ", founder=" + founder + ", image=" + image + '}';
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 29 * hash + (this.name != null ? this.name.hashCode() : 0);
-        hash = 29 * hash + (this.description != null ? this.description.hashCode() : 0);
-        hash = 29 * hash + (this.tags != null ? this.tags.hashCode() : 0);
-        hash = 29 * hash + (this.interest != null ? this.interest.hashCode() : 0);
-        hash = 29 * hash + (this.founder != null ? this.founder.hashCode() : 0);
-        hash = 29 * hash + (this.image != null ? this.image.hashCode() : 0);
+        int hash = 7;
+        hash = 23 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 23 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 23 * hash + (this.description != null ? this.description.hashCode() : 0);
+        hash = 23 * hash + (this.tags != null ? this.tags.hashCode() : 0);
+        hash = 23 * hash + (this.interest != null ? this.interest.hashCode() : 0);
+        hash = 23 * hash + (this.founder != null ? this.founder.hashCode() : 0);
+        hash = 23 * hash + (this.image != null ? this.image.hashCode() : 0);
+        hash = 23 * hash + (this.latitude != null ? this.latitude.hashCode() : 0);
+        hash = 23 * hash + (this.longitude != null ? this.longitude.hashCode() : 0);
         return hash;
     }
 
@@ -176,9 +208,19 @@ public class Club implements Serializable {
         if ((this.image == null) ? (other.image != null) : !this.image.equals(other.image)) {
             return false;
         }
+        if (this.latitude != other.latitude && (this.latitude == null || !this.latitude.equals(other.latitude))) {
+            return false;
+        }
+        if (this.longitude != other.longitude && (this.longitude == null || !this.longitude.equals(other.longitude))) {
+            return false;
+        }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Club{" + "id=" + id + ", name=" + name + ", description=" + description + ", tags=" + tags + ", interest=" + interest
+                + ", founder=" + founder + ", image=" + image + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+    }
 
 }

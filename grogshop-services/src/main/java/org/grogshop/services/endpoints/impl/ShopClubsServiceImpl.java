@@ -64,14 +64,16 @@ public class ShopClubsServiceImpl implements ShopClubsService {
             @NotNull @NotEmpty @FormParam("interest") String interest,
             @NotNull @NotEmpty @FormParam("tags") String tags,
             @NotNull @NotEmpty @FormParam("founderId") Long founderId,
-            @NotNull @NotEmpty @FormParam("image") String image) throws ServiceException {
+            @NotNull @NotEmpty @FormParam("image") String image,
+            @FormParam("longitude") Double longitude,
+            @FormParam("latitude") Double latitude) throws ServiceException {
         String[] tagsArray = tags.split(",");
         List<String> tagsList = new ArrayList<String>();
         if (tagsArray != null) {
             tagsList.addAll(Arrays.asList(tagsArray));
 
         }
-        Long newClub = clubsService.newClub(name, description, interest, tagsList, founderId, image);
+        Long newClub = clubsService.newClub(name, description, interest, tagsList, founderId, image, longitude, latitude );
         return Response.ok(newClub).build();
 
     }

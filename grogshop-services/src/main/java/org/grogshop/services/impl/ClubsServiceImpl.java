@@ -38,7 +38,8 @@ public class ClubsServiceImpl implements ClubsService {
     
 
     @Override
-    public Long newClub(String name, String description, String interest, List<String> tags, Long user_id, String image) throws ServiceException {
+    public Long newClub(String name, String description, String interest, List<String> tags, Long user_id, 
+            String image, Double longitude, Double latitude) throws ServiceException {
         User founder = em.find(User.class, user_id);
         if(founder == null){
             throw new ServiceException("Club cannot be created because there is no user with id: "+user_id);
@@ -47,7 +48,12 @@ public class ClubsServiceImpl implements ClubsService {
         if(interestObject == null){
             throw new ServiceException("Club cannot be created because the interest doesn't exist : "+interest);
         }
-        Club club = new Club(name, description, interestObject, tags, founder, image);
+        Club club = null;
+        if(longitude != 0.0 || latitude != 0.0 ){
+            club = new Club(name, description, interestObject, tags, founder, image);
+        }else{
+            club = new Club(name, description, interestObject, tags, founder, image, longitude, latitude);
+        }
         em.persist(club);
         log.log(Level.INFO, "Club {0} created with id {1}", new Object[]{name, club.getId()});
         return club.getId();

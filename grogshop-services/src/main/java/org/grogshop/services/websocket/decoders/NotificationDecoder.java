@@ -22,12 +22,12 @@ public class NotificationDecoder implements Decoder.Text<Notification> {
     @Override
     public Notification decode(String jsonMessage) throws DecodeException {
 
-        JsonObject jsonObject = Json
-                .createReader(new StringReader(jsonMessage)).readObject();
-        Notification notification = new Notification(jsonObject.getString("userId"), jsonObject.getString("message"), jsonObject.getString("type"));
-        notification.setId(jsonObject.getJsonNumber("notificationId").longValue());
-        return notification;
-
+//        JsonObject jsonObject = Json
+//                .createReader(new StringReader(jsonMessage)).readObject();
+//        Notification notification = new Notification(jsonObject.getString("userId"), jsonObject.getString("message"), jsonObject.getString("type"));
+//        notification.setId(jsonObject.getJsonNumber("notificationId").longValue());
+//        return notification;
+        return null;
     }
 
     @Override

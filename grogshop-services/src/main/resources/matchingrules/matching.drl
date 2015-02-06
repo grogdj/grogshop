@@ -5,28 +5,31 @@ import org.grogshop.services.api.*;
 import org.grogshop.services.impl.*;
 
 global MatchingsService matchingsService;
+global NotificationsService notificationsService;
 
 
 rule "post matching with request in price range"
   when
-    $p: Item(type == Item.ItemType.POST, $club: club, $clubId: club.id, $postTags: tags, $postPrice: minPrice )
-    $r: Item(type == Item.ItemType.REQUEST, club.id == $clubId, tags matchp $postTags, minPrice < $postPrice, maxPrice > $postPrice)
+    $p: Item(type == Item.ItemType.POST, $club: club, $clubId: club.id, $postUserId: user.id, $postTags: tags, $postPrice: minPrice )
+    $r: Item(type == Item.ItemType.REQUEST, club.id == $clubId, $requestUserId: user.id != $postUserId, tags matchp $postTags, minPrice < $postPrice, maxPrice > $postPrice)
   then
     
     Matching newMatching = new Matching($club, $p, $r, Matching.MatchingType.FULL);
     matchingsService.newMatching(newMatching);
-    insertLogical(newMatching);
+    notificationsService.newNotification($postUserId, "Your post matched ...", "", "MATCHING");
+    notificationsService.newNotification($requestUserId, "Your request matched ...", "", "MATCHING");
     System.out.println("New Matching for:  item(post): "+ $p + " itemMatched (request): "+$r);
 end
 
 rule "request matching with post in price range"
   when
-    $r: Item(type == Item.ItemType.REQUEST, $club: club, $clubId: club.id, $requestTags: tags, $requestMinPrice: minPrice, $requestMaxPrice: maxPrice )
-    $p: Item(type == Item.ItemType.POST, club.id == $clubId, tags matchp $requestTags, minPrice < $requestMaxPrice, minPrice > $requestMinPrice)
+    $r: Item(type == Item.ItemType.REQUEST, $club: club, $clubId: club.id, $requestUserId: user.id, $requestTags: tags, $requestMinPrice: minPrice, $requestMaxPrice: maxPrice )
+    $p: Item(type == Item.ItemType.POST, club.id == $clubId, $postUserId: user.id != $requestUserId, tags matchp $requestTags, minPrice < $requestMaxPrice, minPrice > $requestMinPrice)
   then
     
     Matching newMatching = new Matching($club, $r, $p, Matching.MatchingType.FULL);
     matchingsService.newMatching(newMatching);
-    insertLogical(newMatching);
+    notificationsService.newNotification($postUserId, "Your post matched ...", "", "MATCHING");
+    notificationsService.newNotification($requestUserId, "Your request matched ...", "", "MATCHING");
     System.out.println("New Matching for:  item(request): "+ $r + " itemMatched (post): "+$p);
 end

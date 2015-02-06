@@ -10,8 +10,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import org.grogshop.services.api.MatchingsService;
-import org.grogshop.services.api.RulesService;
 import org.grogshop.services.api.NotificationsService;
+import org.grogshop.services.api.RulesService;
 import org.kie.api.KieBase;
 import org.kie.api.cdi.KBase;
 import org.kie.api.event.rule.ObjectDeletedEvent;
@@ -28,8 +28,8 @@ import org.kie.api.runtime.rule.FactHandle;
 @ApplicationScoped
 public class RulesServiceImpl implements RulesService {
 
-//    @Inject
-//    private NotificationsService notificationsService;
+    @Inject
+    private NotificationsService notificationsService;
     
     @Inject
     private MatchingsService matchingsService;
@@ -66,7 +66,7 @@ public class RulesServiceImpl implements RulesService {
 //                }
             }
         });
-//        kieSession.setGlobal("notificationsService", notificationsService);
+        kieSession.setGlobal("notificationsService", notificationsService);
         kieSession.setGlobal("matchingsService", matchingsService);
         
     }

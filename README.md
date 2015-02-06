@@ -1,7 +1,8 @@
 grogshop
 ========
 
-a simple server + iOS client app to provide grog to the masses
+Simple application using AngularJS + JAVA EE 7 + JAX-RS + iOS client
+
 
 For the security domain in wildfly execute: 
 

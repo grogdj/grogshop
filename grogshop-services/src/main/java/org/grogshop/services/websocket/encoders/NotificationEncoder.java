@@ -21,12 +21,13 @@ public class NotificationEncoder implements Encoder.Text<Notification> {
     @Override
     public String encode(Notification notification) throws EncodeException {
 
-        JsonObject jsonObject = Json.createObjectBuilder()
-                .add("notificationId", notification.getId())
-                .add("userId", notification.getUserId())
-                .add("message", notification.getMessage())
-                .add("type", notification.getType()).build();
-        return jsonObject.toString();
+//        JsonObject jsonObject = Json.createObjectBuilder()
+//                .add("notificationId", notification.getId())
+//                .add("userId", notification.getUserId())
+//                .add("message", notification.getMessage())
+//                .add("type", notification.getType()).build();
+//        return jsonObject.toString();
+        return null;
 
     }
 

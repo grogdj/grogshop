@@ -74,6 +74,7 @@ public class Item implements Serializable {
     @NotNull
     @NotEmpty
     @ElementCollection
+    @Field
     private List<String> tags;
 
     private String imageFileName;
@@ -83,12 +84,15 @@ public class Item implements Serializable {
     private byte[] imageContent;
 
     @NotNull
+    @Field
     private BigDecimal minPrice;
 
     @NotNull
+    @Field
     private BigDecimal maxPrice;
 
     @Enumerated(EnumType.STRING)
+    @Field
     private ItemType type;
 
     public Item() {
