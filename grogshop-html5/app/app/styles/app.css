@@ -665,52 +665,52 @@ tags-input .autocomplete  {
 .items-container {
     margin: 0 -7.5px;
 }
-.items-container * {
+.items-container *, .matchings-container *{
        box-sizing:  border-box !important;
      -webkit-box-sizing:  border-box !important;
 }
 
-.items-container .item {
+.items-container .item, .matchings-container .item{
     width:  100%;
     padding: 0 2px;
     display: inline-block;
     margin-bottom: 4px;
 }
 
-.items-container .item .well {
+.items-container .item .well, .matchings-container .item .well{
      position:relative;
      display: block;
     margin-bottom: 0px;
        border-radius: 0px !important;
     
 }
-.items-container .item .well p {
+.items-container .item .well p, .matchings-container .item .well p {
     opacity: .7;
 }
 
-.items-container .item .well .options {
+.items-container .item .well .options, .matchings-container .item .well .options{
     position: absolute;
     bottom: 5px;
     right: 5px;
     display: none;
 }
 
-.items-container .item .well:hover .options{
+.items-container .item .well:hover .options, .matchings-container .item .well:hover .options{
     display: block;
 }
 
-.items-container .item .price {
+.items-container .item .price, .matchings-container .item .price{
     position: absolute;
     top: -1px;
     right: 1px;
     z-index: 10;
 }
 
-.items-container  .item .data {
+.items-container  .item .data, .matchings-container .item .data{
     font-size: 90%;
 }
 
-.items-container  .item .tags {
+.items-container  .item .tags, .matchings-container .item .tags{
     position: absolute;
     top: 7px;
     left: 7px;
@@ -719,26 +719,26 @@ tags-input .autocomplete  {
     display: none;
 }
 
-.items-container  .item:hover .tags {
+.items-container  .item:hover .tags, .matchings-container .item:hover .tags{
     display: block;
 }
 
-.items-container  .item .tags .label-default {
+.items-container  .item .tags .label-default, .matchings-container .item .tags .label-default {
     background-color: #FFF;
     color: #333;
     box-shadow: 0 1px 2px rgba(0,0,0,.5);
 }
 
 
-.items-container  .item .price .label {
+.items-container  .item .price .label, .matchings-container .item .price .label{
      border-radius: 0px !important;
 }
 
-.items-container .item p {
+.items-container .item p, .matchings-container .item p {
     word-break: break-word;
 }
 
-.items-container .item .item-image {
+.items-container .item .item-image, .matchings-container .item .item-image {
     margin: -18px -18px 9px;
 }
 
@@ -765,21 +765,21 @@ tags-input .autocomplete  {
 
 /* ITEM TYPES */
 
-.items-container  .item.POST .well{
+.items-container  .item.POST .well, .matchings-container .item.POST .well {
 
 }
 
-.items-container  .item.REQUEST .well{
+.items-container  .item.REQUEST .well, .matchings-container .item.REQUEST .well{
     background-color: #EAC1C1;
     border-color: #CEC0C0;
     
 }
 
-.items-container  .item.REQUEST .well a.postedBy {
+.items-container  .item.REQUEST .well a.postedBy, .matchings-container  .item.REQUEST .well a.postedBy  {
     color: #D9534F ;
 }
 
-.items-container  .item.TOPIC .well{
+.items-container  .item.TOPIC .well, .matchings-container .item.TOPIC .well{
     padding-top: 30px;
     background-color: #EDEBB2;
     border-color: #D1CF9B;

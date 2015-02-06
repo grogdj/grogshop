@@ -28,44 +28,141 @@
 
             </div>
 
-            <!--<div class="form-group col-md-2">
+            <div class="form-group col-md-2">
                 <label for="order" class="sr-only">By club</label>
                 
-                <select ng-model="matchingClub.id" class="form-control" ng-options="club.id for club in userClubs">
+                <select ng-model="matchingClub.club_id" class="form-control" ng-options="club.name for club in userClubs">
                     <option value="">-- choose club --</option>
                 </select>
                 
                 
 
 
-            </div>-->
+            </div>
 
 
             </div>
         </div> 
-        <hr style="border-color:#999;" >            
-        
+        <hr style="border-color:#999;" >   
+            <!--         
+            <div masonry-tile ng-repeat="item in items | filter:priceRange.range.min:greaterThan | filter:priceRange.range.max:smallerThan | filter:searchName | orderBy:typeSelect" class="item {{item.type}}">
 
-                    <!--filter:{item_type:matchingType.item_type||undefined}:true    -->
+                <div class="well">
+                    <div class="item-image" ng-show="item.type != 'TOPIC' && item.hasImage">
+                        <img class="img-responsive" ng-src="{{server}}rest/public/items/{{item.id}}/image"/>
+                    </div>
+                    <div class="price">
+                        <span class="label label-primary" ng-show="item.type == 'POST'">{{item.minPrice| currency}}</span>
+                        <span class="label label-danger" ng-show="item.type == 'REQUEST'">{{item.minPrice| currency}} - {{item.maxPrice| currency}}</span>
+                    </div>
+                    <div class="tags"><span ng-repeat="itemTag in item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
+                    <div class="data">
+                        <div class="options" >
+                            <a href class="btn btn-default btn-xs" ng-click="showItemDetails(item.id, item.name)"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                            <a href class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
+                            
+                            <a ng-show="user_id == item.user_id" href class="btn btn-danger btn-xs" ng-click="removeItem(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        </div>
+                        
+                        
+                        <h5>{{item.name}}</h5>
+                        <small><a href class="postedBy">{{item.user_email}}</a></small><br/>
+
+                        <p><small>{{item.description}}</small></p>
+                    </div>
+                </div>                
+            </div>
+           //////////////////////////////////////////// -->
+            
+            
      
-            <div class="matching-item" ng-repeat="matching in userItems | filter:matchingClub.id:comparatorClub() | filter:matchingType.type | filter:searchName">
+            <div class="matching-item" ng-repeat="matching in userItems | filter: matchingClub:comparatorClub | filter:matchingType:comparatorType | filter:searchName" >
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-4">
-                            <h6>Matchings para</h6><h4>{{matching.name}}</h4>
-                            <div class="tags"><span ng-repeat="itemTag in matching.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
-                            <br/><br/>
-                            <p><small>{{matching.description}}</small></p>
-                            
+                         <div class="item {{matching.type}}">
+                          <div class="well">
+                               
+                                    <div class="item-image" ng-show="matching.type != 'TOPIC' && matching.hasImage">
+                                        <img class="img-responsive" ng-src="{{server}}rest/public/items/{{matching.id}}/image"/>
+                                    </div>
+
+                                    <div class="price">
+                                        <span class="label label-primary" ng-show="matching.type == 'POST'">{{matching.minPrice| currency}}</span>
+                                        <span class="label label-danger" ng-show="matching.type == 'REQUEST'">{{matching.minPrice| currency}} - {{matching.maxPrice| currency}}</span>
+                                    </div>
+                                    
+                                     <div class="tags"><span ng-repeat="itemTag in matching.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
+                                    
+                                    <div class="data">
+                                    
+
+
+                                        <h5>{{matching.name}}</h5>
+                                        <small><a href class="postedBy">{{matching.user_email}}</a></small><br/>
+
+                                        <p><small>{{matching.description}}</small></p>
+                                    </div>
+                                    
+                               </div>
+                           
+                            </div>
                         </div>
+  
+                       
                         <div class="col-md-8">
                             <div class="container-fluid">
                                <div class="row">
                                    
-                                    <div class="matching-match item col-md-4" ng-repeat="match in matching.item_matchings.machedItems ">
-                                       <div class="well">
-                                        {{match.name }}
-                                        </div>
+                                    <div class="matching-match" ng-repeat="match in matching.item_matchings.matchedItems ">
+                                      <div class="col-md-6">
+                                          <div class="item {{match.item.type}}">
+                                                 {{match.rank }}
+                                                 
+                                               <div class="well">
+                                               
+                                                     <div class="container-fluid">
+                                                            <div class="row">
+                                                               <div class="col-xs-6" ng-show="match.item.type != 'TOPIC' && match.item.hasImage">
+                                                                    <div class="item-image" >
+                                                                        <img class="img-responsive" ng-src="{{server}}rest/public/items/{{match.item.id}}/image"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-6">
+                                                                
+                                                                        <div class="price">
+                                                                            <span class="label label-primary" ng-show="match.item.type == 'POST'">{{match.item.minPrice| currency}}</span>
+                                                                            <span class="label label-danger" ng-show="match.item.type == 'REQUEST'">{{match.item.minPrice| currency}} - {{match.item.maxPrice| currency}}</span>
+                                                                        </div>
+                                                                        <div class="tags"><span ng-repeat="itemTag in match.item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
+                                                                       <div class="data">
+
+
+
+                                                                            <h5>{{match.item.name}}</h5>
+                                                                            <small><a href class="postedBy">{{match.item.user_email}}</a></small><br/>
+
+                                                                                <p><small>{{match.item.description}}</small></p>
+                                                                    </div>
+                                                                
+                                                                </div>
+                                                                
+                                                                
+                                                                
+                                                                
+                                                        </div>
+                                                    
+                                                   </div>
+                                                    
+                                                    
+                                                </div>
+                                          </div>
+                                      </div>
+                                      
+                                    </div>
+                                   
+                                    <div ng-show="matching.item_matchings.matchedItems.length < 1">
+                                        No matchings for this post.
                                     </div>
                                    
                                 </div>

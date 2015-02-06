@@ -1,7 +1,8 @@
 (function(){
-    var matchingsController = function( $scope, $items, $rootScope, $matchings, $memberships, $clubs){
+    var matchingsController = function( $scope, $items, $rootScope, $matchings, $memberships, $clubs, appConstants){
         $scope.userItems = [];
         $scope.itemsMatchings = [];
+         $scope.server = appConstants.server + appConstants.context;
         //LOAD MEMBERSHIPS AND CLUBS FOR FILTER
         $scope.userMemberships = {};
         $scope.userClubs = [];
@@ -71,11 +72,40 @@
         //
         
         $scope.comparatorClub =function (a , b) {
-            console.log("El filtro esta mandando " + a + " / " + b);
+        
+             console.log("El filtro esta mandando " + a + " / " + b);
+            //console.log(b);
+                if(b){
+                    if(a == b.id){
+                        return true;
+                    }else {
+
+                            return false;
+
+                    }
+                }else {
+                 return true;
+                }
+            
+        }
+        
+         $scope.comparatorType =function (a , b) {
+           
+            
+             if( a == b){
+                 return true;
+             }else{
+                if(b == ""){
+                    return true;
+                }else{
+                    return false;
+                }
+             }
+            
         }
     
     }
     
-    matchingsController.$inject = ['$scope', '$items', '$rootScope','$matchings', '$memberships', '$clubs' ];
+    matchingsController.$inject = ['$scope', '$items', '$rootScope','$matchings', '$memberships', '$clubs', 'appConstants' ];
     angular.module('clubhouse').controller('matchingsController', matchingsController);
 }());
