@@ -111,38 +111,43 @@
   
                        
                         <div class="col-md-8">
-                            <div class="container-fluid">
-                               <div class="row">
+                            
                                    
                                     <div class="matching-match" ng-repeat="match in matching.item_matchings.matchedItems ">
-                                      <div class="col-md-6">
+                                      
                                           <div class="item {{match.item.type}}">
-                                                 {{match.rank }}
+                                                 
                                                  
                                                <div class="well">
+                                                   
+                                                       <div class="price">
+                                                                            <span class="label label-primary" ng-show="match.item.type == 'POST'">{{match.item.minPrice| currency}}</span>
+                                                                            <span class="label label-danger" ng-show="match.item.type == 'REQUEST'">{{match.item.minPrice| currency}} - {{match.item.maxPrice| currency}}</span>
+                                                                        </div>
+                                                                        
+                                                                         <div class="tags"><span ng-repeat="itemTag in match.item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
                                                
                                                      <div class="container-fluid">
                                                             <div class="row">
-                                                               <div class="col-xs-6" ng-show="match.item.type != 'TOPIC' && match.item.hasImage">
+                                                               <div class="col-sm-6" ng-show="match.item.type != 'TOPIC' && match.item.hasImage">
                                                                     <div class="item-image" >
                                                                         <img class="img-responsive" ng-src="{{server}}rest/public/items/{{match.item.id}}/image"/>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-xs-6">
+                                                                <div class="col-sm-6">
                                                                 
-                                                                        <div class="price">
-                                                                            <span class="label label-primary" ng-show="match.item.type == 'POST'">{{match.item.minPrice| currency}}</span>
-                                                                            <span class="label label-danger" ng-show="match.item.type == 'REQUEST'">{{match.item.minPrice| currency}} - {{match.item.maxPrice| currency}}</span>
-                                                                        </div>
-                                                                        <div class="tags"><span ng-repeat="itemTag in match.item.tags track by $index"><span class="label label-default">{{itemTag.text}}</span> </span></div>
+                                                                        
+                                                                        
                                                                        <div class="data">
 
 
 
                                                                             <h5>{{match.item.name}}</h5>
                                                                             <small><a href class="postedBy">{{match.item.user_email}}</a></small><br/>
+                                                                                <br/>
 
                                                                                 <p><small>{{match.item.description}}</small></p>
+                                                                                <p><small>{{match.rank }}</small></p>
                                                                     </div>
                                                                 
                                                                 </div>
@@ -157,7 +162,7 @@
                                                     
                                                 </div>
                                           </div>
-                                      </div>
+                                      
                                       
                                     </div>
                                    
@@ -165,8 +170,7 @@
                                         No matchings for this post.
                                     </div>
                                    
-                                </div>
-                            </div>
+                           
                         </div>
                       </div>
                 </div>

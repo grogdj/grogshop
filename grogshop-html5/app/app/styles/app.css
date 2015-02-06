@@ -754,7 +754,19 @@ tags-input .autocomplete  {
 }
 
 /* Small devices (tablets, 768px and up) */
-@media (min-width:  768px) { .items-container .item {  width:  50%; } }
+@media (min-width:  768px) { 
+    .items-container .item {  width:  50%; } 
+    .matchings-container .matching-item .matching-match .well {  
+        height: 250px;
+        overflow: hidden;
+    } 
+    .matchings-container .matching-item .matching-match .well .item-image {
+        margin-left: -33px !important;
+        margin-right: 0 !important;
+        
+    }
+
+}
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) { .items-container .item {  width:  33.333333%; } }
@@ -871,6 +883,7 @@ tags-input .autocomplete  {
     border-bottom: 1px solid #CCC;
 }
 
-.matchings-container .matching-item .matching-match .well {
-    height: 250px;
+.matchings-container .matching-item .matching-match .well .item-image {
+  margin: -18px -34px 9px;
 } 
+
