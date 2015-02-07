@@ -1,0 +1,460 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DDDDFE871A85F49200BBCEDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE861A85F49200BBCEDA /* main.m */; };
+		DDDDFE8A1A85F49200BBCEDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE891A85F49200BBCEDA /* AppDelegate.m */; };
+		DDDDFE8D1A85F49200BBCEDA /* GrogShop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE8B1A85F49200BBCEDA /* GrogShop.xcdatamodeld */; };
+		DDDDFE901A85F49200BBCEDA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE8F1A85F49200BBCEDA /* ViewController.m */; };
+		DDDDFE931A85F49200BBCEDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDDDFE911A85F49200BBCEDA /* Main.storyboard */; };
+		DDDDFE951A85F49200BBCEDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDDDFE941A85F49200BBCEDA /* Images.xcassets */; };
+		DDDDFE981A85F49200BBCEDA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDDDFE961A85F49200BBCEDA /* LaunchScreen.xib */; };
+		DDDDFEA41A85F49200BBCEDA /* GrogShopTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEA31A85F49200BBCEDA /* GrogShopTests.m */; };
+		DDDDFEAF1A86164E00BBCEDA /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEAE1A86164E00BBCEDA /* Utils.m */; };
+		DDDDFEB31A861B7200BBCEDA /* APIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEB21A861B7200BBCEDA /* APIRequest.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DDDDFE9E1A85F49200BBCEDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DDDDFE791A85F49200BBCEDA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DDDDFE801A85F49200BBCEDA;
+			remoteInfo = GrogShop;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DDDDFE811A85F49200BBCEDA /* GrogShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrogShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDDDFE851A85F49200BBCEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDDDFE861A85F49200BBCEDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DDDDFE881A85F49200BBCEDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DDDDFE891A85F49200BBCEDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DDDDFE8C1A85F49200BBCEDA /* GrogShop.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GrogShop.xcdatamodel; sourceTree = "<group>"; };
+		DDDDFE8E1A85F49200BBCEDA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		DDDDFE8F1A85F49200BBCEDA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DDDDFE921A85F49200BBCEDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DDDDFE941A85F49200BBCEDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DDDDFE971A85F49200BBCEDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		DDDDFE9D1A85F49200BBCEDA /* GrogShopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrogShopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDDDFEA21A85F49200BBCEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDDDFEA31A85F49200BBCEDA /* GrogShopTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GrogShopTests.m; sourceTree = "<group>"; };
+		DDDDFEAD1A86164E00BBCEDA /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		DDDDFEAE1A86164E00BBCEDA /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		DDDDFEB01A86198800BBCEDA /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		DDDDFEB11A861B7200BBCEDA /* APIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIRequest.h; sourceTree = "<group>"; };
+		DDDDFEB21A861B7200BBCEDA /* APIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIRequest.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DDDDFE7E1A85F49200BBCEDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDDDFE9A1A85F49200BBCEDA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DDDDFE781A85F49200BBCEDA = {
+			isa = PBXGroup;
+			children = (
+				DDDDFE831A85F49200BBCEDA /* GrogShop */,
+				DDDDFEA01A85F49200BBCEDA /* GrogShopTests */,
+				DDDDFE821A85F49200BBCEDA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DDDDFE821A85F49200BBCEDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DDDDFE811A85F49200BBCEDA /* GrogShop.app */,
+				DDDDFE9D1A85F49200BBCEDA /* GrogShopTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DDDDFE831A85F49200BBCEDA /* GrogShop */ = {
+			isa = PBXGroup;
+			children = (
+				DDDDFE881A85F49200BBCEDA /* AppDelegate.h */,
+				DDDDFE891A85F49200BBCEDA /* AppDelegate.m */,
+				DDDDFE8E1A85F49200BBCEDA /* ViewController.h */,
+				DDDDFE8F1A85F49200BBCEDA /* ViewController.m */,
+				DDDDFEB11A861B7200BBCEDA /* APIRequest.h */,
+				DDDDFEB21A861B7200BBCEDA /* APIRequest.m */,
+				DDDDFEAD1A86164E00BBCEDA /* Utils.h */,
+				DDDDFEAE1A86164E00BBCEDA /* Utils.m */,
+				DDDDFEB01A86198800BBCEDA /* Constants.h */,
+				DDDDFE911A85F49200BBCEDA /* Main.storyboard */,
+				DDDDFE941A85F49200BBCEDA /* Images.xcassets */,
+				DDDDFE961A85F49200BBCEDA /* LaunchScreen.xib */,
+				DDDDFE8B1A85F49200BBCEDA /* GrogShop.xcdatamodeld */,
+				DDDDFE841A85F49200BBCEDA /* Supporting Files */,
+			);
+			path = GrogShop;
+			sourceTree = "<group>";
+		};
+		DDDDFE841A85F49200BBCEDA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DDDDFE851A85F49200BBCEDA /* Info.plist */,
+				DDDDFE861A85F49200BBCEDA /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DDDDFEA01A85F49200BBCEDA /* GrogShopTests */ = {
+			isa = PBXGroup;
+			children = (
+				DDDDFEA31A85F49200BBCEDA /* GrogShopTests.m */,
+				DDDDFEA11A85F49200BBCEDA /* Supporting Files */,
+			);
+			path = GrogShopTests;
+			sourceTree = "<group>";
+		};
+		DDDDFEA11A85F49200BBCEDA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DDDDFEA21A85F49200BBCEDA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DDDDFE801A85F49200BBCEDA /* GrogShop */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDDDFEA71A85F49200BBCEDA /* Build configuration list for PBXNativeTarget "GrogShop" */;
+			buildPhases = (
+				DDDDFE7D1A85F49200BBCEDA /* Sources */,
+				DDDDFE7E1A85F49200BBCEDA /* Frameworks */,
+				DDDDFE7F1A85F49200BBCEDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GrogShop;
+			productName = GrogShop;
+			productReference = DDDDFE811A85F49200BBCEDA /* GrogShop.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DDDDFE9C1A85F49200BBCEDA /* GrogShopTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDDDFEAA1A85F49200BBCEDA /* Build configuration list for PBXNativeTarget "GrogShopTests" */;
+			buildPhases = (
+				DDDDFE991A85F49200BBCEDA /* Sources */,
+				DDDDFE9A1A85F49200BBCEDA /* Frameworks */,
+				DDDDFE9B1A85F49200BBCEDA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DDDDFE9F1A85F49200BBCEDA /* PBXTargetDependency */,
+			);
+			name = GrogShopTests;
+			productName = GrogShopTests;
+			productReference = DDDDFE9D1A85F49200BBCEDA /* GrogShopTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DDDDFE791A85F49200BBCEDA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Grogshop;
+				TargetAttributes = {
+					DDDDFE801A85F49200BBCEDA = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					DDDDFE9C1A85F49200BBCEDA = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = DDDDFE801A85F49200BBCEDA;
+					};
+				};
+			};
+			buildConfigurationList = DDDDFE7C1A85F49200BBCEDA /* Build configuration list for PBXProject "GrogShop" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DDDDFE781A85F49200BBCEDA;
+			productRefGroup = DDDDFE821A85F49200BBCEDA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DDDDFE801A85F49200BBCEDA /* GrogShop */,
+				DDDDFE9C1A85F49200BBCEDA /* GrogShopTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DDDDFE7F1A85F49200BBCEDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDDDFE931A85F49200BBCEDA /* Main.storyboard in Resources */,
+				DDDDFE981A85F49200BBCEDA /* LaunchScreen.xib in Resources */,
+				DDDDFE951A85F49200BBCEDA /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDDDFE9B1A85F49200BBCEDA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DDDDFE7D1A85F49200BBCEDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDDDFE8A1A85F49200BBCEDA /* AppDelegate.m in Sources */,
+				DDDDFE8D1A85F49200BBCEDA /* GrogShop.xcdatamodeld in Sources */,
+				DDDDFEB31A861B7200BBCEDA /* APIRequest.m in Sources */,
+				DDDDFE901A85F49200BBCEDA /* ViewController.m in Sources */,
+				DDDDFEAF1A86164E00BBCEDA /* Utils.m in Sources */,
+				DDDDFE871A85F49200BBCEDA /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDDDFE991A85F49200BBCEDA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDDDFEA41A85F49200BBCEDA /* GrogShopTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DDDDFE9F1A85F49200BBCEDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DDDDFE801A85F49200BBCEDA /* GrogShop */;
+			targetProxy = DDDDFE9E1A85F49200BBCEDA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DDDDFE911A85F49200BBCEDA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DDDDFE921A85F49200BBCEDA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DDDDFE961A85F49200BBCEDA /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DDDDFE971A85F49200BBCEDA /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DDDDFEA51A85F49200BBCEDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		DDDDFEA61A85F49200BBCEDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DDDDFEA81A85F49200BBCEDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = GrogShop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DDDDFEA91A85F49200BBCEDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = GrogShop/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		DDDDFEAB1A85F49200BBCEDA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = GrogShopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GrogShop.app/GrogShop";
+			};
+			name = Debug;
+		};
+		DDDDFEAC1A85F49200BBCEDA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = GrogShopTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GrogShop.app/GrogShop";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DDDDFE7C1A85F49200BBCEDA /* Build configuration list for PBXProject "GrogShop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDDDFEA51A85F49200BBCEDA /* Debug */,
+				DDDDFEA61A85F49200BBCEDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDDDFEA71A85F49200BBCEDA /* Build configuration list for PBXNativeTarget "GrogShop" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDDDFEA81A85F49200BBCEDA /* Debug */,
+				DDDDFEA91A85F49200BBCEDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDDDFEAA1A85F49200BBCEDA /* Build configuration list for PBXNativeTarget "GrogShopTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDDDFEAB1A85F49200BBCEDA /* Debug */,
+				DDDDFEAC1A85F49200BBCEDA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DDDDFE8B1A85F49200BBCEDA /* GrogShop.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DDDDFE8C1A85F49200BBCEDA /* GrogShop.xcdatamodel */,
+			);
+			currentVersion = DDDDFE8C1A85F49200BBCEDA /* GrogShop.xcdatamodel */;
+			path = GrogShop.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DDDDFE791A85F49200BBCEDA /* Project object */;
+}
