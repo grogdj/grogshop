@@ -7,12 +7,16 @@ package org.grogshop.services.impl;
 
 import com.grogdj.grogshop.core.model.Notification;
 import com.grogdj.grogshop.core.model.User;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.websocket.Session;
 import org.grogshop.services.api.NotificationsService;
 import org.grogshop.services.exceptions.ServiceException;
 
@@ -28,6 +32,8 @@ public class NotificationServiceImpl implements NotificationsService {
 
     private final static Logger log = Logger.getLogger(NotificationServiceImpl.class.getName());
 
+    private Map<String, Session> emailToSessionsMap = new HashMap<String, Session>();
+    
     @Override
     public Long newNotification(Long userId, String message, String action, String type) throws ServiceException {
         User user = em.find(User.class, userId);
@@ -35,11 +41,10 @@ public class NotificationServiceImpl implements NotificationsService {
             throw new ServiceException("User  doesn't exist: " + userId);
         }
         
-       
         Notification notification = new Notification(user, message, action, Notification.NotificationType.valueOf(type));
         em.persist(notification);
-        log.log(Level.INFO, "Item {0} created with id {1}", new Object[]{message, notification.getId()});
-        
+        log.log(Level.INFO, "Notification {0} created with id {1}", new Object[]{message, notification.getId()});
+        pushNotificaiton(user.getEmail(), notification.getId().toString());
         return notification.getId();
     }
 
@@ -48,25 +53,20 @@ public class NotificationServiceImpl implements NotificationsService {
         return em.createNamedQuery("Notification.getAllByUser", Notification.class).setParameter("userId", userId).getResultList();
     }
 
-//    private Set<Session> activeSessions;
-//
-//    @Override
-//    public void notifyUser(String userId, String message, String type) {
-//        //@TODO: I need to use the userId to identify the correct session
-//        System.out.println(">>> Notification: \tUser: " + userId + " - Message: " + message);
-//        for (Session peer : activeSessions) {
-//            try {
-//                peer.getBasicRemote().sendObject(new Notification(userId, message, type));
-//            } catch (IOException ex) {
-//                Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            } catch (EncodeException ex) {
-//                Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
-//
-//
-//    public void setActiveSessions(Set<Session> activeSessions) {
-//        this.activeSessions = activeSessions;
-//    }
+    public void addNewSession(String email, Session session) {
+        emailToSessionsMap.put(email, session);
+    }
+    
+    private void pushNotificaiton(String email, String id) {
+        try {
+            System.out.println(">> Looking for Email in SessionMap: "+email);
+            System.out.println(">> Session found: "+emailToSessionsMap.get(email));
+            Session session = emailToSessionsMap.get(email);
+            if(session != null){
+                session.getBasicRemote().sendText(id);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(NotificationServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

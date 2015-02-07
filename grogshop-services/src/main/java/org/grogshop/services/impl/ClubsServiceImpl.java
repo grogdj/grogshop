@@ -33,8 +33,10 @@ public class ClubsServiceImpl implements ClubsService {
 
     @Inject
     private InterestsService interestsService;
-  
-    
+
+    public ClubsServiceImpl() {
+    }
+
     
 
     @Override

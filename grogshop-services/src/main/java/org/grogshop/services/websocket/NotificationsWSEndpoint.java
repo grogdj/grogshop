@@ -17,8 +17,8 @@ import org.grogshop.services.websocket.encoders.NotificationEncoder;
  *
  * @author grogdj
  */
-@ServerEndpoint( value = "/shop", 
-        encoders = {NotificationEncoder.class}, 
+@ServerEndpoint(value = "/shop",
+        encoders = {NotificationEncoder.class},
         decoders = {NotificationDecoder.class}
 )
 public class NotificationsWSEndpoint {
@@ -28,7 +28,8 @@ public class NotificationsWSEndpoint {
 
     @OnMessage
     public void onMessage(String message, Session client) {
-//        notificationService.setActiveSessions(client.getOpenSessions());
+        notificationService.addNewSession(message, client);
+        System.out.println("Message on Web Socket: " + message);
     }
 
 }

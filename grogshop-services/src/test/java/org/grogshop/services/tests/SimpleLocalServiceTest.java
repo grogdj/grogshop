@@ -10,11 +10,16 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.Response;
 import org.grogshop.services.api.ClubsService;
-import org.grogshop.services.api.MembershipsService;
 import org.grogshop.services.api.ProfilesService;
+import org.grogshop.services.api.UsersService;
 import org.grogshop.services.exceptions.ServiceException;
+import org.grogshop.services.filters.auth.GrogAuthenticator;
 import org.grogshop.services.impl.ProfilesServiceImpl;
+import org.grogshop.services.util.GrogUtil;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
 //import org.hibernate.search.jpa.FullTextEntityManager;
 //import org.hibernate.search.jpa.Search;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -24,6 +29,7 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,6 +49,8 @@ public class SimpleLocalServiceTest {
                 .addPackage(ProfilesService.class.getPackage())
                 .addPackage(ProfilesServiceImpl.class.getPackage())
                 .addClass(ServiceException.class)
+                .addClass(GrogAuthenticator.class)
+                .addClass(GrogUtil.class)
                 .addAsResource("users.xml", "META-INF/users.xml")
                 .addAsResource("interests.xml", "META-INF/interests.xml")
                 .addAsResource("servicekey.xml", "META-INF/servicekey.xml")
@@ -60,11 +68,13 @@ public class SimpleLocalServiceTest {
     EntityManager em;
 
     @Inject
-    private ClubsService clubService;
+    private UsersService usersService;
 
+    
     @Inject
-    private MembershipsService membershipsService;
+    private ClubsService clubsService;
 
+   
     @BeforeClass
     public static void setUpClass() {
     }
@@ -147,9 +157,11 @@ public class SimpleLocalServiceTest {
 //        Assert.assertNotNull(allMembers);
 //    }
     @Test
-    public void searchInitialTest() {
-//        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
-//        Assert.assertNotNull(fullTextEntityManager);
+    public void searchInitialTest() throws ServiceException {
+        
+        Assert.assertNotNull(usersService);
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(em);
+        Assert.assertNotNull(fullTextEntityManager);
         
     }
 

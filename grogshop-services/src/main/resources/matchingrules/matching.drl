@@ -15,10 +15,11 @@ rule "post matching with request in price range"
   then
     
     Matching newMatching = new Matching($club, $p, $r, Matching.MatchingType.FULL);
-    matchingsService.newMatching(newMatching);
-    notificationsService.newNotification($postUserId, "Your post matched ...", "", "MATCHING");
-    notificationsService.newNotification($requestUserId, "Your request matched ...", "", "MATCHING");
-    System.out.println("New Matching for:  item(post): "+ $p + " itemMatched (request): "+$r);
+    Long matchingId = matchingsService.newMatching(newMatching);
+
+    notificationsService.newNotification($postUserId, "Your post matched ... userId: "+ $postUserId + "Rule(pmr) Matching:"+matchingId, "", "MATCHING");
+    notificationsService.newNotification($requestUserId, "Your request matched ... userId:"+ $requestUserId + "Rule(pmr) Matching:"+matchingId, "", "MATCHING");
+    
 end
 
 rule "request matching with post in price range"
@@ -28,8 +29,8 @@ rule "request matching with post in price range"
   then
     
     Matching newMatching = new Matching($club, $r, $p, Matching.MatchingType.FULL);
-    matchingsService.newMatching(newMatching);
-    notificationsService.newNotification($postUserId, "Your post matched ...", "", "MATCHING");
-    notificationsService.newNotification($requestUserId, "Your request matched ...", "", "MATCHING");
-    System.out.println("New Matching for:  item(request): "+ $r + " itemMatched (post): "+$p);
+    Long matchingId = matchingsService.newMatching(newMatching);
+    notificationsService.newNotification($postUserId, "Your post matched ... userId: "+ $postUserId + "Rule(rmp) Matching:"+matchingId, "", "MATCHING");
+    notificationsService.newNotification($requestUserId, "Your request matched ... userId:"+ $requestUserId + "Rule(rmp) Matching:"+matchingId, "", "MATCHING");
+    
 end

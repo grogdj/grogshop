@@ -1,6 +1,6 @@
 (function() {
     
-    var clubhouse = angular.module('clubhouse', ['shopnotifications', 'ngCookies', 'ngTagsInput', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload', 'ui-rangeSlider','masonry','angular-growl']);
+    var clubhouse = angular.module('clubhouse', [ 'ngCookies', 'ngTagsInput', 'ngRoute', 'ngAnimate', 'angular.filter', 'angularFileUpload', 'ui-rangeSlider','masonry','angular-growl']);
     
    clubhouse.constant("appConstants", {
         server: "http://localhost:8080/",

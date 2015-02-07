@@ -7,6 +7,7 @@ package org.grogshop.services.api;
 
 import com.grogdj.grogshop.core.model.Notification;
 import java.util.List;
+import javax.websocket.Session;
 import org.grogshop.services.exceptions.ServiceException;
 
 /**
@@ -15,6 +16,8 @@ import org.grogshop.services.exceptions.ServiceException;
  */
 public interface NotificationsService {
 
+   void addNewSession(String token, Session session); 
+    
    Long newNotification(Long userId, String message, String action, String type) throws ServiceException;
    
    List<Notification> getAllNotificationsByUser(Long userId);

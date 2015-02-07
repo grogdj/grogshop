@@ -95,7 +95,25 @@
                     $scope.submitted = false;
                     $scope.avatarStyle = {'background-image':'url('+appConstants.server + appConstants.context +'rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
                     console.log("firstLogin: " + $scope.firstLogin);
-
+                    //var wsUri = "ws://" + "grog-restprovider.rhcloud.com:8000" + "/grogshop-server/" + "shop";
+                    var wsUri = "ws://" + "localhost:8080" + "/grogshop-server/" + "shop";
+                    //var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + "/grogshop-server/" + "shop";
+                    var websocket = new WebSocket(wsUri);
+                    
+                    websocket.onopen = function (evt) {
+                        console.log("sending: "+"joined - auth_token"+ $scope.auth_token + " ->  email: "+ $scope.email);
+                        websocket.send($scope.email);
+                        
+                    };
+                    websocket.onmessage = function (evt) {
+                        console.log(">>> onMessage: " + evt.data);
+                        $rootScope.$broadcast('quickNotification', evt.data);
+                    };
+                    websocket.onerror = function (evt) {
+                        console.log("Error: "+evt.data);
+                    };
+                    
+                    
                     if ($scope.firstLogin) {
                         $rootScope.$broadcast('goTo', "/firstlogin");
                     } else {
