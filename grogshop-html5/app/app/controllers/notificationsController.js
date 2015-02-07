@@ -1,8 +1,18 @@
 (function (){
-    var notificationsController = function ($rootScope, $scope, $cookieStore, $users) {
-        $scope.notifications = [{message:'notificacion vieja', id:10}, {message:'Otra notificacion vieja', id:11},{message:'hola', id:9}, {message:'nuevo', id:8}, {message:' nuevo pero viejo nuevo', id:7}]; ; 
-        $scope.newMatchingsNotifications = [{message:'hola', id:9}, {message:'nuevo', id:8}, {message:' nuevo pero viejo nuevo', id:7}]; 
+    var notificationsController = function ($rootScope, $scope, $cookieStore, $users,  $notifications) {
+        var not = this; 
+        $scope.notifications = []; ; 
+        $scope.newMatchingsNotifications = [{message:"esta es nueva"}]; 
     
+        $scope.loadNotifications = function(){
+            
+            $notifications.loadAll().success(function (data) {
+                   $scope.notifications = data;  
+                
+                }).error(function (data) {
+                    console.log("Error: " + data);
+                });
+        }
     
         
         
@@ -37,27 +47,30 @@
                     $('.dropdown.dropdown-li').data('open', true);
             });
 
-            $(document).click(function() {
-                if($('.dropdown.dropdown-li').data('open')) {
-                    $('.dropdown.dropdown-li').data('open', false);
-                     $scope.clearNewNotifications();
+            //$(document).click(function() {
+            //    if($('.dropdown.dropdown-li').data('open')) {
+            //        $('.dropdown.dropdown-li').data('open', false);
+                     //$scope.clearNewNotifications();
+                    
+            //        $scope.clearNewNotificationsFromDocument($scope);
                     
                     
                     
-                }
-            });
+              //  }
+            //});
 
         $scope.clearNewNotifications = function(){
-            
+            console.log($scope.newMatchingsNotifications)
             $scope.newMatchingsNotifications=[];
-            alert("FUNCION LLAMADA" +  $scope.newMatchingsNotifications.length);
         }
+        
+     
         
     };
     
     
     
-    notificationsController.$inject = ['$rootScope','$scope','$cookieStore', '$users'];
+    notificationsController.$inject = ['$rootScope','$scope','$cookieStore', '$users', '$notifications'];
     angular.module( "clubhouse").controller("notificationsController", notificationsController);
 
 }());
