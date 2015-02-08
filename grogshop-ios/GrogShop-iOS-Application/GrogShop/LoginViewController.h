@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController<UITextFieldDelegate>
+@interface LoginViewController : UIViewController<UITextFieldDelegate>
 
 @property(strong,retain) UITextField *email,*password;
-@property(strong,retain) UIButton *login,*registerUser;
+@property(strong,retain) UIButton *login,*registerUser,*forgotPwd;
 
 @end
 

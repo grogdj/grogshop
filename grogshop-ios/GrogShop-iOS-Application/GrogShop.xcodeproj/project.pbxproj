@@ -10,13 +10,18 @@
 		DDDDFE871A85F49200BBCEDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE861A85F49200BBCEDA /* main.m */; };
 		DDDDFE8A1A85F49200BBCEDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE891A85F49200BBCEDA /* AppDelegate.m */; };
 		DDDDFE8D1A85F49200BBCEDA /* GrogShop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE8B1A85F49200BBCEDA /* GrogShop.xcdatamodeld */; };
-		DDDDFE901A85F49200BBCEDA /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE8F1A85F49200BBCEDA /* ViewController.m */; };
-		DDDDFE931A85F49200BBCEDA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DDDDFE911A85F49200BBCEDA /* Main.storyboard */; };
+		DDDDFE901A85F49200BBCEDA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE8F1A85F49200BBCEDA /* LoginViewController.m */; };
 		DDDDFE951A85F49200BBCEDA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDDDFE941A85F49200BBCEDA /* Images.xcassets */; };
 		DDDDFE981A85F49200BBCEDA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DDDDFE961A85F49200BBCEDA /* LaunchScreen.xib */; };
 		DDDDFEA41A85F49200BBCEDA /* GrogShopTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEA31A85F49200BBCEDA /* GrogShopTests.m */; };
 		DDDDFEAF1A86164E00BBCEDA /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEAE1A86164E00BBCEDA /* Utils.m */; };
 		DDDDFEB31A861B7200BBCEDA /* APIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEB21A861B7200BBCEDA /* APIRequest.m */; };
+		DDDDFEB61A8650EA00BBCEDA /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEB51A8650EA00BBCEDA /* AccountViewController.m */; };
+		DDDDFEB91A8650F500BBCEDA /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEB81A8650F500BBCEDA /* SettingsViewController.m */; };
+		DDDDFEBC1A86510000BBCEDA /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEBB1A86510000BBCEDA /* HomeViewController.m */; };
+		DDDDFEBF1A87466800BBCEDA /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEBE1A87466800BBCEDA /* LaunchViewController.m */; };
+		DDDDFEC21A874ACC00BBCEDA /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEC11A874ACC00BBCEDA /* RegisterViewController.m */; };
+		DDDDFEC51A87781400BBCEDA /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEC41A87781400BBCEDA /* ForgotPasswordViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,9 +41,8 @@
 		DDDDFE881A85F49200BBCEDA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DDDDFE891A85F49200BBCEDA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		DDDDFE8C1A85F49200BBCEDA /* GrogShop.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GrogShop.xcdatamodel; sourceTree = "<group>"; };
-		DDDDFE8E1A85F49200BBCEDA /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DDDDFE8F1A85F49200BBCEDA /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		DDDDFE921A85F49200BBCEDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DDDDFE8E1A85F49200BBCEDA /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		DDDDFE8F1A85F49200BBCEDA /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		DDDDFE941A85F49200BBCEDA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		DDDDFE971A85F49200BBCEDA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		DDDDFE9D1A85F49200BBCEDA /* GrogShopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GrogShopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +53,18 @@
 		DDDDFEB01A86198800BBCEDA /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		DDDDFEB11A861B7200BBCEDA /* APIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APIRequest.h; sourceTree = "<group>"; };
 		DDDDFEB21A861B7200BBCEDA /* APIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APIRequest.m; sourceTree = "<group>"; };
+		DDDDFEB41A8650EA00BBCEDA /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		DDDDFEB51A8650EA00BBCEDA /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		DDDDFEB71A8650F500BBCEDA /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		DDDDFEB81A8650F500BBCEDA /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		DDDDFEBA1A86510000BBCEDA /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		DDDDFEBB1A86510000BBCEDA /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		DDDDFEBD1A87466800BBCEDA /* LaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchViewController.h; sourceTree = "<group>"; };
+		DDDDFEBE1A87466800BBCEDA /* LaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchViewController.m; sourceTree = "<group>"; };
+		DDDDFEC01A874ACC00BBCEDA /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		DDDDFEC11A874ACC00BBCEDA /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		DDDDFEC31A87781400BBCEDA /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
+		DDDDFEC41A87781400BBCEDA /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,14 +108,25 @@
 			children = (
 				DDDDFE881A85F49200BBCEDA /* AppDelegate.h */,
 				DDDDFE891A85F49200BBCEDA /* AppDelegate.m */,
-				DDDDFE8E1A85F49200BBCEDA /* ViewController.h */,
-				DDDDFE8F1A85F49200BBCEDA /* ViewController.m */,
+				DDDDFEBD1A87466800BBCEDA /* LaunchViewController.h */,
+				DDDDFEBE1A87466800BBCEDA /* LaunchViewController.m */,
+				DDDDFEC01A874ACC00BBCEDA /* RegisterViewController.h */,
+				DDDDFEC11A874ACC00BBCEDA /* RegisterViewController.m */,
+				DDDDFE8E1A85F49200BBCEDA /* LoginViewController.h */,
+				DDDDFE8F1A85F49200BBCEDA /* LoginViewController.m */,
 				DDDDFEB11A861B7200BBCEDA /* APIRequest.h */,
 				DDDDFEB21A861B7200BBCEDA /* APIRequest.m */,
 				DDDDFEAD1A86164E00BBCEDA /* Utils.h */,
 				DDDDFEAE1A86164E00BBCEDA /* Utils.m */,
+				DDDDFEB41A8650EA00BBCEDA /* AccountViewController.h */,
+				DDDDFEB51A8650EA00BBCEDA /* AccountViewController.m */,
+				DDDDFEB71A8650F500BBCEDA /* SettingsViewController.h */,
+				DDDDFEB81A8650F500BBCEDA /* SettingsViewController.m */,
+				DDDDFEC31A87781400BBCEDA /* ForgotPasswordViewController.h */,
+				DDDDFEC41A87781400BBCEDA /* ForgotPasswordViewController.m */,
+				DDDDFEBA1A86510000BBCEDA /* HomeViewController.h */,
+				DDDDFEBB1A86510000BBCEDA /* HomeViewController.m */,
 				DDDDFEB01A86198800BBCEDA /* Constants.h */,
-				DDDDFE911A85F49200BBCEDA /* Main.storyboard */,
 				DDDDFE941A85F49200BBCEDA /* Images.xcassets */,
 				DDDDFE961A85F49200BBCEDA /* LaunchScreen.xib */,
 				DDDDFE8B1A85F49200BBCEDA /* GrogShop.xcdatamodeld */,
@@ -214,7 +241,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDDDFE931A85F49200BBCEDA /* Main.storyboard in Resources */,
 				DDDDFE981A85F49200BBCEDA /* LaunchScreen.xib in Resources */,
 				DDDDFE951A85F49200BBCEDA /* Images.xcassets in Resources */,
 			);
@@ -234,10 +260,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDDDFEC51A87781400BBCEDA /* ForgotPasswordViewController.m in Sources */,
+				DDDDFEC21A874ACC00BBCEDA /* RegisterViewController.m in Sources */,
 				DDDDFE8A1A85F49200BBCEDA /* AppDelegate.m in Sources */,
 				DDDDFE8D1A85F49200BBCEDA /* GrogShop.xcdatamodeld in Sources */,
+				DDDDFEB61A8650EA00BBCEDA /* AccountViewController.m in Sources */,
+				DDDDFEBF1A87466800BBCEDA /* LaunchViewController.m in Sources */,
+				DDDDFEB91A8650F500BBCEDA /* SettingsViewController.m in Sources */,
 				DDDDFEB31A861B7200BBCEDA /* APIRequest.m in Sources */,
-				DDDDFE901A85F49200BBCEDA /* ViewController.m in Sources */,
+				DDDDFEBC1A86510000BBCEDA /* HomeViewController.m in Sources */,
+				DDDDFE901A85F49200BBCEDA /* LoginViewController.m in Sources */,
 				DDDDFEAF1A86164E00BBCEDA /* Utils.m in Sources */,
 				DDDDFE871A85F49200BBCEDA /* main.m in Sources */,
 			);
@@ -262,14 +294,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DDDDFE911A85F49200BBCEDA /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DDDDFE921A85F49200BBCEDA /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DDDDFE961A85F49200BBCEDA /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

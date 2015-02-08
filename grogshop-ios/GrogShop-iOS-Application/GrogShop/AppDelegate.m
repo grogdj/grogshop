@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "LaunchViewController.h"
+#import "HomeViewController.h"
+#import "AccountViewController.h"
+#import "SettingsViewController.h"
+#import "Utils.h"
 
 @interface AppDelegate ()
 
@@ -22,17 +27,51 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    _animatingView = [[AnimatingView alloc] initWithFrame:self.window.bounds];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.emailId = [defaults objectForKey:User_email];
     self.auth_token = [defaults objectForKey:User_auth_token];
     
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.animatingView = [[AnimatingView alloc] initWithFrame:self.window.bounds];
+    
+    self.launchViewController = [[LaunchViewController alloc] init];
+    self.loginViewNavigationController = [[UINavigationController alloc] initWithRootViewController:self.launchViewController];
+    if (![Utils isEmpty:self.emailId] && ![Utils isEmpty:self.auth_token]) {
+        [self launchUserSessionTabBarController];
+    } else {
+        self.window.rootViewController = self.loginViewNavigationController;
+    }
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
+- (UITabBarController *)tabBarController
+{
+    if (!_tabBarController) {
+        _tabBarController = [[UITabBarController alloc] init];
+        AccountViewController *account = [[AccountViewController alloc] init];
+        HomeViewController *home = [[HomeViewController alloc] init];
+        SettingsViewController *settings = [[SettingsViewController alloc] init];
+        _tabBarController.viewControllers = [NSArray arrayWithObjects:account,home,settings, nil];
+        _tabBarController.selectedViewController = home;
+    }
+    return  _tabBarController;
+}
+
+- (void)launchUserSessionTabBarController {
+    
+    if([self.window.rootViewController isEqual:self.loginViewNavigationController]) {
+        [self.loginViewNavigationController pushViewController:self.tabBarController animated:YES];
+        self.loginViewNavigationController.navigationBarHidden = YES;
+    } else {
+        self.window.rootViewController = self.tabBarController;
+    }
+}
+
 - (void)startAnimating {
-    [_window addSubview:_animatingView];
-    [_window bringSubviewToFront:_animatingView];
+    [self.window addSubview:_animatingView];
+    [self.window bringSubviewToFront:_animatingView];
 }
 - (void)stopAnimating {
     [_animatingView removeFromSuperview];
