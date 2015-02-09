@@ -32,7 +32,8 @@ public class NotificationServiceImpl implements NotificationsService {
 
     private final static Logger log = Logger.getLogger(NotificationServiceImpl.class.getName());
 
-    private Map<String, Session> emailToSessionsMap = new HashMap<String, Session>();
+    private Map<String, Session> emailToSessionMap = new HashMap<String, Session>();
+    private Map<Session, String> sessionToEmailMap = new HashMap<Session, String>();
     
     @Override
     public Long newNotification(Long userId, String message, String action, String type) throws ServiceException {
@@ -54,14 +55,26 @@ public class NotificationServiceImpl implements NotificationsService {
     }
 
     public void addNewSession(String email, Session session) {
-        emailToSessionsMap.put(email, session);
+        emailToSessionMap.put(email, session);
+        sessionToEmailMap.put(session, email);
     }
+
+    public void removeSession(Session session) throws ServiceException{
+        String email = sessionToEmailMap.get(session);
+        if(email == null){
+            throw new ServiceException("Removing session failed: session doesn't exist");
+        }
+        sessionToEmailMap.remove(session);
+        emailToSessionMap.remove(email);
+    }
+    
+    
     
     private void pushNotificaiton(String email, String id) {
         try {
             System.out.println(">> Looking for Email in SessionMap: "+email);
-            System.out.println(">> Session found: "+emailToSessionsMap.get(email));
-            Session session = emailToSessionsMap.get(email);
+            System.out.println(">> Session found: "+emailToSessionMap.get(email));
+            Session session = emailToSessionMap.get(email);
             if(session != null){
                 session.getBasicRemote().sendText(id);
             }

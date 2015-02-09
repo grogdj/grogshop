@@ -17,6 +17,8 @@ import org.grogshop.services.exceptions.ServiceException;
 public interface NotificationsService {
 
    void addNewSession(String token, Session session); 
+   
+   void removeSession(Session session) throws ServiceException;
     
    Long newNotification(Long userId, String message, String action, String type) throws ServiceException;
    

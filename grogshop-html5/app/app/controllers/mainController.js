@@ -1,11 +1,11 @@
 
 (function () {
-    
-    angular.module( 'clubhouse' ).config(['growlProvider', function (growlProvider) {
-      growlProvider.globalTimeToLive(3000);
-    }]);
-    
-    var MainCtrl = function ($scope,  $cookieStore, $rootScope, $users, $memberships, appConstants, growl, $notifications) {
+
+    angular.module('clubhouse').config(['growlProvider', function (growlProvider) {
+            growlProvider.globalTimeToLive(3000);
+        }]);
+
+    var MainCtrl = function ($scope, $cookieStore, $rootScope, $users, $memberships, appConstants, growl, $notifications) {
         $scope.auth_token = $cookieStore.get('auth_token');
         $scope.email = $cookieStore.get('email');
         $scope.user_id = $cookieStore.get('user_id');
@@ -14,43 +14,39 @@
         $scope.memberships = [];
         $scope.notifications = {};
         $scope.avatarStyle = "";
-        
-       
-        
-        
-        
+
         $rootScope.$on('quickNotification', function (event, data, type) {
-             var config = {};
+            var config = {};
 
             if (!data) {
                 $scope.invalidNotification = true;
                 return;
             }
-        
+
             //i = $scope.index++;
             //$scope.invalidNotification = false;
             //$scope.notifications[i] = data;
-            console.log("notification " + data );
-            
-             switch (type) {
-              case "success":
-                growl.success(data, config);
-                break;
-              case "info":
-                growl.info(data, config);
-                break;
-              case "warning":
-                growl.warning(data, config);
-                break;
-              case "error":
-                growl.error(data, config);
-                break;
-              default: 
-                growl.error(data, config);
+            console.log("notification " + data);
+
+            switch (type) {
+                case "success":
+                    growl.success(data, config);
+                    break;
+                case "info":
+                    growl.info(data, config);
+                    break;
+                case "warning":
+                    growl.warning(data, config);
+                    break;
+                case "error":
+                    growl.error(data, config);
+                    break;
+                default:
+                    growl.error(data, config);
             }
-            
-            
-            
+
+
+
 
         });
 
@@ -60,12 +56,12 @@
             $scope.user_id = "";
             $scope.firstLogin = "";
             $scope.memberships = [];
-            
+
             $users.logout().success(function (data) {
                 console.log("You have been logged out." + data);
                 $cookieStore.remove('auth_token');
                 $cookieStore.remove('email');
-                $scope.avatarStyle ="";
+                $scope.avatarStyle = "";
                 $rootScope.$broadcast('goTo', "/");
                 $rootScope.$broadcast("quickNotification", "You have been logged out.", 'info');
             }).error(function (data) {
@@ -84,6 +80,7 @@
                 $users.login(user).success(function (data) {
                     $rootScope.$broadcast("quickNotification", "You are logged now, have fun!", 'success');
                     console.log("You are signed in! " + data.auth_token);
+                    $scope.initWebSocket();
 
                     $cookieStore.put('auth_token', data.auth_token);
                     $cookieStore.put('email', data.email);
@@ -95,28 +92,9 @@
                     $scope.firstLogin = $cookieStore.get('firstLogin');
                     $scope.credentials = {};
                     $scope.submitted = false;
-                    $scope.avatarStyle = {'background-image':'url('+appConstants.server + appConstants.context +'rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
+                    $scope.avatarStyle = {'background-image': 'url(' + appConstants.server + appConstants.context + 'rest/public/users/' + $scope.user_id + '/avatar' + '?' + new Date().getTime() + ')'};
                     console.log("firstLogin: " + $scope.firstLogin);
-                    //var wsUri = "ws://" + "grog-restprovider.rhcloud.com:8000" + "/grogshop-server/" + "shop";
-                    var wsUri = "ws://" + "localhost:8080" + "/grogshop-server/" + "shop";
-                    //var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + "/grogshop-server/" + "shop";
-                    var websocket = new WebSocket(wsUri);
-                    
-                    websocket.onopen = function (evt) {
-                        console.log("sending: "+"joined - auth_token"+ $scope.auth_token + " ->  email: "+ $scope.email);
-                        websocket.send($scope.email);
-                        
-                    };
-                    websocket.onmessage = function (evt) {
-                        console.log(">>> onMessage: " + evt.data);
-                        $rootScope.$broadcast('quickNotification', evt.data);
-                        $notifications.newMatchingsNotifications.push(evt.data);
-                    };
-                    websocket.onerror = function (evt) {
-                        console.log("Error: "+evt.data);
-                    };
-                    
-                    
+
                     if ($scope.firstLogin) {
                         $rootScope.$broadcast('goTo', "/firstlogin");
                     } else {
@@ -131,12 +109,12 @@
         };
 
         $scope.loadMemberships = function () {
-           
+
             $memberships.load().success(function (data) {
-               // $rootScope.$broadcast("quickNotification", "Memberships loaded! ");
-                console.log("data: "+ data);
+                // $rootScope.$broadcast("quickNotification", "Memberships loaded! ");
+                console.log("data: " + data);
                 $scope.memberships = JSON.parse(JSON.stringify(data));
-                console.log("my memberships: "+ $scope.memberships);
+                console.log("my memberships: " + $scope.memberships);
 
             }).error(function (data) {
                 console.log("Error: " + data);
@@ -144,26 +122,52 @@
             });
 
         };
+        
+        $scope.initWebSocket = function(){
+            //var wsUri = "ws://" + "grog-restprovider.rhcloud.com:8000" + "/grogshop-server/" + "shop";
+            var wsUri = "ws://" + "localhost:8080" + "/grogshop-server/" + "shop?email=" + $scope.email;
+            //var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + "/grogshop-server/" + "shop";
+            var websocket = new WebSocket(wsUri);
+
+            websocket.onopen = function (evt) {
+                console.log("onOpen client side");
+
+            };
+            websocket.onmessage = function (evt) {
+                console.log(">>> onMessage: " + evt.data);
+                $rootScope.$broadcast('quickNotification', evt.data);
+                $notifications.newMatchingsNotifications.push(evt.data);
+            };
+            websocket.onerror = function (evt) {
+                console.log("Error: " + evt.data);
+            };
+
+            websocket.onclose = function () {
+                console.log("onClose client side");
+            };
+            
+        };
 
         $scope.hasMembership = function (club_id) {
             return $memberships.hasMembership(club_id, $scope.memberships);
         };
 
-        if($scope.auth_token && $scope.auth_token !== ""){
+        if ($scope.auth_token && $scope.auth_token !== "") {
+            $scope.initWebSocket();
             $scope.loadMemberships($scope.user_id, $scope.email, $scope.auth_token);
-            $scope.avatarStyle = {'background-image':'url('+appConstants.server + appConstants.context + 'rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
+            $scope.avatarStyle = {'background-image': 'url(' + appConstants.server + appConstants.context + 'rest/public/users/' + $scope.user_id + '/avatar' + '?' + new Date().getTime() + ')'};
 
         }
 
-        $rootScope.$on("updateProfileImage",function (event, data) {
-            $scope.avatarStyle = {'background-image':'url('+appConstants.server + appConstants.context + 'rest/public/users/'+$scope.user_id+'/avatar'+ '?' + new Date().getTime()+')'} ;
+        $rootScope.$on("updateProfileImage", function (event, data) {
+            $scope.avatarStyle = {'background-image': 'url(' + appConstants.server + appConstants.context + 'rest/public/users/' + $scope.user_id + '/avatar' + '?' + new Date().getTime() + ')'};
 
         });
     };
-    
-    
+
+
     MainCtrl.$inject = ['$scope', '$cookieStore', '$rootScope', '$users', '$memberships', 'appConstants', 'growl', '$notifications'];
-    angular.module( "clubhouse" ).controller("MainCtrl", MainCtrl);
+    angular.module("clubhouse").controller("MainCtrl", MainCtrl);
 }());
 
 
