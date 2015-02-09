@@ -10,14 +10,11 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/grogshop-core/target/
 /grogshop-processing/target/
-grogshop-server/src/main/webapp/js/listings.js
 /grogshop-services/target/
-/grogshop-filters/target/
+/grogshop-html5/target/
 /GrogHTML5/nbproject/private/
 /grogshop-html5/nbproject/private/
-/delete-html5/nbproject/private/
 /grogshop-ios/GrogShop-iOS-Application/DerivedData/
 /grogshop-model/target/
 /grogshop-rules/target/
