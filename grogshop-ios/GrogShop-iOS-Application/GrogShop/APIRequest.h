@@ -12,11 +12,15 @@
 @interface APIRequest : NSObject
 
 - (void)startRegistrationRequestWithSuccessBlock:(void (^)(id rootObj))success
-                             failureBlock:(void (^)(NSError *e))failed email:(NSString *)email password:(NSString *)password;
+                                    failureBlock:(void (^)(NSError *e))failed email:(NSString *)email password:(NSString *)password;
 
 - (void)startLoginRequestWithSuccessBlock:(void (^)(id rootObj))success
-                                    failureBlock:(void (^)(NSError *e))failed email:(NSString *)email password:(NSString *)password;
+                             failureBlock:(void (^)(NSError *e))failed email:(NSString *)email password:(NSString *)password;
 
 - (void)startLogoutRequestWithSuccessBlock:(void (^)(id rootObj))success
                               failureBlock:(void (^)(NSError *e))failed email:(NSString *)email authToken:(NSString *)token;
+
+- (void)startGetRequestWithSuccessBlock:(void (^)(id rootObj))success
+                           failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension;
+
 @end

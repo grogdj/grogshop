@@ -12,6 +12,7 @@
 @implementation APIRequest
 
 #define kBaseURL @"http://grog-restprovider.rhcloud.com/grogshop-server/rest/"
+
 #define kDomain @"Grogshop"
 
 - (void)sendSuccessCallback:(id)rootObject successBlock:(void (^)(id rootObj))success {
@@ -63,7 +64,7 @@
 - (void)startRegistrationRequestWithSuccessBlock:(void (^)(id rootObj))success
                                     failureBlock:(void (^)(NSError *e))failed email:(NSString *)email password:(NSString *)password {
     
-    NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,@"auth/register"];
+    NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,kAuthRegister];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     [urlRequest setHTTPMethod:@"POST"];
     NSString *stringToPost = [NSString stringWithFormat:@"password=%@&email=%@",[Utils getURLEncoded:password],[Utils getURLEncoded:email]];
@@ -76,7 +77,7 @@
 
 - (void)startLoginRequestWithSuccessBlock:(void (^)(id rootObj))success
                              failureBlock:(void (^)(NSError *e))failed email:(NSString *)email password:(NSString *)password {
-    NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,@"auth/login"];
+    NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,kAuthLogin];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     [urlRequest setHTTPMethod:@"POST"];
     NSString *stringToPost = [NSString stringWithFormat:@"password=%@&email=%@",[Utils getURLEncoded:password],[Utils getURLEncoded:email]];
@@ -89,17 +90,20 @@
     [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
 }
 - (void)startLogoutRequestWithSuccessBlock:(void (^)(id rootObj))success
-                             failureBlock:(void (^)(NSError *e))failed email:(NSString *)email authToken:(NSString *)token {
-    NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,@"auth/logout"];
+                              failureBlock:(void (^)(NSError *e))failed email:(NSString *)email authToken:(NSString *)token {
+    NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,kAuthLogout];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     [urlRequest setHTTPMethod:@"POST"];
-//    NSString *stringToPost = [NSString stringWithFormat:@"password=%@&email=%@",[Utils getURLEncoded:password],[Utils getURLEncoded:email]];
-//    NSData *dataToPost = [stringToPost dataUsingEncoding:NSUTF8StringEncoding];
-//    [urlRequest setHTTPBody:dataToPost];
-//    [urlRequest setValue:[NSString stringWithFormat:@"%ld",(long)[dataToPost length]] forHTTPHeaderField:@"Content-Length"];
     [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [urlRequest setValue:[NSString stringWithFormat:@"webkey:%@",email] forHTTPHeaderField:@"service_key"];
     [urlRequest setValue:[NSString stringWithFormat:@"%@",token] forHTTPHeaderField:@"auth_token"];
+    [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
+}
+
+- (void)startGetRequestWithSuccessBlock:(void (^)(id rootObj))success
+                           failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension {
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kBaseURL,pathExtension]]];
+    [urlRequest setHTTPMethod:@"GET"];
     [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
 }
 

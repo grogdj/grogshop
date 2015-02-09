@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DDD0473C1A8787A1000F142C /* GrogCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD0473B1A8787A1000F142C /* GrogCollectionCell.m */; };
+		DDD0473F1A880838000F142C /* ImageFetchRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = DDD0473E1A880838000F142C /* ImageFetchRequest.m */; };
+		DDD047411A882E48000F142C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD047401A882E48000F142C /* QuartzCore.framework */; };
 		DDDDFE871A85F49200BBCEDA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE861A85F49200BBCEDA /* main.m */; };
 		DDDDFE8A1A85F49200BBCEDA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE891A85F49200BBCEDA /* AppDelegate.m */; };
 		DDDDFE8D1A85F49200BBCEDA /* GrogShop.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFE8B1A85F49200BBCEDA /* GrogShop.xcdatamodeld */; };
@@ -35,6 +38,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DDD0473A1A8787A1000F142C /* GrogCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrogCollectionCell.h; sourceTree = "<group>"; };
+		DDD0473B1A8787A1000F142C /* GrogCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrogCollectionCell.m; sourceTree = "<group>"; };
+		DDD0473D1A880838000F142C /* ImageFetchRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFetchRequest.h; sourceTree = "<group>"; };
+		DDD0473E1A880838000F142C /* ImageFetchRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFetchRequest.m; sourceTree = "<group>"; };
+		DDD047401A882E48000F142C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		DDDDFE811A85F49200BBCEDA /* GrogShop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrogShop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDDDFE851A85F49200BBCEDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DDDDFE861A85F49200BBCEDA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -72,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDD047411A882E48000F142C /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +97,7 @@
 		DDDDFE781A85F49200BBCEDA = {
 			isa = PBXGroup;
 			children = (
+				DDD047401A882E48000F142C /* QuartzCore.framework */,
 				DDDDFE831A85F49200BBCEDA /* GrogShop */,
 				DDDDFEA01A85F49200BBCEDA /* GrogShopTests */,
 				DDDDFE821A85F49200BBCEDA /* Products */,
@@ -116,8 +126,12 @@
 				DDDDFE8F1A85F49200BBCEDA /* LoginViewController.m */,
 				DDDDFEB11A861B7200BBCEDA /* APIRequest.h */,
 				DDDDFEB21A861B7200BBCEDA /* APIRequest.m */,
+				DDD0473D1A880838000F142C /* ImageFetchRequest.h */,
+				DDD0473E1A880838000F142C /* ImageFetchRequest.m */,
 				DDDDFEAD1A86164E00BBCEDA /* Utils.h */,
 				DDDDFEAE1A86164E00BBCEDA /* Utils.m */,
+				DDD0473A1A8787A1000F142C /* GrogCollectionCell.h */,
+				DDD0473B1A8787A1000F142C /* GrogCollectionCell.m */,
 				DDDDFEB41A8650EA00BBCEDA /* AccountViewController.h */,
 				DDDDFEB51A8650EA00BBCEDA /* AccountViewController.m */,
 				DDDDFEB71A8650F500BBCEDA /* SettingsViewController.h */,
@@ -264,7 +278,9 @@
 				DDDDFEC21A874ACC00BBCEDA /* RegisterViewController.m in Sources */,
 				DDDDFE8A1A85F49200BBCEDA /* AppDelegate.m in Sources */,
 				DDDDFE8D1A85F49200BBCEDA /* GrogShop.xcdatamodeld in Sources */,
+				DDD0473F1A880838000F142C /* ImageFetchRequest.m in Sources */,
 				DDDDFEB61A8650EA00BBCEDA /* AccountViewController.m in Sources */,
+				DDD0473C1A8787A1000F142C /* GrogCollectionCell.m in Sources */,
 				DDDDFEBF1A87466800BBCEDA /* LaunchViewController.m in Sources */,
 				DDDDFEB91A8650F500BBCEDA /* SettingsViewController.m in Sources */,
 				DDDDFEB31A861B7200BBCEDA /* APIRequest.m in Sources */,

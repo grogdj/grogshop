@@ -132,12 +132,14 @@
                     del.emailId = _email.text;
                     NSString *auth = [rootDictionary objectForKey:@"auth_token"];
                     del.auth_token = auth;
+                    del.userId = [[rootDictionary objectForKey:@"user_id"] intValue];
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults setObject:_email.text forKey:User_email];
                     [defaults setObject:auth forKey:User_auth_token];
+                    [defaults setObject:[NSNumber numberWithInt:del.userId] forKey:User_auth_token];
                     [defaults synchronize];
                     
-                    [self launchUserSession:true];
+                    [self launchUserSession:[rootDictionary objectForKey:@"firstLogin"]];
                 }
             }
             
@@ -171,26 +173,6 @@
     } email:del.emailId authToken:del.auth_token];
 }
 
-- (void)startRegistration {
-    if ([self checkFields]) {
-        AppDelegate *del = [AppDelegate sharedDelegate];
-        [del startAnimating];
-        APIRequest *_request = [[APIRequest alloc] init];
-        [_request startRegistrationRequestWithSuccessBlock:^(id rootObj) {
-            NSLog(@"success for registration");
-            [del stopAnimating];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:_email.text forKey:User_email];
-            [defaults synchronize];
-        } failureBlock:^(NSError *e) {
-            NSLog(@"error during registration:%@",[e localizedDescription]);
-            [del stopAnimating];
-            [self showAlert:@"Registration Failed!" message:@"Please re-check values provided."];
-            
-        } email:_email.text password:_password.text];
-    }
-}
-
 - (void)forgotPwdClicked {
     ForgotPasswordViewController *controller = [[ForgotPasswordViewController alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
@@ -201,8 +183,8 @@
     [alert show];
 }
 
-- (void)launchUserSession:(BOOL)animated {
-    [[AppDelegate sharedDelegate] launchUserSessionTabBarController];
+- (void)launchUserSession:(BOOL)firstSession {
+    [[AppDelegate sharedDelegate] launchUserSessionTabBarController:firstSession];
 }
 
 #pragma mark UITextField delegate

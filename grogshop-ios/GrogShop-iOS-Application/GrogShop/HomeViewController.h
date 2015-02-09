@@ -10,4 +10,5 @@
 
 @interface HomeViewController : UIViewController
 
+@property(nonatomic, assign) BOOL firstLogin;
 @end

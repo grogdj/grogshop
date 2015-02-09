@@ -11,7 +11,7 @@
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
 @property(strong,retain) UITextField *email,*password;
-@property(strong,retain) UIButton *login,*registerUser,*forgotPwd;
+@property(strong,retain) UIButton *login,*forgotPwd;
 
 @end
 

@@ -23,15 +23,17 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic) AnimatingView *animatingView;
-
-@property(strong,nonatomic) NSString *emailId,*auth_token;
+@property (assign, nonatomic) BOOL firstLogin;
+@property (strong,nonatomic) NSString *emailId,*auth_token;
+@property (assign,nonatomic) int userId;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 - (void)startAnimating;
 - (void)stopAnimating;
 + (AppDelegate *)sharedDelegate;
-- (void)launchUserSessionTabBarController;
+- (void)launchUserSessionTabBarController:(BOOL)firstLogin;
+- (NSString *)getFilePathForImageIndex:(NSString *)imageName;
 @end
 
 @interface AnimatingView : UIView

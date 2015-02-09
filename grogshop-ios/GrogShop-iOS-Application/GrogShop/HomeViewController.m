@@ -7,8 +7,23 @@
 //
 
 #import "HomeViewController.h"
+#import "Constants.h"
+#import "APIRequest.h"
+#import "GrogCollectionCell.h"
+
+@interface HomeViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
+    BOOL isFirst;
+    NSMutableArray *publicInterestsArray,*userInterestsArray;
+    UICollectionView *collectionView;
+    UICollectionViewFlowLayout *collectionLayout;
+}
+
+
+@end
 
 @implementation HomeViewController
+
+static NSString *reusableIdentifier = @"GrogCell";
 
 - (instancetype)init
 {
@@ -23,7 +38,105 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = BG_COLOR;
+    isFirst = true;
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (isFirst) {
+        isFirst = false;
+        if (_firstLogin) {
+            APIRequest *_request = [[APIRequest alloc] init];
+            AppDelegate *del = [AppDelegate sharedDelegate];
+            [del startAnimating];
+            [_request startGetRequestWithSuccessBlock:^(id rootObj) {
+                
+                [del stopAnimating];
+                if (rootObj) {
+                    NSArray *rootArray = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error:nil];
+                    publicInterestsArray = [[NSMutableArray alloc] init];
+                    userInterestsArray = [[NSMutableArray alloc] init];
+                    for (NSDictionary *interest in rootArray) {
+//                        GrogCollectionCell *cell = [[GrogCollectionCell alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
+//                        cell.title = [interest objectForKey:@"name"];
+//                        cell.imgPath = [interest objectForKey:@"imagePath"];
+                        [publicInterestsArray addObject:interest];
+                    }
+                    [self initializeCollectionView];
+                }
+            } failureBlock:^(NSError *e) {
+                NSLog(@"error during logout:%@",[e localizedDescription]);
+                [del stopAnimating];
+                //[self showAlert:@"Logout Failed!" message:@"Please re-check values provided."];
+                
+            } extension:kPublicAllInterests];
+        }
+    }
+}
+- (void)initializeCollectionView {
+    collectionLayout = [[UICollectionViewFlowLayout alloc] init];
+    collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:collectionLayout];
+    [collectionView registerClass:[GrogCollectionCell class] forCellWithReuseIdentifier:reusableIdentifier];
+    [self.view addSubview:collectionView];
+    collectionView.backgroundColor = [UIColor clearColor];
+    collectionView.delegate = self, collectionView.dataSource = self;
+}
+
+- (GrogCollectionCell *)reusableCellAtIndexPath:(NSIndexPath *)indexPath {
+    return [collectionView dequeueReusableCellWithReuseIdentifier:reusableIdentifier forIndexPath:indexPath];
+}
+
+#pragma mark Collection view data source methods
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+
+    return [publicInterestsArray count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    //NSLog(@"cell for item:%ld",(long)indexPath.row);
+    GrogCollectionCell *cell = [self reusableCellAtIndexPath:indexPath];
+    NSDictionary *d = [publicInterestsArray objectAtIndex:indexPath.row];
+    [cell prepareWithTitle:[d objectForKey:@"name"] imagePath:[d objectForKey:@"imagePath"] selected:[userInterestsArray containsObject:indexPath]];
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)cv layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath  *)indexPath {
+    CGRect frame = cv.frame;
+    int itemsInRow = 3;
+    float aspectRatio = 4.0/3.0;
+    int padding = 10;
+    int availableScreeWidth = frame.size.width - (padding * (itemsInRow -1));
+    int width = (availableScreeWidth/itemsInRow);
+    int height = (width/aspectRatio);
+    return CGSizeMake(width,height);
+}
+
+// 3
+//- (UIEdgeInsets)collectionView:
+//(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+//    return UIEdgeInsetsMake(0, 2.5, 0, 2.5);
+//}
+
+#pragma mark Collection view delegate methods
+
+- (void)collectionView:(UICollectionView *)cv didSelectItemAtIndexPath:(NSIndexPath  *)indexPath
+{
+    GrogCollectionCell *cell = (GrogCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    if (![userInterestsArray containsObject:indexPath]) {
+        [userInterestsArray addObject:indexPath];
+        [cell toggleHoverView:YES];
+    } else {
+        [userInterestsArray removeObject:indexPath];
+        [cell toggleHoverView:NO];
+    }
+    
 }
 
 @end

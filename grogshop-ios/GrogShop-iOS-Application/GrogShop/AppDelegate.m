@@ -19,26 +19,24 @@
 
 @implementation AppDelegate
 
-@synthesize emailId,auth_token;
-
 + (AppDelegate *)sharedDelegate {
     return (AppDelegate *) [[UIApplication sharedApplication] delegate];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [self createTemporaryDirectory];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     self.emailId = [defaults objectForKey:User_email];
     self.auth_token = [defaults objectForKey:User_auth_token];
-    
+    self.userId = [[defaults objectForKey:User_id] intValue];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.animatingView = [[AnimatingView alloc] initWithFrame:self.window.bounds];
     
     self.launchViewController = [[LaunchViewController alloc] init];
     self.loginViewNavigationController = [[UINavigationController alloc] initWithRootViewController:self.launchViewController];
     if (![Utils isEmpty:self.emailId] && ![Utils isEmpty:self.auth_token]) {
-        [self launchUserSessionTabBarController];
+        [self launchUserSessionTabBarController:true];
     } else {
         self.window.rootViewController = self.loginViewNavigationController;
     }
@@ -52,6 +50,7 @@
         _tabBarController = [[UITabBarController alloc] init];
         AccountViewController *account = [[AccountViewController alloc] init];
         HomeViewController *home = [[HomeViewController alloc] init];
+        home.firstLogin = _firstLogin;
         SettingsViewController *settings = [[SettingsViewController alloc] init];
         _tabBarController.viewControllers = [NSArray arrayWithObjects:account,home,settings, nil];
         _tabBarController.selectedViewController = home;
@@ -59,8 +58,9 @@
     return  _tabBarController;
 }
 
-- (void)launchUserSessionTabBarController {
+- (void)launchUserSessionTabBarController:(BOOL)fl {
     
+    _firstLogin = fl;
     if([self.window.rootViewController isEqual:self.loginViewNavigationController]) {
         [self.loginViewNavigationController pushViewController:self.tabBarController animated:YES];
         self.loginViewNavigationController.navigationBarHidden = YES;
@@ -75,6 +75,28 @@
 }
 - (void)stopAnimating {
     [_animatingView removeFromSuperview];
+}
+
+- (NSString *)cacheDirPath {
+    NSFileManager *mgr = [NSFileManager defaultManager];
+    // Create a unique directory in the system caches directory
+    NSArray *docPaths = [mgr URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask];
+    NSString *docPath = [(NSURL *)[docPaths objectAtIndex:0] path];
+    docPath = [docPath stringByAppendingPathComponent:kCacheDirName];
+    return docPath;
+}
+- (NSString *)getFilePathForImageIndex:(NSString *)imageName {
+
+    return [[self cacheDirPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",imageName]];
+}
+
+- (void) createTemporaryDirectory {
+    NSString *docPath = [self cacheDirPath];
+    NSFileManager *mgr = [NSFileManager defaultManager];
+    BOOL isDir;
+    if (![mgr fileExistsAtPath:docPath isDirectory:&isDir]) {
+        [mgr createDirectoryAtPath:docPath withIntermediateDirectories:NO attributes:nil error:nil];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
