@@ -19,3 +19,6 @@ grogshop-server/src/main/webapp/js/listings.js
 /grogshop-html5/nbproject/private/
 /delete-html5/nbproject/private/
 /grogshop-ios/GrogShop-iOS-Application/DerivedData/
+/grogshop-model/target/
+/grogshop-rules/target/
+/grogshop-tests/target/

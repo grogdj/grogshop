@@ -34,8 +34,6 @@ public class RulesServiceImpl implements RulesService {
     @Inject
     private MatchingsService matchingsService;
 
-  
-
     @Inject
     @KBase("matchingrules")
     KieBase kBase;

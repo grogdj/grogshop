@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AA6CCCA2-BC6D-43EA-A76D-48559F9DE9DB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>GrogShop</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FA041B159971D2CE0B8E72125E083BD197788B21</key>
+		<string>https://github.com/grogdj/grogshop.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>grogshop-ios/GrogShop-iOS-Application/GrogShop.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FA041B159971D2CE0B8E72125E083BD197788B21</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/grogdj/grogshop.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FA041B159971D2CE0B8E72125E083BD197788B21</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FA041B159971D2CE0B8E72125E083BD197788B21</string>
+			<key>IDESourceControlWCCName</key>
+			<string>grogshop</string>
+		</dict>
+	</array>
+</dict>
+</plist>

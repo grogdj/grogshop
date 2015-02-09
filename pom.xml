@@ -12,10 +12,11 @@
     <description>GrogShop Modules</description>
 
     <modules>
-        <module>grogshop-core</module>
+        <module>grogshop-model</module>
+        <module>grogshop-rules</module>
         <module>grogshop-services</module>
-        <module>grogshop-server</module>
-        
+        <module>grogshop-html5</module>
+        <module>grogshop-tests</module>
     </modules>
   
     <properties>
