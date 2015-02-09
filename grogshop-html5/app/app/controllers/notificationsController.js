@@ -2,7 +2,7 @@
     var notificationsController = function ($rootScope, $scope, $cookieStore, $users,  $notifications) {
         var not = this; 
         $scope.notifications = []; ; 
-        $scope.newMatchingsNotifications = [{message:"esta es nueva"}]; 
+        $scope.newMatchingsNotificationsArray = $notifications.newMatchingsNotifications;
     
         $scope.loadNotifications = function(){
             
@@ -17,13 +17,14 @@
         
         
         $scope.checkNew =  function(notification_id){
-            
-            if($scope.newMatchingsNotifications.length > 0){
-                for( i = 0; i <  $scope.newMatchingsNotifications.length; i++){
-                    
-                    if(notification_id == $scope.newMatchingsNotifications[i].id){
+            console.log("CHECK NOTIFICATONS " + $notifications.newMatchingsNotifications.length )
+            if($notifications.newMatchingsNotifications.length > 0){
+                for( i = 0; i <  $notifications.newMatchingsNotifications.length; i++){
+                    console.log(notification_id + " / " + $notifications.newMatchingsNotifications[i]);
+                    if(notification_id == $notifications.newMatchingsNotifications[i]){
                         return true;
                     }
+                    
                     
                 }
             }else{
@@ -40,31 +41,28 @@
                 if($('.dropdown.dropdown-li').data('open')) {
                     $('.dropdown.dropdown-li').data('open', false);
                     $scope.clearNewNotifications();
-                    
-                    
-                    
+
                 } else
                     $('.dropdown.dropdown-li').data('open', true);
             });
 
-            //$(document).click(function() {
-            //    if($('.dropdown.dropdown-li').data('open')) {
-            //        $('.dropdown.dropdown-li').data('open', false);
-                     //$scope.clearNewNotifications();
+            $(document).click(function() {
+                if($('.dropdown.dropdown-li').data('open')) {
+                    $('.dropdown.dropdown-li').data('open', false);
+                     
+                     $scope.clearNewNotifications();
                     
-            //        $scope.clearNewNotificationsFromDocument($scope);
-                    
-                    
-                    
-              //  }
-            //});
+              }
+            });
 
         $scope.clearNewNotifications = function(){
-            console.log($scope.newMatchingsNotifications)
-            $scope.newMatchingsNotifications=[];
+            console.log($notifications.newMatchingsNotifications)
+            console.log("CLEAR NOTIFICATION FROM CONTROLLER");
+            $notifications.clearNewNotifications();
+            $scope.newMatchingsNotificationsArray = $notifications.newMatchingsNotifications; 
+            $scope.$apply();
         }
         
-     
         
     };
     

@@ -1,6 +1,7 @@
 (function(){
     var $notifications = function($transformRequestToForm, $cookieStore, $http, appConstants){
         var factory = {};
+        factory.newMatchingsNotifications = [];
         factory.loadAll  = function(){
             return $http({
                 method: 'GET',
@@ -10,6 +11,12 @@
                 data: {}
             })
         };
+        
+        factory.clearNewNotifications  = function(){
+            factory.newMatchingsNotifications = [];
+            
+        };
+       
         return factory;
     };
     

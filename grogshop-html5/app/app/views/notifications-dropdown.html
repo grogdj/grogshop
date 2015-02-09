@@ -1,6 +1,6 @@
 <li class="dropdown dropdown-li" ng-controller="notificationsController" >
-                   
-                     <button ng-click="loadNotifications()" id="notifications-dropdown" class=" btn btn-default" ng-class="{ 'btn-danger': newMatchingsNotifications.length > 0 }"  aria-hidden="true" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-bell" ></span></button>
+    <span style="color:white !important">Nuevos: {{newMatchingsNotificationsArray}}</span>
+                     <button ng-click="loadNotifications()" id="notifications-dropdown" class=" btn btn-default" ng-class="{ 'btn-danger': newMatchingsNotificationsArray.length > 0 }"  aria-hidden="true" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-bell" ></span></button>
                   
                   
                   <ul class="dropdown-menu notifications-menu" role="menu" aria-labelledby="notifications-dropdown">

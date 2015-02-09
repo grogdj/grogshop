@@ -5,7 +5,7 @@
       growlProvider.globalTimeToLive(3000);
     }]);
     
-    var MainCtrl = function ($scope,  $cookieStore, $rootScope, $users, $memberships, appConstants, growl) {
+    var MainCtrl = function ($scope,  $cookieStore, $rootScope, $users, $memberships, appConstants, growl, $notifications) {
         $scope.auth_token = $cookieStore.get('auth_token');
         $scope.email = $cookieStore.get('email');
         $scope.user_id = $cookieStore.get('user_id');
@@ -14,6 +14,8 @@
         $scope.memberships = [];
         $scope.notifications = {};
         $scope.avatarStyle = "";
+        
+       
         
         
         
@@ -108,6 +110,7 @@
                     websocket.onmessage = function (evt) {
                         console.log(">>> onMessage: " + evt.data);
                         $rootScope.$broadcast('quickNotification', evt.data);
+                        $notifications.newMatchingsNotifications.push(evt.data);
                     };
                     websocket.onerror = function (evt) {
                         console.log("Error: "+evt.data);
@@ -159,7 +162,7 @@
     };
     
     
-    MainCtrl.$inject = ['$scope', '$cookieStore', '$rootScope', '$users', '$memberships', 'appConstants', 'growl'];
+    MainCtrl.$inject = ['$scope', '$cookieStore', '$rootScope', '$users', '$memberships', 'appConstants', 'growl', '$notifications'];
     angular.module( "clubhouse" ).controller("MainCtrl", MainCtrl);
 }());
 
