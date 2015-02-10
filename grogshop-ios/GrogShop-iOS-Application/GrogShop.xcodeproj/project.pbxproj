@@ -25,6 +25,8 @@
 		DDDDFEBF1A87466800BBCEDA /* LaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEBE1A87466800BBCEDA /* LaunchViewController.m */; };
 		DDDDFEC21A874ACC00BBCEDA /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEC11A874ACC00BBCEDA /* RegisterViewController.m */; };
 		DDDDFEC51A87781400BBCEDA /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DDDDFEC41A87781400BBCEDA /* ForgotPasswordViewController.m */; };
+		E34AE8EC1A8A61B300854978 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E34AE8EB1A8A61B300854978 /* User.m */; };
+		E3C850621A8A55F5007F5275 /* InterestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C850611A8A55F5007F5275 /* InterestViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,10 @@
 		DDDDFEC11A874ACC00BBCEDA /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		DDDDFEC31A87781400BBCEDA /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		DDDDFEC41A87781400BBCEDA /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
+		E34AE8EA1A8A61B300854978 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		E34AE8EB1A8A61B300854978 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		E3C850601A8A55F5007F5275 /* InterestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestViewController.h; sourceTree = "<group>"; };
+		E3C850611A8A55F5007F5275 /* InterestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterestViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,12 +130,16 @@
 				DDDDFEC11A874ACC00BBCEDA /* RegisterViewController.m */,
 				DDDDFE8E1A85F49200BBCEDA /* LoginViewController.h */,
 				DDDDFE8F1A85F49200BBCEDA /* LoginViewController.m */,
+				E3C850601A8A55F5007F5275 /* InterestViewController.h */,
+				E3C850611A8A55F5007F5275 /* InterestViewController.m */,
 				DDDDFEB11A861B7200BBCEDA /* APIRequest.h */,
 				DDDDFEB21A861B7200BBCEDA /* APIRequest.m */,
 				DDD0473D1A880838000F142C /* ImageFetchRequest.h */,
 				DDD0473E1A880838000F142C /* ImageFetchRequest.m */,
 				DDDDFEAD1A86164E00BBCEDA /* Utils.h */,
 				DDDDFEAE1A86164E00BBCEDA /* Utils.m */,
+				E34AE8EA1A8A61B300854978 /* User.h */,
+				E34AE8EB1A8A61B300854978 /* User.m */,
 				DDD0473A1A8787A1000F142C /* GrogCollectionCell.h */,
 				DDD0473B1A8787A1000F142C /* GrogCollectionCell.m */,
 				DDDDFEB41A8650EA00BBCEDA /* AccountViewController.h */,
@@ -274,6 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E34AE8EC1A8A61B300854978 /* User.m in Sources */,
 				DDDDFEC51A87781400BBCEDA /* ForgotPasswordViewController.m in Sources */,
 				DDDDFEC21A874ACC00BBCEDA /* RegisterViewController.m in Sources */,
 				DDDDFE8A1A85F49200BBCEDA /* AppDelegate.m in Sources */,
@@ -286,6 +297,7 @@
 				DDDDFEB31A861B7200BBCEDA /* APIRequest.m in Sources */,
 				DDDDFEBC1A86510000BBCEDA /* HomeViewController.m in Sources */,
 				DDDDFE901A85F49200BBCEDA /* LoginViewController.m in Sources */,
+				E3C850621A8A55F5007F5275 /* InterestViewController.m in Sources */,
 				DDDDFEAF1A86164E00BBCEDA /* Utils.m in Sources */,
 				DDDDFE871A85F49200BBCEDA /* main.m in Sources */,
 			);

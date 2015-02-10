@@ -12,6 +12,8 @@
 #import "AccountViewController.h"
 #import "SettingsViewController.h"
 #import "Utils.h"
+#import "LoginViewController.h"
+#import "InterestViewController.h"
 
 @interface AppDelegate ()
 
@@ -33,12 +35,16 @@
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.animatingView = [[AnimatingView alloc] initWithFrame:self.window.bounds];
     
-    self.launchViewController = [[LaunchViewController alloc] init];
-    self.loginViewNavigationController = [[UINavigationController alloc] initWithRootViewController:self.launchViewController];
+    
     if (![Utils isEmpty:self.emailId] && ![Utils isEmpty:self.auth_token]) {
-        [self launchUserSessionTabBarController:true];
+        //[self launchUserSessionTabBarController:true];
+        self.interestViewController = [[InterestViewController alloc] init];
+        self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.interestViewController];
+        self.window.rootViewController = self.navigationController;
     } else {
-        self.window.rootViewController = self.loginViewNavigationController;
+        self.launchViewController = [[LaunchViewController alloc] init];
+        self.navigationController = [[UINavigationController alloc] initWithRootViewController:self.launchViewController];
+        self.window.rootViewController = self.navigationController;
     }
     [self.window makeKeyAndVisible];
     return YES;
@@ -60,13 +66,19 @@
     }
     return  _tabBarController;
 }
+- (User *)user {
+    if (!_user) {
+        
+    }
+    return _user;
+}
 
 - (void)launchUserSessionTabBarController:(BOOL)fl {
     
     _firstLogin = fl;
-    if([self.window.rootViewController isEqual:self.loginViewNavigationController]) {
-        [self.loginViewNavigationController pushViewController:self.tabBarController animated:YES];
-        self.loginViewNavigationController.navigationBarHidden = YES;
+    if([self.window.rootViewController isEqual:self.navigationController]) {
+        [self.navigationController pushViewController:self.tabBarController animated:YES];
+        self.navigationController.navigationBarHidden = YES;
     } else {
         self.window.rootViewController = self.tabBarController;
     }

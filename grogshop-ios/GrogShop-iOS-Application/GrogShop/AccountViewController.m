@@ -16,6 +16,7 @@
     if (self)
     {
         [self.tabBarItem setTitle:@"Account"];
+        self.title = @"Account";
     }
     return self;
 }

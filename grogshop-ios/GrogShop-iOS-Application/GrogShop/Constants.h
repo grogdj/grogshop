@@ -16,6 +16,8 @@
 #define User_auth_token @"user_auth_token"
 #define User_id @"user_id"
 
+#define User_profile @"user_profile"
+
 #define BG_COLOR [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0]
 
 #pragma mark networking url path extensions

@@ -1,17 +1,18 @@
 //
-//  HomeViewController.m
+//  InterestViewController.m
 //  GrogShop
 //
-//  Created by Nikita Pahadia on 07/02/2015.
+//  Created by Rishabh Chowdhary on 10/02/2015.
 //  Copyright (c) 2015 Grogshop. All rights reserved.
 //
 
-#import "HomeViewController.h"
+#import "InterestViewController.h"
 #import "Constants.h"
 #import "APIRequest.h"
 #import "GrogCollectionCell.h"
+#import "SettingsViewController.h"
 
-@interface HomeViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
+@interface InterestViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
     BOOL isFirst;
     NSMutableArray *publicInterestsArray,*userInterestsArray;
     UICollectionView *collectionView;
@@ -21,7 +22,7 @@
 
 @end
 
-@implementation HomeViewController
+@implementation InterestViewController
 
 static NSString *reusableIdentifier = @"GrogCell";
 
@@ -30,9 +31,8 @@ static NSString *reusableIdentifier = @"GrogCell";
     self = [super init];
     if (self)
     {
-        [self.tabBarItem setTitle:@"Home"];
-        self.title = @"Home";
-       // self.navigationController.navigationBarHidden = YES;
+        self.title = @"Add your Interests!";
+        // self.navigationController.navigationBarHidden = YES;
     }
     return self;
 }
@@ -41,47 +41,50 @@ static NSString *reusableIdentifier = @"GrogCell";
     [super viewDidLoad];
     self.view.backgroundColor = BG_COLOR;
     isFirst = true;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skipInterest)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addInterest)];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (isFirst) {
         isFirst = false;
-        if (_firstLogin) {
-            APIRequest *_request = [[APIRequest alloc] init];
-            AppDelegate *del = [AppDelegate sharedDelegate];
-            [del startAnimating];
-            [_request startGetRequestWithSuccessBlock:^(id rootObj) {
-                
-                [del stopAnimating];
-                if (rootObj) {
-                    NSArray *rootArray = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error:nil];
-                    publicInterestsArray = [[NSMutableArray alloc] init];
-                    userInterestsArray = [[NSMutableArray alloc] init];
-                    for (NSDictionary *interest in rootArray) {
-//                        GrogCollectionCell *cell = [[GrogCollectionCell alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
-//                        cell.title = [interest objectForKey:@"name"];
-//                        cell.imgPath = [interest objectForKey:@"imagePath"];
-                        [publicInterestsArray addObject:interest];
-                    }
-                    [self initializeCollectionView];
-                    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skipInterest)];
-                    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addInterest)];
+        APIRequest *_request = [[APIRequest alloc] init];
+        AppDelegate *del = [AppDelegate sharedDelegate];
+        //[del startAnimating];
+        [_request startGetRequestWithSuccessBlock:^(id rootObj) {
+            
+            [del stopAnimating];
+            if (rootObj) {
+                NSArray *rootArray = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error:nil];
+                publicInterestsArray = [[NSMutableArray alloc] init];
+                userInterestsArray = [[NSMutableArray alloc] init];
+                for (NSDictionary *interest in rootArray) {
+                    //                        GrogCollectionCell *cell = [[GrogCollectionCell alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
+                    //                        cell.title = [interest objectForKey:@"name"];
+                    //                        cell.imgPath = [interest objectForKey:@"imagePath"];
+                    [publicInterestsArray addObject:interest];
                 }
-            } failureBlock:^(NSError *e) {
-                NSLog(@"error during logout:%@",[e localizedDescription]);
-                [del stopAnimating];
-                //[self showAlert:@"Logout Failed!" message:@"Please re-check values provided."];
+                [self initializeCollectionView];
                 
-            } extension:kPublicAllInterests public:true];
-        }
+            }
+        } failureBlock:^(NSError *e) {
+            NSLog(@"error during interest:%@",[e localizedDescription]);
+            [del stopAnimating];
+            //[self showAlert:@"Logout Failed!" message:@"Please re-check values provided."];
+            
+        } extension:kPublicAllInterests public:true];
     }
 }
 
 - (void)skipInterest {
-    
+    [self launchSettings];
 }
 - (void)addInterest {
-    
+    [self launchSettings];
+}
+- (void)launchSettings {
+    SettingsViewController *settings = [[SettingsViewController alloc] init];
+    [self.navigationController pushViewController:settings animated:YES];
 }
 
 - (void)initializeCollectionView {
@@ -105,7 +108,7 @@ static NSString *reusableIdentifier = @"GrogCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-
+    
     return [publicInterestsArray count];
 }
 

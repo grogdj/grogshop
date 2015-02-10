@@ -11,6 +11,7 @@
 #import "Utils.h"
 #import "APIRequest.h"
 #import "ForgotPasswordViewController.h"
+#import "InterestViewController.h"
 
 @interface LoginViewController () {
     BOOL isFirst;
@@ -123,9 +124,8 @@
         APIRequest *_request = [[APIRequest alloc] init];
         [_request startLoginRequestWithSuccessBlock:^(id data) {
             NSLog(@"success for login");
-            NSLog(@"data:%@",[[NSString alloc] initWithData:(NSData *)data encoding:NSUTF8StringEncoding]);
+            [del stopAnimating];
             if (data) {
-                [del stopAnimating];
                 NSError *error = nil;
                 NSDictionary *rootDictionary = [NSJSONSerialization JSONObjectWithData:data options: NSJSONReadingMutableContainers error: &error];
                 if (rootDictionary) {
@@ -138,8 +138,8 @@
                     [defaults setObject:auth forKey:User_auth_token];
                     [defaults setObject:[NSNumber numberWithInt:del.userId] forKey:User_id];
                     [defaults synchronize];
-                    
-                    [self launchUserSession:[rootDictionary objectForKey:@"firstLogin"]];
+                    [self launchInterest];
+                    //[self launchUserSession:[rootDictionary objectForKey:@"firstLogin"]];
                 }
             }
             
@@ -153,24 +153,24 @@
 }
 
 - (void)logout {
-    APIRequest *_request = [[APIRequest alloc] init];
-    AppDelegate *del = [AppDelegate sharedDelegate];
-    [_request startLogoutRequestWithSuccessBlock:^(id rootObj) {
-        NSLog(@"success for logout");
-        [del stopAnimating];
-        NSLog(@"data:%@",[[NSString alloc] initWithData:(NSData *)rootObj encoding:NSUTF8StringEncoding]);
-        del.emailId = nil; del.auth_token = nil;
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:nil forKey:User_email];
-        [defaults setObject:nil forKey:User_auth_token];
-        [defaults synchronize];
-        
-    } failureBlock:^(NSError *e) {
-        NSLog(@"error during logout:%@",[e localizedDescription]);
-        [del stopAnimating];
-        [self showAlert:@"Logout Failed!" message:@"Please re-check values provided."];
-        
-    } email:del.emailId authToken:del.auth_token];
+//    APIRequest *_request = [[APIRequest alloc] init];
+//    AppDelegate *del = [AppDelegate sharedDelegate];
+//    [_request startLogoutRequestWithSuccessBlock:^(id rootObj) {
+//        NSLog(@"success for logout");
+//        [del stopAnimating];
+//        NSLog(@"data:%@",[[NSString alloc] initWithData:(NSData *)rootObj encoding:NSUTF8StringEncoding]);
+//        del.emailId = nil; del.auth_token = nil;
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        [defaults setObject:nil forKey:User_email];
+//        [defaults setObject:nil forKey:User_auth_token];
+//        [defaults synchronize];
+//        
+//    } failureBlock:^(NSError *e) {
+//        NSLog(@"error during logout:%@",[e localizedDescription]);
+//        [del stopAnimating];
+//        [self showAlert:@"Logout Failed!" message:@"Please re-check values provided."];
+//        
+//    } email:del.emailId authToken:del.auth_token];
 }
 
 - (void)forgotPwdClicked {
@@ -185,6 +185,11 @@
 
 - (void)launchUserSession:(BOOL)firstSession {
     [[AppDelegate sharedDelegate] launchUserSessionTabBarController:firstSession];
+}
+
+- (void)launchInterest {
+    InterestViewController *interests = [[InterestViewController alloc] init];
+    [self.navigationController pushViewController:interests animated:YES];
 }
 
 #pragma mark UITextField delegate

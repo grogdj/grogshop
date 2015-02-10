@@ -18,9 +18,9 @@
                              failureBlock:(void (^)(NSError *e))failed email:(NSString *)email password:(NSString *)password;
 
 - (void)startLogoutRequestWithSuccessBlock:(void (^)(id rootObj))success
-                              failureBlock:(void (^)(NSError *e))failed email:(NSString *)email authToken:(NSString *)token;
+                              failureBlock:(void (^)(NSError *e))failed;
 
 - (void)startGetRequestWithSuccessBlock:(void (^)(id rootObj))success
-                           failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension;
+                           failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension public:(BOOL)publicAPI;
 
 @end

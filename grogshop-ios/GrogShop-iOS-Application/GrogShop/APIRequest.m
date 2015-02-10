@@ -8,6 +8,7 @@
 
 #import "APIRequest.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 @implementation APIRequest
 
@@ -90,20 +91,36 @@
     [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
 }
 - (void)startLogoutRequestWithSuccessBlock:(void (^)(id rootObj))success
-                              failureBlock:(void (^)(NSError *e))failed email:(NSString *)email authToken:(NSString *)token {
+                              failureBlock:(void (^)(NSError *e))failed {
     NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,kAuthLogout];
+    AppDelegate *del = [AppDelegate sharedDelegate];
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setValue:[NSString stringWithFormat:@"webkey:%@",email] forHTTPHeaderField:@"service_key"];
-    [urlRequest setValue:[NSString stringWithFormat:@"%@",token] forHTTPHeaderField:@"auth_token"];
+    [urlRequest setValue:[NSString stringWithFormat:@"webkey:%@",del.emailId] forHTTPHeaderField:@"service_key"];
+    [urlRequest setValue:[NSString stringWithFormat:@"%@",del.auth_token] forHTTPHeaderField:@"auth_token"];
     [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
 }
+//- (void)startUpdateInterestRequestWithSuccessBlock:(void (^)(id rootObj))success
+//                              failureBlock:(void (^)(NSError *e))failed  {
+//    NSString *url = [NSString stringWithFormat:@"%@%@",kBaseURL,kAuthLogout];
+//    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+//    [urlRequest setHTTPMethod:@"POST"];
+//    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+//    [urlRequest setValue:[NSString stringWithFormat:@"webkey:%@",email] forHTTPHeaderField:@"service_key"];
+//    [urlRequest setValue:[NSString stringWithFormat:@"%@",token] forHTTPHeaderField:@"auth_token"];
+//    [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
+//}
 
 - (void)startGetRequestWithSuccessBlock:(void (^)(id rootObj))success
-                           failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension {
+                           failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension public:(BOOL)publicAPI {
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kBaseURL,pathExtension]]];
     [urlRequest setHTTPMethod:@"GET"];
+    if (!publicAPI) {
+        AppDelegate *del = [AppDelegate sharedDelegate];
+        [urlRequest setValue:del.auth_token forHTTPHeaderField:@"auth_token"];
+        [urlRequest setValue:[NSString stringWithFormat:@"webkey:%@",del.emailId] forHTTPHeaderField:@"service_key"];
+    }
     [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
 }
 
