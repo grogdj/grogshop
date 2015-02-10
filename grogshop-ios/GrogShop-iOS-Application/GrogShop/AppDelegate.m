@@ -49,11 +49,14 @@
     if (!_tabBarController) {
         _tabBarController = [[UITabBarController alloc] init];
         AccountViewController *account = [[AccountViewController alloc] init];
+        UINavigationController *accountNav = [[UINavigationController alloc] initWithRootViewController:account];
         HomeViewController *home = [[HomeViewController alloc] init];
+        UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:home];
         home.firstLogin = _firstLogin;
         SettingsViewController *settings = [[SettingsViewController alloc] init];
-        _tabBarController.viewControllers = [NSArray arrayWithObjects:account,home,settings, nil];
-        _tabBarController.selectedViewController = home;
+        UINavigationController *settingsNav = [[UINavigationController alloc] initWithRootViewController:settings];
+        _tabBarController.viewControllers = [NSArray arrayWithObjects:accountNav,homeNav,settingsNav, nil];
+        _tabBarController.selectedViewController = homeNav;
     }
     return  _tabBarController;
 }

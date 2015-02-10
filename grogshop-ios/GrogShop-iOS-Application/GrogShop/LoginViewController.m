@@ -136,7 +136,7 @@
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults setObject:_email.text forKey:User_email];
                     [defaults setObject:auth forKey:User_auth_token];
-                    [defaults setObject:[NSNumber numberWithInt:del.userId] forKey:User_auth_token];
+                    [defaults setObject:[NSNumber numberWithInt:del.userId] forKey:User_id];
                     [defaults synchronize];
                     
                     [self launchUserSession:[rootDictionary objectForKey:@"firstLogin"]];

@@ -68,7 +68,6 @@
     [self toggleHoverView:selected];
 }
 - (void)toggleHoverView:(BOOL)selected {
-    NSLog(@"toggle hover view:%d",selected);
     self.hoverView.hidden = !selected;
     self.title.hidden = !selected;
     [self bringSubviewToFront:self.title];

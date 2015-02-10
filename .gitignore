@@ -19,3 +19,7 @@ hs_err_pid*
 /grogshop-model/target/
 /grogshop-rules/target/
 /grogshop-tests/target/
+grogshop-ios/GrogShop-iOS-Application/GrogShop.xcodeproj/project.xcworkspace/xcuserdata/rishabhchowdhary.xcuserdatad/UserInterfaceState.xcuserstate
+grogshop-ios/GrogShop-iOS-Application/GrogShop.xcodeproj/xcuserdata/rishabhchowdhary.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+grogshop-ios/GrogShop-iOS-Application/GrogShop.xcodeproj/xcuserdata/rishabhchowdhary.xcuserdatad/xcschemes/GrogShop.xcscheme
+grogshop-ios/GrogShop-iOS-Application/GrogShop.xcodeproj/xcuserdata/rishabhchowdhary.xcuserdatad/xcschemes/xcschememanagement.plist
