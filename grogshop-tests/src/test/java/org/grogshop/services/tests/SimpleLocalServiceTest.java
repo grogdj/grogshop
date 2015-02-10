@@ -5,6 +5,7 @@
  */
 package org.grogshop.services.tests;
 
+import com.grogdj.grogshop.core.model.Club;
 import com.grogdj.grogshop.core.model.User;
 import java.io.File;
 import java.util.ArrayList;
@@ -13,20 +14,25 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.grogshop.services.api.ClubsService;
 import org.grogshop.services.api.InterestsService;
 import org.grogshop.services.api.MembershipsService;
 import org.grogshop.services.api.UsersService;
 import org.grogshop.services.exceptions.ServiceException;
 
-//import org.hibernate.search.jpa.FullTextEntityManager;
-//import org.hibernate.search.jpa.Search;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -62,6 +68,7 @@ public class SimpleLocalServiceTest {
 
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addAsLibraries(libs)
+                
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
@@ -113,53 +120,34 @@ public class SimpleLocalServiceTest {
         Assert.assertNotNull(newUser);
         ut.begin();
         interestService.newInterest("sports");
+        interestService.newInterest("food");
         ut.commit();
         List<String> tags = new ArrayList<String>();
 
         tags.add("sports");
         ut.begin();
-        clubsService.newClub("My First Club", "This is my first club description",
+        clubsService.newClub("My First Sports Club", "This is my sports first club description",
                 "sports", tags, newUser, "imagePathHere", 51.5033630, -0.1276250);
+        
+        clubsService.newClub("My First food Club", "This is my first food club description",
+                "food", tags, newUser, "imagePathHere", 51.5033630, -0.1276250);
         ut.commit();
-
+        
+        String userInput = "food";
+        
+        FullTextEntityManager fullTextEm = Search.getFullTextEntityManager(em);
+        Assert.assertNotNull(fullTextEm);
+        
+        QueryBuilder qb = fullTextEm.getSearchFactory().buildQueryBuilder().forEntity(Club.class).get();
+        Query query = qb.phrase().onField("name").andField("description").sentence(userInput).createQuery();
+        
+        FullTextQuery fullTextQuery = fullTextEm.createFullTextQuery(query, Club.class);
+        fullTextQuery.setSort(org.apache.lucene.search.Sort.RELEVANCE);
+        List resultList = fullTextQuery.getResultList();
+        
+        
+        Assert.assertNotEquals(0, resultList.size());
     }
 
-//    @Test
-//    public void simpleCreateClubAndJoin() throws ServiceException {
-//       
-//        MultivaluedMap<String, String> headers = new MultivaluedHashMap<String, String>();
-//        headers.add("service_key", "webkey:grogdj@gmail.com");
-//        HttpHeaders httpHeaders = new ResteasyHttpHeaders(headers);
-//
-//        Response loginResponse = authService.login(httpHeaders, "grogdj@gmail.com", "asdasd");
-//
-//        Assert.assertEquals(Response.Status.OK.getStatusCode(), loginResponse.getStatus());
-//        JsonReader jsonReader = Json.createReader(new StringReader((String) loginResponse.getEntity()));
-//        JsonObject object = jsonReader.readObject();
-//        jsonReader.close();
-//
-//        String authToken = object.getString("auth_token");
-//        String email = object.getString("email");
-//        String serviceKey = object.getString("service_key");
-//        Long userId = object.getJsonNumber("user_id").longValue();
-//        Assert.assertNotNull(authToken);
-//        Assert.assertEquals("grogdj@gmail.com", email);
-//        Assert.assertTrue(serviceKey.contains(email));
-//        Assert.assertNotSame(0, userId);
-//
-//        Response newClubResponse = clubsService.newClub("My First Club", "This is my first club description",
-//                "sports", "sports,first,club", userId, "imagePathHere", 51.5033630, -0.1276250);
-//        jsonReader = Json.createReader(new StringReader((String) newClubResponse.getEntity()));
-//
-//        object = jsonReader.readObject();
-//        jsonReader.close();
-//
-//        Long clubId = Long.getLong(object.getString("club_id"));
-//
-//        Response joinResponse = membershipsService.create(clubId, userId);
-//
-//        Response allMembers = membershipsService.getAllMembers(clubId);
-//
-//        Assert.assertNotNull(allMembers);
-//    }
+
 }

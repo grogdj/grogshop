@@ -17,8 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import org.hibernate.search.annotations.Boost;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Latitude;
+import org.hibernate.search.annotations.Longitude;
+import org.hibernate.search.annotations.Spatial;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -28,6 +32,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity(name = "Club")
 @Table(name = "CLUBS")
 @Indexed
+@Spatial 
 public class Club implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,6 +49,7 @@ public class Club implements Serializable {
     @NotNull
     @NotEmpty
     @Field
+    @Boost(0.8f)
     private String description;
 
     @NotNull
@@ -64,10 +70,11 @@ public class Club implements Serializable {
     @NotEmpty
     private String image;
 
-    @Field
+    
+    @Latitude
     private Double longitude = 0.0;
 
-    @Field
+    @Longitude
     private Double latitude = 0.0;
 
     public Club() {

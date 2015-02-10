@@ -14,7 +14,7 @@
         $scope.memberships = [];
         $scope.notifications = {};
         $scope.avatarStyle = "";
-
+        $scope.websocket = {};
         $rootScope.$on('quickNotification', function (event, data, type) {
             var config = {};
 
@@ -62,6 +62,7 @@
                 $cookieStore.remove('auth_token');
                 $cookieStore.remove('email');
                 $scope.avatarStyle = "";
+                $scope.closeWebSocket();
                 $rootScope.$broadcast('goTo', "/");
                 $rootScope.$broadcast("quickNotification", "You have been logged out.", 'info');
             }).error(function (data) {
@@ -80,7 +81,7 @@
                 $users.login(user).success(function (data) {
                     $rootScope.$broadcast("quickNotification", "You are logged now, have fun!", 'success');
                     console.log("You are signed in! " + data.auth_token);
-                    $scope.initWebSocket();
+                    
 
                     $cookieStore.put('auth_token', data.auth_token);
                     $cookieStore.put('email', data.email);
@@ -94,7 +95,7 @@
                     $scope.submitted = false;
                     $scope.avatarStyle = {'background-image': 'url(' + appConstants.server + appConstants.context + 'rest/public/users/' + $scope.user_id + '/avatar' + '?' + new Date().getTime() + ')'};
                     console.log("firstLogin: " + $scope.firstLogin);
-
+                    $scope.initWebSocket();
                     if ($scope.firstLogin) {
                         $rootScope.$broadcast('goTo', "/firstlogin");
                     } else {
@@ -125,27 +126,32 @@
         
         $scope.initWebSocket = function(){
             //var wsUri = "ws://" + "grog-restprovider.rhcloud.com:8000" + "/grogshop-server/" + "shop";
-            var wsUri = "ws://" + "localhost:8080" + "/grogshop-server/" + "shop?email=" + $scope.email;
+            var wsUri = "ws://" + "localhost:8080" + "/grogshop-server/" + "shop?email=" + $cookieStore.get('email');
             //var wsUri = "ws://" + document.location.hostname + ":" + document.location.port + "/grogshop-server/" + "shop";
-            var websocket = new WebSocket(wsUri);
-
-            websocket.onopen = function (evt) {
+            $scope.websocket = new WebSocket(wsUri);
+            console.log("Init websocket for: "+$cookieStore.get('email'));
+            $scope.websocket.onopen = function (evt) {
                 console.log("onOpen client side");
 
             };
-            websocket.onmessage = function (evt) {
+            $scope.websocket.onmessage = function (evt) {
                 console.log(">>> onMessage: " + evt.data);
-                $rootScope.$broadcast('quickNotification', evt.data);
+                $rootScope.$broadcast('quickNotification', evt.data, "success");
                 $notifications.newMatchingsNotifications.push(evt.data);
             };
-            websocket.onerror = function (evt) {
+            $scope.websocket.onerror = function (evt) {
                 console.log("Error: " + evt.data);
             };
 
-            websocket.onclose = function () {
+            $scope.websocket.onclose = function () {
                 console.log("onClose client side");
             };
             
+        };
+        
+        $scope.closeWebSocket = function(){
+            $scope.websocket.onclose = function () {};
+            $scope.websocket.close(); 
         };
 
         $scope.hasMembership = function (club_id) {

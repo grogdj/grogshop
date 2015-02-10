@@ -52,9 +52,9 @@ public class ClubsServiceImpl implements ClubsService {
         }
         Club club = null;
         if(longitude != 0.0 || latitude != 0.0 ){
-            club = new Club(name, description, interestObject, tags, founder, image);
-        }else{
             club = new Club(name, description, interestObject, tags, founder, image, longitude, latitude);
+        }else{
+            club = new Club(name, description, interestObject, tags, founder, image);
         }
         em.persist(club);
         log.log(Level.INFO, "Club {0} created with id {1}", new Object[]{name, club.getId()});

@@ -23,8 +23,7 @@ import org.grogshop.services.endpoints.api.ShopClubMembershipsService;
 import org.grogshop.services.endpoints.api.ShopClubsService;
 import org.grogshop.services.exceptions.ServiceException;
 
-//import org.hibernate.search.jpa.FullTextEntityManager;
-//import org.hibernate.search.jpa.Search;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.resteasy.specimpl.ResteasyHttpHeaders;

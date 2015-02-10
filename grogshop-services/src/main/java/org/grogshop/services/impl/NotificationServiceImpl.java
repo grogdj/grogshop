@@ -55,6 +55,7 @@ public class NotificationServiceImpl implements NotificationsService {
     }
 
     public void addNewSession(String email, Session session) {
+        System.out.println(">>>> Adding new session to email: "+email);
         emailToSessionMap.put(email, session);
         sessionToEmailMap.put(session, email);
     }

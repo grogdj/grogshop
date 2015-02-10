@@ -17,7 +17,7 @@ rule "post matching with request in price range"
     Matching newMatching = new Matching($club, $p, $r, Matching.MatchingType.FULL);
     Long matchingId = matchingsService.newMatching(newMatching);
 
-    notificationsService.newNotification($postUserId, "Your post matched ... userId: "+ $postUserId + "Rule(pmr) Matching:"+matchingId, "", "MATCHING");
+    notificationsService.newNotification($postUserId, "Your post: "+$r.getName() + " matched with request: "+$p.getName()+".", "", "MATCHING");
     //notificationsService.newNotification($requestUserId, "Your request matched ... userId:"+ $requestUserId + "Rule(pmr) Matching:"+matchingId, "", "MATCHING");
     
 end
@@ -31,6 +31,6 @@ rule "request matching with post in price range"
     Matching newMatching = new Matching($club, $r, $p, Matching.MatchingType.FULL);
     Long matchingId = matchingsService.newMatching(newMatching);
   //  notificationsService.newNotification($postUserId, "Your post matched ... userId: "+ $postUserId + "Rule(rmp) Matching:"+matchingId, "", "MATCHING");
-    notificationsService.newNotification($requestUserId, "Your request matched ... userId:"+ $requestUserId + "Rule(rmp) Matching:"+matchingId, "", "MATCHING");
+    notificationsService.newNotification($requestUserId, "Your request: "+$r.getName() + " matched with post: "+$p.getName()+".", "", "MATCHING");
     
 end
