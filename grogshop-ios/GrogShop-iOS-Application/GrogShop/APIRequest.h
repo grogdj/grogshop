@@ -23,4 +23,6 @@
 - (void)startGetRequestWithSuccessBlock:(void (^)(id rootObj))success
                            failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension public:(BOOL)publicAPI;
 
+- (void)startUpdateUserProfileRequestWithSuccessBlock:(void (^)(id rootObj))success
+                                         failureBlock:(void (^)(NSError *e))failed name:(NSString *)name location:(NSString *)location bio:(NSString *)bio;
 @end

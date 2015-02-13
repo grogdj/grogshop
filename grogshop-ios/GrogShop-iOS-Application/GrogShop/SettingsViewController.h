@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController
+@interface SettingsViewController : UIViewController <UITextFieldDelegate>
 
+@property (nonatomic, retain) UITextField *username,*location;
+@property (nonatomic, retain) UITextField *bio;
+@property (nonatomic, retain) UIButton *save;
 @end

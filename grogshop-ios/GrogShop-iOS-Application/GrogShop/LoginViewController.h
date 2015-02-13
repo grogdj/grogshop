@@ -10,8 +10,9 @@
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 
-@property(strong,retain) UITextField *email,*password;
-@property(strong,retain) UIButton *login,*forgotPwd;
+@property (nonatomic, retain) UITextField *email,*password;
+@property (nonatomic, retain) UIButton *login,*forgotPwd;
+
 - (void)launchInterest;
 @end
 

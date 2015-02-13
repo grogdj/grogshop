@@ -124,4 +124,21 @@
     [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
 }
 
+- (void)startUpdateUserProfileRequestWithSuccessBlock:(void (^)(id rootObj))success
+                                         failureBlock:(void (^)(NSError *e))failed name:(NSString *)name location:(NSString *)location bio:(NSString *)bio {
+    AppDelegate *del = [AppDelegate sharedDelegate];
+    NSString *url = [NSString stringWithFormat:@"%@%@/%d/%@",kBaseURL,@"users",del.userId,@"update"];
+    
+    NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setValue:[NSString stringWithFormat:@"webkey:%@",del.emailId] forHTTPHeaderField:@"service_key"];
+    [urlRequest setValue:[NSString stringWithFormat:@"%@",del.auth_token] forHTTPHeaderField:@"auth_token"];
+    NSString *stringToPost = [NSString stringWithFormat:@"name=%@&location=%@&bio=%@",[Utils getURLEncoded:name],[Utils getURLEncoded:location],[Utils getURLEncoded:bio]];
+    NSData *dataToPost = [stringToPost dataUsingEncoding:NSUTF8StringEncoding];
+    [urlRequest setHTTPBody:dataToPost];
+    [urlRequest setValue:[NSString stringWithFormat:@"%ld",(long)[dataToPost length]] forHTTPHeaderField:@"Content-Length"];
+    [self startAPIRequestWithSuccessBlock:success failureBlock:failed urlRequest:urlRequest];
+}
+
 @end
