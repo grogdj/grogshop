@@ -44,8 +44,9 @@
             [del stopAnimating];
             if(rootObj) {
                 NSError *error = nil;
-                NSDictionary *rootDictionary = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error: &error];
-                if (rootDictionary) {
+                id root = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error: &error];
+                if (root && [root isKindOfClass:[NSDictionary class]]) {
+                    NSDictionary *rootDictionary = (NSDictionary *)root;
                     NSString *bio,*location,*username;
                     bio = [rootDictionary objectForKey:@"bio"];
                     location = [rootDictionary objectForKey:@"location"];
@@ -93,17 +94,19 @@
     [_save setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_save setBackgroundColor:[UIColor colorWithRed:123/255.0 green:169/255.0 blue:208/255.0 alpha:1.0]];
     [self.view addSubview:_save];
+    
+    if (_showHomeBarButton) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(saveProfile)];
+    }
 }
 
 - (void)saveProfile {
     APIRequest *request = [[APIRequest alloc] init];
-    AppDelegate *del = [AppDelegate sharedDelegate];
-    [del startAnimating];
     [request startUpdateUserProfileRequestWithSuccessBlock:^(id rootObj) {
-        [del stopAnimating];
     } failureBlock:^(NSError *e) {
-        [del stopAnimating];
     } name:_username.text location:_location.text bio:_bio.text];
+    
+    [[AppDelegate sharedDelegate] launchUserSessionTabBarController:true];
 }
 
 @end

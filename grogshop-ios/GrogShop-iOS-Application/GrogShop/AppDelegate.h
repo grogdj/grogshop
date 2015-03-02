@@ -29,7 +29,7 @@
 @property (strong, nonatomic) AnimatingView *animatingView;
 @property (assign, nonatomic) BOOL firstLogin;
 @property (strong, nonatomic) NSString *emailId,*auth_token;
-@property (assign, nonatomic) int userId;
+@property (assign, nonatomic) long userId;
 @property (strong, nonatomic) User *user;
 
 - (void)saveContext;

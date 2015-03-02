@@ -26,6 +26,9 @@
 #define kAuthLogin @"auth/login"
 #define kAuthLogout @"auth/logout"
 #define kPublicAllInterests @"public/interests/all"
-
+#define kAllClubs @"clubs/all"
 #define kCacheDirName @"static_images"
+
+static NSString *reusableIdentifier = @"GrogCell";
+
 #endif

@@ -115,6 +115,7 @@
 - (void)startGetRequestWithSuccessBlock:(void (^)(id rootObj))success
                            failureBlock:(void (^)(NSError *e))failed extension:(NSString *)pathExtension public:(BOOL)publicAPI {
     NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kBaseURL,pathExtension]]];
+//    [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://10.14.84.73/~rishabhchowdhary/clubs.json"]];
     [urlRequest setHTTPMethod:@"GET"];
     if (!publicAPI) {
         AppDelegate *del = [AppDelegate sharedDelegate];

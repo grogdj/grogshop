@@ -24,7 +24,7 @@
 
 @implementation InterestViewController
 
-static NSString *reusableIdentifier = @"GrogCell";
+
 
 - (instancetype)init
 {
@@ -55,16 +55,19 @@ static NSString *reusableIdentifier = @"GrogCell";
             
             [del stopAnimating];
             if (rootObj) {
-                NSArray *rootArray = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error:nil];
-                publicInterestsArray = [[NSMutableArray alloc] init];
-                userInterestsArray = [[NSMutableArray alloc] init];
-                for (NSDictionary *interest in rootArray) {
-                    //                        GrogCollectionCell *cell = [[GrogCollectionCell alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
-                    //                        cell.title = [interest objectForKey:@"name"];
-                    //                        cell.imgPath = [interest objectForKey:@"imagePath"];
-                    [publicInterestsArray addObject:interest];
+                id root = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error:nil];
+                if (root && [root isKindOfClass:[NSArray class]]) {
+                    NSArray *rootArray = (NSArray *)root;
+                    publicInterestsArray = [[NSMutableArray alloc] init];
+                    userInterestsArray = [[NSMutableArray alloc] init];
+                    for (NSDictionary *interest in rootArray) {
+                        //                        GrogCollectionCell *cell = [[GrogCollectionCell alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
+                        //                        cell.title = [interest objectForKey:@"name"];
+                        //                        cell.imgPath = [interest objectForKey:@"imagePath"];
+                        [publicInterestsArray addObject:interest];
+                    }
+                    [self initializeCollectionView];
                 }
-                [self initializeCollectionView];
                 
             }
         } failureBlock:^(NSError *e) {
@@ -84,6 +87,7 @@ static NSString *reusableIdentifier = @"GrogCell";
 }
 - (void)launchSettings {
     SettingsViewController *settings = [[SettingsViewController alloc] init];
+    settings.showHomeBarButton = true;
     [self.navigationController pushViewController:settings animated:YES];
 }
 

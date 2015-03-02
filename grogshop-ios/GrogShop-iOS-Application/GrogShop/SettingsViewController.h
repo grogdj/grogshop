@@ -13,4 +13,5 @@
 @property (nonatomic, retain) UITextField *username,*location;
 @property (nonatomic, retain) UITextField *bio;
 @property (nonatomic, retain) UIButton *save;
+@property (nonatomic, assign) BOOL showHomeBarButton;
 @end

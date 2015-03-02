@@ -60,6 +60,7 @@
         UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:home];
         home.firstLogin = _firstLogin;
         SettingsViewController *settings = [[SettingsViewController alloc] init];
+        settings.showHomeBarButton = false;
         UINavigationController *settingsNav = [[UINavigationController alloc] initWithRootViewController:settings];
         _tabBarController.viewControllers = [NSArray arrayWithObjects:accountNav,homeNav,settingsNav, nil];
         _tabBarController.selectedViewController = homeNav;

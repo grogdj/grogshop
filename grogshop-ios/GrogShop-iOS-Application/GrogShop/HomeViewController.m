@@ -13,7 +13,7 @@
 
 @interface HomeViewController () <UICollectionViewDataSource,UICollectionViewDelegateFlowLayout> {
     BOOL isFirst;
-    NSMutableArray *publicInterestsArray,*userInterestsArray;
+    NSMutableArray *publicClubsArray,*userInterestsArray,*userPublicClubInterestArray;
     UICollectionView *collectionView;
     UICollectionViewFlowLayout *collectionLayout;
 }
@@ -22,8 +22,6 @@
 @end
 
 @implementation HomeViewController
-
-static NSString *reusableIdentifier = @"GrogCell";
 
 - (instancetype)init
 {
@@ -42,6 +40,51 @@ static NSString *reusableIdentifier = @"GrogCell";
     self.view.backgroundColor = BG_COLOR;
     isFirst = true;
 }
+
+- (void)compareUserInterestWithPublicClubs {
+    userPublicClubInterestArray = [[NSMutableArray alloc] init];
+    for (NSDictionary *club in publicClubsArray) {
+        NSString *i = [club objectForKey:@"interest"];
+        for (NSDictionary *interest in userInterestsArray) {
+            NSString *n = [interest objectForKey:@"name"];
+            if ([i isEqualToString:n]) {
+               // NSLog(@"club:%@",[club description]);
+                //NSLog(@"interest:%@",[interest description]);
+                [userPublicClubInterestArray addObject:club];
+            }
+        }
+    }
+    [userInterestsArray removeAllObjects]; userInterestsArray = nil;
+    [publicClubsArray removeAllObjects]; publicClubsArray = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self initializeCollectionView];
+    });
+    
+}
+
+- (void)fetchUserInterests {
+    //users/62/interests
+    
+    APIRequest *request = [[APIRequest alloc] init];
+    AppDelegate *del = [AppDelegate sharedDelegate];
+    
+    [request startGetRequestWithSuccessBlock:^(id rootObj) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            if (rootObj) {
+                NSArray *rootArray = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error:nil];
+                for (NSDictionary *interest in rootArray) {
+                    NSLog(@"%@",interest);
+                    [userInterestsArray addObject:interest];
+                }
+                [self compareUserInterestWithPublicClubs];
+            }
+        });
+        [del stopAnimating];
+    } failureBlock:^(NSError *e) {
+        [del stopAnimating];
+    } extension:[NSString stringWithFormat:@"/users/%ld/interests",del.userId] public:false];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     if (isFirst) {
@@ -52,27 +95,25 @@ static NSString *reusableIdentifier = @"GrogCell";
             [del startAnimating];
             [_request startGetRequestWithSuccessBlock:^(id rootObj) {
                 
-                [del stopAnimating];
                 if (rootObj) {
                     NSArray *rootArray = [NSJSONSerialization JSONObjectWithData:rootObj options: NSJSONReadingMutableContainers error:nil];
-                    publicInterestsArray = [[NSMutableArray alloc] init];
+                    publicClubsArray = [[NSMutableArray alloc] init];
                     userInterestsArray = [[NSMutableArray alloc] init];
-                    for (NSDictionary *interest in rootArray) {
-//                        GrogCollectionCell *cell = [[GrogCollectionCell alloc] initWithFrame:CGRectMake(0, 0, 80, 60)];
-//                        cell.title = [interest objectForKey:@"name"];
-//                        cell.imgPath = [interest objectForKey:@"imagePath"];
-                        [publicInterestsArray addObject:interest];
+                    for (NSDictionary *club in rootArray) {
+                        //"description", "founderEmail", id, "image", "interest", "name"
+                        [publicClubsArray addObject:club];
+                        //NSLog(@"%@",[interest description]);
+                        
                     }
-                    [self initializeCollectionView];
-                    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Skip" style:UIBarButtonItemStylePlain target:self action:@selector(skipInterest)];
-                    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addInterest)];
+                    [self fetchUserInterests];
+                    //[self initializeCollectionView];
                 }
             } failureBlock:^(NSError *e) {
-                NSLog(@"error during logout:%@",[e localizedDescription]);
+                NSLog(@"error during public club:%@",[e localizedDescription]);
                 [del stopAnimating];
                 //[self showAlert:@"Logout Failed!" message:@"Please re-check values provided."];
                 
-            } extension:kPublicAllInterests public:true];
+            } extension:kAllClubs public:false];
         }
     }
 }
@@ -106,15 +147,15 @@ static NSString *reusableIdentifier = @"GrogCell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
 
-    return [publicInterestsArray count];
+    return [userPublicClubInterestArray count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     //NSLog(@"cell for item:%ld",(long)indexPath.row);
     GrogCollectionCell *cell = [self reusableCellAtIndexPath:indexPath];
-    NSDictionary *d = [publicInterestsArray objectAtIndex:indexPath.row];
-    [cell prepareWithTitle:[d objectForKey:@"name"] imagePath:[d objectForKey:@"imagePath"] selected:[userInterestsArray containsObject:indexPath]];
+    NSDictionary *d = [userPublicClubInterestArray objectAtIndex:indexPath.row];
+    [cell prepareWithTitle:[d objectForKey:@"name"] imagePath:[d objectForKey:@"image"] selected:false];
     return cell;
 }
 
@@ -140,13 +181,6 @@ static NSString *reusableIdentifier = @"GrogCell";
 - (void)collectionView:(UICollectionView *)cv didSelectItemAtIndexPath:(NSIndexPath  *)indexPath
 {
     GrogCollectionCell *cell = (GrogCollectionCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    if (![userInterestsArray containsObject:indexPath]) {
-        [userInterestsArray addObject:indexPath];
-        [cell toggleHoverView:YES];
-    } else {
-        [userInterestsArray removeObject:indexPath];
-        [cell toggleHoverView:NO];
-    }
     
 }
 
